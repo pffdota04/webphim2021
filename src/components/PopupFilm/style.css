@@ -1,0 +1,15 @@
+.img-trailer{
+    max-height: 60vh;
+}
+
+.trailer-ytb{
+    max-height: 90vh;
+}
+
+.text-ten-line {
+  width: 100%;
+  /* white-space: nowrap; */
+  overflow-y: scroll;
+  /* max-height: 40vh; */
+  text-overflow: ellipsis;
+}

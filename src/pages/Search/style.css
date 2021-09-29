@@ -1,0 +1,30 @@
+
+  /* A film item */
+ .card img{
+   width: 100%;
+   height: 400px;
+}
+
+@media (max-width: 992px) {
+    .card img{
+    width: 100%;
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+    .card img{
+    width: 100%;
+    height: 200px;
+  }
+}
+
+
+
+.text-one-line {
+
+  white-space: nowrap;
+  overflow: hidden;
+  height: 25px;
+  text-overflow: ellipsis;
+}

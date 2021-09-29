@@ -1,0 +1,62 @@
+.mota {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* LIST TRENDING  */
+
+
+.carousel-button-group .left {
+  position: absolute;
+  left: 0;
+
+  background-repeat: no-repeat;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0) 00%,
+    rgba(0, 0, 0, 0.5) 50%
+  ) !important;
+
+  width: 4rem !important;
+  top: 0 !important;
+  left: 0rem !important;
+  height: -webkit-fill-available !important;
+
+  border: none;
+}
+
+.carousel-button-group .right {
+  position: absolute;
+  right: 0;
+
+  background-repeat: no-repeat;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 00%,
+    rgba(0, 0, 0, 0.5) 50%
+  ) !important;
+  width: 4rem !important;
+  top: 0 !important;
+  height: -webkit-fill-available !important;
+  border: none;
+
+}
+
+.sodem {
+  margin-bottom: 4rem;
+
+  height: 5rem !important;
+  width: 5rem !important;
+}
+
+.text-one-line {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 25px;
+  text-overflow: ellipsis;
+}
+
+/* <!-- end - TRENDING LIST --> */

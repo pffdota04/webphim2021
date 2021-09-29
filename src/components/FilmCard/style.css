@@ -1,0 +1,38 @@
+/* A film item */
+.card {
+  width: 13.5rem;
+  width: 30vw !important;
+  margin: 3px auto !important;
+  border: 1.5px rgba(0, 0, 0, 0.755) solid !important;
+}
+
+.card .film-item {
+  height: 20rem;
+  height: 40vw !important;
+}
+
+.card img {
+  user-select: none !important;
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 20vw !important;
+    margin: 4px 2px;
+  }
+  .card .film-item {
+    height: 32vw !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card {
+    width: 15vw !important;
+
+    margin: 4px 2px;
+  }
+  .card .film-item {
+    height: 17rem;
+    height: 20vw !important;
+  }
+}

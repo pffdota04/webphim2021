@@ -1,0 +1,79 @@
+/* HEADER */
+#header{
+    background-color: rgb(255, 172, 172);
+        text-align: center !important;
+        display: block;
+}
+
+.dropdown-memu{
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+}
+
+#header-real{
+    padding: 0;
+    margin: 0;
+}
+#userlogo{
+    text-align: center !important;
+}
+
+.usermenu li, .usermenu hr{
+     text-align: left !important;
+     width: inherit;
+} 
+.usermenu form input{
+    width: 4.3rem;
+}
+
+.usermenu {
+     min-width: fit-content !important;
+} 
+
+
+@media (max-width: 1068px) {
+    #header-real div div ul li,#header-real div div button, #header-real div div form input, #header-real div div form button {
+        font-size: 70%;
+        margin: 0;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}
+@media (max-width: 863px) {
+       #header-real div div ul li,#header-real div div button, #header-real div div form input, #header-real div div form button {
+        font-size: 56%;
+        margin: 0;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}
+@media (max-width: 767px) {
+    #userlogo{
+        text-align: center !important;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    #header-real div div ul li,#header-real div div button, #header-real div div form input, #header-real div div form button {
+        font-size: 100%;
+        margin: 0;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .formsearch{
+        padding-bottom: 1rem;
+    }
+}
+
+

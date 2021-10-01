@@ -2,10 +2,13 @@ import PopupFilm from "./../../components/PopupFilm";
 import FilmCard from "./../../components/FilmCard";
 
 import "./style.css";
+import filmImage from "./../../assets/images/film-card-example.jpg";
 
 import Carousel from "react-multi-carousel";
 import "../../../node_modules/react-multi-carousel/lib/styles.css";
+
 import Footer from "../../components/Footer";
+
 const responsive_multi_carsousel = {
   superLargeDesktop: {
     breakpoint: { max: 8000, min: 1200 },
@@ -253,6 +256,7 @@ const Home = () => {
                     key={i + 1}
                     numberTrend={i + 1}
                     title={"Tựa phim"}
+                    image={filmImage}
                     year={2021}
                     id={i + 1}
                   />
@@ -276,6 +280,7 @@ const Home = () => {
                   <FilmCard
                     key={i + 10}
                     title={"Tựa phim"}
+                    image={filmImage}
                     year={2021}
                     id={i + 11}
                   />
@@ -299,6 +304,7 @@ const Home = () => {
                   <FilmCard
                     key={i + 21}
                     title={"Tựa phim"}
+                    image={filmImage}
                     year={2021}
                     id={i + 21}
                   />
@@ -311,7 +317,7 @@ const Home = () => {
           </div>
         </section>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

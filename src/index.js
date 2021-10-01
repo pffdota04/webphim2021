@@ -10,15 +10,22 @@ import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
 import "../node_modules/jquery/dist/jquery.min.js";
 import "../node_modules/@popperjs/core/dist/umd/popper";
 import "../node_modules/popper.js/dist/popper.min.js";
-
-
-
 import "../node_modules/font-awesome/css/font-awesome.min.css";
 
+
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "./store/recuders";
+const store = createStore(
+    rootReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() 
+)
+
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+    <Provider store={store}>
     <App />
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 

@@ -208,31 +208,54 @@ const Header = () => {
                   className="dropdown-menu dropdown-menu-dark usermenu"
                   aria-labelledby="dropdowntype"
                 >
-                  <li>
+                  <li
+                    // data-bs-toggle="collapse"
+                    // data-bs-target=".navbar-collapse.show"
+                  >
                     <Link className="dropdown-item" to="/phim/phim-my">
                       PHIM MỸ
                     </Link>
                   </li>
-                  <li>
-                    <Link className="dropdown-item" to="/phim/phim-nhat">
+                  {/* <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/phim/phim-nhat"
+                      data-bs-target=".navbar-collapse.show"
+                      data-bs-toggle="collapse"
+                    >
                       PHIM NHẬT
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/phim-han">
+                    <Link
+                      className="dropdown-item"
+                      to="/phim/phim-han"
+                      data-bs-target=".navbar-collapse.show"
+                      data-bs-toggle="collapse"
+                    >
                       PHIM HÀN
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/phim-vietnam">
+                    <Link
+                      className="dropdown-item"
+                      to="/phim/phim-vietnam"
+                      data-bs-target=".navbar-collapse.show"
+                      data-bs-toggle="collapse"
+                    >
                       PHIM VIỆT NAM
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/phim-trung">
+                    <Link
+                      className="dropdown-item"
+                      to="/phim/phim-trung"
+                      data-bs-target=".navbar-collapse.show"
+                      data-bs-toggle="collapse"
+                    >
                       PHIM TRUNG
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link className="dropdown-item" to="/phim/quoc-gia-khac">
                       KHÁC...
@@ -244,6 +267,7 @@ const Header = () => {
             {/* <button type="button" class="btn btn-danger me-2 mb-2 mt-2" data-bs-toggle="modal"
       data-bs-target="#thongbao">What new?</button> */}
             {/* Dropdown user action */}
+
             <div className="dropdown nav-item  " id="userlogo">
               <a
                 href="/"
@@ -261,13 +285,13 @@ const Header = () => {
                 />
               </a>
               <ul
-                className="dropdown-menu dropdown-menu-dark usermenu"
+                className="dropdown-menu dropdown-menu-dark logomenu"
                 aria-labelledby="dropdownUser1"
               >
                 <li>
-                  <a className="dropdown-item" href="/user">
+                  <Link className="dropdown-item" to="/user">
                     <i className="fa fa-user" /> Bấm vào đây nè
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a className="dropdown-item" href="/">

@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import NapTien from "./NapTien";
 import MaGioiThieu from "./MaGioiThieu";
 import Voucher from "./Voucher";
+import Footer from "./../../components/Footer"
 
 const style = {
   height: 30,
@@ -125,6 +126,7 @@ const UserRequest = (props) => {
         {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
         <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
       </div>
+      <Footer/>
     </div>
   );
 };

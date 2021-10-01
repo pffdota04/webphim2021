@@ -1,10 +1,10 @@
 import "./style.css";
-import filmImage from "./../../assets/images/film-card-example.jpg";
+
 
 import { useEffect, useState } from "react";
 
 const FilmCard = (props) => {
-  const { numberTrend, title, year, id} = props;
+  const { numberTrend, title, year, id, image} = props;
   const [numberImage, setNumberImage] = useState(null);
 
   async function lazyLoadNumber(num) {
@@ -37,7 +37,7 @@ const FilmCard = (props) => {
           />
         )}
         <img
-          src={filmImage}
+          src={image}
           className="card-img-top film-item"
           alt="..."
           data-bs-toggle="modal"

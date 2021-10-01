@@ -8,6 +8,7 @@ import Category from './pages/Category';
 import Search from './pages/Search';
 import UserRequest from './pages/UserRequest';
 import Login from './pages/Login';
+import Watch from './pages/Watch';
 
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
             <Route path="/phim/:type" component={Category}></Route>
             <Route path="/search/:value" component={Search}></Route>
             <Route path="/user" component={UserRequest}></Route>
-            <Route path="/login" component={Login}/>
+            <Route path="/login" component={Login} />
+            <Route path="/watch/:id" component={Watch} />
             <Route path="/" component={Home}></Route>
           </Switch>
         </main>

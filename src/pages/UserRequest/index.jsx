@@ -69,7 +69,7 @@ const UserRequest = (props) => {
                     aria-controls="nav-usercode"
                     aria-selected="false"
                   >
-                    <i class="fa fa-users"></i> Nhập mã
+                    <i className="fa fa-users"></i> Nhập mã
                   </button>
                   <button
                     className="nav-link"
@@ -126,7 +126,7 @@ const UserRequest = (props) => {
         {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
         <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

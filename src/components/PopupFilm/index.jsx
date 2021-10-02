@@ -31,6 +31,7 @@ const PopupFilm = (props) => {
             src={meo}
             alt="youtube thumnail image"
             className="w-100 img-trailer"
+            loading="lazy"
           />
           <div className=" mx-auto text-ten-line ">
             <p className="text-center">
@@ -61,7 +62,6 @@ const PopupFilm = (props) => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };

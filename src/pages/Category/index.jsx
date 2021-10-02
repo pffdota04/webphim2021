@@ -72,9 +72,9 @@ const Category = (props) => {
   let fetchMoreData = async (dataOf) => {
     console.log("Loading data from " + dataOf);
     let resulf = [];
-    if (dataOf == "tatca") for (let i = 0; i < 12; i++) resulf.push(data1);
-    else if (dataOf == "movie") for (let i = 0; i < 12; i++) resulf.push(data2);
-    else if (dataOf == "series") for (let i = 0; i < 12; i++) resulf.push(data3);
+    if (dataOf === "tatca") for (let i = 0; i < 12; i++) resulf.push(data1);
+    else if (dataOf === "movie") for (let i = 0; i < 12; i++) resulf.push(data2);
+    else if (dataOf === "series") for (let i = 0; i < 12; i++) resulf.push(data3);
     else for (let i = 0; i < 12; i++) resulf.push(data4);
 
     let a = await new Promise((resolve) => {
@@ -147,9 +147,9 @@ const Category = (props) => {
         next={() => setData(1)}
         hasMore={hasMore}
         loader={
-          <div class="d-flex justify-content-center">
-            <div class="spinner-border" role="status">
-              <span class="sr-only">Loading...</span>
+          <div clclassNameass="d-flex justify-content-center">
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
             </div>
           </div>
         }
@@ -179,9 +179,9 @@ const Category = (props) => {
         ))}
       </InfiniteScroll>
     ) : (
-      <div class="d-flex justify-content-center">
-        <div class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
     );

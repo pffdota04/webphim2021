@@ -264,8 +264,7 @@ const Header = () => {
                 </ul>
               </li>
             </ul>
-            {/* <button type="button" class="btn btn-danger me-2 mb-2 mt-2" data-bs-toggle="modal"
-      data-bs-target="#thongbao">What new?</button> */}
+
             {/* Dropdown user action */}
 
             <div className="dropdown nav-item  " id="userlogo">
@@ -300,24 +299,18 @@ const Header = () => {
                 </li>
 
                 <li>
-                  <a
-                    className="dropdown-item bg-secondary"
-                    //  href="/"
-                  >
+                  <Link className="dropdown-item " to="/mylist">
                     <i className="fa fa-plus"></i> Phim đã lưu
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    className="dropdown-item  bg-secondary"
-                    //  href="/"
-                  >
+                  <Link className="dropdown-item  " to="/unlock">
                     <i className="fa fa-unlock" /> Phim Vip
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a
-                    className="dropdown-item text-danger  bg-secondary"
+                    className="dropdown-item text-danger "
                     // href="/login/login.html"
                   >
                     <i className="fa fa-sign-out" /> Đăng xuất

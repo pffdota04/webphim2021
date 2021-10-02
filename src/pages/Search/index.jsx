@@ -45,8 +45,6 @@ const Search = (props) => {
               Kết quả tìm kiếm cho "<strong>{value}</strong>"
             </h1>
 
-        
-
             <hr className="mb-2" />
 
             {/* {items.map((e, i) => (
@@ -57,9 +55,9 @@ const Search = (props) => {
               next={fetchMoreData}
               hasMore={hasMore}
               loader={
-                <div class="d-flex justify-content-center">
-                  <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div className="d-flex justify-content-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                   </div>
                 </div>
               }

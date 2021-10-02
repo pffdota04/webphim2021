@@ -30,7 +30,10 @@ const MaGioiThieu = () => {
           >
             Đây là mã của bạn
           </label>
-          <span class="input-group-text mycode mx-auto d-block" id="muycode">
+          <span
+            className="input-group-text mycode mx-auto d-block"
+            id="muycode"
+          >
             123456
           </span>
         </div>

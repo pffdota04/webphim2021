@@ -37,9 +37,9 @@ const Watch = () => {
           <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
 
           {dataFilmState.id == undefined ? (
-            <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+            <div className="d-flex justify-content-center">
+              <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
               </div>
             </div>
           ) : (
@@ -74,7 +74,6 @@ const Watch = () => {
               >
                 Change view
               </p>
-
             </div>
             <nav>
               <ul className="pagination justify-content-center">

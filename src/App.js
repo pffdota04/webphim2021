@@ -9,6 +9,8 @@ import Search from './pages/Search';
 import UserRequest from './pages/UserRequest';
 import Login from './pages/Login';
 import Watch from './pages/Watch';
+import UnlockList from './pages/UserList/UnlockList';
+import WatchLaterList from "./pages/UserList/WatchLaterList";
 
 
 function App() {
@@ -23,6 +25,9 @@ function App() {
             <Route path="/user" component={UserRequest}></Route>
             <Route path="/login" component={Login} />
             <Route path="/watch/:id" component={Watch} />
+            <Route path="/unlock" component={UnlockList} />
+            <Route path="/mylist" component={WatchLaterList} />
+
             <Route path="/" component={Home}></Route>
           </Switch>
         </main>

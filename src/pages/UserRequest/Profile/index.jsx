@@ -11,7 +11,7 @@ const Profile = () => {
       />
       <h1 className="display-5 fw-bold text-center">Nguyễn Văn A </h1>
       <h5 className="text-center">
-        vippro@gmail.com <i class="fa fa-check-circle text-primary"></i>
+        vippro@gmail.com <i className="fa fa-check-circle text-primary"></i>
       </h5>
       <h4 className="text-center">
         Số dư:
@@ -37,26 +37,26 @@ const Profile = () => {
             Liên hệ
           </button>
           <div
-            class="modal fade"
+            className="modal fade"
             id="exampleModal"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">
                     Bạn muốn nói gì đó với chúng tôi?
                   </h5>
                   <button
                     type="button"
-                    class="btn-close"
+                    className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
                   <ul>
                     <li>Facebook: click</li>
                     <li>Email: click</li>
@@ -80,10 +80,10 @@ const Profile = () => {
                     </button>
                   </div>
                 </div>
-                <div class="modal-footer">
+                <div className="modal-footer">
                   <button
                     type="button"
-                    class="btn btn-secondary"
+                    className="btn btn-secondary"
                     data-bs-dismiss="modal"
                   >
                     Close

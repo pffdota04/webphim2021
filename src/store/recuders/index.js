@@ -1,15 +1,18 @@
-import listPhim from "./listphim";
+// import listPhim from "./listphim";
 import listTatCa from "./listPhim/tatca";
-import listPhimLe from "./listPhim/phimle";
-import listPhimBo from "./listPhim/phimbo";
+import listUser from "./userList/userList";
+
+// import listPhimLe from "./listPhim/phimle";
+// import listPhimBo from "./listPhim/phimbo";
 
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  listPhim,
+  // listPhim,
   listTatCa,
-  listPhimLe,
-  listPhimBo,
+  listUser,
+  // listPhimLe,
+  // listPhimBo,
 });
 
 export default rootReducer;

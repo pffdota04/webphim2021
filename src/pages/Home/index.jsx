@@ -105,8 +105,7 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop2"
-                  draggable="false"
+                  data-bs-target="#ItemModal2"
                 >
                   Xem ngay!
                 </button>
@@ -143,8 +142,7 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop2"
-                  draggable="false"
+                  data-bs-target="#ItemModal2"
                 >
                   Xem ngay!
                 </button>
@@ -181,8 +179,7 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop2"
-                  draggable="false"
+                  data-bs-target="#ItemModal2"
                 >
                   Xem ngay!
                 </button>
@@ -219,8 +216,7 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop2"
-                  draggable="false"
+                  data-bs-target="#ItemModal2"
                 >
                   Xem ngay!
                 </button>

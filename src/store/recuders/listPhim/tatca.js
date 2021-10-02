@@ -7,7 +7,6 @@ const initialState = {
 };
 
 const listTatCa = (state = initialState, action) => {
-  let addList = {};
   switch (action.type) {
     case "SET_FILM_DATA": {
       return {

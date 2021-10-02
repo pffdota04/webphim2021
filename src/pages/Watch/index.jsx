@@ -1,13 +1,61 @@
-import "./style.css"
-import qc from "./../../assets/images/quang-cao.jpg"
+import "./style.css";
+import qc from "./../../assets/images/quang-cao.jpg";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+
+const data1 = {
+  title: "Công chúa ngủ trong rừng",
+  year: 2020,
+};
+
 const Watch = () => {
-    return (
+  const { id } = useParams();
+
+  const [dataFilmState, setDataFilmState] = useState({});
+  const [isFull, setIsFull] = useState(false);
+
+  useEffect(() => {
+      getDataByParamsId();
+
+  }, []);
+
+  const getDataByParamsId = () => {
+    setTimeout(() => {    
+      data1.id = id;
+      setDataFilmState(data1);
+  },1000
+    )
+
+  };
+
+
+
+  return (
+    <div>
       <main>
         <div className>
           <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
-          <h2 className="text-center">Tựa phim</h2>
+
+          {dataFilmState.id == undefined ? (
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          ) : (
+            <h2 className="text-center">
+              {dataFilmState.id} {dataFilmState.title}
+            </h2>
+          )}
           <hr className="m-2" />
-          <div className="container ps-5 pe-5" id="film">
+          <div
+            className={
+              isFull
+                ? "container-fluir bg-secondary p-2 pt-0"
+                : "container bg-secondary"
+            }
+            id="filmView"
+          >
             <img
               src="https://i.imgur.com/ia3Jrgc.png"
               alt="phim"
@@ -17,12 +65,16 @@ const Watch = () => {
           <hr className="m-2" />
           <div className="container bg-secondary p-2 pt-0">
             <div className="d-block justify-content-center d-flex">
-              <button onclick="maxview()" className="btn-sm btn-warning m-1">
-                Big view
-              </button>
-              <button onclick="minview()" className="btn-sm btn-warning m-1">
-                Small view
-              </button>
+              <p
+                // onClick={() => {changeIsFull()}}
+                onClick={() => {
+                  setIsFull(!isFull);
+                }}
+                className="btn-sm btn-warning m-1"
+              >
+                Change view
+              </p>
+
             </div>
             <nav>
               <ul className="pagination justify-content-center">
@@ -71,6 +123,7 @@ const Watch = () => {
           <img className="d-block w-100" src={qc} alt="" width={800} />
         </div>
       </main>
-    );
-  }
+    </div>
+  );
+};
 export default Watch;

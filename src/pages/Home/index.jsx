@@ -8,7 +8,8 @@ import Carousel from "react-multi-carousel";
 import "../../../node_modules/react-multi-carousel/lib/styles.css";
 
 import Footer from "../../components/Footer";
-
+import { useEffect } from "react";
+import $ from "jquery";
 const responsive_multi_carsousel = {
   superLargeDesktop: {
     breakpoint: { max: 8000, min: 1200 },
@@ -57,8 +58,16 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
 };
 
 const Home = () => {
+  useEffect(()=>{
+  
+  },[])
   return (
     <div>
+      {/* POPUP ITEM */}
+      {[...Array(32)].map((e, i) => (
+        <PopupFilm key={i + 1} title="Tựa phim" year={2021} id={i + 1} />
+      ))}
+
       {/* HOT PHIM RECOMEMD with a beutiful backgroup mlem mlem... */}
       <div
         id="carouselExampleControls"
@@ -96,7 +105,8 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop24"
+                  data-bs-target="#ItemModalTop2"
+                  draggable="false"
                 >
                   Xem ngay!
                 </button>
@@ -133,7 +143,8 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop24"
+                  data-bs-target="#ItemModalTop2"
+                  draggable="false"
                 >
                   Xem ngay!
                 </button>
@@ -170,7 +181,8 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop24"
+                  data-bs-target="#ItemModalTop2"
+                  draggable="false"
                 >
                   Xem ngay!
                 </button>
@@ -207,7 +219,8 @@ const Home = () => {
                 <button
                   className="btn btn-lg btn-danger"
                   data-bs-toggle="modal"
-                  data-bs-target="#ItemModalTop24"
+                  data-bs-target="#ItemModalTop2"
+                  draggable="false"
                 >
                   Xem ngay!
                 </button>
@@ -236,10 +249,6 @@ const Home = () => {
       </div>
       <div className="container-fluid">
         <hr className="mt-5 mb-2" />
-        {/* POPUP ITEM */}
-        {[...Array(32)].map((e, i) => (
-          <PopupFilm key={i + 1} title="Tựa phim" year={2021} id={i + 1} />
-        ))}
 
         {/* TRENDING LIST */}
         <section>

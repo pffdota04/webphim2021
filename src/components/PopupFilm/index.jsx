@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import meo from "./../../assets/images/hinhmeo.png"
 import "./style.css"
+
 const PopupFilm = (props) => {
   const { title, year, id } = props;
 
@@ -47,12 +49,19 @@ const PopupFilm = (props) => {
             <p className="text-center"> Được phát hành vào năm {year}</p>
           </div>
           <div className="modal-footer p-1">
-            <button className="w-100 p-0 pb-2 pt-2 m-0 mb-1 btn-outline-secondary ">
-              Xem ngay
+            <button
+              className="w-100 p-0 m-0 mb-1 btn-outline-secondary"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <Link to={"/watch/" + id} className=" pb-2 pt-2 d-block ">
+                Xem ngay
+              </Link>
             </button>
           </div>
         </div>
       </div>
+
     </div>
   );
 };

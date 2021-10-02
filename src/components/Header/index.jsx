@@ -10,7 +10,7 @@ const Header = () => {
 
   const onSubmitSearch = (e) => {
     e.preventDefault();
-    let Search = "/search/" + e.target.value;
+    let Search = e.target.value;
     setSearchValue(Search);
   };
 
@@ -209,14 +209,14 @@ const Header = () => {
                   aria-labelledby="dropdowntype"
                 >
                   <li
-                    // data-bs-toggle="collapse"
-                    // data-bs-target=".navbar-collapse.show"
+                  // data-bs-toggle="collapse"
+                  // data-bs-target=".navbar-collapse.show"
                   >
                     <Link className="dropdown-item" to="/phim/phim-my">
                       PHIM MỸ
                     </Link>
                   </li>
-                  {/* <li>
+                  <li>
                     <Link
                       className="dropdown-item"
                       to="/phim/phim-nhat"
@@ -255,7 +255,7 @@ const Header = () => {
                     >
                       PHIM TRUNG
                     </Link>
-                  </li> */}
+                  </li>
                   <li>
                     <Link className="dropdown-item" to="/phim/quoc-gia-khac">
                       KHÁC...
@@ -294,30 +294,31 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/">
+                  <Link className="dropdown-item" to="/login">
+                    <i className="fa fa-sign-in" /> Đăng nhập
+                  </Link>
+                </li>
+
+                <li>
+                  <a
+                    className="dropdown-item bg-secondary"
+                    //  href="/"
+                  >
                     <i className="fa fa-plus"></i> Phim đã lưu
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/">
+                  <a
+                    className="dropdown-item  bg-secondary"
+                    //  href="/"
+                  >
                     <i className="fa fa-unlock" /> Phim Vip
                   </a>
                 </li>
-
-                {/* <li>
-                  <a className="dropdown-item" href="./../voucher/voucher.html">
-                    <i className="fa fa-gift" /> Voucher
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="/">
-                    <i className="fa fa-credit-card"></i> Nạp tiền
-                  </a>
-                </li>*/}
                 <li>
                   <a
-                    className="dropdown-item text-danger"
-                    href="/login/login.html"
+                    className="dropdown-item text-danger  bg-secondary"
+                    // href="/login/login.html"
                   >
                     <i className="fa fa-sign-out" /> Đăng xuất
                   </a>
@@ -336,9 +337,18 @@ const Header = () => {
                 aria-label="Search"
                 onChange={onSubmitSearch}
               />
-              <button className="btn btn-outline-light" type="submit">
-                <i className="fa fa-search"></i>
-              </button>
+              {searchValue.length === 0 ? (
+                <button className="btn btn-outline-light disable" disabled>
+                  <i className="fa fa-search"></i>
+                </button>
+              ) : (
+                <Link
+                  className="btn btn-outline-light"
+                  to={"/search/" + searchValue}
+                >
+                  <i className="fa fa-search"></i>
+                </Link>
+              )}
             </form>
           </div>
         </div>

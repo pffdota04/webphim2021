@@ -293,12 +293,6 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/login">
-                    <i className="fa fa-sign-in" /> Đăng nhập
-                  </Link>
-                </li>
-
-                <li>
                   <Link className="dropdown-item " to="/mylist">
                     <i className="fa fa-plus"></i> Phim đã lưu
                   </Link>
@@ -306,6 +300,11 @@ const Header = () => {
                 <li>
                   <Link className="dropdown-item  " to="/unlock">
                     <i className="fa fa-unlock" /> Phim Vip
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/login">
+                    <i className="fa fa-sign-in" /> Đăng nhập
                   </Link>
                 </li>
                 <li>

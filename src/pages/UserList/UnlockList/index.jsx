@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import PopupFilm from "../../../components/PopupFilm";
 import FilmCard from "../../../components/FilmCard";
 
+import Footer from "../../../components/Footer";
+
+
 const UnlockList = () => {
 //   const { type } = useParams();
   const data = useSelector((state) => state.listUser.unlockList);
@@ -55,28 +58,31 @@ const UnlockList = () => {
 
   return (
     <div>
-      <div className="container"></div>
-      <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
-      <section>
-        <div className="mb-3">
-          <hr className="mb-2" />
-          <h1 className="text-center">PHIM VIP ĐÃ MỞ</h1>
-          <hr className="mb-2" />
+      <div className="container">
+        <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
+        <section>
+          <div className="mb-3">
+            <hr className="mb-2" />
+            <h1 className="text-center">PHIM VIP ĐÃ MỞ</h1>
+            <hr className="mb-2" />
 
-          {data.length == undefined ? (
-            <div className="d-flex justify-content-center">
-              <div className="spinner-border" role="status">
-                <span className="sr-only">Loading...</span>
+            {data.length == undefined ? (
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
               </div>
-            </div>
-          ) : data.length == undefined ? (
-            <h2>Không có phim để hiển thị</h2>
-          ) : (
-            showData()
-          )}
-          <hr className="mb-3" />
-        </div>
-      </section>
+            ) : data.length == undefined ? (
+              <h2>Không có phim để hiển thị</h2>
+            ) : (
+              showData()
+            )}
+            <hr className="mb-3" />
+          </div>
+        </section>
+        <img className="d-block w-100 pt-2 pb-2" src={qc} alt="" width={800} />
+      </div>
+      <Footer/>
     </div>
   );
 };

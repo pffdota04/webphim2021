@@ -146,8 +146,8 @@ const Category = (props) => {
         dataLength={showThis.length}
         next={() => setData(1)}
         hasMore={hasMore}
-        loader={
-          <div clclassNameass="d-flex justify-content-center">
+      loader={
+          <div className="text-center">
             <div className="spinner-border" role="status">
               <span className="sr-only">Loading...</span>
             </div>
@@ -179,7 +179,7 @@ const Category = (props) => {
         ))}
       </InfiniteScroll>
     ) : (
-      <div className="d-flex justify-content-center">
+      <div className="text-center ">
         <div className="spinner-border" role="status">
           <span className="sr-only">Loading...</span>
         </div>

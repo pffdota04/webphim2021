@@ -47,7 +47,6 @@ const Header = () => {
                 <Link
                   className="nav-link active"
                   aria-current="page"
-                  // href="/category/category.html"
                   to="/phim/tatca"
                 >
                   TẤT CẢ
@@ -149,27 +148,27 @@ const Header = () => {
                   aria-labelledby="dropdowntype"
                 >
                   <li>
-                    <Link className="dropdown-item" to="/phim/hanhdong">
+                    <Link className="dropdown-item" to="/phim/action">
                       HÀNH ĐỘNG
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/vientuong">
+                    <Link className="dropdown-item" to="/phim/scifi">
                       VIỄN TƯỞNG
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/kinhdi">
+                    <Link className="dropdown-item" to="/phim/horror">
                       KINH DỊ
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/hoathinh">
+                    <Link className="dropdown-item" to="/phim/anime">
                       HOẠT HÌNH
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/chinhkich">
+                    <Link className="dropdown-item" to="/phim/drama">
                       CHÍNH KỊCH
                     </Link>
                   </li>
@@ -179,17 +178,17 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/hai">
+                    <Link className="dropdown-item" to="/phim/romantic">
                       HÀI
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/toipham">
+                    <Link className="dropdown-item" to="/phim/crime">
                       TỘI PHẠM
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/giadinh">
+                    <Link className="dropdown-item" to="/phim/family">
                       GIA ĐÌNH - TRẺ EM
                     </Link>
                   </li>
@@ -212,16 +211,16 @@ const Header = () => {
                   // data-bs-toggle="collapse"
                   // data-bs-target=".navbar-collapse.show"
                   >
-                    <Link className="dropdown-item" to="/phim/phim-my">
+                    <Link className="dropdown-item" to="/phim/us">
                       PHIM MỸ
                     </Link>
                   </li>
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/phim-nhat"
-                      data-bs-target=".navbar-collapse.show"
-                      data-bs-toggle="collapse"
+                      to="/phim/ja"
+                      // data-bs-target=".navbar-collapse.show"
+                      // data-bs-toggle="collapse"
                     >
                       PHIM NHẬT
                     </Link>
@@ -229,9 +228,9 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/phim-han"
-                      data-bs-target=".navbar-collapse.show"
-                      data-bs-toggle="collapse"
+                      to="/phim/ko"
+                      // data-bs-target=".navbar-collapse.show"
+                      // data-bs-toggle="collapse"
                     >
                       PHIM HÀN
                     </Link>
@@ -239,9 +238,9 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/phim-vietnam"
-                      data-bs-target=".navbar-collapse.show"
-                      data-bs-toggle="collapse"
+                      to="/phim/vi"
+                      // data-bs-target=".navbar-collapse.show"
+                      // data-bs-toggle="collapse"
                     >
                       PHIM VIỆT NAM
                     </Link>
@@ -249,15 +248,15 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/phim-trung"
-                      data-bs-target=".navbar-collapse.show"
-                      data-bs-toggle="collapse"
+                      to="/phim/ch"
+                      // data-bs-target=".navbar-collapse.show"
+                      // data-bs-toggle="collapse"
                     >
                       PHIM TRUNG
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/quoc-gia-khac">
+                    <Link className="dropdown-item" to="/phim/other">
                       KHÁC...
                     </Link>
                   </li>

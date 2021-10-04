@@ -27,8 +27,8 @@ function App() {
             <Route path="/watch/:id" component={Watch} />
             <Route path="/unlock" component={UnlockList} />
             <Route path="/mylist" component={WatchLaterList} />
-
-            <Route path="/" component={Home}></Route>
+            
+            <Route path="/" component={Home}/>
           </Switch>
         </main>
       </>

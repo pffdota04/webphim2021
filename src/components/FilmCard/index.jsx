@@ -45,7 +45,7 @@ const FilmCard = (props) => {
           draggable="false"
         />
         <h5 className="card-title text-center text-one-line mb-0 mt-2">
-          {id} {title}
+          {id} {title} {image}
         </h5>
         <div className="card-body pb-1 pt-0">
           <p className="card-text text-center text-one-line ">{year}</p>

@@ -6,7 +6,7 @@ import Profile from "./Profile";
 import NapTien from "./NapTien";
 import MaGioiThieu from "./MaGioiThieu";
 import Voucher from "./Voucher";
-import Footer from "./../../components/Footer"
+import Footer from "./../../components/Footer";
 
 const style = {
   height: 30,
@@ -14,6 +14,29 @@ const style = {
   margin: 6,
   padding: 8,
 };
+
+// const data = [
+//   {
+//     id: 1,
+//     name: "x1",
+//     type: "x",
+//   },
+//   {
+//     id: 2,
+//     name: "x2",
+//     type: "x",
+//   },
+//   {
+//     id: 3,
+//     name: "y1",
+//     type: "y",
+//   },
+//   {
+//     id: 4,
+//     name: "z1",
+//     type: "z",
+//   },
+// ];
 
 const UserRequest = (props) => {
   useEffect(() => {}, []);
@@ -92,6 +115,10 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-home-tab"
                 >
+                  {/* {data.map((element, index) =>
+                      element.type == "x" && <div>Đây là thức uống X: {element.name} có id = {element.id}</div>
+                  )} */}
+
                   <Profile />
                 </div>
                 <div

@@ -10,6 +10,8 @@ import "../../../node_modules/react-multi-carousel/lib/styles.css";
 import Footer from "../../components/Footer";
 import { useEffect } from "react";
 import $ from "jquery";
+import axios from "axios";
+import { useState } from "react";
 const responsive_multi_carsousel = {
   superLargeDesktop: {
     breakpoint: { max: 8000, min: 1200 },
@@ -58,9 +60,14 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
 };
 
 const Home = () => {
+  const [homeData, setHomeData] = useState([])
   useEffect(()=>{
+    axios
+      .get(process.env.REACT_APP_API_LOCAL + "film/home")
+      .then((res) => setHomeData(res.data));
   
   },[])
+    useEffect(()=>{ console.log(homeData)},[homeData]);
   return (
     <div>
       {/* POPUP ITEM */}

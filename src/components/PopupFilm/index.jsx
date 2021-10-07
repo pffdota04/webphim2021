@@ -3,12 +3,12 @@ import meo from "./../../assets/images/hinhmeo.png"
 import "./style.css"
 
 const PopupFilm = (props) => {
-  const { title, year, id } = props;
+  const {data} = props;
 
   return (
     <div
-      className="modal fade popup-none-in-first"
-      id={"ItemModal" + id}
+      className="modal fade popup-none-in-first bd-example-modal-sm"
+      id={"ItemModal" + data.id}
       tabIndex={-1}
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -17,7 +17,7 @@ const PopupFilm = (props) => {
         <div className="modal-content bg-light text-dark  trailer-ytb">
           <div className="modal-header p-2" id="header-popup">
             <h5 className="modal-title" id="exampleModalLabel">
-              {title}
+              {data.title} ({data.year})
             </h5>
             <button
               type="button"
@@ -28,26 +28,20 @@ const PopupFilm = (props) => {
             />
           </div>
           <img
-            src={meo}
+            src={data.backimg != undefined ? data.backimg : meo}
             alt="youtube thumnail image"
             className="w-100 img-trailer"
             loading="lazy"
           />
           <div className=" mx-auto text-ten-line ">
             <p className="text-center">
-              Đây là bộ phim có id = {id} và có tựa là "{title}".
+              {data.id}: "{data.title}"
             </p>
             <p className="text-left ps-3 pe-2">
-              &nbsp;&nbsp; Lorem, ipsum dolor sit amet consectetur adipisicing
-              elit. Debitis, rem perferendis consequuntur est dicta architecto
-              assumenda perspiciatis veritatis hic labore cum soluta possimus
-              cupiditate dolores quos impedit corrupti deserunt? Expedita.\
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis,
-              rem perferendis consequuntur est dicta architecto assumenda
-              perspiciatis veritatis hic labore cum soluta possimus
+              &nbsp;&nbsp;{data.description}
             </p>
 
-            <p className="text-center"> Được phát hành vào năm {year}</p>
+            <p className="text-center"> Được phát hành vào năm {data.year}</p>
           </div>
           <div className="modal-footer p-1">
             <button
@@ -55,7 +49,7 @@ const PopupFilm = (props) => {
               data-bs-dismiss="modal"
               aria-label="Close"
             >
-              <Link to={"/watch/" + id} className=" pb-2 pt-2 d-block ">
+              <Link to={"/watch/" + data.id} className=" pb-2 pt-2 d-block ">
                 Xem ngay
               </Link>
             </button>

@@ -2,13 +2,32 @@ import "./style.css";
 import brandLogo from "./../../assets/images/logo1.png";
 import userLogo from "./../../assets/images/user-logo.jpg";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setListSearch } from "./../../store/actions/listPhim_Action";
+import axios from "axios";
 
 const Header = () => {
+  const history = useHistory();
   const [searchValue, setSearchValue] = useState("");
+  const data = useSelector((state) => state.listTatCa.searchData);
   const [searchValueTime, setSearchTimeValue] = useState("");
+  const [calling, setcalling] = useState(false);
+
+  const dispatch = useDispatch();
 
   const onSubmitSearch = (e) => {
+    //  console.log("Searching... " + Object.keys(data).length);
+    if (Object.keys(data).length == 0 && !calling) {
+      setcalling(true);
+      console.log("Calling Data...");
+      axios.get(process.env.REACT_APP_API_LOCAL + "film/search").then((res) => {
+        dispatch(setListSearch(res.data));
+        setcalling(false);
+        console.log("You got dat data");
+      });
+    }
     e.preventDefault();
     let Search = e.target.value;
     setSearchValue(Search);
@@ -24,6 +43,7 @@ const Header = () => {
     <header id="header">
       <nav
         className="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
+        style={{ maxHeight: "62px" }}
         id="header-real"
       >
         <div className="container-fluid">
@@ -41,15 +61,19 @@ const Header = () => {
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <div className="collapse navbar-collapse" id="navbarCollapse">
+
+          <div
+            className="collapse navbar-collapse menu-header"
+            id="navbarCollapse"
+          >
             <ul className="navbar-nav me-auto mb-2 mb-md-0 mr-auto">
               <li className="nav-item">
                 <Link
-                  className="nav-link active"
+                  className="nav-link active nv"
                   aria-current="page"
                   to="/phim/tatca"
                 >
-                  TẤT CẢ
+                  <strong>TẤT CẢ</strong>
                 </Link>
               </li>
               <li className="nav-item">
@@ -58,7 +82,7 @@ const Header = () => {
                   aria-current="page"
                   to="/phim/movie"
                 >
-                  PHIM LẺ
+                  <strong>PHIM LẺ</strong>
                 </Link>
               </li>
               <li className="nav-item">
@@ -67,9 +91,10 @@ const Header = () => {
                   aria-current="page"
                   to="/phim/series"
                 >
-                  PHIM BỘ
+                  <strong>PHIM BỘ</strong>
                 </Link>
               </li>
+
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle active"
@@ -84,43 +109,63 @@ const Header = () => {
                   aria-labelledby="dropdownyear"
                 >
                   <li>
-                    <Link className="dropdown-item" to="/phim/2022">
+                    <Link
+                      className="dropdown-item"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/2022")}
+                    >
                       2022
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/2021">
-                      2021
+                    <Link
+                      className="dropdown-item"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/2021")}
+                    >
+                      e 2021
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/2020">
+                    <Link
+                      className="dropdown-item"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/2020")}
+                    >
                       2020
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/2019">
+                    <Link
+                      className="dropdown-item"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/2019")}
+                    >
                       2019
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/2018">
+                    <Link
+                      className="dropdown-item"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/2018")}
+                    >
                       2018
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/2017">
+                    <Link
+                      className="dropdown-item"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/2017")}
+                    >
                       2017
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/phim/2016">
-                      2016
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/phim/2015">
-                      2015
                     </Link>
                   </li>
                   <li>
@@ -146,49 +191,78 @@ const Header = () => {
                 <ul
                   className="dropdown-menu dropdown-menu-dark usermenu"
                   aria-labelledby="dropdowntype"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarCollapse"
                 >
                   <li>
-                    <Link className="dropdown-item" to="/phim/action">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/action")}
+                    >
                       HÀNH ĐỘNG
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/scifi">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/scifi")}
+                    >
                       VIỄN TƯỞNG
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/horror">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/horror")}
+                    >
                       KINH DỊ
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/anime">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/anime")}
+                    >
                       HOẠT HÌNH
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/drama">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/drama")}
+                    >
                       CHÍNH KỊCH
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/langman">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/romantic")}
+                    >
                       LÃNG MẠN
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/romantic">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/comedy")}
+                    >
                       HÀI
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/crime">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/crime")}
+                    >
                       TỘI PHẠM
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/family">
+                    <Link
+                      className="dropdown-item"
+                      onClick={() => history.push("/phim/family")}
+                    >
                       GIA ĐÌNH - TRẺ EM
                     </Link>
                   </li>
@@ -207,20 +281,23 @@ const Header = () => {
                   className="dropdown-menu dropdown-menu-dark usermenu"
                   aria-labelledby="dropdowntype"
                 >
-                  <li
-                  // data-bs-toggle="collapse"
-                  // data-bs-target=".navbar-collapse.show"
-                  >
-                    <Link className="dropdown-item" to="/phim/us">
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      // to="/phim/us"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/us")}
+                    >
                       PHIM MỸ
                     </Link>
                   </li>
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/ja"
-                      // data-bs-target=".navbar-collapse.show"
-                      // data-bs-toggle="collapse"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/ja")}
                     >
                       PHIM NHẬT
                     </Link>
@@ -228,9 +305,9 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/ko"
-                      // data-bs-target=".navbar-collapse.show"
-                      // data-bs-toggle="collapse"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/ko")}
                     >
                       PHIM HÀN
                     </Link>
@@ -238,9 +315,9 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/vi"
-                      // data-bs-target=".navbar-collapse.show"
-                      // data-bs-toggle="collapse"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/vi")}
                     >
                       PHIM VIỆT NAM
                     </Link>
@@ -248,16 +325,21 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/ch"
-                      // data-bs-target=".navbar-collapse.show"
-                      // data-bs-toggle="collapse"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/ch")}
                     >
                       PHIM TRUNG
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/phim/other">
-                      KHÁC...
+                    <Link
+                      className="dropdown-item"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#navbarCollapse"
+                      onClick={() => history.push("/phim/es")}
+                    >
+                      TÂY BAN NHA
                     </Link>
                   </li>
                 </ul>
@@ -265,7 +347,6 @@ const Header = () => {
             </ul>
 
             {/* Dropdown user action */}
-
             <div className="dropdown nav-item  " id="userlogo">
               <a
                 href="/"
@@ -287,22 +368,42 @@ const Header = () => {
                 aria-labelledby="dropdownUser1"
               >
                 <li>
-                  <Link className="dropdown-item" to="/user">
+                  <Link
+                    className="dropdown-item"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse"
+                    onClick={() => history.push("/user")}
+                  >
                     <i className="fa fa-user" /> Bấm vào đây nè
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item " to="/mylist">
+                  <Link
+                    className="dropdown-item "
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse"
+                    onClick={() => history.push("/mylist")}
+                  >
                     <i className="fa fa-plus"></i> Phim đã lưu
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item  " to="/unlock">
+                  <Link
+                    className="dropdown-item  "
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse"
+                    onClick={() => history.push("/unlock")}
+                  >
                     <i className="fa fa-unlock" /> Phim Vip
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/login">
+                  <Link
+                    className="dropdown-item"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse"
+                    onClick={() => history.push("/login")}
+                  >
                     <i className="fa fa-sign-in" /> Đăng nhập
                   </Link>
                 </li>
@@ -316,10 +417,10 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            <form
+
+            {/* Search */}
+            <div
               className="d-flex me-3 formsearch"
-              action={searchValue}
-              method="get"
             >
               <input
                 className="form-control me-2"
@@ -328,7 +429,7 @@ const Header = () => {
                 aria-label="Search"
                 onChange={onSubmitSearch}
               />
-              {searchValue.length === 0 ? (
+              {(searchValue.length === 0 && calling)? (
                 <button className="btn btn-outline-light disable" disabled>
                   <i className="fa fa-search"></i>
                 </button>
@@ -340,7 +441,7 @@ const Header = () => {
                   <i className="fa fa-search"></i>
                 </Link>
               )}
-            </form>
+            </div>
           </div>
         </div>
       </nav>

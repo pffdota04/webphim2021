@@ -1,17 +1,18 @@
 const initialState = {
-  filmData: {},
+  homeData: {},
   data: {},
   dataTatca: {},
   dataMovie: {},
   dataSeries: {},
+  searchData: {},
 };
 
 const listTatCa = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_FILM_DATA": {
+    case "SET_DATA_HOME": {
       return {
         ...state,
-        filmData: action.payload,
+        homeData: action.payload,
       };
     }
     case "SET_DATA":
@@ -35,6 +36,11 @@ const listTatCa = (state = initialState, action) => {
         dataSeries: action.payload,
       };
     }
+    case "ADD_HOME_DATA":
+      return {
+        ...state,
+        data: [...state.homeData, ...action.payload],
+      };
     case "ADD_DATA":
       return {
         ...state,
@@ -50,6 +56,12 @@ const listTatCa = (state = initialState, action) => {
         ...state,
         dataSeries: [...state.dataSeries, ...action.payload],
       };
+    case "SET_DATA_SEARCH": {
+      return {
+        ...state,
+        searchData: action.payload,
+      };
+    }
     default:
       return state;
   }

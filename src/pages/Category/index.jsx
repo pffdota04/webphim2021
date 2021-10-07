@@ -40,25 +40,28 @@ const Category = (props) => {
   }, [type]);
 
   let fetchMoreData = async (dataOf, lastid) => {
-    console.log("... " + lastid);
     const startTime = Date.now();
     let resulf = [];
 
     await axios
-      .get("http://localhost:5000/api/film/caterogy/" + dataOf + "/" + lastid)
+      .get(
+        process.env.REACT_APP_API_LOCAL +
+          "film/caterogy/" +
+          dataOf +
+          "/" +
+          lastid
+      )
       .then((res) => {
-        console.log(res.headers)
+        // console.log(res.headers);
         resulf = res.data;
       });
 
-    let a;
-
-    // Delay chút cho người ta đọc quảng cáo
-    if (Date.now() - startTime < 1000)
+    let a = resulf;
+    // Nếu call nhanh quá thì delay chút cho người ta đọc quảng cáo
+    if (Date.now() - startTime < 500)
       a = await new Promise((resolve) => {
-        setTimeout(() => resolve(resulf), 1000);
+        setTimeout(() => resolve(resulf), 500);
       });
-
     if (a == null || a == "null") sethasMore(false);
     else a = resulf;
 
@@ -70,8 +73,9 @@ const Category = (props) => {
   // else check = lastId
   const setData = async (check) => {
     let holdData;
-    console.log("CJECK: " + check);
-    switch (type) { // 3 category chính (tất cả, phim lẻ. phim bộ) lưu vào redux
+    switch (
+      type // chỉ 3 category chính (tất cả, phim lẻ. phim bộ) lưu vào redux
+    ) {
       case "tatca": {
         if (check == -1 && data.length != undefined) break;
         holdData = await fetchMoreData("tatca", check);
@@ -89,7 +93,7 @@ const Category = (props) => {
         break;
       }
       case "series": {
-        if (check == -1 && dataMovie.length != undefined) break;
+        if (check == -1 && dataSeries.length != undefined) break;
         holdData = await fetchMoreData("series", check);
         if (holdData == null) break;
         if (check == -1) dispatch(setListSeries(holdData));
@@ -132,8 +136,8 @@ const Category = (props) => {
       showThis.length != undefined &&
       console.log("Last id now: " + showThis[showThis.length - 1].id);
 
-    console.log(showThis)
-    return (showThis.length != undefined && showThis.length != 0) ? (
+    // console.log(showThis);
+    return showThis.length != undefined && showThis.length != 0 ? (
       <InfiniteScroll
         dataLength={showThis.length}
         next={() => setData(showThis[showThis.length - 1].id)}
@@ -153,14 +157,14 @@ const Category = (props) => {
         }
       >
         {showThis.map((i, index) => (
-          <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
-            <PopupFilm key={i.id} title={i.title} year={i.year} id={i.id} />
+          <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1">
+            <PopupFilm
+              key={i.id}
+              data={i}
+            />
             <FilmCard
               key={i.id}
-              title={i.title}
-              image={i.img}
-              year={i.year}
-              id={i.id}
+              data={i} 
             />
           </div>
         ))}

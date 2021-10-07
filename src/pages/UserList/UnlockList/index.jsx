@@ -15,6 +15,7 @@ const UnlockList = () => {
   const dispatch = useDispatch();
 
   const dataExample = {
+    id: 1,
     title: "Phim vipp đã mở",
     year: 1990,
     image: "https://image.tmdb.org/t/p/w342/lztz5XBMG1x6Y5ubz7CxfPFsAcW.jpg",
@@ -39,16 +40,18 @@ const UnlockList = () => {
           <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
             <PopupFilm
               key={index + 1}
-              title={i.title}
-              year={2021}
-              id={index + 1}
+              data={i}
+              // title={i.title}
+              // year={2021}
+              // id={index + 1}
             />
             <FilmCard
               key={index + 1}
-              title={i.title}
-              image={i.image}
-              year={i.year}
-              id={index + 1}
+              data={i}
+              // title={i.title}
+              // image={i.image}
+              // year={i.year}
+              // id={index + 1}
             />
           </div>
         ))}

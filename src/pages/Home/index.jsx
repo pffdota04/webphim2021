@@ -1,17 +1,17 @@
-import PopupFilm from "./../../components/PopupFilm";
-import FilmCard from "./../../components/FilmCard";
-
 import "./style.css";
-import filmImage from "./../../assets/images/film-card-example.jpg";
-
 import Carousel from "react-multi-carousel";
 import "../../../node_modules/react-multi-carousel/lib/styles.css";
 
 import Footer from "../../components/Footer";
+import PopupFilm from "./../../components/PopupFilm";
+import FilmCard from "./../../components/FilmCard";
+
 import { useEffect } from "react";
-import $ from "jquery";
 import axios from "axios";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setListHome } from "../../store/actions/listPhim_Action";
+import { Link } from "react-router-dom";
+
 const responsive_multi_carsousel = {
   superLargeDesktop: {
     breakpoint: { max: 8000, min: 1200 },
@@ -60,176 +60,78 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
 };
 
 const Home = () => {
-  const [homeData, setHomeData] = useState([])
-  useEffect(()=>{
-    axios
-      .get(process.env.REACT_APP_API_LOCAL + "film/home")
-      .then((res) => setHomeData(res.data));
-  
-  },[])
-    useEffect(()=>{ console.log(homeData)},[homeData]);
-  return (
-    <div>
-      {/* POPUP ITEM */}
-      {[...Array(32)].map((e, i) => (
-        <PopupFilm key={i + 1} title="Tựa phim" year={2021} id={i + 1} />
-      ))}
+  const homeData = useSelector((state) => state.listTatCa.homeData);
+  const dispatch = useDispatch();
 
-      {/* HOT PHIM RECOMEMD with a beutiful backgroup mlem mlem... */}
-      <div
+  useEffect(() => {
+    if (Object.keys(homeData).length === 0)
+      axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
+        dispatch(setListHome(res.data));
+      });
+  }, []);
+
+  //TOP PHIM RECOMEMD (with a beutiful backgroup mlem mlem...)
+  const topFilm = () => {
+    return (
+      <section
         id="carouselExampleControls"
         className="carousel slide"
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
-          <div className="carousel-item active backimg">
-            <svg
-              className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-              width={800}
-              height={500}
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Placeholder: First slide"
-              preserveAspectRatio="xMidYMid slice"
-              focusable="false"
-            >
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#555" />
-              <text x="50%" y="50%" fill="#333" dy=".3em">
-                First Image
-              </text>
-            </svg>
-            <div className="carousel-caption text-start">
-              <h1>Avenger: Start game</h1>
-              <p className="mota">
-                Sau những sự kiện tàn khốc của Avengers: Infinity War (2018), vũ
-                trụ đang dần tàn lụi. Với sự giúp đỡ của các đồng minh còn lại,
-                các Avengers tập hợp một lần nữa để đảo ngược hành động của
-                Thanos và khôi phục lại sự cân bằng cho vũ trụ. Trận chiến cuối
-                cùng của các siêu anh hùng trước thế lực mạnh mẽ của Thanos.
-              </p>
-              <p>
-                <button
-                  className="btn btn-lg btn-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ItemModal2"
-                >
-                  Xem ngay!
-                </button>
-              </p>
+          {Object.keys(homeData).length == 0 ? (
+            <div className="carousel-item active backimg">
+              <svg
+                className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
+                style={{ width: "100%", height: "60vh" }}
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-label="Placeholder: First slide"
+                preserveAspectRatio="xMidYMid slice"
+                focusable="false"
+              >
+                <title>Đang tải</title>
+                <rect width="100%" height="100%" fill="#555" />
+              </svg>
+              <div className="carousel-caption text-start">
+                <h1> Loading...</h1>
+                <p className="mota">Loading...</p>
+                <p>
+                  <button className="btn btn-lg btn-danger">Loading...</button>
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="carousel-item backimg">
-            <svg
-              className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-              width={800}
-              height={500}
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Placeholder: Second slide"
-              preserveAspectRatio="xMidYMid slice"
-              focusable="false"
-            >
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#777" />
-              <text x="50%" y="50%" fill="#555" dy=".3em">
-                Second Image
-              </text>
-            </svg>
-            <div className="carousel-caption text-start">
-              <h1>Avenger: Mid game</h1>
-              <p className="mota">
-                Sau những sự kiện tàn khốc của Avengers: Infinity War (2018), vũ
-                trụ đang dần tàn lụi. Với sự giúp đỡ của các đồng minh còn lại,
-                các Avengers tập hợp một lần nữa để đảo ngược hành động của
-                Thanos và khôi phục lại sự cân bằng cho vũ trụ. Trận chiến cuối
-                cùng của các siêu anh hùng trước thế lực mạnh mẽ của Thanos.
-              </p>
-              <p>
-                <button
-                  className="btn btn-lg btn-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ItemModal2"
-                >
-                  Xem ngay!
-                </button>
-              </p>
-            </div>
-          </div>
-          <div className="carousel-item backimg">
-            <svg
-              className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-              width={800}
-              height={500}
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Placeholder: First slide"
-              preserveAspectRatio="xMidYMid slice"
-              focusable="false"
-            >
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#555" />
-              <text x="50%" y="50%" fill="#333" dy=".3em">
-                Thỉd Image
-              </text>
-            </svg>
-            <div className="carousel-caption text-start">
-              <h1>Avenger: End game</h1>
-              <p className="mota">
-                Sau những sự kiện tàn khốc của Avengers: Infinity War (2018), vũ
-                trụ đang dần tàn lụi. Với sự giúp đỡ của các đồng minh còn lại,
-                các Avengers tập hợp một lần nữa để đảo ngược hành động của
-                Thanos và khôi phục lại sự cân bằng cho vũ trụ. Trận chiến cuối
-                cùng của các siêu anh hùng trước thế lực mạnh mẽ của Thanos.
-              </p>
-              <p>
-                <button
-                  className="btn btn-lg btn-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ItemModal2"
-                >
-                  Xem ngay!
-                </button>
-              </p>
-            </div>
-          </div>
-          <div className="carousel-item backimg">
-            <svg
-              className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-              width={800}
-              height={500}
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Placeholder: Second slide"
-              preserveAspectRatio="xMidYMid slice"
-              focusable="false"
-            >
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="#777" />
-              <text x="50%" y="50%" fill="#555" dy=".3em">
-                Last Image
-              </text>
-            </svg>
-            <div className="carousel-caption text-start">
-              <h1>Avenger: Last game</h1>
-              <p className="mota">
-                Sau những sự kiện tàn khốc của Avengers: Infinity War (2018), vũ
-                trụ đang dần tàn lụi. Với sự giúp đỡ của các đồng minh còn lại,
-                các Avengers tập hợp một lần nữa để đảo ngược hành động của
-                Thanos và khôi phục lại sự cân bằng cho vũ trụ. Trận chiến cuối
-                cùng của các siêu anh hùng trước thế lực mạnh mẽ của Thanos.
-              </p>
-              <p>
-                <button
-                  className="btn btn-lg btn-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#ItemModal2"
-                >
-                  Xem ngay!
-                </button>
-              </p>
-            </div>
-          </div>
+          ) : (
+            Object.keys(homeData.top).map((e, i) => (
+              <div
+                className={"carousel-item backimg" + (i == 0 ? " active " : "")}
+              >
+                <img
+                  style={{
+                    width: "100%",
+                    height: "60vh",
+                    objectFit: "cover",
+                  }}
+                  className=" mx-auto  d-block"
+                  src={homeData.top[e].backimg}
+                  alt="ảnh top"
+                ></img>
+                <div className="carousel-caption text-start">
+                  <h1>{homeData.top[e].title}</h1>
+                  <p className="mota">{homeData.top[e].description}</p>
+                  <p>
+                    <button
+                      className="btn btn-lg btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target={"#ItemModal" + homeData.top[e].id}
+                    >
+                      Xem ngay!
+                    </button>
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
         <button
           className="carousel-control-prev"
@@ -249,86 +151,127 @@ const Home = () => {
           <span className="carousel-control-next-icon" aria-hidden="true" />
           <span className="visually-hidden">Next</span>
         </button>
-      </div>
+      </section>
+    );
+  };
+
+  const trendingFilm = () => {
+    return (
+      <section>
+        <div className="trending mb-3">
+          <h1 className="text-center pb-2">TRENDING</h1>
+          <div className="item">
+            <Carousel
+              responsive={responsive_multi_carsousel}
+              customButtonGroup={<ButtonGroup />}
+              arrows={false}
+            >
+              {Object.keys(homeData).length == 0
+                ? [...Array(6)].map((e, i) => (
+                    <FilmCard
+                      key={i + "xtren1d"}
+                      numberTrend={i + 1}
+                      loading={true}
+                    />
+                  ))
+                : Object.keys(homeData.trending).map((e, i) => (
+                    <div>
+                      <FilmCard
+                        key={i + "trend"}
+                        numberTrend={i + 1}
+                        data={homeData.trending[e]}
+                      />
+                    </div>
+                  ))}
+            </Carousel>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const recommendFilm = () => {
+    return (
+      <section>
+        <div className="mb-3">
+          <h1 className="text-center pb-2">RECOMMEND</h1>
+          <div className="item">
+            <Carousel
+              responsive={responsive_multi_carsousel}
+              customButtonGroup={<ButtonGroup />}
+              arrows={false}
+            >
+              {Object.keys(homeData).length == 0
+                ? [...Array(6)].map((e, i) => <FilmCard loading={true} />)
+                : Object.keys(homeData.recommend).map((e, i) => (
+                    <FilmCard
+                      data={homeData.recommend[e]}
+                      key={homeData.recommend[e].id + "recom"}
+                    />
+                  ))}
+            </Carousel>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  const lastFilm = () => {
+    return (
+      <section>
+        <div className="mb-3">
+          <h1 className="text-center pb-2">LAST UPDATE</h1>
+          <div
+            className="row justify-content-md-center last-update-list mx-auto"
+            style={{ justifyContent: "center !important" }}
+          >
+            {Object.keys(homeData).length == 0
+              ? [...Array(12)].map((e, i) => (
+                  <div className="col-4 col-md-3 col-xl-2 ps-0 pe-1">
+                    <FilmCard key={i + 1} loading={true} />
+                  </div>
+                ))
+              : Object.keys(homeData.last).map((e, i) => (
+                  <div className="col-4 col-md-3 col-xl-2 ps-0 pe-1">
+                    <FilmCard
+                      key={homeData.last[e].id + "last"}
+                      data={homeData.last[e]}
+                    />
+                  </div>
+                ))}
+          </div>
+        </div>
+        <div className="text-center mx-auto pb-5 pt-3">
+          <Link to="/phim/tatca">Xem thêm</Link>
+        </div>
+      </section>
+    );
+  };
+
+  useEffect(() => {}, [homeData]);
+  return (
+    <div>
+      {topFilm()}
       <div className="container-fluid">
         <hr className="mt-5 mb-2" />
-
-        {/* TRENDING LIST */}
-        <section>
-          <div className="trending mb-3">
-            <h1 className="text-center pb-2">TRENDING</h1>
-            <div className="item">
-              <Carousel
-                responsive={responsive_multi_carsousel}
-                customButtonGroup={<ButtonGroup />}
-                arrows={false}
-              >
-                {[...Array(10)].map((e, i) => (
-                  <FilmCard
-                    key={i + 1}
-                    numberTrend={i + 1}
-                    title={"Tựa phim"}
-                    image={filmImage}
-                    year={2021}
-                    id={i + 1}
-                  />
-                ))}
-              </Carousel>
-            </div>
-          </div>
-        </section>
+        {trendingFilm()}
         <hr className="mt-5 mb-2" />
-        {/* RECOMMEND LIST */}
-        <section>
-          <div className="mb-3">
-            <h1 className="text-center pb-2">RECOMMEND</h1>
-            <div className="item">
-              <Carousel
-                responsive={responsive_multi_carsousel}
-                customButtonGroup={<ButtonGroup />}
-                arrows={false}
-              >
-                {[...Array(10)].map((e, i) => (
-                  <FilmCard
-                    key={i + 10}
-                    title={"Tựa phim"}
-                    image={filmImage}
-                    year={2021}
-                    id={i + 11}
-                  />
-                ))}
-              </Carousel>
-            </div>
-          </div>
-        </section>
-
+        {recommendFilm()}
         <hr className="mt-5 mb-2" />
-        {/* Last update LIST */}
-        <section>
-          <div className="mb-3">
-            <h1 className="text-center pb-2">LAST UPDATE</h1>
-            <div
-              className="row justify-content-md-center last-update-list mx-auto"
-              style={{ justifyContent: "center !important" }}
-            >
-              {[...Array(12)].map((e, i) => (
-                <div className="col-4 col-md-3 col-xl-2">
-                  <FilmCard
-                    key={i + 21}
-                    title={"Tựa phim"}
-                    image={filmImage}
-                    year={2021}
-                    id={i + 21}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="text-center mx-auto pb-5 pt-3">
-            <a href="/">Xem thêm</a>
-          </div>
-        </section>
+        {lastFilm()}
       </div>
+      {/* POPUP ITEM FOR ALL*/}
+      {Object.keys(homeData).map((e, i) => {
+        return Object.keys(homeData[e]).map((ee, ii) => {
+          return (
+            <PopupFilm
+              key={homeData[e][ee].id + e + ee}
+              data={homeData[e][ee]}
+              numberTrend={i + 1}
+            />
+          );
+        });
+      })}
       <Footer />
     </div>
   );

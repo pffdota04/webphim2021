@@ -87,7 +87,13 @@
   .usermenu hr {
     text-align: center !important;
   }
-  .logomenu{
-      margin-left: 50vw !important;
+  .logomenu {
+    margin-left: 50vw !important;
+  }
+
+  .menu-header ul .dropdown ul {
+    max-height: 30vh;
+    overflow: hidden;
+    overflow-y: scroll;
   }
 }

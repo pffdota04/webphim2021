@@ -34,8 +34,7 @@ const Watch = () => {
     <div>
       <main>
         <div className>
-          <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
-
+          <img className="d-block w-100 pb-2" src={qc} alt="" height={200} />
           {dataFilmState.id == undefined ? (
             <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">
@@ -119,7 +118,7 @@ const Watch = () => {
             </div>
           </div>
           {/* <hr class="m-2" /> */}
-          <img className="d-block w-100" src={qc} alt="" width={800} />
+          <img className="d-block w-100 pb-2" src={qc} alt="" height={200} />
         </div>
       </main>
     </div>

@@ -41,15 +41,18 @@ const Search = (props) => {
         dispatch(setListSearch(res.data));
       });
     }
-    setKeySearch(value)
-  }, []);
+    setKeySearch(value);
+  }, [value]);
+
 
    const searching = () => {
     //  console.log("Tìm: " + keySearch+ " ...with " + movieOrSeries+ " " +type +" " +country );
-     let a = Object.values(data).filter((item) => {
+    if(keySearch == undefined)
+      return [];
+    let a = Object.values(data).filter((item) => {
        return (
-         (item.title_origin.toLowerCase().includes(keySearch) ||
-           item.title.toLowerCase().includes(keySearch)) &&
+         (item.title_origin.toLowerCase().includes(keySearch.toLowerCase()) ||
+           item.title.toLowerCase().includes(keySearch.toLowerCase())) &&
          (movieOrSeries != "all"
            ? item.type[movieOrSeries] == movieOrSeries
            : true) &&
@@ -61,13 +64,13 @@ const Search = (props) => {
    };
 
    useEffect(() => {
+     console.log("123")
      let hold = searching();
      setresulfSearch(hold);
      setshowSearch(hold.slice(0, 12));
      setpage(1);
      sethasMore(true);
-    //  console.log("Tìm thấy: " + hold.length + "phần tử");
-
+     //  console.log("Tìm thấy: " + hold.length + "phần tử");
    }, [keySearch, type, country, movieOrSeries, data]);
 
   useEffect(() => {
@@ -187,35 +190,40 @@ const Search = (props) => {
               </div>
             </div>
             <h1 className="text-center pt-3">
-              Kết quả tìm kiếm cho <strong>"{keySearch}"</strong>
+              Kết quả tìm kiếm
             </h1>
             <hr className="mb-2" />
-
-            <InfiniteScroll
-              dataLength={showSearch.length}
-              next={() => setpage(page + 1)}
-              hasMore={hasMore}
-              loader={
-                <div className="d-flex justify-content-center">
-                  <div className="spinner-border" role="status">
-                    <span className="sr-only">Loading...</span>
+            {showSearch.length == 0 || keySearch.length == 0 ? (
+              <p style={{ textAlign: "center" }}>
+                <b>Không tìm thấy!</b>
+              </p>
+            ) : (
+              <InfiniteScroll
+                dataLength={showSearch.length}
+                next={() => setpage(page + 1)}
+                hasMore={hasMore}
+                loader={
+                  <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
                   </div>
-                </div>
-              }
-              className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>Yay! You have seen it all</b>
-                </p>
-              }
-            >
-              {showSearch.map((e, i) => (
-                <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
-                  {e.id}
-                  <FilmCard key={i + "search"} data={e} />
-                </div>
-              ))}
-            </InfiniteScroll>
+                }
+                className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
+              >
+                {showSearch.map((e, i) => (
+                  <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
+                    {e.id}
+                    <FilmCard key={i + "search"} data={e} />
+                  </div>
+                ))}
+              </InfiniteScroll>
+            )}
             <hr className="mb-3" />
           </div>
         </section>

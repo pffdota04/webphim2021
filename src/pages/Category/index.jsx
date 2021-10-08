@@ -132,11 +132,10 @@ const Category = (props) => {
       }
     }
 
-    showThis.length != 0 &&
-      showThis.length != undefined &&
-      console.log("Last id now: " + showThis[showThis.length - 1].id);
+    // showThis.length != 0 &&
+    //   showThis.length != undefined &&
+    //   console.log("Last id now: " + showThis[showThis.length - 1].id);
 
-    // console.log(showThis);
     return showThis.length != undefined && showThis.length != 0 ? (
       <InfiniteScroll
         dataLength={showThis.length}

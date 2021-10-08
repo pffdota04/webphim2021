@@ -43,6 +43,10 @@
   min-width: fit-content !important;
 }
 
+  .header-nav-bar div{
+   max-height: 62px;
+  }
+
 @media (max-width: 1068px) {
   #header-real div div ul li,
   #header-real div div button,
@@ -66,6 +70,10 @@
   }
 }
 @media (max-width: 767px) {
+  .header-nav-bar div{
+   max-height: fit-content;
+
+  }
   #userlogo {
     text-align: center !important;
     margin-bottom: 5px;
@@ -91,8 +99,8 @@
     margin-left: 50vw !important;
   }
 
-  .menu-header ul .dropdown ul {
-    max-height: 30vh;
+  .menu-header  ul{
+    max-height: 60vh;
     overflow: hidden;
     overflow-y: scroll;
   }

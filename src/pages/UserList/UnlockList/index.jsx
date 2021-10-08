@@ -22,7 +22,6 @@ const UnlockList = () => {
   };
 
   useEffect(async() => {
-      console.log("HEHE")
     if (data.length == undefined) {
       let resulf = [];
       for (let i = 0; i < 7; i++) resulf.push(dataExample);

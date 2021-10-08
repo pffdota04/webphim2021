@@ -14,11 +14,12 @@ const Header = () => {
   const data = useSelector((state) => state.listTatCa.searchData);
   const [searchValueTime, setSearchTimeValue] = useState("");
   const [calling, setcalling] = useState(false);
+  const [openHeader, setOpenHeader] = useState(false);
+
 
   const dispatch = useDispatch();
 
   const onSubmitSearch = (e) => {
-    //  console.log("Searching... " + Object.keys(data).length);
     if (Object.keys(data).length == 0 && !calling) {
       setcalling(true);
       console.log("Calling Data...");
@@ -35,35 +36,40 @@ const Header = () => {
 
   const onSubmitYear = (e) => {
     e.preventDefault();
-    let Search = "/phim/" + e.target.value;
-    setSearchTimeValue(Search);
+    setSearchTimeValue(e.target.value);
   };
 
   return (
     <header id="header">
       <nav
-        className="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
-        style={{ maxHeight: "62px" }}
+        className="navbar navbar-expand-md navbar-dark fixed-top header-nav-bar"
         id="header-real"
       >
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+        <div className="container-fluid bg-dark">
+          <Link
+            className="navbar-brand"
+            to="/"
+            onClick={() => setOpenHeader(false)}
+          >
             <img className="NavLogo" src={brandLogo} alt="logo" width="80px" />
           </Link>
           <button
-            className="navbar-toggler"
+            className={
+              "navbar-toggler " + (openHeader == false ? "collapsed" : "")
+            }
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            onClick={() => setOpenHeader(!openHeader)}
           >
             <span className="navbar-toggler-icon" />
           </button>
 
           <div
-            className="collapse navbar-collapse menu-header"
+            className={
+              "collapse navbar-collapse menu-header " +
+              (openHeader ? " show" : " ")
+            }
             id="navbarCollapse"
           >
             <ul className="navbar-nav me-auto mb-2 mb-md-0 mr-auto">
@@ -72,6 +78,7 @@ const Header = () => {
                   className="nav-link active nv"
                   aria-current="page"
                   to="/phim/tatca"
+                  onClick={() => setOpenHeader(false)}
                 >
                   <strong>TẤT CẢ</strong>
                 </Link>
@@ -81,6 +88,7 @@ const Header = () => {
                   className="nav-link active"
                   aria-current="page"
                   to="/phim/movie"
+                  onClick={() => setOpenHeader(false)}
                 >
                   <strong>PHIM LẺ</strong>
                 </Link>
@@ -90,6 +98,7 @@ const Header = () => {
                   className="nav-link active"
                   aria-current="page"
                   to="/phim/series"
+                  onClick={() => setOpenHeader(false)}
                 >
                   <strong>PHIM BỘ</strong>
                 </Link>
@@ -111,9 +120,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/2022")}
+                      to="/phim/2022"
+                      onClick={() => setOpenHeader(false)}
                     >
                       2022
                     </Link>
@@ -121,19 +129,17 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/2021")}
+                      to="/phim/2021"
+                      onClick={() => setOpenHeader(false)}
                     >
-                      e 2021
+                      2021
                     </Link>
                   </li>
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/2020")}
+                      to="/phim/2020"
+                      onClick={() => setOpenHeader(false)}
                     >
                       2020
                     </Link>
@@ -141,41 +147,30 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/2019")}
+                      to="/phim/2029"
+                      onClick={() => setOpenHeader(false)}
                     >
                       2019
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/2018")}
-                    >
-                      2018
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/2017")}
-                    >
-                      2017
-                    </Link>
-                  </li>
-                  <li>
-                    <form action={searchValueTime} method="get">
+                    <div>
                       <input
-                        type="number"
-                        placeholder={1975}
+                        className="me-1 ms-1 mb-1"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
                         onChange={onSubmitYear}
+                        style={{ width: "8rem" }}
                       />
-                    </form>
+                      <Link
+                        className="btn btn-outline-light mx-auto d-block w-50"
+                        to={"/phim/" + searchValueTime}
+                        onClick={() => setOpenHeader(false)}
+                      >
+                        <i className="fa fa-search"></i>
+                      </Link>
+                    </div>
                   </li>
                 </ul>
               </li>
@@ -191,13 +186,12 @@ const Header = () => {
                 <ul
                   className="dropdown-menu dropdown-menu-dark usermenu"
                   aria-labelledby="dropdowntype"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarCollapse"
                 >
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/action")}
+                      to="/phim/action"
+                      onClick={() => setOpenHeader(false)}
                     >
                       HÀNH ĐỘNG
                     </Link>
@@ -205,7 +199,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/scifi")}
+                      to="/phim/scifi"
+                      onClick={() => setOpenHeader(false)}
                     >
                       VIỄN TƯỞNG
                     </Link>
@@ -213,7 +208,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/horror")}
+                      to="/phim/horror"
+                      onClick={() => setOpenHeader(false)}
                     >
                       KINH DỊ
                     </Link>
@@ -221,7 +217,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/anime")}
+                      to="/phim/anime"
+                      onClick={() => setOpenHeader(false)}
                     >
                       HOẠT HÌNH
                     </Link>
@@ -229,7 +226,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/drama")}
+                      to="/phim/drama"
+                      onClick={() => setOpenHeader(false)}
                     >
                       CHÍNH KỊCH
                     </Link>
@@ -237,7 +235,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/romantic")}
+                      to="/phim/romantic"
+                      onClick={() => setOpenHeader(false)}
                     >
                       LÃNG MẠN
                     </Link>
@@ -245,7 +244,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/comedy")}
+                      to="/phim/comedy"
+                      onClick={() => setOpenHeader(false)}
                     >
                       HÀI
                     </Link>
@@ -253,7 +253,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/crime")}
+                      to="/phim/crime"
+                      onClick={() => setOpenHeader(false)}
                     >
                       TỘI PHẠM
                     </Link>
@@ -261,7 +262,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      onClick={() => history.push("/phim/family")}
+                      to="/phim/famyli"
+                      onClick={() => setOpenHeader(false)}
                     >
                       GIA ĐÌNH - TRẺ EM
                     </Link>
@@ -284,10 +286,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      // to="/phim/us"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/us")}
+                      to="/phim/us"
+                      onClick={() => setOpenHeader(false)}
                     >
                       PHIM MỸ
                     </Link>
@@ -295,9 +295,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/ja")}
+                      to="/phim/ja"
+                      onClick={() => setOpenHeader(false)}
                     >
                       PHIM NHẬT
                     </Link>
@@ -305,9 +304,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/ko")}
+                      to="/phim/ko"
+                      onClick={() => setOpenHeader(false)}
                     >
                       PHIM HÀN
                     </Link>
@@ -315,9 +313,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/vi")}
+                      to="/phim/vi"
+                      onClick={() => setOpenHeader(false)}
                     >
                       PHIM VIỆT NAM
                     </Link>
@@ -325,9 +322,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/ch")}
+                      to="/phim/ch"
+                      onClick={() => setOpenHeader(false)}
                     >
                       PHIM TRUNG
                     </Link>
@@ -335,9 +331,8 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#navbarCollapse"
-                      onClick={() => history.push("/phim/es")}
+                      to="/phim/es"
+                      onClick={() => setOpenHeader(false)}
                     >
                       TÂY BAN NHA
                     </Link>
@@ -370,9 +365,8 @@ const Header = () => {
                 <li>
                   <Link
                     className="dropdown-item"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse"
-                    onClick={() => history.push("/user")}
+                    to="/user"
+                    onClick={() => setOpenHeader(false)}
                   >
                     <i className="fa fa-user" /> Bấm vào đây nè
                   </Link>
@@ -380,9 +374,8 @@ const Header = () => {
                 <li>
                   <Link
                     className="dropdown-item "
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse"
-                    onClick={() => history.push("/mylist")}
+                    to="/mylist"
+                    onClick={() => setOpenHeader(false)}
                   >
                     <i className="fa fa-plus"></i> Phim đã lưu
                   </Link>
@@ -390,9 +383,8 @@ const Header = () => {
                 <li>
                   <Link
                     className="dropdown-item  "
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse"
-                    onClick={() => history.push("/unlock")}
+                    to="/unlock"
+                    onClick={() => setOpenHeader(false)}
                   >
                     <i className="fa fa-unlock" /> Phim Vip
                   </Link>
@@ -400,9 +392,8 @@ const Header = () => {
                 <li>
                   <Link
                     className="dropdown-item"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse"
-                    onClick={() => history.push("/login")}
+                    to="/login"
+                    onClick={() => setOpenHeader(false)}
                   >
                     <i className="fa fa-sign-in" /> Đăng nhập
                   </Link>
@@ -410,7 +401,6 @@ const Header = () => {
                 <li>
                   <a
                     className="dropdown-item text-danger "
-                    // href="/login/login.html"
                   >
                     <i className="fa fa-sign-out" /> Đăng xuất
                   </a>
@@ -419,9 +409,7 @@ const Header = () => {
             </div>
 
             {/* Search */}
-            <div
-              className="d-flex me-3 formsearch"
-            >
+            <div className="d-flex me-3 formsearch">
               <input
                 className="form-control me-2"
                 type="search"
@@ -429,7 +417,7 @@ const Header = () => {
                 aria-label="Search"
                 onChange={onSubmitSearch}
               />
-              {(searchValue.length === 0 && calling)? (
+              {searchValue.length === 0 && calling ? (
                 <button className="btn btn-outline-light disable" disabled>
                   <i className="fa fa-search"></i>
                 </button>
@@ -437,6 +425,8 @@ const Header = () => {
                 <Link
                   className="btn btn-outline-light"
                   to={"/search/" + searchValue}
+                  onClick={() => setOpenHeader(false)}
+    
                 >
                   <i className="fa fa-search"></i>
                 </Link>

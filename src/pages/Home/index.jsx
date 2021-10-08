@@ -64,6 +64,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // console.log("Home data: " + Object.keys(homeData).length);
     if (Object.keys(homeData).length === 0)
       axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
         dispatch(setListHome(res.data));

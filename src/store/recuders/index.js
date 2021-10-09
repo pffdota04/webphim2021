@@ -1,13 +1,13 @@
 import listTatCa from "./listPhim/tatca";
 import listUser from "./userList/userList";
-// import listSearch from "./search/search";
+import userData from "./userList/user";
 
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   listTatCa,
   listUser,
-  // listSearch,
+  userData,
 });
 
 export default rootReducer;

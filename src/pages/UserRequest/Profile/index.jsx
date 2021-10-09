@@ -1,6 +1,9 @@
+
 import userProfile from "./../../../assets/images/user-profile.jpg";
-const Profile = () => {
+const Profile = (props) => {
+  const {userInfo} = props
   return (
+
     <div className="container my-2">
       <img
         className="d-block mx-auto mb-4 rounded-circle"
@@ -9,7 +12,7 @@ const Profile = () => {
         width={100}
         height={100}
       />
-      <h1 className="display-5 fw-bold text-center">Nguyễn Văn A </h1>
+      <h1 className="display-5 fw-bold text-center">{userInfo.displayName} </h1>
       <h5 className="text-center">
         vippro@gmail.com <i className="fa fa-check-circle text-primary"></i>
       </h5>

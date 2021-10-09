@@ -8,6 +8,8 @@ import MaGioiThieu from "./MaGioiThieu";
 import Voucher from "./Voucher";
 import Footer from "./../../components/Footer";
 
+import { Redirect } from "react-router";
+import { useSelector } from "react-redux";
 const style = {
   height: 30,
   border: "1px solid green",
@@ -15,33 +17,17 @@ const style = {
   padding: 8,
 };
 
-// const data = [
-//   {
-//     id: 1,
-//     name: "x1",
-//     type: "x",
-//   },
-//   {
-//     id: 2,
-//     name: "x2",
-//     type: "x",
-//   },
-//   {
-//     id: 3,
-//     name: "y1",
-//     type: "y",
-//   },
-//   {
-//     id: 4,
-//     name: "z1",
-//     type: "z",
-//   },
-// ];
 
 const UserRequest = (props) => {
+  const userInfo = useSelector((state) => state.userData.curentUser);
+
   useEffect(() => {}, []);
 
-  return (
+  return userInfo.checkUser == "init" ? (
+    <h1>CHECKING...</h1>
+  ) : userInfo.checkUser == "not" ? (
+    <Redirect push to="/login" />
+  ) : (
     <div>
       <div className="container">
         {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
@@ -119,7 +105,7 @@ const UserRequest = (props) => {
                       element.type == "x" && <div>Đây là thức uống X: {element.name} có id = {element.id}</div>
                   )} */}
 
-                  <Profile />
+                  <Profile userInfo={userInfo} />
                 </div>
                 <div
                   className="tab-pane fade"

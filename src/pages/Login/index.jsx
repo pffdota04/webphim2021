@@ -1,59 +1,71 @@
+import "./style.css";
 import Footer from "../../components/Footer";
-import "./style.css"
 
-// firebase auth
-// import withFirebaseAuth from "react-with-firebase-auth";
-// import { StyledFirebaseAuth } from "react-firebaseui";
-// import { auth } from "../../services/firebase";
-// import { db } from "../../services/firebase";
-// import firebase from "firebase/app";
+import axios from "axios";
 
-// const firebaseAppAuth = auth();
-// const providers = {
-//   googleProvider: new auth.GoogleAuthProvider(),
-// };
+// firebase
+import withFirebaseAuth from "react-with-firebase-auth";
+import { StyledFirebaseAuth } from "react-firebaseui";
+import { auth } from "../../services/firebase";
+import firebase from "firebase/app";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserData } from "./../../store/actions/user";
 
-// const uiConfig = {
-//   signInFlow: "popup",
-//   signInOptions: [
-//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-//   ],
-//   callbacks: {
-//     signInSuccess: () => false,
-//   },
-// };
-  
+const firebaseAppAuth = auth();
+const providers = {
+  googleProvider: new auth.GoogleAuthProvider(),
+};
 
 const Login = () => {
-    return (
-      <div>
-        <main id="main">
-          <div>
-            <div className="container container-login">
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userData.curentUser);
+
+  // const [userInfo, setuserInfo] = useState(
+  //   JSON.parse(localStorage.getItem("currentUser"))
+  // );
+
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user == null) {
+        dispatch(setUserData({ checkUser: "not" }));
+      } else {
+        dispatch(setUserData(user));
+      }
+    });
+  }, [auth().currentUser]);
+
+  const uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    ],
+    callbacks: {
+      signInSuccess: () => false,
+    },
+  };
+
+  return (
+    <div>
+      <main id="main">
+        <div>
+          <div className="container container-login">
+            {userInfo.checkUser === "init" ? (
+              <h1>CHECKING...</h1>
+            ) : userInfo.checkUser === "not" ? (
               <div className="row login-page text-light ">
                 <div className="col-12 col-md-8 sign-in text-center ">
                   <h2 className="text-center mt-2 mb-2 text-light fw-bold ">
-                    ĐĂNG NHẬP
+                    ĐĂNG NHẬP{" "}
                   </h2>
-                  <label
-                    htmlFor="buttongg"
-                    className="form-label text-light fw-bold"
-                  >
-                    Đăng nhập bằng google
-                  </label>
-                  <button
-                    className="btn-danger mb-2 w-50 form-control w-50 mx-auto"
-                    id="buttongg"
-                  >
-                    Đăng nhập với google
-                  </button>
-                  {/* <button
-                    className="btn-primary mb-1 w-50 form-control w-50 mx-auto"
-                    id="buttongg"
-                  >
-                    Đăng nhập với facebook
-                  </button> */}
+
+                  <div>
+                    <StyledFirebaseAuth
+                      uiConfig={uiConfig}
+                      firebaseAuth={firebase.auth()}
+                    />
+                  </div>
 
                   <hr className="w-50 mx-auto pd-1" />
                   <strong className="text-light">
@@ -101,45 +113,27 @@ const Login = () => {
                   </h2>
                   <form className="pb-2">
                     <div className="mb-3">
-                      <label
-                        htmlFor="exampleInputEmail1"
-                        className="form-label"
-                      >
-                        Email
-                      </label>
+                      <label>Email</label>
                       <input
                         type="email"
                         className="form-control w-50 mx-auto"
                         id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
                         placeholder="Email"
                       />
                     </div>
                     <div className="mb-3">
-                      <label
-                        htmlFor="exampleInputPassword1"
-                        className="form-label"
-                      >
-                        Password
-                      </label>
+                      <label>Password:</label>
                       <input
                         type="password"
                         className="form-control w-50 mx-auto"
-                        id="exampleInputPassword1"
                         placeholder="Password"
                       />
                     </div>
                     <div className="mb-3">
-                      <label
-                        htmlFor="exampleInputPassword1"
-                        className="form-label"
-                      >
-                        Xác nhận password:
-                      </label>
+                      <label>Xác nhận password:</label>
                       <input
                         type="password"
                         className="form-control w-50 mx-auto"
-                        id="exampleInputPassword1"
                         placeholder="Password again"
                       />
                     </div>
@@ -147,14 +141,27 @@ const Login = () => {
                       Đăng kí
                     </button>
                   </form>
+                </div>
               </div>
+            ) : (
+              <div>
+                <h3>Xin chào, {userInfo.displayName}</h3>
+                <button
+                  className="w-40 h-30 btn btn-sm btn-danger"
+                  onClick={() =>
+                    firebase.auth().signOut().then(alert("Sign out!!!"))
+                  }
+                >
+                  Đăng xuất <i className="fas fa-sign-out-alt"></i>
+                </button>
               </div>
-            </div>
+            )}
           </div>
-        </main>
-        <Footer />
-      </div>
-    );
-}
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
-export default Login
+export default Login;

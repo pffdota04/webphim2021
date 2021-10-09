@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setListSearch } from "./../../store/actions/listPhim_Action";
 import axios from "axios";
+import { auth } from "../../services/firebase";
+import { setUserData } from "./../../store/actions/user";
 
 const Header = () => {
   const history = useHistory();
@@ -15,9 +17,21 @@ const Header = () => {
   const [searchValueTime, setSearchTimeValue] = useState("");
   const [calling, setcalling] = useState(false);
   const [openHeader, setOpenHeader] = useState(false);
-
-
+  // const [userInfo, setuserInfo] = useState(JSON.parse(localStorage.getItem("currentUser")))
+  const [finalCheckToken, setfinalCheckToken] = useState(false);
+  const userInfo = useSelector((state) => state.userData.curentUser);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      setfinalCheckToken(true);
+      if (user == null) {
+        dispatch(setUserData({ checkUser: "not" }));
+      } else {
+        dispatch(setUserData(user));
+      }
+    });
+  }, [auth().currentUser]);
 
   const onSubmitSearch = (e) => {
     if (Object.keys(data).length == 0 && !calling) {
@@ -147,7 +161,7 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/2029"
+                      to="/phim/2019"
                       onClick={() => setOpenHeader(false)}
                     >
                       2019
@@ -351,61 +365,89 @@ const Header = () => {
                 aria-expanded="false"
               >
                 <img
-                  src={userLogo}
+                  src={
+                    userInfo.photoURL == undefined
+                      ? userLogo
+                      : userInfo.photoURL
+                  }
                   alt="mdo"
                   width={32}
                   height={32}
                   className="rounded-circle"
                 />
               </a>
-              <ul
-                className="dropdown-menu dropdown-menu-dark logomenu"
-                aria-labelledby="dropdownUser1"
-              >
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/user"
-                    onClick={() => setOpenHeader(false)}
-                  >
-                    <i className="fa fa-user" /> Bấm vào đây nè
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item "
-                    to="/mylist"
-                    onClick={() => setOpenHeader(false)}
-                  >
-                    <i className="fa fa-plus"></i> Phim đã lưu
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item  "
-                    to="/unlock"
-                    onClick={() => setOpenHeader(false)}
-                  >
-                    <i className="fa fa-unlock" /> Phim Vip
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/login"
-                    onClick={() => setOpenHeader(false)}
-                  >
-                    <i className="fa fa-sign-in" /> Đăng nhập
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    className="dropdown-item text-danger "
-                  >
-                    <i className="fa fa-sign-out" /> Đăng xuất
-                  </a>
-                </li>
-              </ul>
+
+              {userInfo.checkUser == "init" ? (
+                <ul
+                  className="dropdown-menu dropdown-menu-dark logomenu"
+                  aria-labelledby="dropdownUser1"
+                >
+                  <li>
+                    <Link className="dropdown-item">
+                      <i className="fa fa-sign-in" /> Kiểm tra đăng nhập...
+                    </Link>
+                  </li>
+                </ul>
+              ) : userInfo.checkUser == "not" ? (
+                <ul
+                  className="dropdown-menu dropdown-menu-dark logomenu"
+                  aria-labelledby="dropdownUser1"
+                >
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/login"
+                      onClick={() => setOpenHeader(false)}
+                    >
+                      <i className="fa fa-sign-in" /> Đăng nhập
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <ul
+                  className="dropdown-menu dropdown-menu-dark logomenu"
+                  aria-labelledby="dropdownUser1"
+                >
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/user"
+                      onClick={() => setOpenHeader(false)}
+                    >
+                      <i className="fa fa-user" /> {userInfo.displayName}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item "
+                      to="/mylist"
+                      onClick={() => setOpenHeader(false)}
+                    >
+                      <i className="fa fa-plus"></i> Phim đã lưu
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item  "
+                      to="/unlock"
+                      onClick={() => setOpenHeader(false)}
+                    >
+                      <i className="fa fa-unlock" /> Phim Vip
+                    </Link>
+                  </li>
+
+                  <li>
+                    <button
+                      className="dropdown-item text-danger "
+                      onClick={() => {
+                        auth().signOut().then(alert("da dang xuat"));
+                      }}
+                    >
+                      <i className="fa fa-sign-out" /> Đăng xuất
+                    </button>
+                  </li>
+                </ul>
+              )}
             </div>
 
             {/* Search */}
@@ -426,7 +468,6 @@ const Header = () => {
                   className="btn btn-outline-light"
                   to={"/search/" + searchValue}
                   onClick={() => setOpenHeader(false)}
-    
                 >
                   <i className="fa fa-search"></i>
                 </Link>

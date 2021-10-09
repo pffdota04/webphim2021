@@ -1,11 +1,9 @@
 import "./style.css";
-
-
+import filmCard from "../../assets/images/film-loading.jpg"
 import { useEffect, useState } from "react";
-import { data } from "jquery";
 
 const FilmCard = (props) => {
-  const { numberTrend, title, loading, data } = props;
+  const { numberTrend, loading, data, click} = props;
   const [numberImage, setNumberImage] = useState(null);
 
   async function lazyLoadNumber(num) {
@@ -33,18 +31,11 @@ const FilmCard = (props) => {
             alt="..."
           />
         )}
-        <svg
+        <img
           className="card-img-top film-item"
           style={{ width: "100%", height: "50vh" }}
-          xmlns="http://www.w3.org/2000/svg"
-          role="img"
-          aria-label="Placeholder: First slide"
-          preserveAspectRatio="xMidYMid slice"
-          focusable="false"
-        >
-          <title>Đang tải...</title>
-          <rect width="100%" height="100%" fill="#999" />
-        </svg>
+          src={filmCard}
+        />
         <h6 className="card-title text-center text-one-line mb-0 mt-1">
           Loading...
         </h6>
@@ -61,17 +52,15 @@ const FilmCard = (props) => {
             src={numberImage}
             className="card-img-top position-absolute bottom-0 start-0 sodem"
             alt="..."
-            data-bs-toggle="modal"
-            data-bs-target={"#ItemModal" + data.id}
             draggable="false"
+            onClick={() => click(data)}
           />
         )}
         <img
           src={data.img}
           className="card-img-top film-item"
           alt="..."
-          data-bs-toggle="modal"
-          data-bs-target={"#ItemModal" + data.id}
+          onClick={() => click(data)}
           draggable="false"
         />
         <h6 className="card-title text-center text-one-line mb-0 mt-1">

@@ -1,34 +1,149 @@
 import "./style.css";
 import qc from "./../../assets/images/quang-cao.jpg";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-
-const data1 = {
-  title: "Công chúa ngủ trong rừng",
-  year: 2020,
-};
+import { useHistory, useParams } from "react-router";
+import axios from "axios";
 
 const Watch = () => {
-  const { id } = useParams();
+  const { id, name } = useParams();
 
   const [dataFilmState, setDataFilmState] = useState({});
+  const [dataLink, setDataLink] = useState();
   const [isFull, setIsFull] = useState(false);
+  const [nowChap, setnowChap] = useState(-1);
+  const [nowServer, setnowServer] = useState(-1);
 
+  const history = useHistory();
   useEffect(() => {
-      getDataByParamsId();
+    window.scrollTo(0, 0);
 
-  }, []);
+    getDataByParamsId();
+  }, [id]);
 
   const getDataByParamsId = () => {
-    setTimeout(() => {    
-      data1.id = id;
-      setDataFilmState(data1);
-  },1000
-    )
+    axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
+      setDataFilmState(res.data[0]);
+      if (name != res.data[0].title)
+        history.push("/watch/" + id + "/" + res.data[0].title);
+    });
 
+    axios.get(process.env.REACT_APP_API_LOCAL + "link/" + id).then((res) => {
+      // alert(res.data);
+      setDataLink(res.data);
+      if (res.data != null) {
+        setnowServer(res.data[0].server);
+        setnowChap(res.data[0].chap);
+      }
+    });
   };
 
+  function uniqByKeepFirst(a, key) {
+    let seen = new Set();
+    return a.filter((item) => {
+      let k = key(item);
+      return seen.has(k) ? false : seen.add(k);
+    });
+  }
 
+  function contentVideoView() {
+    return dataLink == null ? (
+      <p className="text-center"> Đang cập nhật phim này! </p>
+    ) : (
+      <div>
+        <hr className="m-2" />
+        <div
+          id="filmView" className={isFull ? "container-fluir p-2 pt-0 isFull" : "container ps-5 pe-5"}
+        >
+          {dataLink.map((e, i) => (
+            <div>
+              {e.chap == nowChap &&
+                e.server == nowServer &&
+                (e.link == "vip only" ? (
+                  <img
+                    src="https://i.imgur.com/JNZDQy0.png"
+                    alt="VIP ONLY"
+                    className="w-100"
+                  />
+                ) : (
+                  <div
+                    className="justify-content-center d-flex iframe-here"
+                    dangerouslySetInnerHTML={{ __html: e.link }}
+                  />
+                ))}
+            </div>
+          ))}
+        </div>
+        <hr className="m-2" />
+          <div className="d-block justify-content-center d-flex">
+            <p
+              onClick={() => setIsFull(!isFull)}
+              className="btn-sm btn-warning m-1"
+            >
+              Change view
+            </p>
+          </div>
+          {chapAndServer()}
+      </div>
+    );
+  }
+
+  function chapAndServer(){
+    return (
+      <nav>
+        <div>
+          <ul className="pagination justify-content-center">
+            {uniqByKeepFirst(dataLink, (i) => i.chap).map((e, i) => (
+              <li>
+                <button
+                  className={"btn btn-outline-secondary me-1 " + e.chap == nowChap && " btn-secondary text-light"}
+                  onClick={() => {
+                    setnowChap(e.chap);
+                    setnowServer(e.server);
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  {e.chap}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <ul className="pagination justify-content-center">
+            {dataLink.map(
+              (e, i) =>
+                e.chap == nowChap && (
+                  <li>
+                    <button
+                      className={buttonServerRender(e.server, e.link)}
+                      onClick={() => {
+                        setnowServer(e.server);
+                        window.scrollTo(0, 0);
+                      }}
+                    >
+                      {e.server}
+                    </button>
+                  </li>
+                )
+            )}
+          </ul>
+        </div>
+
+        <hr className="m-2" />
+      </nav>
+    );
+  }
+
+  function buttonServerRender(sver, isVip) {
+    switch (isVip) {
+      case "vip only": {
+        if (sver == nowServer) return "btn btn-danger me-1";
+        else return "btn btn-outline-danger me-1 ";
+      }
+      default: {
+        if (sver == nowServer) return "btn btn-secondary me-1 ";
+        else return "btn btn-outline-secondary me-1 ";
+      }
+    }
+  }
 
   return (
     <div>
@@ -43,68 +158,18 @@ const Watch = () => {
             </div>
           ) : (
             <h2 className="text-center">
-              {dataFilmState.id} {dataFilmState.title}
+              {dataFilmState.id} {dataFilmState.title} (
+              {dataFilmState.title_origin})
             </h2>
           )}
-          <hr className="m-2" />
-          <div
-            className={
-              isFull
-                ? "container-fluir bg-secondary p-2 pt-0"
-                : "container bg-secondary"
-            }
-            id="filmView"
-          >
-            <img
-              src="https://i.imgur.com/ia3Jrgc.png"
-              alt="phim"
-              className="mx-auto d-block w-100"
-            />
-          </div>
-          <hr className="m-2" />
-          <div className="container bg-secondary p-2 pt-0">
-            <div className="d-block justify-content-center d-flex">
-              <p
-                // onClick={() => {changeIsFull()}}
-                onClick={() => {
-                  setIsFull(!isFull);
-                }}
-                className="btn-sm btn-warning m-1"
-              >
-                Change view
-              </p>
-            </div>
-            <nav>
-              <ul className="pagination justify-content-center">
-                <li>
-                  <a className="page-link" href="#">
-                    1
-                  </a>
-                </li>
-                <li>
-                  <a className="page-link" href="#">
-                    2
-                  </a>
-                </li>
-                <li>
-                  <a className="page-link" href="#">
-                    3
-                  </a>
-                </li>
-                <li>
-                  <a className="page-link" href="#">
-                    4
-                  </a>
-                </li>
-                <li>
-                  <a className="page-link" href="#">
-                    5
-                  </a>
-                </li>
-              </ul>
-              <hr className="m-2" />
-            </nav>
-            <div>
+
+          {contentVideoView()}
+
+          <div className="container bg-light p-2 pt-0">
+            <div
+              style={{backgroundImage: `url(${dataFilmState.backimg})`}}
+              className="background-comment"
+            >
               <h2 className="text-center">Bình luận</h2>
               <div className="me-5 ms-5 bg-light">
                 -xin chào <br />
@@ -117,7 +182,6 @@ const Watch = () => {
               </div>
             </div>
           </div>
-          {/* <hr class="m-2" /> */}
           <img className="d-block w-100 pb-2" src={qc} alt="" height={200} />
         </div>
       </main>

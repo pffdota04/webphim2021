@@ -9,6 +9,7 @@ import PopupFilm from "./../../components/PopupFilm";
 import FilmCard from "./../../components/FilmCard";
 import axios from "axios";
 import { setListSearch } from "./../../store/actions/listPhim_Action";
+import { Link } from "react-router-dom";
 
 const style = {
   height: 30,
@@ -28,6 +29,7 @@ const Search = (props) => {
   const [resulfSearch, setresulfSearch] = useState([]);
   const [showSearch, setshowSearch] = useState([]);
   const [page, setpage] = useState(1);
+  const [popupId, setPopupID] = useState(null);
 
 
 
@@ -189,9 +191,7 @@ const Search = (props) => {
                 </div>
               </div>
             </div>
-            <h1 className="text-center pt-3">
-              Kết quả tìm kiếm
-            </h1>
+            <h1 className="text-center pt-3">Kết quả tìm kiếm</h1>
             <hr className="mb-2" />
             {showSearch.length == 0 || keySearch.length == 0 ? (
               <p style={{ textAlign: "center" }}>
@@ -219,13 +219,86 @@ const Search = (props) => {
                 {showSearch.map((e, i) => (
                   <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
                     {e.id}
-                    <FilmCard key={i + "search"} data={e} />
+                    <FilmCard key={i + "search"} data={e} click={setPopupID} />
                   </div>
                 ))}
               </InfiniteScroll>
             )}
             <hr className="mb-3" />
           </div>
+          {popupId != null && (
+            <div>
+              <div
+                className="modal fade popup-none-in-first bd-example-modal-sm  show"
+                id="ItemModal7"
+                aria-modal="true"
+                role="dialog"
+                style={{ display: "block" }}
+              >
+                <div
+                  className="Invisible"
+                  onClick={() => setPopupID(null)}
+                ></div>
+                <div className="modal-dialog modal-xl">
+                  <div className="modal-content bg-light text-dark  trailer-ytb">
+                    <div className="modal-header p-2" id="header-popup">
+                      <h5 className="modal-title" id="exampleModalLabel">
+                        {popupId.title} ({popupId.year})
+                      </h5>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        onClick={() => setPopupID(null)}
+                        id="bt-close"
+                      />
+                    </div>
+                    <img
+                      src={popupId.backimg}
+                      alt="youtube thumnail image"
+                      className="w-100 img-trailer"
+                      loading="lazy"
+                    />
+                    <div className=" mx-auto text-ten-line ">
+                      <p className="text-center mb-0">
+                        <strong>
+                          {popupId.id}: {popupId.title} ({popupId.title_origin})
+                        </strong>
+                      </p>
+                      <p className="text-center mb-0">
+                        Diễn viên:
+                        <div className="the-loai-popup">{popupId.actor}</div> |
+                        Đạo diễn:
+                        <div className="the-loai-popup">{popupId.director}</div>
+                      </p>
+
+                      <p className="text-center">
+                        Thể loại:
+                        {Object.values(popupId.type).map((e) => (
+                          <div className="the-loai-popup">{e}</div>
+                        ))}
+                      </p>
+
+                      <p className="text-left ps-3 pe-2">
+                        &nbsp;&nbsp;{popupId.description}
+                      </p>
+                      <p className="text-center">
+                        Được phát hành vào năm {popupId.year}
+                      </p>
+                    </div>
+                    <div className="modal-footer p-1">
+                      <Link
+                        className="w-100 p-0 m-0 mb-1 btn-outline-secondary text-center pb-1"
+                        aria-label="Close"
+                        to={"/watch/" + popupId.id + "/"+ popupId.title}
+                      >
+                        Xem ngay
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
         {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
         <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />

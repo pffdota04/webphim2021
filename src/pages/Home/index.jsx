@@ -3,10 +3,10 @@ import Carousel from "react-multi-carousel";
 import "../../../node_modules/react-multi-carousel/lib/styles.css";
 
 import Footer from "../../components/Footer";
-import PopupFilm from "./../../components/PopupFilm";
+// import PopupFilm from "./../../components/PopupFilm";
 import FilmCard from "./../../components/FilmCard";
 
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setListHome } from "../../store/actions/listPhim_Action";
@@ -61,15 +61,28 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
 
 const Home = () => {
   const homeData = useSelector((state) => state.listTatCa.homeData);
+
+  const [popupId, setPopupID] = useState(null);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log("Home data: " + Object.keys(homeData).length);
     if (Object.keys(homeData).length === 0)
       axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
         dispatch(setListHome(res.data));
       });
   }, []);
+
+  const loadLoading = (numberItems, withNumber) => {
+    if(withNumber)
+    return [...Array(numberItems)].map((e, i) => (
+      <FilmCard numberTrend={i + 1} loading={true} />
+    ))
+    else
+    return [...Array(numberItems)].map((e, i) => (
+      <FilmCard  loading={true} />
+    ));
+  }
 
   //TOP PHIM RECOMEMD (with a beutiful backgroup mlem mlem...)
   const topFilm = () => {
@@ -85,7 +98,6 @@ const Home = () => {
               <svg
                 className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
                 style={{ width: "100%", height: "60vh" }}
-                xmlns="http://www.w3.org/2000/svg"
                 role="img"
                 aria-label="Placeholder: First slide"
                 preserveAspectRatio="xMidYMid slice"
@@ -96,7 +108,7 @@ const Home = () => {
               </svg>
               <div className="carousel-caption text-start">
                 <h1> Loading...</h1>
-                <p className="mota">Loading...</p>
+                <p className="mota">. . .</p>
                 <p>
                   <button className="btn btn-lg btn-danger">Loading...</button>
                 </p>
@@ -160,7 +172,7 @@ const Home = () => {
     return (
       <section>
         <div className="trending mb-3">
-          <h1 className="text-center pb-2">TRENDING</h1>
+          <h1 className="text-center pb-2">TRENDING </h1>
           <div className="item">
             <Carousel
               responsive={responsive_multi_carsousel}
@@ -168,19 +180,14 @@ const Home = () => {
               arrows={false}
             >
               {Object.keys(homeData).length == 0
-                ? [...Array(6)].map((e, i) => (
-                    <FilmCard
-                      key={i + "xtren1d"}
-                      numberTrend={i + 1}
-                      loading={true}
-                    />
-                  ))
+                ? loadLoading(6, true)
                 : Object.keys(homeData.trending).map((e, i) => (
                     <div>
                       <FilmCard
                         key={i + "trend"}
                         numberTrend={i + 1}
                         data={homeData.trending[e]}
+                        click={setPopupID}
                       />
                     </div>
                   ))}
@@ -203,11 +210,12 @@ const Home = () => {
               arrows={false}
             >
               {Object.keys(homeData).length == 0
-                ? [...Array(6)].map((e, i) => <FilmCard loading={true} />)
+                ? loadLoading(6,false)
                 : Object.keys(homeData.recommend).map((e, i) => (
                     <FilmCard
                       data={homeData.recommend[e]}
                       key={homeData.recommend[e].id + "recom"}
+                      click={setPopupID}
                     />
                   ))}
             </Carousel>
@@ -223,13 +231,13 @@ const Home = () => {
         <div className="mb-3">
           <h1 className="text-center pb-2">LAST UPDATE</h1>
           <div
-            className="row justify-content-md-center last-update-list mx-auto"
-            style={{ justifyContent: "center !important" }}
+            className="row justify-content-md-center last-update-list"
           >
             {Object.keys(homeData).length == 0
-              ? [...Array(12)].map((e, i) => (
+              ? 
+              [...Array(12)].map((e, i) => (
                   <div className="col-4 col-md-3 col-xl-2 ps-0 pe-1">
-                    <FilmCard key={i + 1} loading={true} />
+                    <FilmCard  loading={true} />
                   </div>
                 ))
               : Object.keys(homeData.last).map((e, i) => (
@@ -237,6 +245,7 @@ const Home = () => {
                     <FilmCard
                       key={homeData.last[e].id + "last"}
                       data={homeData.last[e]}
+                      click={setPopupID}
                     />
                   </div>
                 ))}
@@ -249,7 +258,6 @@ const Home = () => {
     );
   };
 
-  useEffect(() => {}, [homeData]);
   return (
     <div>
       {topFilm()}
@@ -261,18 +269,77 @@ const Home = () => {
         <hr className="mt-5 mb-2" />
         {lastFilm()}
       </div>
-      {/* POPUP ITEM FOR ALL*/}
-      {Object.keys(homeData).map((e, i) => {
-        return Object.keys(homeData[e]).map((ee, ii) => {
-          return (
-            <PopupFilm
-              key={homeData[e][ee].id + e + ee}
-              data={homeData[e][ee]}
-              numberTrend={i + 1}
-            />
-          );
-        });
-      })}
+
+      {popupId != null && (
+        <div>
+          <div
+            className="modal fade popup-none-in-first bd-example-modal-sm  show"
+            id="ItemModal7"
+            aria-modal="true"
+            role="dialog"
+            style={{ display: "block" }}
+          >
+            <div className="Invisible" onClick={() => setPopupID(null)}></div>
+            <div className="modal-dialog modal-xl">
+              <div className="modal-content bg-light text-dark  trailer-ytb">
+                <div className="modal-header p-2" id="header-popup">
+                  <h5 className="modal-title" id="exampleModalLabel">
+                    {popupId.title} ({popupId.year})
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setPopupID(null)}
+                    id="bt-close"
+                  />
+                </div>
+                <img
+                  src={popupId.backimg}
+                  alt="youtube thumnail image"
+                  className="w-100 img-trailer"
+                  loading="lazy"
+                />
+                <div className=" mx-auto text-ten-line ">
+                  <p className="text-center mb-0">
+                    <strong>
+                      {popupId.id}: {popupId.title} ({popupId.title_origin})
+                    </strong>
+                  </p>
+                  <p className="text-center mb-0">
+                    Diễn viên:
+                    <div className="the-loai-popup">{popupId.actor}</div> | Đạo
+                    diễn:
+                    <div className="the-loai-popup">{popupId.director}</div>
+                  </p>
+
+                  <p className="text-center">
+                    Thể loại:
+                    {Object.values(popupId.type).map((e) => (
+                      <div className="the-loai-popup">{e}</div>
+                    ))}
+                  </p>
+
+                  <p className="text-left ps-3 pe-2">
+                    &nbsp;&nbsp;{popupId.description}
+                  </p>
+                  <p className="text-center">
+                    Được phát hành vào năm {popupId.year}
+                  </p>
+                </div>
+                <div className="modal-footer p-1">
+                  <Link
+                    className="w-100 p-0 m-0 mb-1 btn-outline-secondary text-center pb-1"
+                    aria-label="Close"
+                    to={"/watch/" + popupId.id + "/" + popupId.title}
+                  >
+                    Xem ngay
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

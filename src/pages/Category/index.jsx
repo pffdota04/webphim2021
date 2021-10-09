@@ -15,9 +15,10 @@ import {
   setListSeries,
 } from "../../store/actions/listPhim_Action";
 
-import PopupFilm from "./../../components/PopupFilm";
+// import PopupFilm from "./../../components/PopupFilm";
 import FilmCard from "./../../components/FilmCard";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Category = (props) => {
   const [hasMore, sethasMore] = useState(true);
@@ -28,6 +29,7 @@ const Category = (props) => {
   const dataSeries = useSelector((state) => state.listTatCa.dataSeries);
 
   const [dataOther, setDataOther] = useState({});
+  const [popupId, setPopupID] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -132,10 +134,6 @@ const Category = (props) => {
       }
     }
 
-    // showThis.length != 0 &&
-    //   showThis.length != undefined &&
-    //   console.log("Last id now: " + showThis[showThis.length - 1].id);
-
     return showThis.length != undefined && showThis.length != 0 ? (
       <InfiniteScroll
         dataLength={showThis.length}
@@ -157,14 +155,8 @@ const Category = (props) => {
       >
         {showThis.map((i, index) => (
           <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1">
-            <PopupFilm
-              key={i.id}
-              data={i}
-            />
-            <FilmCard
-              key={i.id}
-              data={i} 
-            />
+            {/* <PopupFilm key={i.id} data={i} /> */}
+            <FilmCard key={i.id} data={i} click={setPopupID} />
           </div>
         ))}
       </InfiniteScroll>
@@ -194,6 +186,79 @@ const Category = (props) => {
             {categoryData()}
             <hr className="mb-3" />
           </div>
+          {popupId != null && (
+            <div>
+              <div
+                className="modal fade popup-none-in-first bd-example-modal-sm  show"
+                id="ItemModal7"
+                aria-modal="true"
+                role="dialog"
+                style={{ display: "block" }}
+              >
+                <div
+                  className="Invisible"
+                  onClick={() => setPopupID(null)}
+                ></div>
+                <div className="modal-dialog modal-xl">
+                  <div className="modal-content bg-light text-dark  trailer-ytb">
+                    <div className="modal-header p-2" id="header-popup">
+                      <h5 className="modal-title" id="exampleModalLabel">
+                        {popupId.title} ({popupId.year})
+                      </h5>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        onClick={() => setPopupID(null)}
+                        id="bt-close"
+                      />
+                    </div>
+                    <img
+                      src={popupId.backimg}
+                      alt="youtube thumnail image"
+                      className="w-100 img-trailer"
+                      loading="lazy"
+                    />
+                    <div className=" mx-auto text-ten-line ">
+                      <p className="text-center mb-0">
+                        <strong>
+                          {popupId.id}: {popupId.title} ({popupId.title_origin})
+                        </strong>
+                      </p>
+                      <p className="text-center mb-0">
+                        Diễn viên:
+                        <div className="the-loai-popup">{popupId.actor}</div> |
+                        Đạo diễn:
+                        <div className="the-loai-popup">{popupId.director}</div>
+                      </p>
+
+                      <p className="text-center">
+                        Thể loại:
+                        {Object.values(popupId.type).map((e) => (
+                          <div className="the-loai-popup">{e}</div>
+                        ))}
+                      </p>
+
+                      <p className="text-left ps-3 pe-2">
+                        &nbsp;&nbsp;{popupId.description}
+                      </p>
+                      <p className="text-center">
+                        Được phát hành vào năm {popupId.year}
+                      </p>
+                    </div>
+                    <div className="modal-footer p-1">
+                      <Link
+                        className="w-100 p-0 m-0 mb-1 btn-outline-secondary text-center pb-1"
+                        aria-label="Close"
+                        to={"/watch/" + popupId.id + "/" + popupId.title}
+                      >
+                        Xem ngay
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
         {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
         <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />

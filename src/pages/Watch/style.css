@@ -1,3 +1,31 @@
-.main{
+.main {
   padding-top: 62px;
+}
+
+.background-comment {
+  background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+  min-height: 30rem;
+  background-size: cover;
+}
+
+.iframe-here >* {
+  width: 100%;
+  min-height: 40rem;
+  max-height: 50rem;
+}
+
+.isFull div div >*{
+  min-height: 50rem;
+  max-height: 60rem;
+}
+
+@media (max-width: 767px) {
+  .iframe-here  >* {
+    min-height: 10rem;
+    max-height: 15rem;
+  }
+  .isFull div div >* {
+    max-height: 35rem;
+    min-height: 30rem;
+  }
 }

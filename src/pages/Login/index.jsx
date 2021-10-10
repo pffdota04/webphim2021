@@ -10,7 +10,7 @@ import { auth } from "../../services/firebase";
 import firebase from "firebase/app";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserData } from "./../../store/actions/user";
+import { setUserData, setUserDataDetail } from "./../../store/actions/user";
 
 const firebaseAppAuth = auth();
 const providers = {
@@ -21,26 +21,35 @@ const Login = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userData.curentUser);
 
-  // const [userInfo, setuserInfo] = useState(
-  //   JSON.parse(localStorage.getItem("currentUser"))
-  // );
-
   useEffect(() => {
     auth().onAuthStateChanged((user) => {
       if (user == null) {
         dispatch(setUserData({ checkUser: "not" }));
+        dispatch(setUserDataDetail({ checkUser: "not" }));
       } else {
         dispatch(setUserData(user));
+        auth()
+          .currentUser.getIdToken(true)
+          .then(function (idToken) {
+            axios
+              .post(process.env.REACT_APP_API_LOCAL + "user/info", {
+                token: idToken,
+              })
+              .then((res) => {
+                dispatch(setUserDataDetail(res.data));
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          });
       }
     });
   }, [auth().currentUser]);
 
+
   const uiConfig = {
     signInFlow: "popup",
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    ],
+    signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
     callbacks: {
       signInSuccess: () => false,
     },

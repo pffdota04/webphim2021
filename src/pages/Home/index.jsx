@@ -14,11 +14,15 @@ import { Link } from "react-router-dom";
 
 const responsive_multi_carsousel = {
   superLargeDesktop: {
-    breakpoint: { max: 8000, min: 1200 },
-    items: 6,
+    breakpoint: { max: 9999, min: 2048 },
+    items: 8,
+  },
+  largeDesktop: {
+    breakpoint: { max: 2048, min: 1440 },
+    items: 5,
   },
   desktop: {
-    breakpoint: { max: 1200, min: 768 },
+    breakpoint: { max: 1440, min: 768 },
     items: 4,
   },
   tablet: {
@@ -74,15 +78,13 @@ const Home = () => {
   }, []);
 
   const loadLoading = (numberItems, withNumber) => {
-    if(withNumber)
-    return [...Array(numberItems)].map((e, i) => (
-      <FilmCard numberTrend={i + 1} loading={true} />
-    ))
+    if (withNumber)
+      return [...Array(numberItems)].map((e, i) => (
+        <FilmCard numberTrend={i + 1} loading={true} />
+      ));
     else
-    return [...Array(numberItems)].map((e, i) => (
-      <FilmCard  loading={true} />
-    ));
-  }
+      return [...Array(numberItems)].map((e, i) => <FilmCard loading={true} />);
+  };
 
   //TOP PHIM RECOMEMD (with a beutiful backgroup mlem mlem...)
   const topFilm = () => {
@@ -109,9 +111,7 @@ const Home = () => {
               <div className="carousel-caption text-start">
                 <h1> Loading...</h1>
                 <p className="mota">. . .</p>
-                <p>
-                  <button className="btn btn-lg btn-danger">Loading...</button>
-                </p>
+                <button className="btn btn-lg btn-danger">Loading...</button>
               </div>
             </div>
           ) : (
@@ -132,15 +132,13 @@ const Home = () => {
                 <div className="carousel-caption text-start">
                   <h1>{homeData.top[e].title}</h1>
                   <p className="mota">{homeData.top[e].description}</p>
-                  <p>
-                    <button
-                      className="btn btn-lg btn-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target={"#ItemModal" + homeData.top[e].id}
-                    >
-                      Xem ngay!
-                    </button>
-                  </p>
+
+                  <button
+                    className="btn btn-lg btn-danger"
+                    onClick={() => setPopupID(homeData.top[e])}
+                  >
+                    Xem ngay!
+                  </button>
                 </div>
               </div>
             ))
@@ -210,7 +208,7 @@ const Home = () => {
               arrows={false}
             >
               {Object.keys(homeData).length == 0
-                ? loadLoading(6,false)
+                ? loadLoading(6, false)
                 : Object.keys(homeData.recommend).map((e, i) => (
                     <FilmCard
                       data={homeData.recommend[e]}
@@ -227,21 +225,18 @@ const Home = () => {
 
   const lastFilm = () => {
     return (
-      <section>
+      <section className="container">
         <div className="mb-3">
           <h1 className="text-center pb-2">LAST UPDATE</h1>
-          <div
-            className="row justify-content-md-center last-update-list"
-          >
+          <div className="row justify-content-md-center last-update-list mx-auto overflow-hidden">
             {Object.keys(homeData).length == 0
-              ? 
-              [...Array(12)].map((e, i) => (
-                  <div className="col-4 col-md-3 col-xl-2 ps-0 pe-1">
-                    <FilmCard  loading={true} />
+              ? [...Array(12)].map((e, i) => (
+                  <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1">
+                    <FilmCard loading={true} />
                   </div>
                 ))
               : Object.keys(homeData.last).map((e, i) => (
-                  <div className="col-4 col-md-3 col-xl-2 ps-0 pe-1">
+                  <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1">
                     <FilmCard
                       key={homeData.last[e].id + "last"}
                       data={homeData.last[e]}
@@ -293,16 +288,26 @@ const Home = () => {
                     id="bt-close"
                   />
                 </div>
-                <img
-                  src={popupId.backimg}
-                  alt="youtube thumnail image"
-                  className="w-100 img-trailer"
-                  loading="lazy"
-                />
+                <div className="position-relative">
+                  <img
+                    src={
+                      popupId.backimg == undefined
+                        ? "https://i.imgur.com/sLwEvjw.jpg"
+                        : popupId.backimg
+                    }
+                    alt="youtube thumnail image"
+                    className="w-100 img-trailer"
+                    loading="lazy"
+                  ></img>
+                  <div className="play">
+                    <p className=" text-light pt-4 mt-5 text-center">Trailer</p>
+                  </div>
+                </div>
+
                 <div className=" mx-auto text-ten-line ">
                   <p className="text-center mb-0">
                     <strong>
-                      {popupId.id}: {popupId.title} ({popupId.title_origin})
+                      {popupId.title} ({popupId.title_origin})
                     </strong>
                   </p>
                   <p className="text-center mb-0">
@@ -318,7 +323,7 @@ const Home = () => {
                       <div className="the-loai-popup">{e}</div>
                     ))}
                   </p>
-
+                  <hr className="w-50 mx-auto" />
                   <p className="text-left ps-3 pe-2">
                     &nbsp;&nbsp;{popupId.description}
                   </p>
@@ -328,7 +333,7 @@ const Home = () => {
                 </div>
                 <div className="modal-footer p-1">
                   <Link
-                    className="w-100 p-0 m-0 mb-1 btn-outline-secondary text-center pb-1"
+                    className="w-100 p-0 m-0 mb-1 btn btn-danger text-center pb-1"
                     aria-label="Close"
                     to={"/watch/" + popupId.id + "/" + popupId.title}
                   >

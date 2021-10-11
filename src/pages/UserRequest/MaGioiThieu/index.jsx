@@ -1,6 +1,30 @@
-import "./style.css"
+import axios from "axios";
+import { useState } from "react";
+import "./style.css";
 
-const MaGioiThieu = () => {
+const MaGioiThieu = (props) => {
+  const [inputCode, setInputCode] = useState("");
+  const { userDetail, change } = props;
+
+  function sendMaGioiThieu() {
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "user/usecode", {
+        token: userDetail.token,
+        code: inputCode,
+      })
+      .then((res) => {
+        if (res.data.complete == true) {
+          alert("Thanhf coong: nhaanj 20 koin!");
+          let newDetail = userDetail;
+          newDetail.coin = newDetail.coin+20;
+          change(newDetail)
+        } else alert(res.data.complete);
+      })
+      .catch((e) => {
+        alert(e.response.data.message);
+      });
+  }
+
   return (
     <div className="container my-2 mb-3">
       <div className="row">
@@ -34,7 +58,7 @@ const MaGioiThieu = () => {
             className="input-group-text mycode mx-auto d-block"
             id="muycode"
           >
-            123456
+            {userDetail.code}
           </span>
         </div>
         <hr className="mt-3 mb-3" style={{ height: "2px" }} />
@@ -48,12 +72,17 @@ const MaGioiThieu = () => {
             name="magiaodich"
             id="magiaodich"
             className="w-100 form-control"
-            // onChange={this.getCombo.bind(this)}
+            onChange={(e) => {
+              setInputCode(e.target.value);
+            }}
             //   value={this.state.type}
           ></input>
         </div>
         <div className="col-12 ">
-          <button className="btn-lg w-25 btn-secondary mx-auto d-block mt-3">
+          <button
+            className="btn-lg w-25 btn-secondary mx-auto d-block mt-3"
+            onClick={() => sendMaGioiThieu()}
+          >
             Gửi
           </button>
         </div>

@@ -149,7 +149,8 @@ const Watch = () => {
     <div>
       <main>
         <div className>
-          <img className="d-block w-100 pb-2" src={qc} alt="" height={200} />
+          <img className="d-block w-100 pb-2" src={qc} alt="" />
+
           {dataFilmState.id == undefined ? (
             <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">
@@ -167,11 +168,11 @@ const Watch = () => {
 
           <div className="container bg-light p-2 pt-0">
             <div
-              style={{backgroundImage: `url(${dataFilmState.backimg})`}}
-              className="background-comment"
+              style={{ backgroundImage: `url(${dataFilmState.backimg})` }}
+              className="background-comment w-100 h-100"
             >
-              <h2 className="text-center">Bình luận</h2>
               <div className="me-5 ms-5 bg-light">
+                <h2 className="text-center">Bình luận</h2>
                 -xin chào <br />
                 - chào
                 <br />
@@ -182,7 +183,8 @@ const Watch = () => {
               </div>
             </div>
           </div>
-          <img className="d-block w-100 pb-2" src={qc} alt="" height={200} />
+
+          <img className="d-block w-100 pt-2" src={qc} alt="" />
         </div>
       </main>
     </div>

@@ -4,3 +4,10 @@ export const setUserData = (data) => {
     payload: data,
   };
 };
+
+export const setUserDataDetail = (data) => {
+  return {
+    type: "SET_USER_DATA_DETAIL",
+    payload: data,
+  };
+};

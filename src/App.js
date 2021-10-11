@@ -25,7 +25,7 @@ function App() {
             <Route path="/user" component={UserRequest}></Route>
             <Route path="/login" component={Login} />
             <Route path={["/watch/:id/:name" ,"/watch/:id", ]} component={Watch} />
-            <Route path="/unlock" component={UnlockList} />
+            <Route path="/unlock"x component={UnlockList} />
             <Route path="/mylist" component={WatchLaterList} />
             
             <Route path="/" component={Home}/>

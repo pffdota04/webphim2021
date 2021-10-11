@@ -1,9 +1,8 @@
 
 import userProfile from "./../../../assets/images/user-profile.jpg";
 const Profile = (props) => {
-  const {userInfo} = props
+  const { userInfo, coin } = props;
   return (
-
     <div className="container my-2">
       <img
         className="d-block mx-auto mb-4 rounded-circle"
@@ -14,13 +13,13 @@ const Profile = (props) => {
       />
       <h1 className="display-5 fw-bold text-center">{userInfo.displayName} </h1>
       <h5 className="text-center">
-        vippro@gmail.com <i className="fa fa-check-circle text-primary"></i>
+        {userInfo.email} <i className="fa fa-check-circle text-primary"></i>
       </h5>
       <h4 className="text-center">
         Số dư:
         <strong className="display-6 fw-bold fst-italic ">
           {" "}
-          320 KOIN
+          {coin} KOIN
         </strong>{" "}
       </h4>
       <div className="col-lg-6 mx-auto">
@@ -65,7 +64,7 @@ const Profile = (props) => {
                     <li>Email: click</li>
                     <li>Discord: click</li>
                   </ul>
-                  <div className="input-group mb-3">
+                  {/* <div className="input-group mb-3">
                     <input
                       type="text"
                       className="form-control"
@@ -81,7 +80,7 @@ const Profile = (props) => {
                     >
                       Gửi
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="modal-footer">
                   <button

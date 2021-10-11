@@ -89,8 +89,8 @@ const Search = (props) => {
         <section>
           <div className="mb-3">
             <hr className="mb-2" />
-            <div class="row">
-              <div class="col-4">
+            <div className="row">
+              <div className="col-4">
                 <label for="search">Từ khóa:</label>
                 <input
                   className="form-control me-2"
@@ -104,7 +104,7 @@ const Search = (props) => {
                   }}
                 />
               </div>
-              <div class="col-2 pt-1 ps-1 pe-1">
+              <div className="col-2 pt-1 ps-1 pe-1">
                 <div>
                   <div className="form-check col-12 p-0">
                     <input
@@ -152,10 +152,10 @@ const Search = (props) => {
                 </div>
               </div>
               <div className="col-3 ps-0">
-                <div class="form-group">
+                <div className="form-group">
                   <label for="theloaiSelect">Thể loại</label>
                   <select
-                    class="form-control"
+                    className="form-control"
                     id="theloaiSelect"
                     onChange={(e) => setType(e.target.value)}
                   >
@@ -173,10 +173,10 @@ const Search = (props) => {
                 </div>
               </div>
               <div className="col-3 ps-0">
-                <div class="form-group">
+                <div className="form-group">
                   <label for="theloaiSelect">Quốc gia</label>
                   <select
-                    class="form-control"
+                    className="form-control"
                     id="theloaiSelect"
                     onChange={(e) => setCountry(e.target.value)}
                   >
@@ -289,7 +289,7 @@ const Search = (props) => {
                       <Link
                         className="w-100 p-0 m-0 mb-1 btn-outline-secondary text-center pb-1"
                         aria-label="Close"
-                        to={"/watch/" + popupId.id + "/"+ popupId.title}
+                        to={"/watch/" + popupId.id + "/" + popupId.title}
                       >
                         Xem ngay
                       </Link>

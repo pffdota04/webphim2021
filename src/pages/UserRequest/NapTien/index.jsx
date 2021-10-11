@@ -1,10 +1,40 @@
-const NapTien = () => {
+import { useState } from "react";
+import axios from "axios";
+
+const NapTien = (props) => {
+  const [inputCode, setInputCode] = useState("");
+  const [soLuong, setSoLuong] = useState(10);
+  const [phuongThuc, setPhuongthuc] = useState("momo");
+  const [ghiChu, setGhiChu] = useState("");
+  const { userDetail } = props;
+
+  function sendRequest(){
+    // alert(inputCode+ soLuong + phuongThuc+ ghiChu);
+    console.log(userDetail)
+     axios
+       .post(process.env.REACT_APP_API_LOCAL + "user/napkoin", {
+         token: userDetail.token,
+         mgd: inputCode,
+         type: phuongThuc,
+         coin: soLuong,
+         note: ghiChu,
+       })
+       .then((res) => {
+         if (res.data.complete == true) {
+           alert("Da ghi nhan, yeu cau se som duoc xu ly");
+         } else alert(res.data);
+       })
+       .catch((e) => {
+         alert(e.response.data.message);
+       });
+  }
+
   return (
     <div className="container mb-3 my-2">
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            Tỷ lệ quy đổi:
+            Tỷ lệ:
             <strong className="display-6 fw-bold fst-italic ">
               {" "}
               1000 đồng = 1 KOIN
@@ -31,13 +61,13 @@ const NapTien = () => {
             name="type"
             id="menhgia"
             className="w-100 form-control"
-            // onChange={this.getMenhgia.bind(this)}
-            //   value={this.state.menhgia}
+            onChange={(e) => setSoLuong(e.target.value)}
+            value={soLuong}
           >
-            <option value="10">10k</option>
-            <option value="20">20k</option>
-            <option value="50">50k</option>
-            <option value="100">100k</option>
+            <option value="100">10k = 100 Koin</option>
+            <option value="200">20k= 200 Koin</option>
+            <option value="500">50k= 500 + 20 Koin </option>
+            <option value="1000">100k= 1000 + 100 Koin</option>
           </select>{" "}
         </div>
         <div className="col-12 col-md-6">
@@ -49,8 +79,8 @@ const NapTien = () => {
             name="coin"
             id="phuongthuc"
             className="w-100 form-control"
-            // onChange={this.getCombo.bind(this)}
-            //   value={this.state.type}
+            onChange={(e) => setPhuongthuc(e.target.value)}
+            value={phuongThuc}
           >
             <option value="momo">Momo</option>
             <option value="airpay">Airpay</option>
@@ -68,8 +98,7 @@ const NapTien = () => {
             name="magiaodich"
             id="magiaodich"
             className="w-100 form-control"
-            // onChange={this.getCombo.bind(this)}
-            //   value={this.state.type}
+            onChange={(e) => setInputCode(e.target.value)}
           ></input>
         </div>
         <div className="col-12 col-md-6 mx-auto">
@@ -81,13 +110,12 @@ const NapTien = () => {
             name="magiaodich"
             id="magiaodich"
             className="w-100 form-control"
-            // onChange={this.getCombo.bind(this)}
-            //   value={this.state.type}
+            onChange={(e) => setGhiChu(e.target.value)}
           ></input>
         </div>
         <hr className="mt-3 mb-3" style={{ height: "2px" }} />
         <div className="col-12 ">
-          <button className="btn-lg w-25 btn-secondary mx-auto d-block">
+          <button className="btn-lg w-25 btn-secondary mx-auto d-block" onClick={()=> sendRequest()}>
             Gửi
           </button>
         </div>

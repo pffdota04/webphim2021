@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setListSearch } from "./../../store/actions/listPhim_Action";
 import axios from "axios";
 import { auth } from "../../services/firebase";
-import { setUserData } from "./../../store/actions/user";
+import { setUserData, setUserDataDetail } from "./../../store/actions/user";
 
 const Header = () => {
   const history = useHistory();
@@ -20,18 +20,41 @@ const Header = () => {
   // const [userInfo, setuserInfo] = useState(JSON.parse(localStorage.getItem("currentUser")))
   const [finalCheckToken, setfinalCheckToken] = useState(false);
   const userInfo = useSelector((state) => state.userData.curentUser);
+  const userDetail = useSelector((state) => state.userData.userDetail);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
-    auth().onAuthStateChanged((user) => {
+    console.log("useEff header")
+    if (finalCheckToken === false) {
       setfinalCheckToken(true);
-      if (user == null) {
-        dispatch(setUserData({ checkUser: "not" }));
-      } else {
-        dispatch(setUserData(user));
-      }
-    });
-  }, [auth().currentUser]);
+      auth().onAuthStateChanged((user) => {
+        if (user == null) {
+          dispatch(setUserData({ checkUser: "not" }));
+          dispatch(setUserDataDetail({ checkUser: "not" }));
+        } else {
+          dispatch(setUserData(user));
+          auth()
+            .currentUser.getIdToken(true)
+            .then(function (idToken) {
+              axios
+                .post(process.env.REACT_APP_API_LOCAL + "user/info", {
+                // .post("http://localhost:5000/api/user/info", {
+                  token: idToken,
+                })
+                .then((res) => {
+                  let saveDetail = Object.values(res.data)[0];
+                  saveDetail.token = idToken;
+                  dispatch(setUserDataDetail(saveDetail));
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
+            });
+        }
+      });
+    }
+  }, [finalCheckToken]);
 
   const onSubmitSearch = (e) => {
     if (Object.keys(data).length == 0 && !calling) {

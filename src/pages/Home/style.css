@@ -77,4 +77,19 @@
   text-overflow: ellipsis;
 }
 
+.play{
+      height: 72px;
+    width: 72px;
+    left: 50%;
+    top: 50%;
+    margin-left: -36px;
+    margin-top: -36px;
+    position: absolute;
+    background: url('//i.imgur.com/TxzC70f.png') no-repeat;
+    cursor: pointer;
+}
+
+.img-trailer{
+
+}
 /* <!-- end - TRENDING LIST --> */

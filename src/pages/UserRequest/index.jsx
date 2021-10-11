@@ -7,9 +7,13 @@ import NapTien from "./NapTien";
 import MaGioiThieu from "./MaGioiThieu";
 import Voucher from "./Voucher";
 import Footer from "./../../components/Footer";
+import { setUserDataDetail } from "./../../store/actions/user";
 
 import { Redirect } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { auth } from "../../services/firebase";
+
 const style = {
   height: 30,
   border: "1px solid green",
@@ -17,11 +21,21 @@ const style = {
   padding: 8,
 };
 
-
 const UserRequest = (props) => {
   const userInfo = useSelector((state) => state.userData.curentUser);
+  const userDetail = useSelector((state) => state.userData.userDetail);
+  const [forceChange, setforceChange] = useState(0);
 
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
+
+  function changeUserDetail(newUserDetail) {
+    setforceChange(forceChange + 1);
+    dispatch(setUserDataDetail(newUserDetail));
+  }
+
+  useEffect(() => {
+    console.log(userDetail);
+  }, [forceChange]);
 
   return userInfo.checkUser == "init" ? (
     <h1>CHECKING...</h1>
@@ -101,11 +115,7 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-home-tab"
                 >
-                  {/* {data.map((element, index) =>
-                      element.type == "x" && <div>Đây là thức uống X: {element.name} có id = {element.id}</div>
-                  )} */}
-
-                  <Profile userInfo={userInfo} />
+                  <Profile userInfo={userInfo} coin={userDetail.coin} />
                 </div>
                 <div
                   className="tab-pane fade"
@@ -113,7 +123,8 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-profile-tab"
                 >
-                  <NapTien />
+                  <NapTien 
+                  userDetail={userDetail}/>
                 </div>
                 <div
                   className="tab-pane fade"
@@ -121,7 +132,10 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-contact-tab"
                 >
-                  <MaGioiThieu />
+                  <MaGioiThieu
+                    userDetail={userDetail}
+                    change={changeUserDetail}
+                  />
                 </div>
                 <div
                   className="tab-pane fade"
@@ -129,7 +143,7 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-contact-tab"
                 >
-                  <Voucher />
+                  <Voucher userDetail={userDetail} change={changeUserDetail} />
                 </div>
               </div>
             </div>

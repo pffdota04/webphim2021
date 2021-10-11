@@ -2,80 +2,98 @@ import { setUnlockList } from "../../../store/actions/userList_Action";
 import qc from "./../../../assets/images/quang-cao.jpg";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+
+import { auth } from "../../../services/firebase";
+import { useEffect, useState } from "react";
+
 import PopupFilm from "../../../components/PopupFilm";
 import FilmCard from "../../../components/FilmCard";
-
 import Footer from "../../../components/Footer";
-
+import axios from "axios";
+import { Redirect } from "react-router";
 
 const UnlockList = () => {
-//   const { type } = useParams();
   const data = useSelector((state) => state.listUser.unlockList);
+  const userInfo = useSelector((state) => state.userData.curentUser);
+  const userDetail = useSelector((state) => state.userData.userDetail);
+
   const dispatch = useDispatch();
+  const [popupId, setPopupID] = useState(null);
 
-  const dataExample = {
-    id: 1,
-    title: "Phim vipp đã mở",
-    year: 1990,
-    image: "https://image.tmdb.org/t/p/w342/lztz5XBMG1x6Y5ubz7CxfPFsAcW.jpg",
-  };
+  useEffect(() => {
+    if (data.init == true) getData();
+  }, [userDetail]);
 
-  useEffect(async() => {
-    if (data.length == undefined) {
-      let resulf = [];
-      for (let i = 0; i < 7; i++) resulf.push(dataExample);
-       let a = await new Promise((resolve) => {
-         setTimeout(() => resolve(resulf), 1000);
-       });
-      dispatch(setUnlockList(resulf));
+  function getData() {
+    if (userDetail.saveFilm != null && userDetail.saveFilm != undefined) {
+      console.log(Object.keys(userDetail.unlockFilm));
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "film/bylistid", {
+          list: Object.keys(userDetail.unlockFilm),
+        })
+        .then((res) => {
+          dispatch(setUnlockList(res.data));
+          console.log(res.data);
+          console.log("<<<<<<<<<<<");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (userDetail.checkUser != "init") {
+      dispatch(setUnlockList({ init: false }));
     }
-  }, []);
+  }
 
   function showData() {
+    console.log(userDetail.saveFilm);
     return (
       <div className="row justify-content-md-center last-update-list mx-auto overflow-hidden">
         {data.map((i, index) => (
+         ((Object.values(userDetail.unlockFilm)[index].end) -Date.now() >= 0) &&
           <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
-            <PopupFilm
-              key={index + 1}
-              data={i}
-              // title={i.title}
-              // year={2021}
-              // id={index + 1}
-            />
-            <FilmCard
-              key={index + 1}
-              data={i}
-              // title={i.title}
-              // image={i.image}
-              // year={i.year}
-              // id={index + 1}
-            />
+            <FilmCard key={i + "later"} data={i} click={setPopupID} />
+            <p className="text-center">
+              Còn lại
+              {Math.ceil(
+                Math.abs(
+                  new Date(Object.values(userDetail.unlockFilm)[index].end) -
+                    Date.now()
+                ) /
+                  (1000 * 60 * 60 * 24)
+              )}
+              ngày
+              {console.log(
+                (new Date( Object.values(userDetail.unlockFilm)[index].end).toString())
+              )}
+            </p>
           </div>
         ))}
       </div>
     );
   }
 
-  return (
+  return userInfo.checkUser == "init" ? (
+    <h1>CHECKING...</h1>
+  ) : userInfo.checkUser == "not" ? (
+    <Redirect push to="/login" />
+  ) : (
     <div>
       <div className="container">
         <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
         <section>
           <div className="mb-3">
             <hr className="mb-2" />
-            <h1 className="text-center">PHIM VIP ĐÃ MỞ</h1>
+            <h1 className="text-center">PHIM BẠN ĐÃ MỞ KHÓA</h1>
             <hr className="mb-2" />
 
-            {data.length == undefined ? (
+            {data.init == true ? (
               <div className="d-flex justify-content-center">
                 <div className="spinner-border" role="status">
                   <span className="sr-only">Loading...</span>
                 </div>
               </div>
-            ) : data.length == undefined ? (
-              <h2>Không có phim để hiển thị</h2>
+            ) : userDetail.saveFilm == undefined ? (
+              <h3>Không có phim, hãy thêm vài phim vào đây</h3>
             ) : (
               showData()
             )}
@@ -83,8 +101,9 @@ const UnlockList = () => {
           </div>
         </section>
         <img className="d-block w-100 pt-2 pb-2" src={qc} alt="" width={800} />
+        <PopupFilm data={popupId} click={setPopupID} />
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

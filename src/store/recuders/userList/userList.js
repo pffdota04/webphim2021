@@ -1,6 +1,6 @@
 const initialState = {
-  unlockList: {},
-  watchLater: {},
+  unlockList: {"init": true},
+  watchLater: {"init": true},
 };
 
 const userList = (state = initialState, action) => {

@@ -37,6 +37,7 @@ const Header = () => {
           auth()
             .currentUser.getIdToken(true)
             .then(function (idToken) {
+              console.log(idToken)
               axios
                 .post(process.env.REACT_APP_API_LOCAL + "user/info", {
                 // .post("http://localhost:5000/api/user/info", {

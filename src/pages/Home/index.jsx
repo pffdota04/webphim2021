@@ -275,7 +275,7 @@ const Home = () => {
             style={{ display: "block" }}
           >
             <div className="Invisible" onClick={() => setPopupID(null)}></div>
-            <div className="modal-dialog modal-xl">
+            <div className="modal-dialog modal-dialog-centered modal-xl">
               <div className="modal-content bg-light text-dark  trailer-ytb">
                 <div className="modal-header p-2" id="header-popup">
                   <h5 className="modal-title" id="exampleModalLabel">

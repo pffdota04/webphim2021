@@ -22,19 +22,28 @@ const UnlockList = () => {
 
   useEffect(() => {
     if (data.init == true) getData();
+    else {
+      let arrHold = new Array();
+      data.map((e) => {
+        arrHold.push(e.id);
+      });
+      let is_same =
+        arrHold.length == Object.keys(userDetail.unlockFilm).length &&
+        arrHold.every(function (element, index) {
+          return element == Object.keys(userDetail.unlockFilm)[index];
+        });
+      if (is_same == false) getData();
+    }
   }, [userDetail]);
 
   function getData() {
-    if (userDetail.saveFilm != null && userDetail.saveFilm != undefined) {
-      console.log(Object.keys(userDetail.unlockFilm));
+    if (userDetail.unlockFilm != null && userDetail.unlockFilm != undefined) {
       axios
         .post(process.env.REACT_APP_API_LOCAL + "film/bylistid", {
           list: Object.keys(userDetail.unlockFilm),
         })
         .then((res) => {
           dispatch(setUnlockList(res.data));
-          console.log(res.data);
-          console.log("<<<<<<<<<<<");
         })
         .catch((e) => {
           console.log(e);
@@ -45,29 +54,29 @@ const UnlockList = () => {
   }
 
   function showData() {
-    console.log(userDetail.saveFilm);
     return (
       <div className="row justify-content-md-center last-update-list mx-auto overflow-hidden">
-        {data.map((i, index) => (
-         ((Object.values(userDetail.unlockFilm)[index].end) -Date.now() >= 0) &&
-          <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
-            <FilmCard key={i + "later"} data={i} click={setPopupID} />
-            <p className="text-center">
-              Còn lại
-              {Math.ceil(
-                Math.abs(
-                  new Date(Object.values(userDetail.unlockFilm)[index].end) -
-                    Date.now()
-                ) /
-                  (1000 * 60 * 60 * 24)
-              )}
-              ngày
-              {console.log(
-                (new Date( Object.values(userDetail.unlockFilm)[index].end).toString())
-              )}
-            </p>
-          </div>
-        ))}
+        {data.map(
+          (i, index) =>
+            Object.values(userDetail.unlockFilm)[index].end - Date.now() >=
+              0 && (
+              <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
+                <FilmCard key={i + "later"} data={i} click={setPopupID} />
+                <p className="text-center">
+                  Còn lại
+                  {Math.ceil(
+                    Math.abs(
+                      new Date(
+                        Object.values(userDetail.unlockFilm)[index].end
+                      ) - Date.now()
+                    ) /
+                      (1000 * 60 * 60 * 24)
+                  )}
+                  ngày
+                </p>
+              </div>
+            )
+        )}
       </div>
     );
   }

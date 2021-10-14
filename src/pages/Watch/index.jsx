@@ -5,6 +5,8 @@ import { Redirect, useHistory, useParams } from "react-router";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserDataDetail } from "./../../store/actions/user";
+import { auth } from "../../services/firebase";
+import { Link } from "react-router-dom";
 
 const Watch = () => {
   const { id, name } = useParams();
@@ -14,6 +16,8 @@ const Watch = () => {
   const [isFull, setIsFull] = useState(false);
   const [nowChap, setnowChap] = useState(-1);
   const [nowServer, setnowServer] = useState(-1);
+
+  const [loadingData, setLoading] = useState(true);
   const [iconSave, setIconSave] = useState(0);
   const [iconUnlock, setIconUnlock] = useState(0);
   const [popupVip, setPopupVip] = useState(null);
@@ -26,17 +30,43 @@ const Watch = () => {
   const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 0);
-    getDataByParamsId();
+    // getDataByParamsId();
   }, [id]);
+
+  useEffect(() => {
+    if (dataFilmState.id == undefined) {
+      axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
+        if (name != res.data[0].title)
+          history.push("/watch/" + id + "/" + res.data[0].title);
+        setDataFilmState(res.data[0]);
+      });
+    }
+    if (userDetail.checkUser != "init") {
+      if (userDetail.checkUser === "not") getDataByParamsId();
+      else getDataByTokenId();
+    }
+  }, [userDetail]);
 
   useEffect(() => {
     if (userDetail.checkUser == "not") {
       setIconUnlock(-1);
       setIconSave(-1);
-    } else if (userDetail.checkUser != "init") {
-      if (userDetail.saveFilm[id] == undefined) setIconSave(-1);
+    } else if (
+      userDetail.checkUser != "init" &&
+      userDetail.checkUser != "not"
+    ) {
+      console.log(userDetail.saveFilm);
+      if (
+        userDetail.saveFilm == undefined ||
+        userDetail.saveFilm[id] == undefined
+      )
+        setIconSave(-1);
       else setIconSave(1);
-      if (userDetail.unlockFilm[id] == undefined) setIconUnlock(-1);
+      if (
+        userDetail.unlockFilm == undefined ||
+        userDetail.unlockFilm[id] == undefined
+      )
+        setIconUnlock(-1);
       else {
         setIconUnlock(
           Math.round(
@@ -48,20 +78,31 @@ const Watch = () => {
   }, [userDetail]);
 
   const getDataByParamsId = () => {
-    axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
-      if (name != res.data[0].title)
-        history.push("/watch/" + id + "/" + res.data[0].title);
-      setDataFilmState(res.data[0]);
-    });
-
     axios.get(process.env.REACT_APP_API_LOCAL + "link/" + id).then((res) => {
-      // alert(res.data);
       setDataLink(res.data);
       if (res.data != null) {
         setnowServer(res.data[0].server);
         setnowChap(res.data[0].chap);
       }
+      setLoading(false);
     });
+  };
+
+  const getDataByTokenId = () => {
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "link/vip", {
+        token: userDetail.token,
+        fid: id,
+      })
+      .then((res) => {
+        setDataLink(res.data);
+        if (res.data != null) {
+          setnowServer(res.data[0].server);
+          setnowChap(res.data[0].chap);
+        }
+        setLoading(false);
+      })
+      .catch((e) => alert(e));
   };
 
   function uniqByKeepFirst(a, key) {
@@ -73,8 +114,12 @@ const Watch = () => {
   }
 
   function contentVideoView() {
-    return dataLink == null ? (
-      <p className="text-center"> Đang cập nhật phim này! </p>
+    return loadingData == true ? (
+      <p className="text-center"> Đang tai </p>
+    ) : dataLink == null ? (
+      <p className="text-center">
+        Khong tim thay du lieu, (phim này Đang cập nhật !)
+      </p>
     ) : (
       <div>
         <hr className="m-2" />
@@ -146,12 +191,13 @@ const Watch = () => {
                 e.chap == nowChap && (
                   <li>
                     <button
-                      className={buttonServerRender(e.server, e.link)}
+                      className={buttonServerRender(e.server, e.vip)}
                       onClick={() => {
                         setnowServer(e.server);
                         window.scrollTo(0, 0);
                       }}
                     >
+                      
                       {e.server}
                     </button>
                   </li>
@@ -166,20 +212,19 @@ const Watch = () => {
   }
 
   function buttonServerRender(sver, isVip) {
-    switch (isVip) {
-      case "vip only": {
-        if (sver == nowServer) return "btn btn-danger me-1";
-        else return "btn btn-outline-danger me-1 ";
-      }
-      default: {
-        if (sver == nowServer) return "btn btn-secondary me-1 ";
-        else return "btn btn-outline-secondary me-1 ";
-      }
+    if (isVip == true)
+      if (sver == nowServer) return "btn btn-danger me-1";
+      else return "btn btn-outline-danger me-1 ";
+    else {
+      if (sver == nowServer) return "btn btn-secondary me-1 ";
+      else return "btn btn-outline-secondary me-1 ";
     }
   }
 
   function unlockTHis(plan) {
-    if (userDetail.checkUser == "not") return history.push("/login");
+    if (userDetail.checkUser == "not") 
+    // return history.push("/login");
+    alert("please login!")
     else {
       setIconUnlock(0);
       axios
@@ -200,6 +245,7 @@ const Watch = () => {
                 (res.data.info.end - Date.now()) / (1000 * 60 * 60 * 24)
               )
             );
+            getDataByTokenId();
             // forceUpdate();
           } else alert(res.data.complete);
         })
@@ -210,7 +256,9 @@ const Watch = () => {
   }
 
   function saveThis() {
-    if (userDetail.checkUser == "not") return <Redirect push to="/login" />;
+    if (userDetail.checkUser == "not") 
+    // return history.push("/login");
+    alert("please login!")
     else {
       setIconSave(0);
       axios
@@ -240,7 +288,7 @@ const Watch = () => {
       <main>
         <div className>
           <img className="d-block w-100 pb-2" src={qc} alt="" />
-          {dataFilmState.id == undefined ? (
+          {dataFilmState.title == undefined ? (
             <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">
                 <span className="sr-only">Loading...</span>
@@ -249,61 +297,67 @@ const Watch = () => {
           ) : (
             <h2 className="text-center">
               {dataFilmState.title} ({dataFilmState.title_origin})
-              <div className="">
-                <button
-                  className="btn btn-danger btn-sm me-1"
-                  onClick={() => saveThis()}
-                >
-                  {iconSave === 0 ? (
-                    <div>
-                      <div
-                        className="spinner-border spinner-border-sm me-1"
-                        role="status"
-                      ></div>
-                      Đang tải ...
-                    </div>
-                  ) : iconSave === 1 ? (
-                    <div>
-                      <i class="fa fa-trash"></i> Xóa khỏi danh sách
-                    </div>
-                  ) : (
-                    <div>
-                      <i class="fa fa-plus"></i> Thêm vào danh sách
-                    </div>
-                  )}
-                </button>
-                <button
-                  className="btn btn-danger btn-sm ms-1"
-                  // data-bs-toggle="modal"
-                  // data-bs-target="#unlockFilmPlan"
-                  onClick={() => {
-                    setPopupVip(1);
-                  }}
-                  disabled={iconUnlock > 0 && "true"}
-                >
-                  {iconUnlock === 0 ? (
-                    <div>
-                      <div
-                        className="spinner-border spinner-border-sm me-1"
-                        role="status"
-                      ></div>
-                      Đang tải ...
-                    </div>
-                  ) : iconUnlock === -1 ? (
-                    <div>
-                      <i class="fa fa-trash"></i> Mở khóa vip
-                    </div>
-                  ) : (
-                    <div>
-                      <i class="fa fa-hourglass"></i> Còn lại {iconUnlock} ngày
-                      VIP
-                    </div>
-                  )}
-                </button>
-              </div>
+              {loadingData == true ? (
+                <div className="d-flex justify-content-center">
+                  <div className="spinner-border" role="status"></div>
+                </div>
+              ) : (
+                <div className="">
+                  <button
+                    className="btn btn-danger btn-sm me-1"
+                    onClick={() => saveThis()}
+                  >
+                    {iconSave === 0 ? (
+                      <div>
+                        <div
+                          className="spinner-border spinner-border-sm me-1"
+                          role="status"
+                        ></div>
+                        Đang tải ...
+                      </div>
+                    ) : iconSave === 1 ? (
+                      <div>
+                        <i class="fa fa-trash"></i> Xóa khỏi danh sách
+                      </div>
+                    ) : (
+                      <div>
+                        <i class="fa fa-plus"></i> Thêm vào danh sách
+                      </div>
+                    )}
+                  </button>
+                  <button
+                    className="btn btn-danger btn-sm ms-1"
+                    // data-bs-toggle="modal"
+                    // data-bs-target="#unlockFilmPlan"
+                    onClick={() => {
+                      setPopupVip(1);
+                    }}
+                    disabled={iconUnlock > 0 && "true"}
+                  >
+                    {iconUnlock === 0 ? (
+                      <div>
+                        <div
+                          className="spinner-border spinner-border-sm me-1"
+                          role="status"
+                        ></div>
+                        Đang tải ...
+                      </div>
+                    ) : iconUnlock === -1 ? (
+                      <div>
+                        <i class="fa fa-trash"></i> Mở khóa vip
+                      </div>
+                    ) : (
+                      <div>
+                        <i class="fa fa-hourglass"></i> Còn lại {iconUnlock}{" "}
+                        ngày VIP
+                      </div>
+                    )}
+                  </button>
+                </div>
+              )}
             </h2>
           )}
-
+          <hr />
           {contentVideoView()}
 
           <div className="container bg-light p-2 pt-0">
@@ -353,9 +407,16 @@ const Watch = () => {
                 </div>
                 <div class="modal-body">
                   <div className="row p-1">
-                    <h5 className="text-center mb-3">
-                      Số dư của bạn: {userDetail.coin} Koin
-                    </h5>
+                    {userDetail.coin == undefined ? (
+                      <h5 className="text-center mb-3">
+                        <Link to="/login">Dang nhap</Link> de thuc hien chuc nang
+                      </h5>
+                    ) : (
+                      <h5 className="text-center mb-3">
+                        Số dư của bạn: {userDetail.coin} Koin
+                      </h5>
+                    )}
+
                     <div className="col-12 border border-danger mb-3 p-1">
                       Mở khóa <strong>3</strong> ngày với{" "}
                       <strong>{dataFilmState.price}</strong> Koin

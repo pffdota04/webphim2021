@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Watch from './pages/Watch';
 import UnlockList from './pages/UserList/UnlockList';
 import WatchLaterList from "./pages/UserList/WatchLaterList";
+import Admin from './pages/Admin';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
             <Route path={["/watch/:id/:name" ,"/watch/:id", ]} component={Watch} />
             <Route path="/unlock"x component={UnlockList} />
             <Route path="/mylist" component={WatchLaterList} />
-            
+            <Route path="/admin" component={Admin} />
             <Route path="/" component={Home}/>
           </Switch>
         </main>

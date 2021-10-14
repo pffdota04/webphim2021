@@ -1,0 +1,41 @@
+.mycode {
+  width: fit-content;
+}
+
+/* table tr th {
+  border: 3px solid rgb(255, 0, 0);
+}
+table tr td {
+  border: 1px solid black;
+} */
+
+.table-phim {
+  margin-top: 20px;
+  display: inline-block;
+  overflow: auto;
+  max-height: 70rem;
+  overflow-x: scroll;
+  max-width: 100%;
+}
+
+.table-phim tr th div {
+  margin-top: -20px;
+  position: absolute;
+  text-align: center;
+}
+
+.table-phim tr th {
+  min-width: 4rem;
+}
+table {
+  border-collapse: collapse;
+}
+tr:nth-child(even) {
+  background: #eee;
+}
+
+@media (max-width: 768px) {
+  .table-phim tr th {
+    display: none;
+  }
+}

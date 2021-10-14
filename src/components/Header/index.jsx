@@ -34,24 +34,23 @@ const Header = () => {
           dispatch(setUserDataDetail({ checkUser: "not" }));
         } else {
           dispatch(setUserData(user));
-          auth()
-            .currentUser.getIdToken(true)
-            .then(function (idToken) {
-              console.log(idToken)
-              axios
-                .post(process.env.REACT_APP_API_LOCAL + "user/info", {
+          console.log(user.getIdToken(true))
+          user.getIdToken(true).then(function (idToken) {
+            console.log(idToken);
+            axios
+              .post(process.env.REACT_APP_API_LOCAL + "user/info", {
                 // .post("http://localhost:5000/api/user/info", {
-                  token: idToken,
-                })
-                .then((res) => {
-                  let saveDetail = Object.values(res.data)[0];
-                  saveDetail.token = idToken;
-                  dispatch(setUserDataDetail(saveDetail));
-                })
-                .catch((e) => {
-                  console.log(e);
-                });
-            });
+                token: idToken,
+              })
+              .then((res) => {
+                let saveDetail = Object.values(res.data)[0];
+                saveDetail.token = idToken;
+                dispatch(setUserDataDetail(saveDetail));
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          });
         }
       });
     }
@@ -300,7 +299,7 @@ const Header = () => {
                   <li>
                     <Link
                       className="dropdown-item"
-                      to="/phim/famyli"
+                      to="/phim/family"
                       onClick={() => setOpenHeader(false)}
                     >
                       GIA ĐÌNH - TRẺ EM
@@ -465,6 +464,7 @@ const Header = () => {
                       className="dropdown-item text-danger "
                       onClick={() => {
                         auth().signOut().then(alert("da dang xuat"));
+                        setOpenHeader(false);
                       }}
                     >
                       <i className="fa fa-sign-out" /> Đăng xuất

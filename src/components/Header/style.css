@@ -69,10 +69,11 @@
     padding-bottom: 5px;
   }
 }
+
+/* Header Small screen hone */
 @media (max-width: 767px) {
   .header-nav-bar div{
    max-height: fit-content;
-
   }
   #userlogo {
     text-align: center !important;
@@ -101,7 +102,6 @@
 
   .menu-header  ul{
     max-height: 60vh;
-    overflow: hidden;
-    overflow-y: scroll;
+    overflow: auto!important;
   }
 }

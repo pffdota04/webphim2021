@@ -11,6 +11,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setListHome } from "../../store/actions/listPhim_Action";
 import { Link } from "react-router-dom";
+import PopupFilm from "../../components/PopupFilm";
 
 const responsive_multi_carsousel = {
   superLargeDesktop: {
@@ -264,8 +265,8 @@ const Home = () => {
         <hr className="mt-5 mb-2" />
         {lastFilm()}
       </div>
-
-      {popupId != null && (
+      <PopupFilm data={popupId} click={setPopupID} />
+      {/* {popupId != null && (
         <div>
           <div
             className="modal fade popup-none-in-first bd-example-modal-sm  show"
@@ -344,7 +345,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       <Footer />
     </div>
   );

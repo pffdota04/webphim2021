@@ -2,28 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import "./style.css"
 
-const Voucher = (props) => {
-  const [inputCode, setInputCode] = useState("");
-  const { userDetail, change } = props;
+const User = (props) => {
 
-  const sendVoucher = () => {
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "user/voucher", {
-        token: userDetail.token,
-        code: inputCode,
-      })
-      .then((res) => {
-        if (res.data.complete == true) {
-          alert("Thanhf coong: nhan duoc " + res.data.voucherPoint);
-          let newDetail = userDetail;
-          newDetail.coin = newDetail.coin + res.data.voucherPoint;
-          change(newDetail);
-        } else alert(res.data);
-      })
-      .catch((e) => {
-        alert(e.response.data.message);
-      });
-  };
+  const { userDetail, change } = props;
 
   return (
     <div className="container my-2 mb-3">
@@ -32,7 +13,7 @@ const Voucher = (props) => {
           <h4 className="text-center">
             <strong className="display-6 fw-bold fst-italic ">
               {" "}
-              VOUCH KOIN 
+              User
             </strong>{" "}
           </h4>
           <div className="col-lg-6 mx-auto">
@@ -53,13 +34,13 @@ const Voucher = (props) => {
             name="magiaodich"
             id="magiaodich"
             className="w-100 form-control"
-            onChange={(e) => setInputCode(e.target.value)}
+
           ></input>
         </div>
         <div className="col-12 ">
           <button
             className="btn-lg w-25 btn-secondary mx-auto d-block mt-3"
-            onClick = {() => sendVoucher()}
+      
           >
             Gửi
           </button>
@@ -68,4 +49,4 @@ const Voucher = (props) => {
     </div>
   );
 };
-export default Voucher;
+export default User;

@@ -19,6 +19,7 @@ import {
 import FilmCard from "./../../components/FilmCard";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import PopupFilm from "../../components/PopupFilm";
 
 const Category = (props) => {
   const [hasMore, sethasMore] = useState(true);
@@ -30,6 +31,58 @@ const Category = (props) => {
 
   const [dataOther, setDataOther] = useState({});
   const [popupId, setPopupID] = useState(null);
+  const [reType, setreType] = useState(type);
+
+  const params_theloai = [
+    "tatca",
+    "action",
+    "movie",
+    "series",
+    "scifi",
+    "comedy",
+    "anime",
+    "adventure",
+    "document",
+    "fantasy",
+    "history",
+    "horror",
+    "romance",
+    "war",
+    "drama",
+    "crime",
+    "family",
+    "us",
+    "ja",
+    "ko",
+    "vi",
+    "ch",
+    "es"
+  ];
+  const theloai = [
+    "mới cập nhật",
+    "hành động",
+    "phim lẻ",
+    "phim bộ",
+    "khoa học viễn tưởng",
+    "hài",
+    "hoạt hình",
+    "phiêu lưu",
+    "tài liệu",
+    "kì ảo",
+    "lịch sử",
+    "kinh dị",
+    "lãng mạn",
+    "chiến tranh",
+    "chính kịch",
+    "tội phạm",
+    "gia đình - trẻ em",
+    "Mỹ",
+    "Nhật",
+    "Hàn Quốc",
+    "Việt Nam",
+    "Trung Quốc",
+    "Tây Ban Nha",
+  ];
 
   const dispatch = useDispatch();
 
@@ -39,6 +92,12 @@ const Category = (props) => {
     sethasMore(true);
     window.scrollTo(0, 0);
     setData(-1);
+
+    // change type
+    if (params_theloai.indexOf(type) != -1)
+      setreType(theloai[params_theloai.indexOf(type)]);
+    else 
+      setreType(type);
   }, [type]);
 
   let fetchMoreData = async (dataOf, lastid) => {
@@ -175,90 +234,19 @@ const Category = (props) => {
 
   return (
     <div>
+   
       <div className="container">
         {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
         <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
         <section>
           <div className="mb-3">
             <hr className="mb-2" />
-            <h1 className="text-center">PHIM {type}</h1>
+            <h1 className="text-center">Phim {reType}</h1>
             <hr className="mb-2" />
             {categoryData()}
             <hr className="mb-3" />
           </div>
-          {popupId != null && (
-            <div>
-              <div
-                className="modal fade popup-none-in-first bd-example-modal-sm  show"
-                id="ItemModal7"
-                aria-modal="true"
-                role="dialog"
-                style={{ display: "block" }}
-              >
-                <div
-                  className="Invisible"
-                  onClick={() => setPopupID(null)}
-                ></div>
-                <div className="modal-dialog modal-dialog-centered modal-xl">
-                  <div className="modal-content bg-light text-dark  trailer-ytb">
-                    <div className="modal-header p-2" id="header-popup">
-                      <h5 className="modal-title" id="exampleModalLabel">
-                        {popupId.title} ({popupId.year})
-                      </h5>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        onClick={() => setPopupID(null)}
-                        id="bt-close"
-                      />
-                    </div>
-                    <img
-                      src={popupId.backimg}
-                      alt="youtube thumnail image"
-                      className="w-100 img-trailer"
-                      loading="lazy"
-                    />
-                    <div className=" mx-auto text-ten-line ">
-                      <p className="text-center mb-0">
-                        <strong>
-                          {popupId.id}: {popupId.title} ({popupId.title_origin})
-                        </strong>
-                      </p>
-                      <p className="text-center mb-0">
-                        Diễn viên:
-                        <div className="the-loai-popup">{popupId.actor}</div> |
-                        Đạo diễn:
-                        <div className="the-loai-popup">{popupId.director}</div>
-                      </p>
-
-                      <p className="text-center">
-                        Thể loại:
-                        {Object.values(popupId.type).map((e) => (
-                          <div className="the-loai-popup">{e}</div>
-                        ))}
-                      </p>
-
-                      <p className="text-left ps-3 pe-2">
-                        &nbsp;&nbsp;{popupId.description}
-                      </p>
-                      <p className="text-center">
-                        Được phát hành vào năm {popupId.year}
-                      </p>
-                    </div>
-                    <div className="modal-footer p-1">
-                      <Link
-                        className="w-100 p-0 m-0 mb-1 btn-outline-secondary text-center pb-1"
-                        aria-label="Close"
-                        to={"/watch/" + popupId.id + "/" + popupId.title}
-                      >
-                        Xem ngay
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          <PopupFilm data={popupId} click={setPopupID} />
         </section>
         {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
         <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />

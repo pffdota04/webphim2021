@@ -22,7 +22,8 @@ const Admin = () => {
   const [dataDas, setDataDas] = useState({});
   const [char1, setChar1] = useState({});
   const [char2, setChar2] = useState({});
-  const [dataAllF, setDataAllF] = useState([{
+  const [dataAllF, setDataAllF] = useState([
+    {
       id: 0,
       title: "Loading..",
       type: "Loading..",
@@ -33,6 +34,9 @@ const Admin = () => {
       country: "Loading",
     },
   ]);
+  const [dataAllUser, setDataAllUser] = useState([]);
+  const [dataAllLink, setDataAllLink] = useState([]);
+
   useEffect(() => {
     auth().onAuthStateChanged((currentUser) => {
       currentUser
@@ -90,13 +94,33 @@ const Admin = () => {
             res.data.sum = sum;
             setDataDas(res.data);
 
-          axios
-            .get(process.env.REACT_APP_API_LOCAL + "film/search")
-            .then((res) => {
-              setDataAllF(Object.values(res.data));
-            })
-            .catch((e) => console.log(e));
+            // all phim
+            axios
+              .get(process.env.REACT_APP_API_LOCAL + "film/search")
+              .then((res) => {
+                setDataAllF(Object.values(res.data));
+              })
+              .catch((e) => console.log(e));
 
+            // all user
+            axios
+              .post(process.env.REACT_APP_API_LOCAL + "admin/alluser", {
+                token: token,
+              })
+              .then((res) => {
+                setDataAllUser(res.data);
+              })
+              .catch((e) => console.log(e));
+
+            // alll link
+            axios
+              .post(process.env.REACT_APP_API_LOCAL + "admin/alllink", {
+                token: token,
+              })
+              .then((res) => {
+                setDataAllLink(res.data);
+              })
+              .catch((e) => console.log(e));
           });
       });
   }
@@ -196,11 +220,21 @@ const Admin = () => {
             {/* End Col */}
           </div>
           <Switch>
-            <Route path={"/admin/user"} component={User} />
-            <Route path={"/admin/phim"} component={()=> <Phims dataF={dataAllF}/>} />
-            <Route path={"/admin/link"} component={Links} />
             <Route
-              path={"/admin"} component={() => <Dashboard char1={char1} char2={char2} />}
+              path={"/admin/user"}
+              component={() => <User dataU={dataAllUser} />}
+            />
+            <Route
+              path={"/admin/phim"}
+              component={() => <Phims dataF={dataAllF} />}
+            />
+            <Route
+              path={"/admin/link"}
+              component={() => <Links dataL={dataAllLink} />}
+            />
+            <Route
+              path={"/admin"}
+              component={() => <Dashboard char1={char1} char2={char2} />}
             />
           </Switch>
         </div>

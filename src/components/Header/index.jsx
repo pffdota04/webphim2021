@@ -58,13 +58,18 @@ const Header = () => {
 
   const onSubmitSearch = (e) => {
     if (Object.keys(data).length == 0 && !calling) {
+      const local = JSON.parse(localStorage.getItem("search"));
       setcalling(true);
       console.log("Calling Data...");
-      axios.get(process.env.REACT_APP_API_LOCAL + "film/search").then((res) => {
-        dispatch(setListSearch(res.data));
-        setcalling(false);
-        console.log("You got dat data");
-      });
+      if (local == undefined || parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now())
+        axios.get(process.env.REACT_APP_API_LOCAL + "film/search").then((res) => {
+          dispatch(setListSearch(res.data));
+          localStorage.setItem("search", JSON.stringify(res.data));
+          setcalling(false);
+          console.log("You got dat data");
+        });
+      else
+       dispatch(setListSearch(local));
     }
     e.preventDefault();
     let Search = e.target.value;

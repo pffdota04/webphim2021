@@ -72,10 +72,15 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const local= JSON.parse(localStorage.getItem("home"));
     if (Object.keys(homeData).length === 0)
-      axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
-        dispatch(setListHome(res.data));
-      });
+      if (local == undefined || parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()) // call new api sau 3 tieng
+        axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
+          dispatch(setListHome(res.data));
+          res.data.time = Date.now();
+          localStorage.setItem("home", JSON.stringify(res.data));
+        });
+      else dispatch(setListHome(local));
   }, []);
 
   const loadLoading = (numberItems, withNumber) => {

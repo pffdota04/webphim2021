@@ -4,10 +4,15 @@ import { useState } from "react";
 import "./style.css";
 
 const Phims = (props) => {
+  // token --> để gửi đi chung post (xác thực admin bên api),
+  // dataF --> là all Data Phim,
+  // setFetchPhim --> để gọi lại api lấy dataF mới
   const { token, dataF, setFetchPhim } = props;
-  const [choseF, setChoseF] = useState(0);
-  const [currentPhim, setCurrentPhim] = useState(dataF[choseF]);
 
+  const [choseF, setChoseF] = useState(0); // id phim đang chọn, mặc định 0
+  const [currentPhim, setCurrentPhim] = useState(dataF[choseF]); // lưu thông tin phim đang chọn
+
+  // just convert tiếng việt ra viết tắt để lưu trong dababase
   const theloai = [
     "phim lẻ",
     "phim bộ",
@@ -45,7 +50,7 @@ const Phims = (props) => {
     "family",
   ];
 
-
+  // Form input, hiển thị current và thay đổi state bằng setNew
   const formPhim = (currentPhim, setNew) => {
     return (
       <div className="row g-3" id="editFilm">
@@ -67,7 +72,7 @@ const Phims = (props) => {
             Giá vip
           </label>
           <input
-            type="text"
+            type="number"
             className="form-control"
             id="lastName"
             placeholder
@@ -321,6 +326,7 @@ const Phims = (props) => {
     );
   };
 
+  // Bấm vào nút cập nhật thì lấy currentPhim gửi đi.
   function updatePhim() {
     axios
       .post(process.env.REACT_APP_API_LOCAL + "admin/updatephim", {
@@ -335,6 +341,7 @@ const Phims = (props) => {
       .catch((e) => alert(e));
   }
 
+  // nút refresh --> call api để lấy new dataF
   function Refresh() {
     setFetchPhim(true);
   }

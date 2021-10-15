@@ -38,11 +38,16 @@ const Search = (props) => {
 
   useEffect(() => {
     if (Object.keys(data).length == 0) {
-      // console.log("Calling data... (not header)")
-      axios.get(process.env.REACT_APP_API_LOCAL + "film/search").then((res) => {
-        dispatch(setListSearch(res.data));
-      });
+      const local = JSON.parse(localStorage.getItem("search"));
+      if (local == undefined || parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now())
+        axios.get(process.env.REACT_APP_API_LOCAL + "film/search").then((res) => {
+          dispatch(setListSearch(res.data));
+          localStorage.setItem("search", JSON.stringify(res.data));
+        });
+      else
+        dispatch(setListSearch(local));
     }
+
     setKeySearch(value);
   }, [value]);
 

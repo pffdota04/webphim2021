@@ -12,16 +12,8 @@ const Links = (props) => {
   }
 
   function updateLink() {
-    // UObject là một object chứa thông tin User sau khi cập nhật. example:
-    //
-    // UObject =
-    //  {
-    //     "code": "5ez522b",
-    //     "coin": 456,
-    //     "createDay": 1634180235794,
-    //     "email": "maivanluong0458@gmail.com",
-    //     "usedCode": false
-    //  }
+    // LObject là một object chứa thông tin User sau khi cập nhật
+
     axios
       .post(process.env.REACT_APP_API_LOCAL + "admin/updatelink", {
         token: token,

@@ -5,12 +5,14 @@ import "./style.css"
 const User = (props) => {
   const { dataU, token, setFetchUser } = props;
   const [choseU, setChoseU] = useState(0);
-  const [currentUser, setCurrentUser] = useState(dataU[choseU]); // giá trị mặc định là user đầu tiên
+  const [currentUser, setCurrentUser] = useState(dataU[choseU]); // giá trị mặc định là user đầu tiên, update gì thì lưu vào đây
 
   function Refresh() {
     setFetchUser(true);
   }
 
+
+  // update user thì gọi cái này
   function updateUser() {
     // UObject là một object chứa thông tin User sau khi cập nhật. example:
     //
@@ -30,7 +32,7 @@ const User = (props) => {
       })
       .then((res) => {
         alert(res.data);
-        // bấm nút refresh để update data sau khi cập nhât thnah cong
+        // bấm nút refresh để update all data user sau khi cập nhât thnah cong
       })
       .catch((e) => alert(e));
   }
@@ -38,7 +40,7 @@ const User = (props) => {
   return (
     <div className="container my-2 mb-3">
       <div className="row">
-        {console.log(dataU)}
+        {/* {console.log(dataU)} */}
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
             <strong className="display-6 fw-bold fst-italic ">User</strong>

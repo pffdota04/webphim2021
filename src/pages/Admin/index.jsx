@@ -117,12 +117,10 @@ const Admin = () => {
   }, [adminToken]);
 
   useEffect(() => {
-    alert(fetchPhim);
     if (fetchPhim) getDataPhim();
   }, [fetchPhim]);
 
   useEffect(() => {
-    alert(fetchUser);
     if (fetchUser) getDataUser();
   }, [fetchUser]);
 

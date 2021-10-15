@@ -19,6 +19,7 @@ import Dashboard from "./Dashboard";
 const Admin = () => {
   const history = useHistory();
   const userInfo = useSelector((state) => state.userData.curentUser);
+  const [adminToken, setAdminToken] = useState(null);
   const [dataDas, setDataDas] = useState({});
   const [char1, setChar1] = useState({});
   const [char2, setChar2] = useState({});
@@ -37,6 +38,10 @@ const Admin = () => {
   const [dataAllUser, setDataAllUser] = useState([]);
   const [dataAllLink, setDataAllLink] = useState([]);
 
+  const [fetchPhim, setFetchPhim] = useState(true);
+  const [fetchUser, setFetchUser] = useState(true);
+  const [fetchLink, setFetchLink] = useState(true);
+
   useEffect(() => {
     auth().onAuthStateChanged((currentUser) => {
       currentUser
@@ -44,7 +49,7 @@ const Admin = () => {
         .then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
             // alert("You are admin!");
-            getDataAdmin();
+            getDataDashAndToken();
           } else {
             history.push("/");
           }
@@ -55,10 +60,14 @@ const Admin = () => {
     });
   }, []);
 
-  function getDataAdmin() {
+  function getDataDashAndToken() {
     auth()
       .currentUser.getIdToken(true)
       .then((token) => {
+        //set token
+        setAdminToken(token);
+
+        // set data chart && thong ke dasboard
         axios
           .post(process.env.REACT_APP_API_LOCAL + "admin/dashboard", {
             token: token,
@@ -92,37 +101,69 @@ const Admin = () => {
             let sum = 0;
             Object.values(res.data.doanhthu).map((e) => (sum = sum + e));
             res.data.sum = sum;
+
             setDataDas(res.data);
-
-            // all phim
-            axios
-              .get(process.env.REACT_APP_API_LOCAL + "film/search")
-              .then((res) => {
-                setDataAllF(Object.values(res.data));
-              })
-              .catch((e) => console.log(e));
-
-            // all user
-            axios
-              .post(process.env.REACT_APP_API_LOCAL + "admin/alluser", {
-                token: token,
-              })
-              .then((res) => {
-                setDataAllUser(res.data);
-              })
-              .catch((e) => console.log(e));
-
-            // alll link
-            axios
-              .post(process.env.REACT_APP_API_LOCAL + "admin/alllink", {
-                token: token,
-              })
-              .then((res) => {
-                setDataAllLink(res.data);
-              })
-              .catch((e) => console.log(e));
           });
       });
+  }
+
+  // có token thì lấy data các thứ còn lại
+  useEffect(() => {
+    if (adminToken != null) {
+      getDataPhim();
+      getDataUser();
+      getDataLink();
+    }
+  }, [adminToken]);
+
+  useEffect(() => {
+    alert(fetchPhim);
+    if (fetchPhim) getDataPhim();
+  }, [fetchPhim]);
+
+  useEffect(() => {
+    alert(fetchUser);
+    if (fetchUser) getDataUser();
+  }, [fetchUser]);
+
+  useEffect(() => {
+    if (fetchLink) getDataLink();
+  }, [fetchLink]);
+
+  function getDataPhim() {
+    setFetchPhim(false);
+    axios
+      .get(process.env.REACT_APP_API_LOCAL + "film/search")
+      .then((res) => {
+        setDataAllF(Object.values(res.data));
+      })
+      .catch((e) => console.log(e));
+  }
+
+  function getDataUser() {
+    // all user
+    setFetchUser(false);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "admin/alluser", {
+        token: adminToken,
+      })
+      .then((res) => {
+        setDataAllUser(res.data);
+      })
+      .catch((e) => console.log(e));
+  }
+
+  function getDataLink() {
+    // all user
+    setFetchLink(false);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "admin/alllink", {
+        token: adminToken,
+      })
+      .then((res) => {
+        setDataAllLink(res.data);
+      })
+      .catch((e) => console.log(e));
   }
 
   return userInfo.checkUser == "init" ? (
@@ -222,15 +263,33 @@ const Admin = () => {
           <Switch>
             <Route
               path={"/admin/user"}
-              component={() => <User dataU={dataAllUser} />}
+              component={() => (
+                <User
+                  dataU={dataAllUser}
+                  setFetchUser={setFetchUser}
+                  token={adminToken}
+                />
+              )}
             />
             <Route
               path={"/admin/phim"}
-              component={() => <Phims dataF={dataAllF} />}
+              component={() => (
+                <Phims
+                  dataF={dataAllF}
+                  setFetchPhim={setFetchPhim}
+                  token={adminToken}
+                />
+              )}
             />
             <Route
               path={"/admin/link"}
-              component={() => <Links dataL={dataAllLink} />}
+              component={() => (
+                <Links
+                  dataL={dataAllLink}
+                  token={adminToken}
+                  setFetchLink={setFetchLink}
+                />
+              )}
             />
             <Route
               path={"/admin"}

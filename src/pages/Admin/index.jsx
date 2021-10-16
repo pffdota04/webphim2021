@@ -9,12 +9,14 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import User from "./User";
 import Links from "./Link";
 import Phims from "./Phim";
-
 import Dashboard from "./Dashboard";
+
+// ionicon
+import { happy, home } from "ionicons/icons";
+import { IonIcon } from "@ionic/react";
 
 const Admin = () => {
   const history = useHistory();
@@ -174,6 +176,9 @@ const Admin = () => {
         <Link className="btn btn-sm btn-danger ms-1 mt-1" to="/admin">
           Home admin
         </Link>
+        <IonIcon icon={happy}></IonIcon>
+        <IonIcon icon={home} />
+        <div className="accessibility-outline"></div>
         <div className="container-fluid pt-1">
           {" "}
           <div className="row">

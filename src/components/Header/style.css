@@ -43,9 +43,9 @@
   min-width: fit-content !important;
 }
 
-  .header-nav-bar div{
-   max-height: 62px;
-  }
+.header-nav-bar div {
+  max-height: 62px;
+}
 
 @media (max-width: 1068px) {
   #header-real div div ul li,
@@ -72,8 +72,8 @@
 
 /* Header Small screen hone */
 @media (max-width: 767px) {
-  .header-nav-bar div{
-   max-height: fit-content;
+  .header-nav-bar div {
+    max-height: fit-content;
   }
   #userlogo {
     text-align: center !important;
@@ -100,8 +100,43 @@
     margin-left: 50vw !important;
   }
 
-  .menu-header  ul{
-    max-height: 60vh;
-    overflow: auto!important;
+  .menu-header ul {
+    max-height: 70vh;
+    overflow: auto !important;
   }
+}
+
+
+.strong-three{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: #1f1f1f; */
+}
+
+.strong-three a  {
+  position: relative;
+  text-decoration: none;
+  overflow: hidden;
+}
+.strong-three a ::before {
+  /* width: fit-content; */
+  overflow: hidden;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentcolor;
+  transform: translateX(-110%);
+  transition: transform 1s ease;
+}
+.strong-three a :hover::before {
+  /* overflow: hidden; */
+  transform: translateX(110%);
+}
+
+li a{
+  cursor: pointer;
 }

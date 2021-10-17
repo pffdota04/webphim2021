@@ -15,7 +15,7 @@ import Phims from "./Phim";
 import Dashboard from "./Dashboard";
 
 // ionicon
-import { happy, home } from "ionicons/icons";
+import { happy, home, accessibility } from "ionicons/icons";
 import { IonIcon } from "@ionic/react";
 
 const Admin = () => {
@@ -178,9 +178,9 @@ const Admin = () => {
         </Link>
         <IonIcon icon={happy}></IonIcon>
         <IonIcon icon={home} />
-        <div className="accessibility-outline"></div>
+        <IonIcon icon={accessibility} />
+
         <div className="container-fluid pt-1">
-          {" "}
           <div className="row">
             <div className="col-xl-3  col-sm-6  border border-danger">
               <div className="icon-card mb-30">

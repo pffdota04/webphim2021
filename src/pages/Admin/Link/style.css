@@ -1,3 +1,121 @@
-.mycode{
-    width: fit-content;
+.mycode {
+  width: fit-content;
+}
+
+.main__table_link-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.main__table_link {
+  width: 100%;
+  min-width: 1050px;
+  max-height: 500px;
+  border-spacing: 0;
+  overflow-x: scroll;
+  display: block;
+}
+.main__table_link thead {
+  border-bottom: 20px solid #1a191f;
+}
+.main__table_link thead th {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  padding: 0 15px 0 15px;
+  line-height: 100%;
+  margin-bottom: 0;
+  border: none;
+  padding: 0 20px;
+
+}
+.main__table_link tbody tr {
+  border-bottom: 10px solid #1a191f;
+  background-color: #222028;
+}
+.main__table_link tbody td {
+  padding: 0;
+  background-color: transparent;
+  border: 0px solid transparent;
+}
+.main__table_link tbody td:nth-child(5) .main__table_link-text {
+  padding: 0;
+  margin: 0;
+  width: 180px;
+}
+.main__table_link tbody td:nth-child(6) .main__table_link-text {
+  margin-left: 16px;
+}
+.main__table_link tbody td:first-child .main__table_link-text {
+  border-radius: 6px 0 0 6px;
+}
+.main__table_link tbody td:last-child .main__table_link-text {
+  border-radius: 0 6px 6px 0;
+}
+.main__table_link tbody .main__table_link-text {
+  padding: 0 20px;
+}
+
+.main__table_link-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 400;
+  height: 80px;
+  line-height: 31px;
+  padding: 15px;
+  background-color: #222028;
+  white-space: nowrap;
+}
+.main__table_link-text input {
+  width: 200px;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+}
+
+.main__table_link-btn--delete { 
+  color: #fff !important;
+  background-color: #eb5757 !important;
+}
+.main__table_link-btn--delete:hover {
+  border: 1px solid #eb5757 !important;
+  background-color: rgba(235,87,87,0.2) !important;
+  color: #eb5757 !important;
+}
+.main__table_link-btn--edit {
+  color: #fff !important;
+  background-color: #2f80ed !important;
+}
+.main__table_link-btn--edit:hover {
+  border: 1px solid #2f80ed !important;
+  color: #2f80ed !important;
+  background-color: rgba(47,128,237,0.2) !important;
+}
+
+.dashbox__mores_link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 40px;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffc312;
+  border-radius: 6px;
+  border: 1px solid #ffc312;
+}
+.dashboxs_link {
+  display: flex;
+  justify-content: flex-end;
+}
+.dashbox__mores_link:hover {
+  background-color: #f9ab00;
+  color: #000;
 }

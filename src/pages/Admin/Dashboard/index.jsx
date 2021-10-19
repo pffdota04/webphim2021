@@ -8,19 +8,23 @@ const Dashboard = (props) => {
     <div className="row">
       {console.log(props)}
       <div className="col-lg-6">
-        <div className="header">
-          <h1 className="title">Doanh thu</h1>
-          <div className="links"></div>
-        </div>{" "}
-        {char1.labels != undefined && <Line data={char1} />}
+        <div className="stats">
+          <div className="header">
+            <h1 className="titles">REVENUE</h1>
+            <div className="links"></div>
+          </div>{" "}
+          {char1.labels != undefined && <Line data={char1} />}
+        </div>
       </div>
 
       <div className="col-lg-6">
+      <div className="stats">
         <div className="header">
-          <h1 className="title">Người dùng mới</h1>
+          <h1 className="titles">NEW USER</h1>
           <div className="links"></div>
         </div>
         {char2.labels != undefined && <Line data={char2} />}
+      </div>
       </div>
     </div>
   );

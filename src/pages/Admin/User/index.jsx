@@ -52,16 +52,32 @@ const User = (props) => {
             }
           />
         </div>
-
-        <div className="col-md-8">
+        <div className="col-md-12">
+          <label htmlFor="usedCode" className="form-label">Usedcode</label>
+          <input
+            type="checkbox"
+            class="form-check-input ms-2"
+            id="isvip"
+            checked={currentUser.usedCode == "true" || currentUser.usedCode == true}
+            onChange={(e) =>
+              setNew((prevState) => ({
+                ...prevState,
+                usedCode: !currentUser.usedCode,
+              }))
+            }
+          />
+        </div>
+        <div className="col-md-12">
           <label htmlFor="createDay" className="form-label">
             CreateDay
+
           </label>
           <input
             type="text"
             className="form-control"
             id="createDay"
             value={currentUser.createDay}
+
             required
             onChange={(e) =>
               setNew((prevState) => ({
@@ -72,27 +88,10 @@ const User = (props) => {
             disabled
           />
         </div>
-        <div className="col-md-4">
-          <label htmlFor="usedCode" className="form-label">
-            Usedcode
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="usedCode"
-            value={currentUser.usedCode}
-            required
-            onChange={(e) =>
-              setNew((prevState) => ({
-                ...prevState,
-                usedCode: e.target.value,
-              }))
-            }
-          />
-        </div>
-        <div className="col-12">
+        <div className="col-md-12">
           <label htmlFor="email" className="form-label">
-            Email
+          Email
+
           </label>
           <input
             type="email"
@@ -106,6 +105,8 @@ const User = (props) => {
               }))
             }
             required
+            disabled
+
           />
         </div>
       </div>
@@ -142,13 +143,15 @@ const User = (props) => {
   }, [currentUser]);
 
   return (
-    <div className="container my-2 mb-3">
+    <div className="my-2 mb-3">
       <div className="row">
         {/* {console.log(dataU)} */}
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
             <strong className="display-6 fw-bold fst-italic ">User</strong>
-            <button onClick={() => Refresh()}>Test refresh data user</button>
+            <div className="dashboxs_user">
+            <button className="dashbox__mores_user" onClick={() => Refresh()}>Refresh Data</button>
+            </div>
           </h4>
           {/* <div className="col-8">
             {dataU.map((e, i) => {
@@ -161,56 +164,61 @@ const User = (props) => {
           </div>
           <div className="col-6"></div> */}
         </div>
-        <div className="col-12 col-xl-4">
-          {currentUser!=undefined && formUser(currentUser, setCurrentUser)}
+        <div className="col-12 col-xl-3 mt-2">
+          {formUser(currentUser, setCurrentUser)}
+          <hr className="my-4" />
+
           <button
             className="w-100 btn btn-primary btn-lg mt-2"
             onClick={() => updateUser()}
           >
-            Cập nhật
+            UPDATE
           </button>
-          <hr className="my-4" />
         </div>
-        <div className="col-12 col-xl-8">
+        <div className="col-12 col-xl-9 mt-2">
           {
             dataU != undefined && (
-              <div className="table-test">
-                <table className="table-phim ">
+              <div className="main__table_user-wrap">
+                <table className="main__table_user">
+                  <thead>
                   <tr>
                     <th>
-                      <div>STT</div>
+                      STT
                     </th>
                     <th>
-                      <div>Code</div>
+                      Code
                     </th>
                     <th>
-                      <div>Coin</div>
+                      Coin
                     </th>
                     <th>
-                      <div>CreateDay</div>
+                      CreateDay
                     </th>
                     <th>
-                      <div>Email</div>
+                      Email
                     </th>
                     <th>
-                      <div>UsedCode</div>
+                      UsedCode
                     </th>
                     <th>
-                      <div>Action</div>
+                      Action
                     </th>
                   </tr>
+                  </thead>
 
+                  <tbody>
                   {dataU.map((e, i) => (
                     <tr>
-                      <td>{i}</td>
-                      <td>{e.code}</td>
-                      <td>{e.coin}</td>
-                      <td>{e.createDay}</td>
-                      <td>{e.email}</td>
-                      <td>{e.usedCode}</td>
-                      <td>
-                        <button
-                          className="btn btn-sm btn-danger"
+                      <td><div class="main__table_user-text">{i}</div></td>
+                      <td><div class="main__table_user-text">{e.code}</div></td>
+                      <td><div class="main__table_user-text">{e.coin}</div></td>
+                      <td><div class="main__table_user-text">{e.createDay}</div></td>
+                      <td><div class="main__table_user-text">
+                        <input value={e.email} readOnly /></div></td>
+                      <td><div class="main__table_user-text">{e.usedCode}</div></td>
+                      <td><div class="main__table_user-text"><button
+                          className="btn btn-sm btn-link main__table-btn--edit"
+
                           onClick={() => {
                             setChoseU(e.code);
                             setCurrentUser(dataU[i]);
@@ -218,9 +226,19 @@ const User = (props) => {
                         >
                           Edit
                         </button>
+                        <button
+                          className="btn btn-sm btn-link ms-1 main__table-btn--delete"
+                          onClick={() => {}}
+                        >
+                          Delete
+                        </button></div>
+                        
                       </td>
                     </tr>
                   ))}
+                  </tbody>
+                  
+
                 </table>
               </div>
             )

@@ -15,9 +15,10 @@ const Links = (props) => {
   const formLink = (currentLink, setNew) => {
     return (
       <div className="row g-3" id="editFilm">
-        <div className="col-sm-4">
+        <div className="col-sm-6">
           <label htmlFor="firstName" className="form-label">
-            Id link
+            ID Link
+
           </label>
           <input
             type="text"
@@ -28,9 +29,10 @@ const Links = (props) => {
             disabled
           />
         </div>
-        <div className="col-sm-4">
+        <div className="col-sm-6">
           <label htmlFor="firstName" className="form-label">
-            Id phim
+            ID Film
+
           </label>
           <input
             type="number"
@@ -47,7 +49,8 @@ const Links = (props) => {
             }
           />
         </div>
-        <div className="col-sm-4">
+        <div className="col-sm-6">
+
           <label htmlFor="lastName" className="form-label">
             Chap
           </label>
@@ -66,25 +69,6 @@ const Links = (props) => {
             }
           />
         </div>
-
-        <div className="col-12">
-          <label htmlFor="email" className="form-label">
-            Link
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="text"
-            value={currentLink.link}
-            required
-            onChange={(e) =>
-              setNew((prevState) => ({
-                ...prevState,
-                link: e.target.value,
-              }))
-            }
-          />
-        </div>
         <div className="col-sm-6">
           <label htmlFor="firstName" className="form-label">
             Server
@@ -95,11 +79,33 @@ const Links = (props) => {
             id="firstName"
             placeholder
             value={currentLink.server}
+
             required
             onChange={(e) =>
               setNew((prevState) => ({
                 ...prevState,
                 server: e.target.value,
+
+              }))
+            }
+          />
+        </div>
+        <div className="col-12">
+          <label htmlFor="email" className="form-label">
+            Link
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="text"
+            value={currentLink.link}
+
+            required
+            onChange={(e) =>
+              setNew((prevState) => ({
+                ...prevState,
+                link: e.target.value,
+
               }))
             }
           />
@@ -110,7 +116,8 @@ const Links = (props) => {
           </label>
           <input
             type="checkbox"
-            class="form-check-input"
+            class="form-check-input ms-2"
+
             id="isvip"
             checked={currentLink.vip == "true" || currentLink.vip == true}
             onChange={(e) =>
@@ -141,12 +148,14 @@ const Links = (props) => {
   }
 
   return (
-    <div className="container my-2 mb-3">
+    <div className="my-2 mb-3">
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
             <strong className="display-6 fw-bold fst-italic "> Links</strong>{" "}
-            <button onClick={() => Refresh()}>refresh data link</button>
+            <div className="dashboxs_link">
+            <button className="dashbox__mores_link" onClick={() => Refresh()}>Refresh Data</button>
+            </div>
           </h4>
           {/* <div className="col-6">
             {dataL.map((e, i) => {
@@ -158,72 +167,81 @@ const Links = (props) => {
             })}
           </div> */}
         </div>
-        <div className="col-12 col-xl-4">
+        <div className="col-12 col-xl-3 mt-2">
           {currentLink != undefined && formLink(currentLink, setCurrentLink)}
+          <hr className="my-4" />
+
           <button
             className="w-100 btn btn-primary btn-lg mt-2"
             onClick={() => updateLink()}
           >
-            Cập nhật
+            UPDATE
           </button>
-          <hr className="my-4" />
         </div>
-        <div className="col-12 col-xl-8">
+        <div className="col-12 col-xl-9 mt-2">
           {
             dataL != undefined && (
-              <div className="table-test">
-                <table className="table-phim ">
+              <div className="main__table_link-wrap">
+                <table className="main__table_link">
+                  <thead>
                   <tr>
-                    <th>
-                      <div>STT</div>
+                    <th>STT
                     </th>
-                    <th>
-                      <div>ID Link</div>
+                    <th>ID Link
                     </th>
-                    <th>
-                      <div>ID Film</div>
+                    <th>ID Film
                     </th>
-                    <th className="max-5x">
-                      <div>CHAP</div>
+                    <th>CHAP
                     </th>
-                    <th>
-                      <div>LINK</div>
+                    <th>LINK
                     </th>
-                    <th>
-                      <div>SERVER</div>
+                    <th>SERVER
                     </th>
-                    <th>
-                      <div>VIP</div>
+                    <th>VIP
                     </th>
-                    <th>
-                      <div>Action</div>
+                    <th>Action
                     </th>
                   </tr>
-
+                  </thead>
+                  
+                  <tbody>
                   {dataL.map((e, i) => (
                     <tr>
-                      <td>{i}</td>
-                      <td>{e.id}</td>
-                      <td>{e.film_id}</td>
-                      <td>{e.chap}</td>
+                      <td><div class="main__table_link-text">{i}</div></td>
+                      <td><div class="main__table_link-text">{e.id}</div></td>
+                      <td><div class="main__table_link-text">{e.film_id}</div></td>
+                      <td><div class="main__table_link-text">{e.chap}</div></td>
                       <td>
-                        <input value={e.link} readOnly />
+                        <div class="main__table_link-text"><input value={e.link} readOnly /></div>
+                        {/* <input value={e.link} readOnly /> */}
                       </td>
-                      <td>{e.server}</td>
-                      <td>{e.vip}</td>
-                      <td>
-                        <button
-                          className="btn btn-sm btn-danger"
+                      <td><div class="main__table_link-text">{e.server}</div></td>
+                      <td><div class="main__table_link-text">{e.vip}</div></td>
+                      <td><div class="main__table_link-text">
+                      <button
+                          className="btn btn-sm btn-link main__table_link-btn--edit"
                           onClick={() => {
-                            setChoseL(e.id);
-                            setCurrentLink(dataL[e.id]);
+                            //setChoseL(e.id);
+                            setCurrentLink(dataL[i]);
                           }}
                         >
                           Edit
                         </button>
+                        <button
+                          className="btn btn-sm btn-link ms-1 main__table_link-btn--delete"
+                          onClick={() => {
+                            
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
                       </td>
                     </tr>
                   ))}
+                  </tbody>
+                  
+
                 </table>
               </div>
             )

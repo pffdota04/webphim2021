@@ -1,3 +1,26 @@
 .mycode{
     width: fit-content;
 }
+
+.titles {
+    margin: 0 135px 5px;
+}
+
+.lines {
+    border-bottom: 1px solid #222028;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #222028;
+    padding: 20px;
+    height: auto;
+    width: 100%;
+    position: relative;
+    border-radius: 6px;
+    border: 1px solid #ffc312;
+  
+}

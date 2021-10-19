@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
-import "./style.css"
+import { useEffect, useState } from "react";
+import "./style.css";
 
 const User = (props) => {
   const { dataU, token, setFetchUser } = props;
@@ -70,12 +70,14 @@ const User = (props) => {
         <div className="col-md-12">
           <label htmlFor="createDay" className="form-label">
             CreateDay
+
           </label>
           <input
             type="text"
             className="form-control"
             id="createDay"
             value={currentUser.createDay}
+
             required
             onChange={(e) =>
               setNew((prevState) => ({
@@ -89,6 +91,7 @@ const User = (props) => {
         <div className="col-md-12">
           <label htmlFor="email" className="form-label">
           Email
+
           </label>
           <input
             type="email"
@@ -103,6 +106,7 @@ const User = (props) => {
             }
             required
             disabled
+
           />
         </div>
       </div>
@@ -134,6 +138,10 @@ const User = (props) => {
       .catch((e) => alert(e));
   }
 
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
+
   return (
     <div className="my-2 mb-3">
       <div className="row">
@@ -159,6 +167,7 @@ const User = (props) => {
         <div className="col-12 col-xl-3 mt-2">
           {formUser(currentUser, setCurrentUser)}
           <hr className="my-4" />
+
           <button
             className="w-100 btn btn-primary btn-lg mt-2"
             onClick={() => updateUser()}
@@ -209,6 +218,7 @@ const User = (props) => {
                       <td><div class="main__table_user-text">{e.usedCode}</div></td>
                       <td><div class="main__table_user-text"><button
                           className="btn btn-sm btn-link main__table-btn--edit"
+
                           onClick={() => {
                             setChoseU(e.code);
                             setCurrentUser(dataU[i]);
@@ -228,6 +238,7 @@ const User = (props) => {
                   ))}
                   </tbody>
                   
+
                 </table>
               </div>
             )

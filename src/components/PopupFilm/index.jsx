@@ -56,14 +56,20 @@ const PopupFilm = (props) => {
   const [showYoutube, setShowYoutube] = useState(false);
 
   useEffect(() => {
+    let type2 = {};
     if (data != null) {
       if (params_quocgia.indexOf(data.country) != -1)
-        data.country = quocgia[params_quocgia.indexOf(data.country)];
+        data.country2 = params_quocgia.indexOf(data.country);
+        //  quocgia[params_quocgia.indexOf(data.country)];
 
       Object.keys(data.type).map((e) => {
         if (params_theloai.indexOf(e) != -1)
-          data.type[e] = theloai[params_theloai.indexOf(e)];
+          // data.type[e] = theloai[params_theloai.indexOf(e)];
+          // type2[e] = theloai[params_theloai.indexOf(e)];
+          type2[e] = params_theloai.indexOf(e);
       });
+
+      data.type2 = type2;
       setShowYoutube(false);
       setDataState(data);
     }
@@ -133,34 +139,47 @@ const PopupFilm = (props) => {
                   </strong>
                 </p>
                 <p className="text-center mb-0">
-                  Diễn viên:
-                  <div className="the-loai-popup">{data.actor}</div> | Đạo diễn:
-                  <div className="the-loai-popup">{data.director}</div>
+                  Diễn viên: {data.actor} | Đạo diễn: {data.director}
                 </p>
 
                 <p className="text-center mb-0">
                   Thể loại:
-                  {Object.values(data.type).map((e) => (
-                    <div className="the-loai-popup">{e}</div>
-                  ))}
+                  {data.type2 != null &&
+                    Object.values(data.type2).map((e) => (
+                      <Link
+                        className="btn btn-sm btn-outline-light ms-1 mt-1 mb-1"
+                        to={"/phim/" + params_theloai[e]}
+                      >
+                        {theloai[e]}
+                      </Link>
+                    ))}
                 </p>
                 <p className="text-center mb-0">
                   Quốc gia:
-                  <div className="the-loai-popup">{data.country}</div>| Thời
-                  lượng:
-                  <div className="the-loai-popup">{data.length}</div>
+                  <Link
+                    className="btn btn-sm btn-outline-light ms-1 mt-1 mb-1"
+                    to={"/phim/" + data.country}
+                  >
+                    {quocgia[data.country2]}
+                  </Link>{" "}
+                  | Thời lượng: {data.length}
                 </p>
 
                 <p className="text-center">
                   Năm:
-                  <div className="the-loai-popup">{data.year}</div>| Giá vip
-                  <div className="the-loai-popup">{data.price}</div>
+                  <Link
+                    className="btn btn-sm btn-outline-light ms-1 mt-1 mb-1"
+                    to={"/phim/" + data.year}
+                  >
+                    {data.year}
+                  </Link>{" "}
+                  | Giá vip: {data.price}
                 </p>
                 <p className="text-left ps-3 pe-2">
                   &nbsp;&nbsp;{data.description}
                 </p>
               </div>
-              <div className="modal-footer p-1">
+              <div className="modal-footer p-1 nut-xem">
                 <Link
                   className="w-100 p-0 m-0 mt-1 mb-1 btn btn-danger text-center pb-1"
                   aria-label="Close"

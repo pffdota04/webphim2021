@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import User from "./User";
 import Links from "./Link";
 import Phims from "./Phim";
@@ -18,7 +17,12 @@ import Napcoins from "./Napcoin";
 import Comments from "./Comment";
 import Reports from "./Report";
 
+
 import Dashboard from "./Dashboard";
+
+// ionicon
+import { happy, home, accessibility } from "ionicons/icons";
+import { IonIcon } from "@ionic/react";
 
 const Admin = () => {
   const history = useHistory();
@@ -377,6 +381,7 @@ const Admin = () => {
               </div>
 				    </div>
             {/* <div className="col-xl-3  col-sm-6  border border-danger">
+
               <div className="icon-card mb-30">
                 <div className="content">
                   <h6 className="mb-10">

@@ -96,7 +96,18 @@ const Search = (props) => {
             <hr className="mb-2" />
             <div className="row">
               <div className="col-4">
-                <label for="search">Từ khóa:</label>
+                <button
+                  className="btn btn-sm btn-danger m-1"
+                  onClick={() => {
+                    setCountry("all");
+                    setType("all");
+                    setMovieOrSeries("all");
+                    setKeySearch("")
+                  }}
+                >
+                  Clear all filter
+                </button>
+                {/* <label for="search">Từ khóa: </label> */}
                 <input
                   className="form-control me-2"
                   type="search"
@@ -118,6 +129,7 @@ const Search = (props) => {
                       name="exampleRadios"
                       id="allcheck"
                       defaultChecked
+                      checked={movieOrSeries === "all"}
                       onChange={() => {
                         setMovieOrSeries("all");
                       }}
@@ -132,6 +144,7 @@ const Search = (props) => {
                       type="radio"
                       name="exampleRadios"
                       id="moviecheck"
+                      checked={movieOrSeries === "movie"}
                       onChange={() => {
                         setMovieOrSeries("movie");
                       }}
@@ -146,6 +159,7 @@ const Search = (props) => {
                       type="radio"
                       name="exampleRadios"
                       id="seriescheck"
+                      checked={movieOrSeries === "series"}
                       onChange={() => {
                         setMovieOrSeries("series");
                       }}
@@ -163,6 +177,7 @@ const Search = (props) => {
                     className="form-control"
                     id="theloaiSelect"
                     onChange={(e) => setType(e.target.value)}
+                    value={type}
                   >
                     <option value="all">Tất cả</option>
                     <option value="action"> HÀNH ĐỘNG</option>
@@ -184,6 +199,7 @@ const Search = (props) => {
                     className="form-control"
                     id="theloaiSelect"
                     onChange={(e) => setCountry(e.target.value)}
+                    value={country}
                   >
                     <option value="all">Tất cả</option>
                     <option value="us">Mỹ</option>

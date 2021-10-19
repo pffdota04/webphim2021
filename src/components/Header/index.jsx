@@ -21,11 +21,11 @@ const Header = () => {
   const [finalCheckToken, setfinalCheckToken] = useState(false);
   const userInfo = useSelector((state) => state.userData.curentUser);
   const userDetail = useSelector((state) => state.userData.userDetail);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("useEff header")
+    console.log("useEff header");
     if (finalCheckToken === false) {
       setfinalCheckToken(true);
       auth().onAuthStateChanged((user) => {
@@ -34,7 +34,7 @@ const Header = () => {
           dispatch(setUserDataDetail({ checkUser: "not" }));
         } else {
           dispatch(setUserData(user));
-          console.log(user.getIdToken(true))
+          console.log(user.getIdToken(true));
           user.getIdToken(true).then(function (idToken) {
             console.log(idToken);
             axios
@@ -61,15 +61,19 @@ const Header = () => {
       const local = JSON.parse(localStorage.getItem("search"));
       setcalling(true);
       console.log("Calling Data...");
-      if (local == undefined || parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now())
-        axios.get(process.env.REACT_APP_API_LOCAL + "film/search").then((res) => {
-          dispatch(setListSearch(res.data));
-          localStorage.setItem("search", JSON.stringify(res.data));
-          setcalling(false);
-          console.log("You got dat data");
-        });
-      else
-       dispatch(setListSearch(local));
+      if (
+        local == undefined ||
+        parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
+      )
+        axios
+          .get(process.env.REACT_APP_API_LOCAL + "film/search")
+          .then((res) => {
+            dispatch(setListSearch(res.data));
+            localStorage.setItem("search", JSON.stringify(res.data));
+            setcalling(false);
+            console.log("You got dat data");
+          });
+      else dispatch(setListSearch(local));
     }
     e.preventDefault();
     let Search = e.target.value;
@@ -115,7 +119,7 @@ const Header = () => {
             id="navbarCollapse"
           >
             <ul className="navbar-nav me-auto mb-2 mb-md-0 mr-auto">
-              <li className="nav-item">
+              <li className="nav-item strong-three">
                 <Link
                   className="nav-link active nv"
                   aria-current="page"
@@ -125,7 +129,7 @@ const Header = () => {
                   <strong>TẤT CẢ</strong>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item strong-three">
                 <Link
                   className="nav-link active"
                   aria-current="page"
@@ -135,7 +139,7 @@ const Header = () => {
                   <strong>PHIM LẺ</strong>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item strong-three">
                 <Link
                   className="nav-link active"
                   aria-current="page"
@@ -196,7 +200,27 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <div>
+                    <div
+                      class="input-group mx-auto "
+                      style={{ minWidth: "100px", maxWidth:"50vw" }}
+                    >
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="year"
+                        onChange={onSubmitYear}
+                        aria-describedby="button-addon2"
+                      />
+                      <Link
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        to={"/phim/" + searchValueTime}
+                        onClick={() => setOpenHeader(false)}
+                      >
+                        <i className="fa fa-search"></i>
+                      </Link>
+                    </div>
+                    {/* <div>
                       <input
                         className="me-1 ms-1 mb-1"
                         type="search"
@@ -212,7 +236,7 @@ const Header = () => {
                       >
                         <i className="fa fa-search"></i>
                       </Link>
-                    </div>
+                    </div> */}
                   </li>
                 </ul>
               </li>

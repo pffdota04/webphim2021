@@ -13,16 +13,10 @@
   text-overflow: ellipsis;
 }
 
-
-.the-loai-popup{
-  background-color: rgba(255, 0, 0, 0.517);
-    margin-left: .1rem;
-      width: fit-content;
-      display: inline-block;
-      padding: 0.2rem;
-      border-radius: .5rem;
-      margin-right: .5rem;
-      margin-bottom: 2px;
+.nut-xem :hover, .nut-xem a:hover{
+    background-color: rgb(255, 255, 255) !important;
+    border: 1px solid rgb(255, 0, 0);
+    color: rgb(255, 0, 0);
 }
 
 .youtube-player {

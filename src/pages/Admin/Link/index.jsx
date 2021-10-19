@@ -18,6 +18,7 @@ const Links = (props) => {
         <div className="col-sm-6">
           <label htmlFor="firstName" className="form-label">
             ID Link
+
           </label>
           <input
             type="text"
@@ -31,6 +32,7 @@ const Links = (props) => {
         <div className="col-sm-6">
           <label htmlFor="firstName" className="form-label">
             ID Film
+
           </label>
           <input
             type="number"
@@ -48,6 +50,7 @@ const Links = (props) => {
           />
         </div>
         <div className="col-sm-6">
+
           <label htmlFor="lastName" className="form-label">
             Chap
           </label>
@@ -76,11 +79,13 @@ const Links = (props) => {
             id="firstName"
             placeholder
             value={currentLink.server}
+
             required
             onChange={(e) =>
               setNew((prevState) => ({
                 ...prevState,
                 server: e.target.value,
+
               }))
             }
           />
@@ -94,11 +99,13 @@ const Links = (props) => {
             className="form-control"
             id="text"
             value={currentLink.link}
+
             required
             onChange={(e) =>
               setNew((prevState) => ({
                 ...prevState,
                 link: e.target.value,
+
               }))
             }
           />
@@ -110,6 +117,7 @@ const Links = (props) => {
           <input
             type="checkbox"
             class="form-check-input ms-2"
+
             id="isvip"
             checked={currentLink.vip == "true" || currentLink.vip == true}
             onChange={(e) =>
@@ -162,6 +170,7 @@ const Links = (props) => {
         <div className="col-12 col-xl-3 mt-2">
           {currentLink != undefined && formLink(currentLink, setCurrentLink)}
           <hr className="my-4" />
+
           <button
             className="w-100 btn btn-primary btn-lg mt-2"
             onClick={() => updateLink()}
@@ -232,6 +241,7 @@ const Links = (props) => {
                   ))}
                   </tbody>
                   
+
                 </table>
               </div>
             )

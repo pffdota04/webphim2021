@@ -1,0 +1,506 @@
+.collage-404 {
+  position: relative;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  perspective: 500px;
+  display: inline-block;
+  margin: 2vw 0;
+}
+.collage-404 h1 {
+  font-size: 30vw;
+  margin: 0;
+  line-height: 1;
+  padding: 0;
+  display: inline-block;
+  transition: all 1s ease-in-out;
+  opacity: 0.1;
+}
+
+.collage-404-images {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.collage-404 a {
+  position: absolute;
+  width: 5vw;
+  width: 7%;
+  display: block;
+  border-radius: 0.25rem;
+  transition: all 1s ease-in-out;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.collage-404 a img {
+  transition: all 0.2s ease-in-out;
+}
+.collage-404 a:hover {
+  z-index: 1;
+}
+.collage-404 a:hover img {
+  transform: scale(1.5) !important;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+}
+.collage-404 a.loaded img {
+  opacity: 1;
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
+}
+.collage-404 a.introduced {
+  transition: all 0.1s ease-in-out;
+}
+.collage-404 a:nth-child(1) {
+  left: 19%;
+  top: 18%;
+}
+.collage-404 a:nth-child(2) {
+  left: 15%;
+  top: 25%;
+}
+.collage-404 a:nth-child(3) {
+  left: 12%;
+  top: 32%;
+}
+.collage-404 a:nth-child(4) {
+  left: 8%;
+  top: 39%;
+}
+.collage-404 a:nth-child(5) {
+  left: 4%;
+  top: 47%;
+}
+.collage-404 a:nth-child(6) {
+  left: 1%;
+  top: 55%;
+}
+.collage-404 a:nth-child(7) {
+  left: -2%;
+  top: 62%;
+}
+.collage-404 a:nth-child(8) {
+  left: 5%;
+  top: 62%;
+}
+.collage-404 a:nth-child(9) {
+  left: 12%;
+  top: 62%;
+}
+.collage-404 a:nth-child(10) {
+  left: 19%;
+  top: 62%;
+}
+.collage-404 a:nth-child(11) {
+  left: 25.5%;
+  top: 62%;
+}
+.collage-404 a:nth-child(12) {
+  left: 19%;
+  top: 27%;
+}
+.collage-404 a:nth-child(13) {
+  left: 19%;
+  top: 35.5%;
+}
+.collage-404 a:nth-child(14) {
+  left: 19%;
+  top: 43.5%;
+}
+.collage-404 a:nth-child(15) {
+  left: 19%;
+  top: 53%;
+}
+.collage-404 a:nth-child(16) {
+  left: 19%;
+  top: 70%;
+}
+.collage-404 a:nth-child(17) {
+  left: 19%;
+  top: 79%;
+}
+.collage-404 a:nth-child(18) {
+  left: 41%;
+  top: 20%;
+}
+.collage-404 a:nth-child(19) {
+  left: 38%;
+  top: 26%;
+}
+.collage-404 a:nth-child(20) {
+  left: 36%;
+  top: 34%;
+}
+.collage-404 a:nth-child(21) {
+  left: 35%;
+  top: 43%;
+}
+.collage-404 a:nth-child(22) {
+  left: 35%;
+  top: 52%;
+}
+.collage-404 a:nth-child(23) {
+  left: 35.5%;
+  top: 61%;
+}
+.collage-404 a:nth-child(24) {
+  left: 37%;
+  top: 69%;
+}
+.collage-404 a:nth-child(25) {
+  left: 41%;
+  top: 76%;
+}
+.collage-404 a:nth-child(26) {
+  left: 47%;
+  top: 79%;
+}
+.collage-404 a:nth-child(27) {
+  left: 52%;
+  top: 76%;
+}
+.collage-404 a:nth-child(28) {
+  left: 55.5%;
+  top: 69%;
+}
+.collage-404 a:nth-child(29) {
+  left: 57%;
+  top: 61%;
+}
+.collage-404 a:nth-child(30) {
+  left: 58%;
+  top: 52%;
+}
+.collage-404 a:nth-child(31) {
+  left: 58%;
+  top: 43%;
+}
+.collage-404 a:nth-child(32) {
+  left: 57%;
+  top: 34%;
+}
+.collage-404 a:nth-child(33) {
+  left: 55%;
+  top: 26%;
+}
+.collage-404 a:nth-child(34) {
+  left: 52%;
+  top: 20%;
+}
+.collage-404 a:nth-child(35) {
+  left: 47%;
+  top: 18%;
+}
+.collage-404 a:nth-child(36) {
+  left: 88%;
+  top: 18%;
+}
+.collage-404 a:nth-child(37) {
+  left: 84%;
+  top: 25%;
+}
+.collage-404 a:nth-child(38) {
+  left: 81%;
+  top: 32%;
+}
+.collage-404 a:nth-child(39) {
+  left: 77%;
+  top: 39%;
+}
+.collage-404 a:nth-child(40) {
+  left: 73%;
+  top: 47%;
+}
+.collage-404 a:nth-child(41) {
+  left: 70%;
+  top: 55%;
+}
+.collage-404 a:nth-child(42) {
+  left: 67%;
+  top: 62%;
+}
+.collage-404 a:nth-child(43) {
+  left: 74%;
+  top: 62%;
+}
+.collage-404 a:nth-child(44) {
+  left: 81%;
+  top: 62%;
+}
+.collage-404 a:nth-child(45) {
+  left: 88%;
+  top: 62%;
+}
+.collage-404 a:nth-child(46) {
+  left: 94.5%;
+  top: 62%;
+}
+.collage-404 a:nth-child(47) {
+  left: 88%;
+  top: 27%;
+}
+.collage-404 a:nth-child(48) {
+  left: 88%;
+  top: 35.5%;
+}
+.collage-404 a:nth-child(49) {
+  left: 88%;
+  top: 43.5%;
+}
+.collage-404 a:nth-child(50) {
+  left: 88%;
+  top: 53%;
+}
+.collage-404 a:nth-child(51) {
+  left: 88%;
+  top: 70%;
+}
+.collage-404 a:nth-child(52) {
+  left: 88%;
+  top: 79%;
+}
+.collage-404 img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+  opacity: 0;
+  display: block;
+  -webkit-filter: grayscale(100);
+  filter: grayscale(100);
+  transition: all 2s ease-in-out;
+}
+.collage-404.arkanoid h1 {
+  line-height: 0;
+}
+.collage-404.arkanoid h1 svg {
+  opacity: 1;
+  width: 40vw;
+  height: auto;
+}
+.collage-404.arkanoid a {
+  width: 9.1%;
+  height: 12.5%;
+  margin: 0;
+}
+.collage-404.arkanoid a img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.collage-404.arkanoid a:nth-child(1) {
+  left: 0%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(2) {
+  left: 0%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(3) {
+  left: 0%;
+  top: 75%;
+}
+.collage-404.arkanoid a:nth-child(4) {
+  left: 9.1%;
+  top: 37.5%;
+}
+.collage-404.arkanoid a:nth-child(5) {
+  left: 9.1%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(6) {
+  left: 18.2%;
+  top: 0%;
+}
+.collage-404.arkanoid a:nth-child(7) {
+  left: 18.2%;
+  top: 25%;
+}
+.collage-404.arkanoid a:nth-child(8) {
+  left: 18.2%;
+  top: 37.5%;
+}
+.collage-404.arkanoid a:nth-child(9) {
+  left: 18.2%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(10) {
+  left: 18.2%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(11) {
+  left: 18.2%;
+  top: 75%;
+}
+.collage-404.arkanoid a:nth-child(12) {
+  left: 27.3%;
+  top: 12.5%;
+}
+.collage-404.arkanoid a:nth-child(13) {
+  left: 27.3%;
+  top: 25%;
+}
+.collage-404.arkanoid a:nth-child(14) {
+  left: 27.3%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(15) {
+  left: 27.3%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(16) {
+  left: 27.3%;
+  top: 87.5%;
+}
+.collage-404.arkanoid a:nth-child(17) {
+  left: 36.4%;
+  top: 25%;
+}
+.collage-404.arkanoid a:nth-child(18) {
+  left: 36.4%;
+  top: 37.5%;
+}
+.collage-404.arkanoid a:nth-child(19) {
+  left: 36.4%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(20) {
+  left: 36.4%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(21) {
+  left: 36.4%;
+  top: 87.5%;
+}
+.collage-404.arkanoid a:nth-child(22) {
+  left: 45.5%;
+  top: 25%;
+}
+.collage-404.arkanoid a:nth-child(23) {
+  left: 45.5%;
+  top: 37.5%;
+}
+.collage-404.arkanoid a:nth-child(24) {
+  left: 45.5%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(25) {
+  left: 45.5%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(26) {
+  left: 54.6%;
+  top: 25%;
+}
+.collage-404.arkanoid a:nth-child(27) {
+  left: 54.6%;
+  top: 37.5%;
+}
+.collage-404.arkanoid a:nth-child(28) {
+  left: 54.6%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(29) {
+  left: 54.6%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(30) {
+  left: 54.6%;
+  top: 87.5%;
+}
+.collage-404.arkanoid a:nth-child(31) {
+  left: 63.7%;
+  top: 12.5%;
+}
+.collage-404.arkanoid a:nth-child(32) {
+  left: 63.7%;
+  top: 25%;
+}
+.collage-404.arkanoid a:nth-child(33) {
+  left: 63.7%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(34) {
+  left: 63.7%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(35) {
+  left: 63.7%;
+  top: 87.5%;
+}
+.collage-404.arkanoid a:nth-child(36) {
+  left: 72.8%;
+  top: 0%;
+}
+.collage-404.arkanoid a:nth-child(37) {
+  left: 72.8%;
+  top: 25%;
+}
+.collage-404.arkanoid a:nth-child(38) {
+  left: 72.8%;
+  top: 37.5%;
+}
+.collage-404.arkanoid a:nth-child(39) {
+  left: 72.8%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(40) {
+  left: 72.8%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(41) {
+  left: 72.8%;
+  top: 75%;
+}
+.collage-404.arkanoid a:nth-child(42) {
+  left: 81.9%;
+  top: 37.5%;
+}
+.collage-404.arkanoid a:nth-child(43) {
+  left: 81.9%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(44) {
+  left: 91%;
+  top: 50%;
+}
+.collage-404.arkanoid a:nth-child(45) {
+  left: 91%;
+  top: 62.5%;
+}
+.collage-404.arkanoid a:nth-child(46) {
+  left: 91%;
+  top: 75%;
+}
+.collage-404.arkanoid a:nth-child(46) ~ * {
+  display: none;
+}
+
+
+@media screen and (max-width: 760px) {
+
+  .collage-404 a,
+  .collage-404 img {
+    border-radius: 0.125rem;
+  }
+  .collage-404 h1 {
+    font-size: 50vw;
+  }
+
+}
+ .collage-404-images{
+        margin-top: 80px;
+    }
+
+@media (max-width: 768px) {
+    .collage-404{
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+    .collage-404-images{
+        margin-top: 100px;
+    }
+}

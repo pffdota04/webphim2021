@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUserDataDetail } from "./../../store/actions/user";
 import { auth } from "../../services/firebase";
 import { Link } from "react-router-dom";
+import Chat from "../../components/Chat/Chat";
 
 const Watch = () => {
   const { id, name } = useParams();
@@ -361,20 +362,9 @@ const Watch = () => {
           {contentVideoView()}
 
           <div className="container bg-light p-2 pt-0">
-            <div
-              style={{ backgroundImage: `url(${dataFilmState.backimg})` }}
-              className="background-comment w-100 h-100"
-            >
-              <div className="me-5 ms-5 bg-light">
-                <h2 className="text-center">Bình luận</h2>
-                -xin chào <br />
-                - chào
-                <br />
-                - khỏe không
-                <br />
-                - khỏe
-                <br />
-              </div>
+              <div >
+                <h2 className="text-center mt-2 mb-0">Bình luận</h2>
+                <Chat place={id} backimg={dataFilmState.backimg} />
             </div>
           </div>
 
@@ -409,7 +399,8 @@ const Watch = () => {
                   <div className="row p-1">
                     {userDetail.coin == undefined ? (
                       <h5 className="text-center mb-3">
-                        <Link to="/login">Dang nhap</Link> de thuc hien chuc nang
+                        <Link to="/login">Dang nhap</Link> de thuc hien chuc
+                        nang
                       </h5>
                     ) : (
                       <h5 className="text-center mb-3">

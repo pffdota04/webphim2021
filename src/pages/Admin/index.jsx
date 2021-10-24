@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 import User from "./User";
 import Links from "./Link";
 import Phims from "./Phim";
@@ -17,15 +18,13 @@ import Napcoins from "./Napcoin";
 import Comments from "./Comment";
 import Reports from "./Report";
 
-
 import Dashboard from "./Dashboard";
-
-// ionicon
-import { happy, home, accessibility } from "ionicons/icons";
-import { IonIcon } from "@ionic/react";
+import Loading from "../../components/Loading";
 
 const Admin = () => {
   const history = useHistory();
+  const [onLoading, setonLoading] = useState(1);
+
   const userInfo = useSelector((state) => state.userData.curentUser);
   const [adminToken, setAdminToken] = useState(null);
   const [dataDas, setDataDas] = useState({});
@@ -44,113 +43,61 @@ const Admin = () => {
     },
   ]);
   const [dataAllUser, setDataAllUser] = useState([]);
-  const [dataAllLink, setDataAllLink] = useState([]);
+  const [dataAllLink, setDataAllLink] = useState([
+    {
+      id: 0,
+      film_id: 0,
+      link: "loading",
+      server: 0,
+      chap: 0,
+    },
+  ]);
   const [dataAllVoucher, setDataAllVoucher] = useState([
     {
       id: 0,
-      code: "FSDGKRIRFKF",
-      point: 5,
-      usedBy: "ksoeugg",
-      usedDate: "1633930570999",
-    },
-    {
-      id: 0,
-      code: "FSDGKRIRFKF",
-      point: 5,
-      usedBy: "ksoeugg",
-      usedDate: "1633930570999",
-    },
-    {
-      id: 0,
-      code: "FSDGKRIRFKF",
-      point: 5,
-      usedBy: "ksoeugg",
-      usedDate: "1633930570999",
+      code: "Loading..",
+      point: 0,
+      usedBy: "Loading",
+      usedDate: "Loading",
     },
   ]);
   const [dataAllNC, setDataAllNC] = useState([
     {
       id: 0,
-      user: "ksoeugg",
-      coin: 10,
-      type: "airpay",
-      mgd: "111111aaaaaaaaa",
-      xuly: "none",
-      note: "none",
-    },
-    {
-      id: 0,
-      user: "ksoeugg",
-      coin: 10,
-      type: "airpay",
-      mgd: "111111aaaaaaaaa",
-      xuly: "none",
-      note: "none",
-    },
-    {
-      id: 0,
-      user: "ksoeugg",
-      coin: 10,
-      type: "airpay",
-      mgd: "111111aaaaaaaaa",
-      xuly: "none",
-      note: "none",
+      user: "Loading",
+      coin: 0,
+      type: "Loading",
+      mgd: "Loading",
+      xuly: "Loading",
+      note: "Loading",
     },
   ]);
+
   const [dataAllComment, setDataAllComment] = useState([
     {
       id: 0,
-      uid: "Fcv7eRnefrNSX1988u4r4NbWCqp2",
-      username: "A Nguyễn văn",
-      content: "phim này có robot đánh nhau à?",
-      timestamp: 1630910963760,
-    },
-    {
-      id: 0,
-      uid: "Fcv7eRnefrNSX1988u4r4NbWCqp2",
-      username: "A Nguyễn văn",
-      content: "phim này có robot đánh nhau à?",
-      timestamp: 1630910963760,
-    },
-    {
-      id: 0,
-      uid: "Fcv7eRnefrNSX1988u4r4NbWCqp2",
-      username: "A Nguyễn văn",
-      content: "phim này có robot đánh nhau à?",
-      timestamp: 1630910963760,
+      uid: "Loading",
+      username: "Loading",
+      content: "Loading",
+      timestamp: 0,
     },
   ]);
   const [dataAllReport, setDataAllReport] = useState([
     {
-      id: 0,
-      uid: "Fcv7eRnefrNSX1988u4r4NbWCqp2",
-      username: "A Nguyễn văn",
-      content: "phim này có robot đánh nhau à?",
-      timestamp: 1630910963760,
-    },
-    {
-      id: 0,
-      uid: "Fcv7eRnefrNSX1988u4r4NbWCqp2",
-      username: "A Nguyễn văn",
-      content: "phim này có robot đánh nhau à?",
-      timestamp: 1630910963760,
-    },
-    {
-      id: 0,
-      uid: "Fcv7eRnefrNSX1988u4r4NbWCqp2",
-      username: "A Nguyễn văn",
-      content: "phim này có robot đánh nhau à?",
-      timestamp: 1630910963760,
+      user: "Loading",
+      status: "Loading",
+      content: "Loading",
+      timestamp: 0,
     },
   ]);
 
-  const [fetchPhim, setFetchPhim] = useState(true);
-  const [fetchUser, setFetchUser] = useState(true);
-  const [fetchLink, setFetchLink] = useState(true);
-  const [fetchVoucher, setFetchVoucher] = useState(true);
-  const [fetchCoin, setFetchCoin] = useState(true);
-  const [fetchComment, setFetchComment] = useState(true);
-  const [fetchReport, setFetchReport] = useState(true);
+  const [fetchPhim, setFetchPhim] = useState(false);
+  const [fetchUser, setFetchUser] = useState(false);
+  const [fetchLink, setFetchLink] = useState(false);
+  const [fetchVoucher, setFetchVoucher] = useState(false);
+  const [fetchCoin, setFetchCoin] = useState(false);
+  const [fetchComment, setFetchComment] = useState(false);
+  const [fetchReport, setFetchReport] = useState(false);
 
   useEffect(() => {
     auth().onAuthStateChanged((currentUser) => {
@@ -176,7 +123,6 @@ const Admin = () => {
       .then((token) => {
         //set token
         setAdminToken(token);
-
         // set data chart && thong ke dasboard
         axios
           .post(process.env.REACT_APP_API_LOCAL + "admin/dashboard", {
@@ -211,8 +157,10 @@ const Admin = () => {
             let sum = 0;
             Object.values(res.data.doanhthu).map((e) => (sum = sum + e));
             res.data.sum = sum;
-
             setDataDas(res.data);
+          })
+          .catch((e) => {
+            console.log(e);
           });
       });
   }
@@ -259,91 +207,104 @@ const Admin = () => {
   }, [fetchReport]);
 
   function getDataPhim() {
+    console.log("lect phim");
     setFetchPhim(false);
-    axios
-      .get(process.env.REACT_APP_API_LOCAL + "film/search")
-      .then((res) => {
-        setDataAllF(Object.values(res.data));
-      })
-      .catch((e) => console.log(e));
+    if (adminToken != null)
+      axios
+        .get(process.env.REACT_APP_API_LOCAL + "film/search")
+        .then((res) => {
+          setDataAllF(Object.values(res.data));
+        })
+        .catch((e) => console.log(e));
   }
 
   function getDataUser() {
     // all user
     setFetchUser(false);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/alluser", {
-        token: adminToken,
-      })
-      .then((res) => {
-        setDataAllUser(res.data);
-      })
-      .catch((e) => console.log(e));
+    if (adminToken != null)
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "admin/alluser", {
+          token: adminToken,
+        })
+        .then((res) => {
+          setDataAllUser(res.data);
+        })
+        .catch((e) => console.log(e));
   }
 
   function getDataLink() {
     // all user
     setFetchLink(false);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/alllink", {
-        token: adminToken,
-      })
-      .then((res) => {
-        setDataAllLink(res.data);
-      })
-      .catch((e) => console.log(e));
+    if (adminToken != null)
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "admin/alllink", {
+          token: adminToken,
+        })
+        .then((res) => {
+          let holdLink = res.data;
+          setDataAllLink(holdLink);
+        })
+        .catch((e) => console.log(e));
   }
 
   function getDataVoucher() {
     // all user
     setFetchVoucher(false);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/allvoucher", {
-        token: adminToken,
-      })
-      .then((res) => {
-        setDataAllVoucher(res.data);
-      })
-      .catch((e) => console.log(e));
+    if (adminToken != null)
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "admin/allvoucher", {
+          token: adminToken,
+        })
+        .then((res) => {
+          setDataAllVoucher(res.data);
+        })
+        .catch((e) => console.log(e));
   }
 
   function getDataCoin() {
     // all user
     setFetchCoin(false);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/allcoin", {
-        token: adminToken,
-      })
-      .then((res) => {
-        setDataAllNC(res.data);
-      })
-      .catch((e) => console.log(e));
+    if (adminToken != null)
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "admin/allnap", {
+          token: adminToken,
+        })
+        .then((res) => {
+          setDataAllNC(res.data);
+        })
+        .catch((e) => console.log(e));
   }
 
   function getDataComment() {
     // all user
     setFetchComment(false);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/allcomment", {
-        token: adminToken,
-      })
-      .then((res) => {
-        setDataAllComment(res.data);
-      })
-      .catch((e) => console.log(e));
+    if (adminToken != null)
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "admin/allstk", {
+          token: adminToken,
+        })
+        .then((res) => {
+          setDataAllComment(res.data);
+        })
+        .catch((e) => console.log(e));
   }
 
   function getDataReport() {
     // all user
     setFetchReport(false);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/allreport", {
-        token: adminToken,
-      })
-      .then((res) => {
-        setDataAllReport(res.data);
-      })
-      .catch((e) => console.log(e));
+    if (adminToken != null)
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "admin/allreport", {
+          token: adminToken,
+        })
+        .then((res) => {
+          setDataAllReport(res.data);
+          setonLoading(0);
+        })
+        .catch((e) => {
+          console.log(e);
+          setonLoading(0);
+        });
   }
 
   return userInfo.checkUser == "init" ? (
@@ -351,272 +312,248 @@ const Admin = () => {
   ) : userInfo.checkUser == "not" ? (
     <Redirect push to="/login" />
   ) : (
-    <div>
+    <div className="all-admin">
       <section className="section container">
-        {/* <Link className="btn btn-sm btn-danger ms-1 mt-1" to="/admin">
-          Home admin
-        </Link> */}
         <div className="container-fluid pt-1">
           {" "}
+          {/* <h6>
+            (user ok) __ (film ok) __ link còn delete __(Voucer ok) __ (napkoin
+            ok)__ (STK ok) __ Report ok
+          </h6> */}
           <div className="row mt-4">
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-6 col-lg-3">
               <div class="stats">
-                <h6 className="mb-10">
-                  <Link
-                      to="/admin"
-                      className="btn btn-sm btn-link ms-1 mt-1"
-                    >
-                      {" "}
-                      <i className="fa fa-dollar" /> Revenue
+                <p className="text-bold mb-10 d-none d-sm-block">
+                  {dataDas.sum}K
+                </p>
+                <h6 className=" mx-auto ms-sm-0 ">
+                  <Link to="/admin" className="btn btn-sm btn-link ms-1 mt-1 ">
+                    <i className="fa fa-dollar  d-none d-sm-block" /> Revenue
                   </Link>
-                  {/* <div className="dashbox__more ms-1 mt-1"
-                    to="/admin">
-                    <i className="fa fa-dollar" /> Doanh thu
-                  </div> */}
                 </h6>
-                <p className="text-bold mb-10">{dataDas.sum}K</p>
-                <span className="text-sm text-success">
-                  <i className="lni lni-arrow-up" /> +5.45%
-                </span>
               </div>
-				    </div>
-            {/* <div className="col-xl-3  col-sm-6  border border-danger">
-
-              <div className="icon-card mb-30">
-                <div className="content">
-                  <h6 className="mb-10">
-                    <div
-                      className="btn btn-sm btn-secondary ms-1 mt-1"
-                      to="/admin/phim"
-                    >
-                      <i className="fa fa-dollar" /> Doanh thu
-                    </div>
-                  </h6>
-                  <h3 className="text-bold mb-10">{dataDas.sum}k</h3>
-                  <p className="text-sm text-success">
-                    <i className="lni lni-arrow-up" /> +5.45%
-                  </p>
-                </div>
-              </div>
-            </div> */}
-            <div className="col-xl-3  col-sm-6">
+            </div>
+            <div className="col-lg-3  col-6">
               <div className="icon-card mb-30">
                 <div className="stats">
-                  <h6 className="mb-10">
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {dataDas.user}
+                  </p>
+                  <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       to="/admin/user"
                       className="btn btn-sm btn-link ms-1 mt-1"
                     >
-                      {" "}
-                      <i className="fa fa-user" /> User
+                      <i className="fa fa-user  d-none d-sm-block" /> User
                     </Link>
                   </h6>
-                  <p className="text-bold mb-10">{dataDas.user}</p>
-                  <span className="text-sm text-success">
-                    <i className="lni lni-arrow-up" /> +2.00%
-                  </span>
                 </div>
               </div>
-              {/* End Icon Cart */}
             </div>
-            {/* End Col */}
-            <div className="col-xl-3  col-sm-6">
+            <div className="col-lg-3 col-6">
               <div className="icon-card mb-30">
                 <div className="icon primary">
                   <i className="lni lni-credit-cards" />
                 </div>
                 <div className="stats">
-                  <h6 className="mb-10">
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {Object.keys(dataAllF).length}
+                  </p>{" "}
+                  <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/phim"
                     >
-                      <i className="fa fa-film" /> Film
+                      <i className="fa fa-film  d-none d-sm-block" /> Film
                     </Link>
                   </h6>
-                  <p className="text-bold mb-10">{dataDas.phim}</p>
-                  <span className="text-sm text-success">Total film </span>
                 </div>
               </div>
             </div>
-            <div className="col-xl-3  col-sm-6">
+            <div className="col-lg-3  col-6">
               <div className="icon-card mb-30">
                 <div className="icon orange">
                   <i className="lni lni-user" />
                 </div>
                 <div className="stats">
-                  <h6 className="mb-10">
-                    {" "}
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {dataAllLink.length}
+                  </p>
+                  <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/link"
                     >
-                      <i className="fa fa-link" /> Link Film
+                      <i className="fa fa-link  d-none d-sm-block" /> Link Film
                     </Link>
                   </h6>
-                  <p className="text-bold mb-10">{dataDas.link}</p>
-                  <span className="text-sm text-success">Total Link </span>
                 </div>
               </div>
             </div>
-            <div className="col-xl-3  col-sm-6">
+            <div className="col-lg-3  col-6">
               <div className="icon-card mb-30">
                 <div className="icon orange">
                   <i className="lni lni-user" />
                 </div>
                 <div className="stats">
-                  <h6 className="mb-10">
-                    {" "}
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {dataAllVoucher.length}
+                  </p>{" "}
+                  <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/voucher"
                     >
-                      <i className="fa fa-gift" /> Voucher
+                      <i className="fa fa-gift  d-none d-sm-block" /> Voucher
                     </Link>
                   </h6>
-                  <p className="text-bold mb-10">{dataDas.voucher}</p>
-                  <span className="text-sm text-success">Total Voucher </span>
                 </div>
               </div>
             </div>
-            <div className="col-xl-3  col-sm-6">
+            <div className="col-lg-3  col-6">
               <div className="icon-card mb-30">
                 <div className="icon orange">
                   <i className="lni lni-user" />
                 </div>
                 <div className="stats">
-                  <h6 className="mb-10">
-                    {" "}
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {dataAllNC.length}
+                  </p>{" "}
+                  <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/napcoin"
                     >
-                      <i className="fa fa-gift" /> Nạp Coin
+                      <i className="fa fa-money  d-none d-sm-block" /> Nạp Coin
                     </Link>
                   </h6>
-                  <p className="text-bold mb-10">{dataDas.napcoin}</p>
-                  <span className="text-sm text-success">+2.00% </span>
                 </div>
               </div>
             </div>
-            <div className="col-xl-3  col-sm-6">
+            <div className="col-lg-3  col-6">
               <div className="icon-card mb-30">
                 <div className="icon orange">
                   <i className="lni lni-user" />
                 </div>
                 <div className="stats">
-                  <h6 className="mb-10">
-                    {" "}
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {Object.keys(dataAllComment).length}
+                  </p>
+                  <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       className="btn btn-sm btn-link ms-1 mt-1"
-                      to="/admin/comment"
+                      to="/admin/stk"
                     >
-                      <i className="fa fa-gift" /> Comment
+                      <i className="fa fa-bank d-none d-sm-block" /> Tài khoản
                     </Link>
                   </h6>
-                  <p className="text-bold mb-10">{dataDas.comment}</p>
-                  <span className="text-sm text-success">Total Comment </span>
                 </div>
               </div>
             </div>
-            <div className="col-xl-3  col-sm-6">
+            <div className="col-lg-3  col-6">
               <div className="icon-card mb-30">
                 <div className="icon orange">
                   <i className="lni lni-user" />
                 </div>
                 <div className="stats">
-                  <h6 className="mb-10">
-                    {" "}
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {Object.keys(dataAllReport).length}
+                  </p>
+                  <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/report"
                     >
-                      <i className="fa fa-gift" /> Report
+                      <i className="fa fa-newspaper-o  d-none d-sm-block" />
+                      Report
                     </Link>
                   </h6>
-                  <p className="text-bold mb-10">{dataDas.report}</p>
-                  <span className="text-sm text-success">Total Report </span>
                 </div>
               </div>
             </div>
             {/* End Col */}
           </div>
-          <Switch>
-            <Route
-              path={"/admin/user"}
-              component={() => (
-                <User
-                  dataU={dataAllUser}
-                  setFetchUser={setFetchUser}
-                  token={adminToken}
-                />
-              )}
-            />
-            <Route
-              path={"/admin/phim"}
-              component={() => (
-                <Phims
-                  dataF={dataAllF}
-                  setFetchPhim={setFetchPhim}
-                  token={adminToken}
-                />
-              )}
-            />
-            <Route
-              path={"/admin/link"}
-              component={() => (
-                <Links
-                  dataL={dataAllLink}
-                  token={adminToken}
-                  setFetchLink={setFetchLink}
-                />
-              )}
-            />
-            <Route
-              path={"/admin/voucher"}
-              component={() => (
-                <Vouchers
-                  dataV={dataAllVoucher}
-                  setFetchVoucher={setFetchVoucher}
-                  token={adminToken}
-                />
-              )}
-            />
-            <Route
-              path={"/admin/napcoin"}
-              component={() => (
-                <Napcoins
-                  dataNC={dataAllNC}
-                  setFetchCoin={setFetchCoin}
-                  token={adminToken}
-                />
-              )}
-            />
-            <Route
-              path={"/admin/comment"}
-              component={() => (
-                <Comments
-                  dataComment={dataAllComment}
-                  setFetchComment={setFetchComment}
-                  token={adminToken}
-                />
-              )}
-            />
-            <Route
-              path={"/admin/report"}
-              component={() => (
-                <Reports
-                  dataReport={dataAllReport}
-                  setFetchReport={setFetchReport}
-                  token={adminToken}
-                />
-              )}
-            />
-            <Route
-              path={"/admin"}
-              component={() => <Dashboard char1={char1} char2={char2} />}
-            />
-          </Switch>
+          {onLoading == 1 ? (
+            <Loading />
+          ) : (
+            <Switch>
+              <Route
+                path={"/admin/user"}
+                component={() => (
+                  <User
+                    dataU={dataAllUser}
+                    setFetchUser={setFetchUser}
+                    token={adminToken}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin/phim"}
+                component={() => (
+                  <Phims
+                    dataF={dataAllF}
+                    setFetchPhim={setFetchPhim}
+                    token={adminToken}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin/link"}
+                component={() => (
+                  <Links
+                    dataL={dataAllLink}
+                    token={adminToken}
+                    setFetchLink={setFetchLink}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin/voucher"}
+                component={() => (
+                  <Vouchers
+                    dataV={dataAllVoucher}
+                    setFetchVoucher={setFetchVoucher}
+                    token={adminToken}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin/napcoin"}
+                component={() => (
+                  <Napcoins
+                    dataNC={dataAllNC}
+                    setFetchCoin={setFetchCoin}
+                    token={adminToken}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin/stk"}
+                component={() => (
+                  <Comments
+                    dataComment={dataAllComment}
+                    setFetchComment={setFetchComment}
+                    token={adminToken}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin/report"}
+                component={() => (
+                  <Reports
+                    dataReport={dataAllReport}
+                    setFetchReport={setFetchReport}
+                    token={adminToken}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin"}
+                component={() => <Dashboard char1={char1} char2={char2} />}
+              />
+              )
+            </Switch>
+          )}
         </div>
       </section>
 

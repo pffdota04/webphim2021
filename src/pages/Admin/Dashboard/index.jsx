@@ -1,12 +1,12 @@
 import "./style.css"
 import { Line } from "react-chartjs-2";
+import { useEffect } from "react";
 
 const Dashboard = (props) => {
   const { char1, char2 } = props;
 
   return (
     <div className="row">
-      {console.log(props)}
       <div className="col-lg-6">
         <div className="stats">
           <div className="header">

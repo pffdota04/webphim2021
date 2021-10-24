@@ -236,7 +236,7 @@ const Category = (props) => {
     <div>
    
       <div className="container">
-        {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
+        {/* Top ADS: */}
         <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
         <section>
           <div className="mb-3">
@@ -248,7 +248,7 @@ const Category = (props) => {
           </div>
           <PopupFilm data={popupId} click={setPopupID} />
         </section>
-        {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
+        {/* End ADS, kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
         <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
       </div>
     </div>

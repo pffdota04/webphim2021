@@ -3,26 +3,18 @@ import "./style.css";
 function Footer() {
   return (
     <footer className="text-center text-lg-start bg-dark text-muted">
-      {/* Section: Links  */}
       <section className>
         <div className="container text-center text-md-start pt-5">
-          {/* Grid row */}
           <div className="row mt-3">
-            {/* Grid column */}
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-              {/* Content */}
               <h6 className="text-uppercase fw-bold mb-4">
                 <i className="fab fa-kickstarter" /> KPHIM
               </h6>
               <p>
-                Trang web xem phim sử dụng bootstrap 5. Có phiên bản ReactJS,
-                hãy liên hệ tôi nếu bạn có nhu cầu!
+                Trang web xem phim sử dụng Reactjs, Expressjs và Bootstrap 5. 
               </p>
             </div>
-            {/* Grid column */}
-            {/* Grid column */}
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-              {/* Links */}
               <h6 className="text-uppercase fw-bold mb-4">Sản phấm</h6>
               <p>
                 <a href="#!" className="text-reset">
@@ -35,10 +27,8 @@ function Footer() {
                 </a>
               </p>
             </div>
-            {/* Grid column */}
-            {/* Grid column */}
+
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-              {/* Links */}
               <h6 className="text-uppercase fw-bold mb-4">Liên kết</h6>
               <p>
                 <a href="#!" className="text-reset">
@@ -51,8 +41,7 @@ function Footer() {
                 </a>
               </p>
             </div>
-            {/* Grid column */}
-            {/* Grid column */}
+
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               {/* Links */}
               <h6 className="text-uppercase fw-bold mb-4">Liên hệ</h6>
@@ -68,7 +57,7 @@ function Footer() {
         </div>
       </section>
       <hr />
-      <div className="pb-3 social-net d-flex justify-content-center">
+      {/* <div className="pb-3 social-net d-flex justify-content-center">
         <a href className="me-4 text-reset ">
           <i className="fa fa-facebook-f" />
         </a>
@@ -87,8 +76,7 @@ function Footer() {
         <a href className="me-4 text-reset">
           <i className="fa fa-github" />
         </a>
-      </div>
-      {/* Copyright */}
+      </div> */}
       <div
         className="text-center p-4"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
@@ -96,7 +84,6 @@ function Footer() {
         © 2021 Copyright: &nbsp;
         <a className="text-reset fw-bold">KPHIM</a>
       </div>
-      {/* Copyright */}
     </footer>
   );
 }

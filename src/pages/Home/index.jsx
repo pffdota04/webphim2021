@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setListHome } from "../../store/actions/listPhim_Action";
 import { Link } from "react-router-dom";
 import PopupFilm from "../../components/PopupFilm";
+import qc from "./../../assets/images/quang-cao.jpg";
 
 const responsive_multi_carsousel = {
   superLargeDesktop: {
@@ -72,6 +73,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const local= JSON.parse(localStorage.getItem("home"));
     if (Object.keys(homeData).length === 0)
       if (local == undefined || parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()) // call new api sau 3 tieng
@@ -255,6 +257,7 @@ const Home = () => {
         <div className="text-center mx-auto pb-5 pt-3">
           <Link to="/phim/tatca">Xem thêm</Link>
         </div>
+          <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
       </section>
     );
   };
@@ -271,86 +274,7 @@ const Home = () => {
         {lastFilm()}
       </div>
       <PopupFilm data={popupId} click={setPopupID} />
-      {/* {popupId != null && (
-        <div>
-          <div
-            className="modal fade popup-none-in-first bd-example-modal-sm  show"
-            id="ItemModal7"
-            aria-modal="true"
-            role="dialog"
-            style={{ display: "block" }}
-          >
-            <div className="Invisible" onClick={() => setPopupID(null)}></div>
-            <div className="modal-dialog modal-dialog-centered modal-xl">
-              <div className="modal-content bg-light text-dark  trailer-ytb">
-                <div className="modal-header p-2" id="header-popup">
-                  <h5 className="modal-title" id="exampleModalLabel">
-                    {popupId.title} ({popupId.year})
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={() => setPopupID(null)}
-                    id="bt-close"
-                  />
-                </div>
-                <div className="position-relative">
-                  <img
-                    src={
-                      popupId.backimg == undefined
-                        ? "https://i.imgur.com/sLwEvjw.jpg"
-                        : popupId.backimg
-                    }
-                    alt="youtube thumnail image"
-                    className="w-100 img-trailer"
-                    loading="lazy"
-                  ></img>
-                  <div className="play">
-                    <p className=" text-light pt-4 mt-5 text-center">Trailer</p>
-                  </div>
-                </div>
-
-                <div className=" mx-auto text-ten-line ">
-                  <p className="text-center mb-0">
-                    <strong>
-                      {popupId.title} ({popupId.title_origin})
-                    </strong>
-                  </p>
-                  <p className="text-center mb-0">
-                    Diễn viên:
-                    <div className="the-loai-popup">{popupId.actor}</div> | Đạo
-                    diễn:
-                    <div className="the-loai-popup">{popupId.director}</div>
-                  </p>
-
-                  <p className="text-center">
-                    Thể loại:
-                    {Object.values(popupId.type).map((e) => (
-                      <div className="the-loai-popup">{e}</div>
-                    ))}
-                  </p>
-                  <hr className="w-50 mx-auto" />
-                  <p className="text-left ps-3 pe-2">
-                    &nbsp;&nbsp;{popupId.description}
-                  </p>
-                  <p className="text-center">
-                    Được phát hành vào năm {popupId.year}
-                  </p>
-                </div>
-                <div className="modal-footer p-1">
-                  <Link
-                    className="w-100 p-0 m-0 mb-1 btn btn-danger text-center pb-1"
-                    aria-label="Close"
-                    to={"/watch/" + popupId.id + "/" + popupId.title}
-                  >
-                    Xem ngay
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
+     
       <Footer />
     </div>
   );

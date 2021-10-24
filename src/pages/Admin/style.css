@@ -25,10 +25,10 @@
 }
 /* ------ */
 
-body {
+.all-admin {
     font-family: 'Source Sans Pro', sans-serif !important;
     font-weight: 600 !important;
-    background-color: #1a191f !important;
+    background-color: #1a191f;
     font-weight: normal !important;
     color: white !important;
     -webkit-font-smoothing: antialiased !important;
@@ -89,95 +89,3 @@ body {
   background-color: #f9ab00 !important;
 
 }
-
-/* KHUNG TITLE */
-.dashbox__more {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  height: 26px;
-  background-color: #ffc312;
-  font-size: 18px;
-  margin-left: 15px;
-  color: #000;
-  border-radius: 3px;
-}
-.dashbox__more:hover {
-  color: #ffc312;
-}
-
-/* LIST TRENDING  */
-.Invisible{
-  height: 100vh;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-}
-
-.carousel-button-group .left {
-  position: absolute;
-  left: 0;
-
-  background-repeat: no-repeat;
-  background: linear-gradient(
-    to left,
-    rgba(255, 255, 255, 0) 00%,
-    rgba(0, 0, 0, 0.5) 50%
-  ) !important;
-
-  width: 4rem !important;
-  top: 0 !important;
-  left: 0rem !important;
-  height: -webkit-fill-available !important;
-  border: none;
-}
-
-.carousel-button-group .right {
-  position: absolute;
-  right: 0;
-  background-repeat: no-repeat;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 00%,
-    rgba(0, 0, 0, 0.5) 50%
-  ) !important;
-  width: 4rem !important;
-  top: 0 !important;
-  height: -webkit-fill-available !important;
-  border: none;
-
-}
-
-.sodem {
-  margin-bottom: 4rem;
-  height: 5rem !important;
-  width: 5rem !important;
-}
-
-.text-one-line {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  height: 25px;
-  text-overflow: ellipsis;
-}
-
-.play{
-  height: 72px;
-  width: 72px;
-  left: 50%;
-  top: 50%;
-  margin-left: -36px;
-  margin-top: -36px;
-  position: absolute;
-  background: url('//i.imgur.com/TxzC70f.png') no-repeat;
-  cursor: pointer;
-}
-
-.img-trailer{
-
-}
-/* <!-- end - TRENDING LIST --> */

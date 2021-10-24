@@ -2,81 +2,6 @@
     width: fit-content;
   }
   
-  .main__table_voucher-wrap {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .main__table_voucher {
-    width: 100%;
-    min-width: 1050px;
-    max-height: 500px;
-    border-spacing: 0;
-    overflow-x: scroll;
-    display: block;
-  }
-  .main__table_voucher thead {
-    border-bottom: 20px solid #1a191f;
-  }
-  .main__table_voucher thead th {
-    font-size: 12px;
-    color: rgba(255,255,255,0.7);
-    font-weight: 600;
-    padding: 0 15px 0 15px;
-    line-height: 100%;
-    margin-bottom: 0;
-    border: none;
-    padding: 0 20px;
-  
-  }
-  .main__table_voucher tbody tr {
-    border-bottom: 10px solid #1a191f;
-    background-color: #222028;
-  }
-  .main__table_voucher tbody td {
-    padding: 0;
-    background-color: transparent;
-    border: 0px solid transparent;
-  }
-  .main__table_voucher tbody td:nth-child(5) .main__table_voucher-text {
-    padding: 0;
-    margin: 0;
-    width: 180px;
-  }
-  .main__table_voucher tbody td:nth-child(6) .main__table_voucher-text {
-    margin-left: 16px;
-  }
-  .main__table_voucher tbody td:first-child .main__table_voucher-text {
-    border-radius: 6px 0 0 6px;
-  }
-  .main__table_voucher tbody td:last-child .main__table_voucher-text {
-    border-radius: 0 6px 6px 0;
-  }
-  .main__table_voucher tbody .main__table_voucher-text {
-    padding: 0 20px;
-  }
-  
-  .main__table_voucher-text {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 16px;
-    color: #fff;
-    font-weight: 400;
-    height: 80px;
-    line-height: 31px;
-    padding: 15px;
-    background-color: #222028;
-    white-space: nowrap;
-  }
-  .main__table_voucher-text input {
-    width: 200px;
-    background-color: transparent;
-    border: none;
-    color: #fff;
-  }
   
   .main__table_voucher-btn--delete { 
     color: #fff !important;
@@ -87,15 +12,7 @@
     background-color: rgba(235,87,87,0.2) !important;
     color: #eb5757 !important;
   }
-  .main__table_voucher-btn--edit {
-    color: #fff !important;
-    background-color: #2f80ed !important;
-  }
-  .main__table_voucher-btn--edit:hover {
-    border: 1px solid #2f80ed !important;
-    color: #2f80ed !important;
-    background-color: rgba(47,128,237,0.2) !important;
-  }
+  
   
   .dashbox__mores_voucher {
     margin-left: 20px;
@@ -120,6 +37,10 @@
     background-color: #f9ab00;
     color: #000;
   }
-  .modal-dialog {
-    min-width: 640px !important;
-  }
+
+    .table-voucher{
+  max-height: 800px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+ 

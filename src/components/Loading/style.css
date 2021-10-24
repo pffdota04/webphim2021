@@ -1,0 +1,12 @@
+.loading-cat{
+    position: fixed;
+    z-index: 99;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    background: rgba(0,0,0,0.4);
+}
+
+.loading-cat div{
+    margin-top: calc(50vh - 1rem);
+    margin-left: calc(25vw - 1rem);
+}

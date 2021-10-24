@@ -31,58 +31,58 @@ const Search = (props) => {
   const [page, setpage] = useState(1);
   const [popupId, setPopupID] = useState(null);
 
-
-
   const data = useSelector((state) => state.listTatCa.searchData);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (Object.keys(data).length == 0) {
       const local = JSON.parse(localStorage.getItem("search"));
-      if (local == undefined || parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now())
-        axios.get(process.env.REACT_APP_API_LOCAL + "film/search").then((res) => {
-          dispatch(setListSearch(res.data));
-          localStorage.setItem("search", JSON.stringify(res.data));
-        });
-      else
-        dispatch(setListSearch(local));
+      if (
+        local == undefined ||
+        parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
+      )
+        axios
+          .get(process.env.REACT_APP_API_LOCAL + "film/search")
+          .then((res) => {
+            dispatch(setListSearch(res.data));
+            localStorage.setItem("search", JSON.stringify(res.data));
+          });
+      else dispatch(setListSearch(local));
     }
 
     setKeySearch(value);
   }, [value]);
 
-
-   const searching = () => {
+  const searching = () => {
     //  console.log("Tìm: " + keySearch+ " ...with " + movieOrSeries+ " " +type +" " +country );
-    if(keySearch == undefined)
-      return [];
+    if (keySearch == undefined) return [];
     let a = Object.values(data).filter((item) => {
-       return (
-         (item.title_origin.toLowerCase().includes(keySearch.toLowerCase()) ||
-           item.title.toLowerCase().includes(keySearch.toLowerCase())) &&
-         (movieOrSeries != "all"
-           ? item.type[movieOrSeries] == movieOrSeries
-           : true) &&
-         (type != "all" ? item.type[type] == type : true) &&
-         (country != "all" ? item.country == country : true)
-       );
-     });
-     return a;
-   };
+      return (
+        (item.title_origin.toLowerCase().includes(keySearch.toLowerCase()) ||
+          item.title.toLowerCase().includes(keySearch.toLowerCase())) &&
+        (movieOrSeries != "all"
+          ? item.type[movieOrSeries] == movieOrSeries
+          : true) &&
+        (type != "all" ? item.type[type] == type : true) &&
+        (country != "all" ? item.country == country : true)
+      );
+    });
+    return a;
+  };
 
-   useEffect(() => {
-     console.log("123")
-     let hold = searching();
-     setresulfSearch(hold);
-     setshowSearch(hold.slice(0, 12));
-     setpage(1);
-     sethasMore(true);
-     //  console.log("Tìm thấy: " + hold.length + "phần tử");
-   }, [keySearch, type, country, movieOrSeries, data]);
+  useEffect(() => {
+    console.log("123");
+    let hold = searching();
+    setresulfSearch(hold);
+    setshowSearch(hold.slice(0, 12));
+    setpage(1);
+    sethasMore(true);
+    //  console.log("Tìm thấy: " + hold.length + "phần tử");
+  }, [keySearch, type, country, movieOrSeries, data]);
 
   useEffect(() => {
     if (page * 12 >= resulfSearch.length) sethasMore(false);
-     setshowSearch(resulfSearch.slice(0, page * 12));
+    setshowSearch(resulfSearch.slice(0, page * 12));
     //  console.log("_._ Đang ở trang: "+page+ " _._ hiển thị: "+showSearch.length+" phần tử")
   }, [page]);
 
@@ -94,35 +94,36 @@ const Search = (props) => {
         <section>
           <div className="mb-3">
             <hr className="mb-2" />
-            <div className="row">
+            <div className="row ">
               <div className="col-4">
-                <button
-                  className="btn btn-sm btn-danger m-1"
-                  onClick={() => {
-                    setCountry("all");
-                    setType("all");
-                    setMovieOrSeries("all");
-                    setKeySearch("")
-                  }}
-                >
-                  Clear all filter
-                </button>
-                {/* <label for="search">Từ khóa: </label> */}
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  id="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  value={keySearch}
-                  onChange={(e) => {
-                    setKeySearch(e.target.value);
-                  }}
-                />
+                <div className="row">
+                  <input
+                    className="me-1 col-lg-7 ms-1"
+                    type="search"
+                    id="search-in-search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    value={keySearch}
+                    onChange={(e) => {
+                      setKeySearch(e.target.value);
+                    }}
+                  />
+                  <button
+                    className="btn btn-sm btn-danger col-lg-4 mt-3 ms-1 mt-lg-0"
+                    onClick={() => {
+                      setCountry("all");
+                      setType("all");
+                      setMovieOrSeries("all");
+                      // setKeySearch("");
+                    }}
+                  >
+                    Clear filter
+                  </button>
+                </div>
               </div>
-              <div className="col-2 pt-1 ps-1 pe-1">
+              <div className="col-2 pt-1 ps-1 pe-1 ">
                 <div>
-                  <div className="form-check col-12 p-0">
+                  <div className="form-check col-12 p-0  ms-1">
                     <input
                       className="form-check-input ms-0 me-1"
                       type="radio"
@@ -134,11 +135,14 @@ const Search = (props) => {
                         setMovieOrSeries("all");
                       }}
                     />
-                    <label className="form-check-label" htmlFor="allcheck">
+                    <label
+                      className="form-check-label text-body"
+                      htmlFor="allcheck"
+                    >
                       Tất cả
                     </label>
                   </div>
-                  <div className="form-check col-12 p-0">
+                  <div className="form-check col-12 p-0  ms-1">
                     <input
                       className="form-check-input ms-0  me-1"
                       type="radio"
@@ -153,7 +157,7 @@ const Search = (props) => {
                       Movie
                     </label>
                   </div>
-                  <div className="form-check col-12 p-0">
+                  <div className="form-check col-12 p-0  ms-1">
                     <input
                       className="form-check-input  ms-0 me-1"
                       type="radio"
@@ -170,45 +174,49 @@ const Search = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="col-3 ps-0">
-                <div className="form-group">
-                  <label for="theloaiSelect">Thể loại</label>
-                  <select
-                    className="form-control"
-                    id="theloaiSelect"
-                    onChange={(e) => setType(e.target.value)}
-                    value={type}
-                  >
-                    <option value="all">Tất cả</option>
-                    <option value="action"> HÀNH ĐỘNG</option>
-                    <option value="scifi"> VIỄN TƯỞNG</option>
-                    <option value="horror"> KINH DỊ</option>
-                    <option value="anime"> HOẠT HÌNH</option>
-                    <option value="drama"> CHÍNH KỊCH</option>
-                    <option value="comedy">HÀI</option>
-                    <option value="romantic"> LÃNG MẠN</option>
-                    <option value="crime">TỘI PHẠM</option>
-                    <option value="family"> GIA ĐÌNH - TRẺ EM</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-3 ps-0">
-                <div className="form-group">
-                  <label for="theloaiSelect">Quốc gia</label>
-                  <select
-                    className="form-control"
-                    id="theloaiSelect"
-                    onChange={(e) => setCountry(e.target.value)}
-                    value={country}
-                  >
-                    <option value="all">Tất cả</option>
-                    <option value="us">Mỹ</option>
-                    <option value="ja">Nhật</option>
-                    <option value="ko">Hàn Quốc</option>
-                    <option value="ch">Trung Quốc</option>
-                    <option value="vi">Việt Nam</option>
-                    <option value="es">Tây ban nha</option>
-                  </select>
+              <div className="col-6">
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    <div className="form-group">
+                      <label for="theloaiSelect">Thể loại:</label>
+                      <select
+                        className="form-control"
+                        id="theloaiSelect"
+                        onChange={(e) => setType(e.target.value)}
+                        value={type}
+                      >
+                        <option value="all">Tất cả</option>
+                        <option value="action"> HÀNH ĐỘNG</option>
+                        <option value="scifi"> VIỄN TƯỞNG</option>
+                        <option value="horror"> KINH DỊ</option>
+                        <option value="anime"> HOẠT HÌNH</option>
+                        <option value="drama"> CHÍNH KỊCH</option>
+                        <option value="comedy">HÀI</option>
+                        <option value="romantic"> LÃNG MẠN</option>
+                        <option value="crime">TỘI PHẠM</option>
+                        <option value="family"> GIA ĐÌNH - TRẺ EM</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    <div className="form-group">
+                      <label for="theloaiSelect">Quốc gia:</label>
+                      <select
+                        className="form-control"
+                        id="theloaiSelect"
+                        onChange={(e) => setCountry(e.target.value)}
+                        value={country}
+                      >
+                        <option value="all">Tất cả</option>
+                        <option value="us">Mỹ</option>
+                        <option value="ja">Nhật</option>
+                        <option value="ko">Hàn Quốc</option>
+                        <option value="ch">Trung Quốc</option>
+                        <option value="vi">Việt Nam</option>
+                        <option value="es">Tây ban nha</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

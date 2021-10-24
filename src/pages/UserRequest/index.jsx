@@ -25,17 +25,21 @@ const UserRequest = (props) => {
   const userInfo = useSelector((state) => state.userData.curentUser);
   const userDetail = useSelector((state) => state.userData.userDetail);
   const [forceChange, setforceChange] = useState(0);
+  const [allStk, setAllStk] = useState({ Loading: "Loading..." });
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    axios.post(process.env.REACT_APP_API_LOCAL + "admin/allstk").then((res) => {
+      setAllStk(res.data);
+    });
+  }, []);
 
   function changeUserDetail(newUserDetail) {
     setforceChange(forceChange + 1);
     dispatch(setUserDataDetail(newUserDetail));
   }
-
-  useEffect(() => {
-    console.log(userDetail);
-  }, [forceChange]);
 
   return userInfo.checkUser == "init" ? (
     <h1>CHECKING...</h1>
@@ -49,8 +53,7 @@ const UserRequest = (props) => {
         <section>
           <div className="mb-3">
             <hr className="mb-2" />
-            {/* <h1 className="text-center">Xin chào bạn tôi!</h1>
-            <hr className="mb-2" /> */}
+
             <div>
               <nav>
                 <div
@@ -123,8 +126,7 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-profile-tab"
                 >
-                  <NapTien 
-                  userDetail={userDetail}/>
+                  <NapTien userDetail={userDetail} stk={allStk} />
                 </div>
                 <div
                   className="tab-pane fade"

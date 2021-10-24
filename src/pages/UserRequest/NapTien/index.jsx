@@ -6,27 +6,26 @@ const NapTien = (props) => {
   const [soLuong, setSoLuong] = useState(10);
   const [phuongThuc, setPhuongthuc] = useState("momo");
   const [ghiChu, setGhiChu] = useState("");
-  const { userDetail } = props;
+  const { userDetail, stk } = props;
 
-  function sendRequest(){
+  function sendRequest() {
     // alert(inputCode+ soLuong + phuongThuc+ ghiChu);
-    console.log(userDetail)
-     axios
-       .post(process.env.REACT_APP_API_LOCAL + "user/napkoin", {
-         token: userDetail.token,
-         mgd: inputCode,
-         type: phuongThuc,
-         coin: soLuong,
-         note: ghiChu,
-       })
-       .then((res) => {
-         if (res.data.complete == true) {
-           alert("Da ghi nhan, yeu cau se som duoc xu ly");
-         } else alert(res.data);
-       })
-       .catch((e) => {
-         alert(e.response.data.message);
-       });
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "user/napkoin", {
+        token: userDetail.token,
+        mgd: inputCode,
+        type: phuongThuc,
+        coin: soLuong,
+        note: ghiChu,
+      })
+      .then((res) => {
+        if (res.data.complete == true) {
+          alert("Da ghi nhan, yeu cau se som duoc xu ly");
+        } else alert(res.data);
+      })
+      .catch((e) => {
+        alert(e.response.data.message);
+      });
   }
 
   return (
@@ -42,12 +41,25 @@ const NapTien = (props) => {
           </h4>
           <div className="col-lg-6 mx-auto">
             <p className="lead mb-4">
-              Nhập chính xác số tiền bạn muốn nạp vào ô mệnh giá, chọn phương
-              thức nạp tiền phù hợp, thực hiện chuyển tiền theo thông tin hiển
-              thị. Lấy mã giao dịch nhận được nhập vào và bấm gửi. <br />
+              Nhập chính xác số tiền bạn muốn nạp, chọn phương thức nạp tiền phù
+              hợp, chuyển tiền theo thông tin hiển thị. Lấy mã giao dịch nhập
+              vào và bấm gửi. <br />
               Thông tin nạp của bạn sẽ được kiểm tra và cập nhật (trong vòng
-              24h). Nếu bạn gặp bất cứ khó khăn nào, hãy liên hệ với chúng tôi
-              (hồ sơ > liên hệ).
+              24h).
+            </p>
+            <h6 className="text-center">Thông tin chuyển khoản</h6>
+            <p className="text-uppercase text-center">
+              {stk[phuongThuc] !== undefined ? (
+                <div>
+                  {phuongThuc}
+                  <i class="fa fa-arrow-right me-1 ms-1" /> {stk[phuongThuc]}
+                </div>
+              ) : (
+                <div>
+                  {phuongThuc} <i class="fa fa-arrow-right me-1 ms-1" /> Bảo
+                  trì...
+                </div>
+              )}
             </p>
           </div>
         </div>
@@ -115,7 +127,10 @@ const NapTien = (props) => {
         </div>
         <hr className="mt-3 mb-3" style={{ height: "2px" }} />
         <div className="col-12 ">
-          <button className="btn-lg w-25 btn-secondary mx-auto d-block" onClick={()=> sendRequest()}>
+          <button
+            className="btn-lg w-25 btn-secondary mx-auto d-block"
+            onClick={() => sendRequest()}
+          >
             Gửi
           </button>
         </div>

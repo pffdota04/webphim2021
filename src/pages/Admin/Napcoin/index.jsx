@@ -1,92 +1,210 @@
 import axios from "axios";
+import { data } from "jquery";
 import { useEffect } from "react";
 import { useState } from "react";
+import Loading from "../../../components/Loading";
 import "./style.css";
 
 const Napcoins = (props) => {
   const { dataNC, token, setFetchCoin } = props;
+  const [dataNapCoin, setdataNapCoin] = useState(dataNC);
+
+  const [onLoading, setonLoading] = useState(false);
   const [choseNC, setChoseNC] = useState(0);
-  const [currentCoin, setCurrentCoin] = useState(dataNC[choseNC]); // mặc định là voucher  đầu tiên
+  const [currentCoin, setCurrentCoin] = useState(dataNapCoin[choseNC]); // mặc định là voucher  đầu tiên
 
   function Refresh() {
     setFetchCoin(true);
   }
 
-  function updateCoin() {
-    // LObject là một object chứa thông tin User sau khi cập nhật
-
+  function deleteRequest(rm_e) {
+    setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/updatecoin", {
+      .post(process.env.REACT_APP_API_LOCAL + "admin/deletenap", {
         token: token,
-        LObject: currentCoin,
+        mgdtype: rm_e.mgd + rm_e.type,
       })
       .then((res) => {
-        alert(res.data);
-        // bấm nút refresh để update data sau khi cập nhâtk
+        if (res.data === "okok") {
+          alert("Đã xóa");
+          setdataNapCoin([...dataNapCoin].filter((e) => e.mgd !== rm_e.mgd));
+        } else alert(res.data);
+        setonLoading(false);
       })
-      .catch((e) => alert(e));
+      .catch((e) => {
+        alert(e);
+        setonLoading(false);
+      });
   }
+
+  function deleteOld() {
+    setonLoading(true);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "admin/deleteoldnap", {
+        token: token,
+      })
+      .then((res) => {
+        if (res.data === "okok") {
+          alert("Đã xóa");
+          setFetchCoin(true);
+        } else alert(res.data);
+        setonLoading(false);
+      })
+      .catch((e) => {
+        alert(e);
+        setonLoading(false);
+      });
+  }
+
+  function xuly(xuly_e, action) {
+    alert(action);
+    setonLoading(true);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "admin/xulynapkoin", {
+        token: token,
+        mgdtype: xuly_e.mgd + xuly_e.type,
+        action: action,
+      })
+      .then((res) => {
+        if (res.data == "okok1") alert("Đã cộng tiền");
+        else alert("Đã bỏ qua");
+        dataNapCoin.some((e, i) => {
+          if (xuly_e.mgd == e.mgd) {
+            dataNapCoin[i].xuly = action ? "true" : "false";
+          }
+        });
+        // }
+        setonLoading(false);
+      })
+      .catch((e) => {
+        alert(e);
+        setonLoading(false);
+      });
+  }
+  const formatTime = (timestamp) => {
+    if (timestamp == undefined) return;
+    const d = new Date(timestamp);
+    const time = `${d.getDate()}/${
+      d.getMonth() + 1
+    }/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`;
+    return time;
+  };
+
+  const searching = (keySearch) => {
+    if (keySearch == undefined || keySearch == "") {
+      setdataNapCoin([...dataNC]);
+      return;
+    }
+    let a = Object.values([...dataNC]).filter((item) => {
+      return item.mgd.toLowerCase().includes(keySearch.toLowerCase());
+    });
+    console.log(a);
+    setdataNapCoin(a);
+  };
 
   return (
     <div className="container my-2 mb-3">
+      {onLoading && <Loading />}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
             <strong className="display-6 fw-bold fst-italic "> Nạp Coin</strong>{" "}
             <div className="dashboxs_coin">
-            <button className="dashbox__mores_coin" onClick={() => Refresh()}>Refresh Data</button>
+              <button
+                className="dashbox__mores_coin"
+                onClick={() => deleteOld()}
+              >
+                Delete Old
+              </button>
+              <button className="dashbox__mores_coin" onClick={() => Refresh()}>
+                Refresh Data
+              </button>
             </div>
           </h4>
         </div>
-        
-        <div className="col-12 col-xl-9 mt-2">
+
+        <div className="col-12  mt-2">
+          <label htmlFor="timkiem">Tìm kiếm: </label>
+          <input
+            id="timkiem"
+            className="ms-1"
+            onChange={(e) => searching(e.target.value)}
+            placeholder="Mã giao dịch"
+          />
           {
-            dataNC != undefined && (
-              <div className="main__table_coin-wrap">
-                <table className="main__table_coin">
+            dataNapCoin != undefined && (
+              <div className="table-responsive-xl table-nap mt-3">
+                <table class="table table-hover table-striped table-dark">
                   <thead>
-                  <tr>
-                    <th>STT
-                    </th>
-                    <th>User
-                    </th>
-                    <th>Coin
-                    </th>
-                    <th>Payment
-                    </th>
-                    <th>Trading Code
-                    </th>
-                    <th>Handle
-                    </th>
-                    <th>Note
-                    </th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  
-                  <tbody>
-                  {dataNC.map((e, i) => (
-                    <tr>
-                      <td><div class="main__table_coin-text">{i}</div></td>
-                      <td><div class="main__table_coin-text">{e.user}</div></td>
-                      <td><div class="main__table_coin-text">{e.coin}</div></td>
-                      <td><div class="main__table_coin-text">{e.type}</div></td>
-                      <td><div class="main__table_coin-text">{e.mgd}</div></td>
-                      <td><div class="main__table_coin-text">{e.xuly}</div></td>
-                      <td><div class="main__table_coin-text">{e.note}</div></td>
-                      <td><div class="main__table_coin-text">
-                        <button
-                          className="btn btn-sm btn-link ms-1 main__table_coin-btn--delete"
-                          onClick={() => {
-                            
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                      </td>
+                    <tr className="text-center">
+                      <th>CreatDay</th>
+                      <th>User</th>
+                      <th>Coin</th>
+                      <th>Payment</th>
+                      <th>Trading Code</th>
+                      <th>Handle</th>
+                      <th>Note</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
+                  </thead>
+
+                  <tbody>
+                    {dataNapCoin.map((e, i) => (
+                      <tr className="text-center">
+                        <td>{formatTime(e.createDay)}</td>
+                        <td>{e.user}</td>
+                        <td>{e.coin}</td>
+                        <td>{e.type}</td>
+                        <td>{e.mgd}</td>
+                        <td>
+                          {e.xuly == "none" ? (
+                            <i class="fa fa-ellipsis-h " aria-hidden="true"></i>
+                          ) : e.xuly == "false" ? (
+                            <i
+                              class="fa fa-times text-danger bg-light"
+                              aria-hidden="true"
+                            ></i>
+                          ) : (
+                            <i
+                              class="fa fa-check text-success bg-light"
+                              aria-hidden="true"
+                            ></i>
+                          )}
+                        </td>
+                        <td>{e.note}</td>
+                        <td>
+                          {e.xuly != "none" ? (
+                            <button
+                              className="btn btn-sm btn-primary ms-1"
+                              onClick={() => {
+                                deleteRequest(e);
+                              }}
+                            >
+                              Xoa
+                            </button>
+                          ) : (
+                            <div>
+                              <button
+                                className="btn btn-sm btn-danger ms-1"
+                                onClick={() => {
+                                  xuly(e, false);
+                                }}
+                              >
+                                Tu choi
+                              </button>
+                              <button
+                                className="btn btn-sm btn-success ms-1"
+                                onClick={() => {
+                                  xuly(e, true);
+                                }}
+                              >
+                                dong y
+                              </button>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

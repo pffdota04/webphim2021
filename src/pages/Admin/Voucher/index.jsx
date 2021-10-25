@@ -100,11 +100,9 @@ const Vouchers = (props) => {
       return;
     }
     let a = Object.values([...dataV]).filter((item) => {
-      // console.log(item);
       return item.code.toLowerCase().includes(keySearch.toLowerCase());
-      // item.code.toLowerCase().includes(keySearch.toLowerCase())
     });
-    console.log(a);
+    // console.log(a);
     setdataVoucher(a);
   };
 
@@ -141,7 +139,7 @@ const Vouchers = (props) => {
               aria-hidden="true"
             >
               <div className="modal-dialog">
-                <div className="modal-content">
+                <div className="modal-content bg-dark">
                   <div className="modal-header">
                     <h5 className="modal-title fw-bold" id="exampleModalLabel">
                       ADD NEW VOUCHER

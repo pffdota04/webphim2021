@@ -11,7 +11,8 @@ function Footer() {
                 <i className="fab fa-kickstarter" /> KPHIM
               </h6>
               <p>
-                Trang web xem phim sử dụng Reactjs, Expressjs và Bootstrap 5. 
+                Trang web xem phim sử dụng Reactjs (+ Bootstrap 5), server
+                Expressjs.
               </p>
             </div>
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
@@ -47,10 +48,10 @@ function Footer() {
               <h6 className="text-uppercase fw-bold mb-4">Liên hệ</h6>
               <p>
                 <i className="fa fa-envelope me-3" />
-                info@example.com
+                kphim.contact@gmail.com
               </p>
               <p>
-                <i className="fa fa-phone me-3" /> + 01 234 567 88
+                <i className="fa fa-phone me-3" /> + 0123 456 789
               </p>
             </div>
           </div>

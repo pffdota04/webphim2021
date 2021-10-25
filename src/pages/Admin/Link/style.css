@@ -49,7 +49,6 @@
 }
 .table-link{
   max-height: 750px;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 
 }

@@ -1,11 +1,6 @@
-/* @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap'); */
-
-
-.chat-component{
-    background-size: cover;
-
+.chat-component {
+  background-size: cover;
 }
-
 
 .chat-area {
   padding: 20px;
@@ -14,24 +9,24 @@
   overflow-y: scroll;
 }
 
-.chat-content{
+.chat-content {
   overflow: hidden;
 }
 
-.no-bottom{
+.no-bottom {
   padding-top: 0;
   margin-bottom: 0.5rem;
   /* display: contents; */
 }
 
-.userAndTime{
-    float: left;
-    font-weight: bolder;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    display: -webkit-box;
-    font-size: 80%;
-    -webkit-box-orient: vertical;
+.userAndTime {
+  float: left;
+  font-weight: bolder;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  font-size: 80%;
+  -webkit-box-orient: vertical;
 }
 
 .chat-area .chat-bubble {
@@ -41,12 +36,15 @@
   max-width: 500px;
   word-wrap: break-word;
   display: block;
+  border: 3px outset cornsilk;
+  /* border-width: 3px; */
+  
 }
 
 .chat-bubble .chat-time {
   font-size: 12px;
   color: #757575;
-   /* background: rgba(0,0,0,0.5); */
+  /* background: rgba(0,0,0,0.5); */
   text-align: left;
   display: inline;
 }
@@ -64,19 +62,14 @@
   box-shadow: none;
 }
 
-.btn {
-  margin-top: 10px;
-}
-
 .btn-submit {
   background-color: #2e7d32;
   color: white;
 }
 
-.w-fit{
+.w-fit {
   width: fit-content;
 }
-
 
 @media screen and (max-width: 767px) {
   .form-control {

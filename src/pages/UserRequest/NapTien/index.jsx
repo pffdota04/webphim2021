@@ -1,15 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
 
+import Loading from "../../../components/Loading";
 const NapTien = (props) => {
   const [inputCode, setInputCode] = useState("");
   const [soLuong, setSoLuong] = useState(10);
   const [phuongThuc, setPhuongthuc] = useState("momo");
   const [ghiChu, setGhiChu] = useState("");
   const { userDetail, stk } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   function sendRequest() {
-    // alert(inputCode+ soLuong + phuongThuc+ ghiChu);
+        setIsLoading(true);
+
     axios
       .post(process.env.REACT_APP_API_LOCAL + "user/napkoin", {
         token: userDetail.token,
@@ -20,16 +23,19 @@ const NapTien = (props) => {
       })
       .then((res) => {
         if (res.data.complete == true) {
-          alert("Da ghi nhan, yeu cau se som duoc xu ly");
+          alert("Đã ghi nhận, yêu cầu sẽ sớm được xử lý");
         } else alert(res.data);
+        setIsLoading(false);
       })
       .catch((e) => {
         alert(e.response.data.message);
+        setIsLoading(false);
       });
   }
 
   return (
     <div className="container mb-3 my-2">
+      {isLoading && <Loading />}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
@@ -78,8 +84,13 @@ const NapTien = (props) => {
           >
             <option value="100">10k = 100 Koin</option>
             <option value="200">20k= 200 Koin</option>
+            <option value="500">50k= 500 Koin </option>
+            <option value="1000">100k= 1000 Koin</option>
+
+            {/* <option value="100">10k = 100 Koin</option>
+            <option value="200">20k= 200 Koin</option>
             <option value="500">50k= 500 + 20 Koin </option>
-            <option value="1000">100k= 1000 + 100 Koin</option>
+            <option value="1000">100k= 1000 + 100 Koin</option> */}
           </select>{" "}
         </div>
         <div className="col-12 col-md-6">

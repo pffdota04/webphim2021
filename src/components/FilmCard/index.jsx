@@ -1,9 +1,9 @@
 import "./style.css";
-import filmCard from "../../assets/images/film-loading.jpg"
+import filmCard from "../../assets/images/film-loading.jpg";
 import { useEffect, useState } from "react";
 
 const FilmCard = (props) => {
-  const { numberTrend, loading, data, click} = props;
+  const { numberTrend, loading, data, click } = props;
   const [numberImage, setNumberImage] = useState(null);
 
   async function lazyLoadNumber(num) {
@@ -14,10 +14,8 @@ const FilmCard = (props) => {
   }
 
   useEffect(() => {
-    if (numberTrend !== undefined)
-      lazyLoadNumber(numberTrend);
-    return() => {
-    }
+    if (numberTrend !== undefined) lazyLoadNumber(numberTrend);
+    return () => {};
   }, []);
 
   // loading > xoa het modal
@@ -46,23 +44,27 @@ const FilmCard = (props) => {
     </div>
   ) : (
     <div>
-      <div className="card">
-        {numberTrend !== undefined && (
+      <div className="card border border-danger border-3 rounded-2 border-outsets">
+        <div>
+          {numberTrend !== undefined && (
+            <img
+              src={numberImage}
+              className="card-img-top position-absolute bottom-0 start-0 sodem"
+              alt="..."
+              draggable="false"
+              onClick={() => click(data)}
+            />
+          )}
+        </div>
+        <div className="hover-image">
           <img
-            src={numberImage}
-            className="card-img-top position-absolute bottom-0 start-0 sodem"
+            src={data.img}
+            className="card-img-top film-item "
             alt="..."
-            draggable="false"
             onClick={() => click(data)}
+            draggable="false"
           />
-        )}
-        <img
-          src={data.img}
-          className="card-img-top film-item"
-          alt="..."
-          onClick={() => click(data)}
-          draggable="false"
-        />
+        </div>
         <h6 className="card-title text-center text-one-line mb-0 mt-1">
           {data.title}
         </h6>

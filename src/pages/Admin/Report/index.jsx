@@ -54,7 +54,7 @@ const Reports = (props) => {
 
         <div className="col-12 col-xl-12 mt-2">
           {dataReport != undefined && (
-            <div className="table-responsive-xl table-phim mt-3">
+            <div className="table-responsive-xl table-report mt-3">
               <table class="table table-hover table-striped table-dark">
                 <thead>
                   <tr className="text-center">

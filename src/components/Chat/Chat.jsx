@@ -193,21 +193,22 @@ const Chat = (props) => {
   };
   return (
     <div
-      className="chat-component w-100 pb-1"
+      className="chat-component w-100 pb-1 "
       style={{ backgroundImage: `url(${backimg})` }}
     >
       {/* {console.log(state.lasttime)} */}
       {chats.length === 0 && (
-        <p style={{ color: "aliceblue" }}>
+        <p className="text-dark">
           Chưa có tin nhắn nào, hãy là người mở đầu cuộc trò chuyện!
         </p>
       )}
-      <p>{state.writeError}</p>
 
       <div className="chat-area" ref={myRef}>
         {state.loadingChats ? (
-          <div className="spinner-border text-success" role="status">
-            <span className="sr-only">Loading...</span>
+          <div class="d-block w-fit ps-1 mx-auto">
+            <div className="spinner-border text-success" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
           </div>
         ) : (
           ""

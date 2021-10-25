@@ -1,12 +1,35 @@
-
 import userProfile from "./../../../assets/images/user-profile.jpg";
+import { useState } from "react";
+import axios from "axios";
+import Loading from "../../../components/Loading";
 const Profile = (props) => {
-  const { userInfo, coin } = props;
+  const { userInfo, coin, token } = props;
+  const [report, setReport] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const sendReport = () => {
+    setIsLoading(true);
+    if (!!report && report !== "")
+      axios
+        .post(process.env.REACT_APP_API_LOCAL + "user/report", {
+          token: token,
+          content: report,
+        })
+        .then((res) => {
+          if (res.data === "okok") {
+            alert("Đã ghi nhận phản hồi của bạn!");
+            setReport("");
+            setIsLoading(false);
+          }
+        })
+        .catch(setIsLoading(false));
+  };
   return (
     <div className="container my-2">
+      {isLoading && <Loading />}
       <img
         className="d-block mx-auto mb-4 rounded-circle"
-        src={userProfile}
+        src={userInfo.photoURL == undefined ? userProfile : userInfo.photoURL}
         alt=""
         width={100}
         height={100}
@@ -36,7 +59,7 @@ const Profile = (props) => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
-            Liên hệ
+            Liên hệ/Báo lỗi
           </button>
           <div
             className="modal fade"
@@ -46,7 +69,7 @@ const Profile = (props) => {
             aria-hidden="true"
           >
             <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content">
+              <div className="modal-content ">
                 <div className="modal-header">
                   <h5 className="modal-title" id="exampleModalLabel">
                     Bạn muốn nói gì đó với chúng tôi?
@@ -64,9 +87,21 @@ const Profile = (props) => {
                     <li>Email: click</li>
                     <li>Discord: click</li>
                   </ul>
-             
                 </div>
+                <input
+                  className="w-75 mx-auto mb-3 p-1"
+                  placeholder="Hoặc gửi tin nhắn ở đây"
+                  onChange={(e) => setReport(e.target.value)}
+                />
                 <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    onClick={() => sendReport()}
+                  >
+                    Gửi
+                  </button>
                   <button
                     type="button"
                     className="btn btn-secondary"

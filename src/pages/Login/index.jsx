@@ -78,78 +78,77 @@ const Login = () => {
 
                   <hr className="w-50 mx-auto pd-1" />
                   <strong className="text-light">
-                    Hoặc bằng tài khoản của bạn
+                    Hoặc bằng tài khoản của bạn (sắp có)
                   </strong>
-                  <form className="">
-                    <div className="mb-3">
-                      <label
-                        htmlFor="exampleInputEmail1"
-                        className="form-label"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        className="form-control w-50 mx-auto"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                        placeholder="Email"
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label
-                        htmlFor="exampleInputPassword1"
-                        className="form-label"
-                      >
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        className="form-control w-50 mx-auto"
-                        id="exampleInputPassword1"
-                        placeholder="Password"
-                      />
-                    </div>
+                  <div className="mb-3">
+                    <label htmlFor="exampleInputEmail1" className="form-label">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control w-50 mx-auto"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Email"
+                      disabled
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label
+                      htmlFor="exampleInputPassword1"
+                      className="form-label"
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control w-50 mx-auto"
+                      id="exampleInputPassword1"
+                      placeholder="Password"
+                      disabled
+                    />
+                  </div>
 
-                    <button type="submit" className="btn btn-primary w-50 mb-3">
-                      Đăng nhập
-                    </button>
-                  </form>
+                  <button className="btn btn-primary w-50 mb-3">
+                    Đăng nhập
+                  </button>
                 </div>
                 <div className="col-12 col-md-4 p-2 sign-up text-center">
                   <h2 className="text-center  mt-2 mb-2 text-light fw-bold fst-italics">
-                    Đăng kí
+                    Đăng kí (sắp có)
                   </h2>
-                  <form className="pb-2">
-                    <div className="mb-3">
-                      <label>Email</label>
-                      <input
-                        type="email"
-                        className="form-control w-50 mx-auto"
-                        id="exampleInputEmail1"
-                        placeholder="Email"
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label>Password:</label>
-                      <input
-                        type="password"
-                        className="form-control w-50 mx-auto"
-                        placeholder="Password"
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label>Xác nhận password:</label>
-                      <input
-                        type="password"
-                        className="form-control w-50 mx-auto"
-                        placeholder="Password again"
-                      />
-                    </div>
-                    <button type="submit" className="btn btn-primary w-50 ">
-                      Đăng kí
-                    </button>
-                  </form>
+
+                  <div className="mb-3 pb-2">
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      className="form-control w-50 mx-auto"
+                      id="exampleInputEmail1"
+                      placeholder="Email"
+                      disabled
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label>Password:</label>
+                    <input
+                      type="password"
+                      className="form-control w-50 mx-auto"
+                      placeholder="Password"
+                      disabled
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label>Xác nhận password:</label>
+                    <input
+                      type="password"
+                      className="form-control w-50 mx-auto"
+                      placeholder="Password again"
+                      disabled
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary w-50 ">
+                    Đăng kí
+                  </button>
                 </div>
               </div>
             ) : (

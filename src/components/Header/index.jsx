@@ -25,7 +25,6 @@ const Header = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("useEff header");
     if (finalCheckToken === false) {
       setfinalCheckToken(true);
       auth().onAuthStateChanged((user) => {
@@ -34,12 +33,11 @@ const Header = () => {
           dispatch(setUserDataDetail({ checkUser: "not" }));
         } else {
           dispatch(setUserData(user));
-          console.log(user.getIdToken(true));
+          // console.log(user.getIdToken(true));
           user.getIdToken(true).then(function (idToken) {
-            console.log(idToken);
+            // console.log(idToken);
             axios
               .post(process.env.REACT_APP_API_LOCAL + "user/info", {
-                // .post("http://localhost:5000/api/user/info", {
                 token: idToken,
               })
               .then((res) => {
@@ -60,7 +58,6 @@ const Header = () => {
     if (Object.keys(data).length == 0 && !calling) {
       const local = JSON.parse(localStorage.getItem("search"));
       setcalling(true);
-      console.log("Calling Data...");
       if (
         local == undefined ||
         parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
@@ -71,7 +68,6 @@ const Header = () => {
             dispatch(setListSearch(res.data));
             localStorage.setItem("search", JSON.stringify(res.data));
             setcalling(false);
-            console.log("You got dat data");
           });
       else dispatch(setListSearch(local));
     }
@@ -506,7 +502,7 @@ const Header = () => {
             {/* Search */}
             <div className="d-flex me-3 formsearch">
               <input
-                className="form-control me-2"
+                className="form-control me-2 "
                 type="search"
                 placeholder="Search"
                 aria-label="Search"

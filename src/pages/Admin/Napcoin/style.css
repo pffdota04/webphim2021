@@ -29,6 +29,6 @@
 
   .table-nap{
   max-height: 800px;
-  overflow: hidden;
-  overflow-y: scroll;
+
+  overflow-y: auto;
 }

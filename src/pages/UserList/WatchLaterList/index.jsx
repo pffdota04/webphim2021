@@ -26,17 +26,12 @@ const WatchLaterList = () => {
     if (data.init == true) getData();
     else {
       let arrHold = new Array();
-      console.log(data);
-      console.log((userDetail.saveFilm));
       data.map((e) => {
         arrHold.push(e.id);
       });
       let is_same =
         arrHold.length == Object.keys(userDetail.saveFilm).length &&
         arrHold.every(function (element, index) {
-          console.log(
-            element + " -- " + Object.keys(userDetail.saveFilm)[index]
-          );
           return element == Object.keys(userDetail.saveFilm)[index];
         });
       if (is_same == false) getData();
@@ -46,15 +41,12 @@ const WatchLaterList = () => {
 
   function getData() {
     if (userDetail.saveFilm != null && userDetail.saveFilm != undefined) {
-      console.log("get data");
       axios
         .post(process.env.REACT_APP_API_LOCAL + "film/bylistid", {
           list: Object.keys(userDetail.saveFilm),
         })
         .then((res) => {
           dispatch(setWatchLater(res.data));
-          console.log(res.data);
-          console.log("<<<<<<<<<<<");
         })
         .catch((e) => {
           console.log(e);

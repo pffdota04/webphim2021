@@ -1,12 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
-import "./style.css"
+import "./style.css";
+import Loading from "../../../components/Loading";
 
 const Voucher = (props) => {
   const [inputCode, setInputCode] = useState("");
   const { userDetail, change } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   const sendVoucher = () => {
+    setIsLoading(true);
+
     axios
       .post(process.env.REACT_APP_API_LOCAL + "user/voucher", {
         token: userDetail.token,
@@ -19,20 +23,23 @@ const Voucher = (props) => {
           newDetail.coin = newDetail.coin + res.data.voucherPoint;
           change(newDetail);
         } else alert(res.data);
+        setIsLoading(false);
       })
       .catch((e) => {
         alert(e.response.data.message);
+        setIsLoading(false);
       });
   };
 
   return (
     <div className="container my-2 mb-3">
+      {isLoading && <Loading/>}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
             <strong className="display-6 fw-bold fst-italic ">
               {" "}
-              VOUCH KOIN 
+              VOUCH KOIN
             </strong>{" "}
           </h4>
           <div className="col-lg-6 mx-auto">
@@ -59,7 +66,7 @@ const Voucher = (props) => {
         <div className="col-12 ">
           <button
             className="btn-lg w-25 btn-secondary mx-auto d-block mt-3"
-            onClick = {() => sendVoucher()}
+            onClick={() => sendVoucher()}
           >
             Gửi
           </button>

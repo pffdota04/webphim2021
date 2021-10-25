@@ -186,12 +186,13 @@ const Links = (props) => {
       })
       .then((res) => {
         alert(res.data);
-        let a = [...dataL];
-        console.log(a);
-        a.map((e, i) => {
-          if (e.id == lid) a.splice(i, 1);
-        });
-        setdataL(a);
+        if (res.data === "okok") {
+          let a = [...dataL];
+          a.map((e, i) => {
+            if (e.id == lid) a.splice(i, 1);
+          });
+          setdataL(a);
+        }
         // console.log(...dataL)
         // if (res.data === "okok") {
         // adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
@@ -381,7 +382,7 @@ const Links = (props) => {
           aria-hidden="true"
         >
           <div className="modal-dialog modal-xl modal-dialog-centered ">
-            <div className="modal-content border-warning">
+            <div className="modal-content bg-dark border-warning">
               <div className="modal-header">
                 <h5 className="modal-title fw-bold" id="exampleModalLabel">
                   ADD NEW FILM
@@ -427,7 +428,7 @@ const Links = (props) => {
           aria-hidden="true"
         >
           <div className="modal-dialog  modal-dialog-centered ">
-            <div className="modal-content border-warning">
+            <div className="modal-content bg-dark border-warning">
               <div className="modal-header">
                 <h5 className="modal-title fw-bold" id="exampleModalLabel">
                   Are you sure?

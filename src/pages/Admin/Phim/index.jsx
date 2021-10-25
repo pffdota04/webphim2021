@@ -633,7 +633,7 @@ const Phims = (props) => {
             aria-hidden="true"
           >
             <div className="modal-dialog modal-xl modal-dialog-centered ">
-              <div className="modal-content border-warning">
+              <div className="modal-content border-warning bg-dark">
                 <div className="modal-header">
                   <h5 className="modal-title fw-bold" id="exampleModalLabel">
                     ADD NEW FILM
@@ -681,7 +681,7 @@ const Phims = (props) => {
           aria-hidden="true"
         >
           <div className="modal-dialog  modal-dialog-centered ">
-            <div className="modal-content border-warning">
+            <div className="modal-content bg-dark border-warning">
               <div className="modal-header">
                 <h5 className="modal-title fw-bold" id="exampleModalLabel">
                   Are you sure?

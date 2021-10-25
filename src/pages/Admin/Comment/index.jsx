@@ -94,7 +94,7 @@ const Comments = (props) => {
           aria-hidden="true"
         >
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div className="modal-content bg-dark">
               <div className="modal-header">
                 <h5 className="modal-title fw-bold" id="exampleModalLabel">
                   Edit

@@ -1,9 +1,7 @@
 /* A film item */
 .card {
   width: 100%;
-  /* width: 30vw !important; */
-  margin: 3px auto !important;
-  border: 1.5px rgba(0, 0, 0, 0.755) solid !important;
+  margin: 0 auto !important;
 }
 
 .card .film-item {
@@ -55,4 +53,16 @@
     height: 30rem!important;
     height: 20vw ;
   }
+}
+
+
+/* HOVER IMGAE */
+.film-item, .sodem {
+  transition: .3s ease;
+  backface-visibility: hidden;
+}
+
+.film-item:hover {
+  opacity: 0.6;
+  filter: sepia(30%);
 }

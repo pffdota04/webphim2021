@@ -207,7 +207,6 @@ const Admin = () => {
   }, [fetchReport]);
 
   function getDataPhim() {
-    console.log("lect phim");
     setFetchPhim(false);
     if (adminToken != null)
       axios

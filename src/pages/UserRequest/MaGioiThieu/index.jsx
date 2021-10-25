@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useState } from "react";
 import "./style.css";
+import Loading from "../../../components/Loading";
 
 const MaGioiThieu = (props) => {
   const [inputCode, setInputCode] = useState("");
   const { userDetail, change } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   function sendMaGioiThieu() {
+    setIsLoading(true);
     axios
       .post(process.env.REACT_APP_API_LOCAL + "user/usecode", {
         token: userDetail.token,
@@ -14,19 +17,22 @@ const MaGioiThieu = (props) => {
       })
       .then((res) => {
         if (res.data.complete == true) {
-          alert("Thanhf coong: nhaanj 20 koin!");
+          alert("Thành công, nhận 20 Koin!");
           let newDetail = userDetail;
-          newDetail.coin = newDetail.coin+20;
-          change(newDetail)
+          newDetail.coin = newDetail.coin + 20;
+          change(newDetail);
         } else alert(res.data.complete);
+        setIsLoading(false);
       })
       .catch((e) => {
         alert(e.response.data.message);
+        setIsLoading(false);
       });
   }
 
   return (
     <div className="container my-2 mb-3">
+      {isLoading && <Loading/>}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">

@@ -118,7 +118,7 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-home-tab"
                 >
-                  <Profile userInfo={userInfo} coin={userDetail.coin} />
+                  <Profile userInfo={userInfo} coin={userDetail.coin} token={userDetail.token} />
                 </div>
                 <div
                   className="tab-pane fade"

@@ -188,7 +188,7 @@ const Home = () => {
               {Object.keys(homeData).length == 0
                 ? loadLoading(6, true)
                 : Object.keys(homeData.trending).map((e, i) => (
-                    <div>
+                    <div className="ms-1">
                       <FilmCard
                         key={i + "trend"}
                         numberTrend={i + 1}
@@ -218,11 +218,13 @@ const Home = () => {
               {Object.keys(homeData).length == 0
                 ? loadLoading(6, false)
                 : Object.keys(homeData.recommend).map((e, i) => (
+                    <div className="ms-1">
                     <FilmCard
                       data={homeData.recommend[e]}
                       key={homeData.recommend[e].id + "recom"}
                       click={setPopupID}
                     />
+                    </div>
                   ))}
             </Carousel>
           </div>

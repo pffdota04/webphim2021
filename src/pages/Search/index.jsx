@@ -54,7 +54,6 @@ const Search = (props) => {
   }, [value]);
 
   const searching = () => {
-    //  console.log("Tìm: " + keySearch+ " ...with " + movieOrSeries+ " " +type +" " +country );
     if (keySearch == undefined) return [];
     let a = Object.values(data).filter((item) => {
       return (
@@ -71,19 +70,16 @@ const Search = (props) => {
   };
 
   useEffect(() => {
-    console.log("123");
     let hold = searching();
     setresulfSearch(hold);
     setshowSearch(hold.slice(0, 12));
     setpage(1);
     sethasMore(true);
-    //  console.log("Tìm thấy: " + hold.length + "phần tử");
   }, [keySearch, type, country, movieOrSeries, data]);
 
   useEffect(() => {
     if (page * 12 >= resulfSearch.length) sethasMore(false);
     setshowSearch(resulfSearch.slice(0, page * 12));
-    //  console.log("_._ Đang ở trang: "+page+ " _._ hiển thị: "+showSearch.length+" phần tử")
   }, [page]);
 
   return (

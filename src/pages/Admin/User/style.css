@@ -148,6 +148,6 @@
 /* new table ediy */
 .table-user{
   max-height: 800px;
-  overflow: hidden;
-  overflow-y: scroll;
+  /* overflow-y: hidden; */
+  overflow-y: auto;
 }

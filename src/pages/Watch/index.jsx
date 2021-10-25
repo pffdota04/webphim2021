@@ -1,13 +1,13 @@
 import "./style.css";
 import qc from "./../../assets/images/quang-cao.jpg";
-import { useEffect, useState, useCallback, useRef } from "react";
-import { Redirect, useHistory, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserDataDetail } from "./../../store/actions/user";
-import { auth } from "../../services/firebase";
 import { Link } from "react-router-dom";
 import Chat from "../../components/Chat/Chat";
+import Loading from "../../components/Loading";
 
 const Watch = () => {
   const { id, name } = useParams();
@@ -17,6 +17,7 @@ const Watch = () => {
   const [isFull, setIsFull] = useState(false);
   const [nowChap, setnowChap] = useState(-1);
   const [nowServer, setnowServer] = useState(-1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [loadingData, setLoading] = useState(true);
   const [iconSave, setIconSave] = useState(0);
@@ -26,13 +27,11 @@ const Watch = () => {
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userData.userDetail);
 
-  const modalRefVip = useRef();
-
   const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 0);
     // getDataByParamsId();
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     if (dataFilmState.id == undefined) {
@@ -56,7 +55,6 @@ const Watch = () => {
       userDetail.checkUser != "init" &&
       userDetail.checkUser != "not"
     ) {
-      console.log(userDetail.saveFilm);
       if (
         userDetail.saveFilm == undefined ||
         userDetail.saveFilm[id] == undefined
@@ -123,7 +121,7 @@ const Watch = () => {
       </p>
     ) : (
       <div>
-        <hr className="m-2" />
+        {/* <hr className="m-2" /> */}
         <div
           id="filmView"
           className={
@@ -149,8 +147,7 @@ const Watch = () => {
             </div>
           ))}
         </div>
-        <hr className="m-2" />
-        <div className="d-block justify-content-center d-flex">
+        <div className="d-block justify-content-center d-flex mt-2">
           <p
             onClick={() => setIsFull(!isFull)}
             className="btn-sm btn-warning m-1"
@@ -172,13 +169,13 @@ const Watch = () => {
               <li>
                 <button
                   className={
-                    "btn btn-outline-secondary me-1 " + e.chap == nowChap &&
-                    " btn-secondary text-light"
+                    "btn btn-outline-secondary me-1 " +
+                    (e.chap == nowChap && " btn-secondary text-light")
                   }
                   onClick={() => {
                     setnowChap(e.chap);
                     setnowServer(e.server);
-                    window.scrollTo(0, 0);
+                    // window.scrollTo(0, 0);
                   }}
                 >
                   {e.chap}
@@ -195,10 +192,9 @@ const Watch = () => {
                       className={buttonServerRender(e.server, e.vip)}
                       onClick={() => {
                         setnowServer(e.server);
-                        window.scrollTo(0, 0);
+                        // window.scrollTo(0, 0);
                       }}
                     >
-                      
                       {e.server}
                     </button>
                   </li>
@@ -223,10 +219,10 @@ const Watch = () => {
   }
 
   function unlockTHis(plan) {
-    if (userDetail.checkUser == "not") 
-    // return history.push("/login");
-    alert("please login!")
+    setPopupVip(null);
+    if (userDetail.checkUser == "not") alert("please login!");
     else {
+      setIsLoading(true);
       setIconUnlock(0);
       axios
         .post(process.env.REACT_APP_API_LOCAL + "user/unlock", {
@@ -249,17 +245,19 @@ const Watch = () => {
             getDataByTokenId();
             // forceUpdate();
           } else alert(res.data.complete);
+          setIsLoading(false);
         })
         .catch((e) => {
           alert(e.response.data.message);
+          setIsLoading(false);
         });
     }
   }
 
   function saveThis() {
-    if (userDetail.checkUser == "not") 
-    // return history.push("/login");
-    alert("please login!")
+    if (userDetail.checkUser == "not")
+      // return history.push("/login");
+      alert("please login!");
     else {
       setIconSave(0);
       axios
@@ -286,6 +284,7 @@ const Watch = () => {
 
   return (
     <div>
+      {isLoading && <Loading />}
       <main>
         <div className>
           <img className="d-block w-100 pb-2" src={qc} alt="" />
@@ -345,7 +344,7 @@ const Watch = () => {
                       </div>
                     ) : iconUnlock === -1 ? (
                       <div>
-                        <i class="fa fa-trash"></i> Mở khóa vip
+                        <i class="fa fa-unlock-alt"></i> Mở khóa vip
                       </div>
                     ) : (
                       <div>
@@ -362,9 +361,9 @@ const Watch = () => {
           {contentVideoView()}
 
           <div className="container bg-light p-2 pt-0">
-              <div >
-                <h2 className="text-center mt-2 mb-0">Bình luận</h2>
-                <Chat place={id} backimg={dataFilmState.backimg} />
+            <div>
+              <h2 className="text-center mt-2 mb-0">Bình luận</h2>
+              <Chat place={id} backimg={dataFilmState.backimg} />
             </div>
           </div>
 
@@ -375,7 +374,7 @@ const Watch = () => {
       {popupVip != null && (
         <div>
           <div
-            class="modal  fade show"
+            class="modal  fade show text-light"
             id="unlockFilmPlan"
             aria-modal="true"
             role="dialog"
@@ -383,7 +382,7 @@ const Watch = () => {
           >
             <div className="Invisible" onClick={() => setPopupVip(null)}></div>
             <div class="modal-dialog  modal-dialog-centered ">
-              <div class="modal-content p-3 border border-danger border-3 rounded-3">
+              <div class="modal-content bg-dark p-3 border border-danger border-3 rounded-3">
                 <div class="modal-header">
                   <h5 class="modal-title" id="staticBackdropLabel">
                     Mở khóa VIP cho phim này

@@ -13,6 +13,7 @@ import UnlockList from './pages/UserList/UnlockList';
 import WatchLaterList from "./pages/UserList/WatchLaterList";
 import Admin from './pages/Admin';
 import ErrorPage from './pages/ErrorPage';
+import XacThuc from './pages/XacThuc';
 
 
 function App() {
@@ -32,9 +33,10 @@ function App() {
             />
             <Route path="/unlock" x component={UnlockList} />
             <Route path="/mylist" component={WatchLaterList} />
+            <Route path="/xacthuc" component={XacThuc} />
             <Route path="/admin" component={Admin} />
             <Route exact path={["/", "/home"]} component={Home} />
-            <Route path="/404" component={() => <ErrorPage error={404}/>} />
+            <Route path="/404" component={() => <ErrorPage error={404} />} />
             <Redirect to="/404" />
           </Switch>
         </main>

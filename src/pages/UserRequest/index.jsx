@@ -13,6 +13,7 @@ import { Redirect } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { auth } from "../../services/firebase";
+import Loading from "../../components/Loading";
 
 const style = {
   height: 30,
@@ -42,10 +43,12 @@ const UserRequest = (props) => {
   }
 
   return userInfo.checkUser == "init" ? (
-    <h1>CHECKING...</h1>
+    <Loading />
   ) : userInfo.checkUser == "not" ? (
     <Redirect push to="/login" />
   ) : (
+    // ) : userInfo.checkUser === false ? (
+    //   <Redirect to="/xacthuc" />
     <div>
       <div className="container">
         {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
@@ -82,6 +85,7 @@ const UserRequest = (props) => {
                     role="tab"
                     aria-controls="nav-naptien"
                     aria-selected="false"
+                    disabled={!userInfo.checkUser}
                   >
                     <i className="fa fa-dollar" /> Nạp tiền
                   </button>
@@ -94,6 +98,7 @@ const UserRequest = (props) => {
                     role="tab"
                     aria-controls="nav-usercode"
                     aria-selected="false"
+                    disabled={!userInfo.checkUser}
                   >
                     <i className="fa fa-users"></i> Nhập mã
                   </button>
@@ -106,6 +111,7 @@ const UserRequest = (props) => {
                     role="tab"
                     aria-controls="nav-voucher"
                     aria-selected="false"
+                    disabled={!userInfo.checkUser}
                   >
                     <i className="fa fa-gift" /> Voucher
                   </button>
@@ -118,35 +124,48 @@ const UserRequest = (props) => {
                   role="tabpanel"
                   aria-labelledby="nav-home-tab"
                 >
-                  <Profile userInfo={userInfo} coin={userDetail.coin} token={userDetail.token} />
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="nav-naptien"
-                  role="tabpanel"
-                  aria-labelledby="nav-profile-tab"
-                >
-                  <NapTien userDetail={userDetail} stk={allStk} />
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="nav-usercode"
-                  role="tabpanel"
-                  aria-labelledby="nav-contact-tab"
-                >
-                  <MaGioiThieu
-                    userDetail={userDetail}
-                    change={changeUserDetail}
+                  <Profile
+                    userInfo={userInfo}
+                    coin={userDetail.coin}
+                    token={userDetail.token}
                   />
                 </div>
-                <div
-                  className="tab-pane fade"
-                  id="nav-voucher"
-                  role="tabpanel"
-                  aria-labelledby="nav-contact-tab"
-                >
-                  <Voucher userDetail={userDetail} change={changeUserDetail} />
-                </div>
+                {userInfo.checkUser && (
+                  <div
+                    className="tab-pane fade"
+                    id="nav-naptien"
+                    role="tabpanel"
+                    aria-labelledby="nav-profile-tab"
+                  >
+                    <NapTien userDetail={userDetail} stk={allStk} />
+                  </div>
+                )}
+                {userInfo.checkUser && (
+                  <div
+                    className="tab-pane fade"
+                    id="nav-usercode"
+                    role="tabpanel"
+                    aria-labelledby="nav-contact-tab"
+                  >
+                    <MaGioiThieu
+                      userDetail={userDetail}
+                      change={changeUserDetail}
+                    />
+                  </div>
+                )}
+                {userInfo.checkUser && (
+                  <div
+                    className="tab-pane fade"
+                    id="nav-voucher"
+                    role="tabpanel"
+                    aria-labelledby="nav-contact-tab"
+                  >
+                    <Voucher
+                      userDetail={userDetail}
+                      change={changeUserDetail}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <hr className="mb-3" />

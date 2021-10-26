@@ -221,6 +221,7 @@ const Watch = () => {
   function unlockTHis(plan) {
     setPopupVip(null);
     if (userDetail.checkUser == "not") alert("please login!");
+    if (userDetail.checkUser == false) alert("please verified email!");
     else {
       setIsLoading(true);
       setIconUnlock(0);
@@ -396,12 +397,15 @@ const Watch = () => {
                 </div>
                 <div class="modal-body">
                   <div className="row p-1">
-                    {userDetail.coin == undefined ? (
+                    {userDetail.checkUser == "not" ? (
                       <h5 className="text-center mb-3">
-                        <Link to="/login">Dang nhap</Link> de thuc hien chuc
-                        nang
+                        <Link to="/login">Đăng nhập</Link> để thực hiện chức năng
                       </h5>
-                    ) : (
+                    ) : (userDetail.checkUser == "not verified" ? 
+                      <h5 className="text-center mb-3">
+                        <Link to="/xacthuc">Xác thực email</Link> để thực hiện chức năng
+                      </h5>
+                      :
                       <h5 className="text-center mb-3">
                         Số dư của bạn: {userDetail.coin} Koin
                       </h5>

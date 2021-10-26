@@ -2,6 +2,7 @@ import userProfile from "./../../../assets/images/user-profile.jpg";
 import { useState } from "react";
 import axios from "axios";
 import Loading from "../../../components/Loading";
+import { Link } from "react-router-dom";
 const Profile = (props) => {
   const { userInfo, coin, token } = props;
   const [report, setReport] = useState();
@@ -36,7 +37,12 @@ const Profile = (props) => {
       />
       <h1 className="display-5 fw-bold text-center">{userInfo.displayName} </h1>
       <h5 className="text-center">
-        {userInfo.email} <i className="fa fa-check-circle text-primary"></i>
+        {userInfo.email + " "}
+        {userInfo.checkUser ? (
+          <i className="fa fa-check-circle text-primary"></i>
+        ) : (
+          <Link to="/xacthuc"> Xác thực ngay</Link>
+        )}
       </h5>
       <h4 className="text-center">
         Số dư:

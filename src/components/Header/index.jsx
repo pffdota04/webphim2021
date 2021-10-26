@@ -1,7 +1,7 @@
 import "./style.css";
 import brandLogo from "./../../assets/images/logo1.png";
 import userLogo from "./../../assets/images/user-logo.jpg";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,10 +32,30 @@ const Header = () => {
           dispatch(setUserData({ checkUser: "not" }));
           dispatch(setUserDataDetail({ checkUser: "not" }));
         } else {
-          dispatch(setUserData(user));
-          // console.log(user.getIdToken(true));
+          // if (!user.emailVerified) {
+          //   dispatch(
+          //     setUserData({
+          //       checkUser: "not verified",
+          //       email: user.email,
+          //       displayName: user.displayName,
+          //       photoURL: user.photoURL,
+          //     })
+          //   );
+          //   user.getIdToken(true).then(function (idToken) {
+          //     dispatch(
+          //       setUserDataDetail({
+          //         checkUser: "not verified",
+          //         email: user.email,
+          //         token: idToken,
+          //       })
+          //     );
+          //   });
+          // } else {
+          let userinfo = user;
+          userinfo.checkUser = user.emailVerified;
+          dispatch(setUserData(userinfo));
           user.getIdToken(true).then(function (idToken) {
-            // console.log(idToken);
+            console.log(idToken);
             axios
               .post(process.env.REACT_APP_API_LOCAL + "user/info", {
                 token: idToken,
@@ -43,6 +63,7 @@ const Header = () => {
               .then((res) => {
                 let saveDetail = Object.values(res.data)[0];
                 saveDetail.token = idToken;
+                saveDetail.checkUser = user.emailVerified;
                 dispatch(setUserDataDetail(saveDetail));
               })
               .catch((e) => {
@@ -50,6 +71,7 @@ const Header = () => {
               });
           });
         }
+        // }
       });
     }
   }, [finalCheckToken]);
@@ -198,7 +220,7 @@ const Header = () => {
                   <li>
                     <div
                       class="input-group mx-auto "
-                      style={{ minWidth: "100px", maxWidth:"50vw" }}
+                      style={{ minWidth: "100px", maxWidth: "50vw" }}
                     >
                       <input
                         type="text"
@@ -436,7 +458,7 @@ const Header = () => {
                     </Link>
                   </li>
                 </ul>
-              ) : userInfo.checkUser == "not" ? (
+              ) : userInfo.checkUser === "not" ? (
                 <ul
                   className="dropdown-menu dropdown-menu-dark logomenu"
                   aria-labelledby="dropdownUser1"
@@ -449,6 +471,32 @@ const Header = () => {
                     >
                       <i className="fa fa-sign-in" /> Đăng nhập
                     </Link>
+                  </li>
+                </ul>
+              ) : userInfo.checkUser == false ? (
+                <ul
+                  className="dropdown-menu dropdown-menu-dark logomenu"
+                  aria-labelledby="dropdownUser1"
+                >
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/xacthuc"
+                      onClick={() => setOpenHeader(false)}
+                    >
+                      <i className="fa fa-user" /> Xác thực email
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      className="dropdown-item text-danger "
+                      onClick={() => {
+                        auth().signOut().then(alert("da dang xuat"));
+                        setOpenHeader(false);
+                      }}
+                    >
+                      <i className="fa fa-sign-out" /> Đăng xuất
+                    </button>
                   </li>
                 </ul>
               ) : (

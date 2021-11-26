@@ -1,22 +1,17 @@
-
 #main {
-  background-color: rgb(186, 255, 182);
-  height: fit-content;
-  width: 100vw;
+  background-image: url(../../assets/images/section.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 40px 0;
+  min-height: 765px;
 }
-
-/* .login-page {
-  padding-top: 5rem;
-} */
-
-/* .sign-in,
-.sign-up {
-  display: block;
-  padding: 1rem;
-  padding-bottom: 5rem;
-} */
-
-.sign-in {
+:root {
+  --primary-color: #f9ab00;
+}
+.primary-color {
+  color: #f9ab00;
+}
+/* .sign-in {
   background-image: url("./../../assets/images/conmeo1.jpg");
   background-repeat: no-repeat;
   background-position: center;
@@ -31,75 +26,98 @@
   background-size: cover;
   background-color: rgb(102, 181, 98);
 }
-
-/* .sign-in h2,
-.sign-in form label,
-.sign-up h2,
-.sign-up label {
-  color: white;
-  text-shadow: 2px 2px #000000;
-}
-
-.sign-in button,
-.sign-up {
-  display: block;
-  text-align: center;
-  padding: 0.2rem;
-  width: 300px;
-  margin: 0 auto;
-}
-
-.form-signin {
-  display: block;
-  width: 300px;
-  margin: 0 auto;
-} */
- @media (max-width: 767px) {
-
-  .sign-up {
-    background-image: url("./../../assets/images/conmeo3.png");
-    background-position: center center;
-  }
-
- }
-
-/* @media (max-width: 767px) {
-  .login-page {
-    height: 100vh;
-    padding-top: 0;
-  } 
-} */
-
-
-/* 
 @media (max-width: 767px) {
-  .sign-in {
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-  }
 
   .sign-up {
     background-image: url("./../../assets/images/conmeo3.png");
     background-position: center center;
   }
-
-  .login-page {
-    height: 100vh;
-    padding-top: 0;
-  }
-
-  .form-signin {
-    padding: 0.2rem;
-    width: 80%;
-    margin-left: 10%;
-    font-size: 80%;
-  }
-  .container-login {
-    max-width: 100vw;
-    padding-bottom: 2rem;
-  }
-
-  .login-page div button, .login-page form input {
-    width: 75% !important;
-  }
 } */
+
+/*==============================
+	Fonts
+==============================*/
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600");
+.logo-img {
+  width: 120px;
+  height: 70px;
+  background-image: url("../../assets/images/logo1.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 0 auto 20px;
+}
+.sign__form {
+  background-color: #1a191f;
+  border: 1px solid #222028;
+  border-radius: 6px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+.sign__input {
+  width: 100%;
+  background-color: #222028;
+  border: 2px solid transparent;
+  height: 46px;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+  width: 100%;
+  border-radius: 6px;
+  padding: 0 20px;
+  margin: 12px 0;
+}
+.sign__input:focus {
+  border-color: var(--primary-color);
+}
+.sign__btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 46px;
+  width: 100%;
+  border-radius: 6px;
+  background-color: transparent;
+  font-size: 14px;
+  color: #fff;
+  text-transform: uppercase;
+  border: 2px solid var(--primary-color);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.sign__btn:hover {
+  color: #fff;
+  background-color: rgba(249,171,0,0.05);
+}
+.sign__text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #fff;
+}
+.sign__text a {
+  display: inline-block;
+  text-decoration: none;
+  color: #f9ab00;
+}
+.sign__text a:hover {
+  color: #f9ab00;
+  text-decoration: underline;
+}
+@media (min-width: 576px) {
+  .sign__form {
+    padding: 50px 60px;
+  }
+  .sign__logo {
+    margin-bottom: 50px;
+  }
+}
+.firebaseui-card-content, .firebaseui-card-footer {
+  padding: 0 !important;
+}

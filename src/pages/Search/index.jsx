@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-
+import Footer from "../../components/Footer";
 import PopupFilm from "./../../components/PopupFilm";
 import FilmCard from "./../../components/FilmCard";
 import axios from "axios";
@@ -82,179 +82,206 @@ const Search = (props) => {
     setshowSearch(resulfSearch.slice(0, page * 12));
   }, [page]);
 
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const btnScroll = document.getElementById('scrolltotop');
+  window.onscroll = function() {scrollFunction()};
+  function scrollFunction() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      btnScroll.style.display = "flex";
+    } else {
+      btnScroll.style.display = "none";
+    }
+  }
+
   return (
     <div>
-      <div className="container">
-        {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
-        <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
-        <section>
-          <div className="mb-3">
-            <hr className="mb-2" />
-            <div className="row ">
-              <div className="col-4">
-                <div className="row">
-                  <input
-                    className="me-1 col-lg-7 ms-1"
-                    type="search"
-                    id="search-in-search"
-                    placeholder="Search"
-                    aria-label="Search"
-                    value={keySearch}
-                    onChange={(e) => {
-                      setKeySearch(e.target.value);
-                    }}
-                  />
-                  <button
-                    className="btn btn-sm btn-danger col-lg-4 mt-3 ms-1 mt-lg-0"
-                    onClick={() => {
-                      setCountry("all");
-                      setType("all");
-                      setMovieOrSeries("all");
-                      // setKeySearch("");
-                    }}
-                  >
-                    Clear filter
-                  </button>
-                </div>
-              </div>
-              <div className="col-2 pt-1 ps-1 pe-1 ">
-                <div>
-                  <div className="form-check col-12 p-0  ms-1">
-                    <input
-                      className="form-check-input ms-0 me-1"
-                      type="radio"
-                      name="exampleRadios"
-                      id="allcheck"
-                      defaultChecked
-                      checked={movieOrSeries === "all"}
-                      onChange={() => {
-                        setMovieOrSeries("all");
-                      }}
-                    />
-                    <label
-                      className="form-check-label text-body"
-                      htmlFor="allcheck"
-                    >
-                      Tất cả
-                    </label>
-                  </div>
-                  <div className="form-check col-12 p-0  ms-1">
-                    <input
-                      className="form-check-input ms-0  me-1"
-                      type="radio"
-                      name="exampleRadios"
-                      id="moviecheck"
-                      checked={movieOrSeries === "movie"}
-                      onChange={() => {
-                        setMovieOrSeries("movie");
-                      }}
-                    />
-                    <label className="form-check-label" htmlFor="moviecheck">
-                      Movie
-                    </label>
-                  </div>
-                  <div className="form-check col-12 p-0  ms-1">
-                    <input
-                      className="form-check-input  ms-0 me-1"
-                      type="radio"
-                      name="exampleRadios"
-                      id="seriescheck"
-                      checked={movieOrSeries === "series"}
-                      onChange={() => {
-                        setMovieOrSeries("series");
-                      }}
-                    />
-                    <label className="form-check-label" htmlFor="seriescheck">
-                      Series
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label for="theloaiSelect">Thể loại:</label>
-                      <select
-                        className="form-control"
-                        id="theloaiSelect"
-                        onChange={(e) => setType(e.target.value)}
-                        value={type}
-                      >
-                        <option value="all">Tất cả</option>
-                        <option value="action"> HÀNH ĐỘNG</option>
-                        <option value="scifi"> VIỄN TƯỞNG</option>
-                        <option value="horror"> KINH DỊ</option>
-                        <option value="anime"> HOẠT HÌNH</option>
-                        <option value="drama"> CHÍNH KỊCH</option>
-                        <option value="comedy">HÀI</option>
-                        <option value="romantic"> LÃNG MẠN</option>
-                        <option value="crime">TỘI PHẠM</option>
-                        <option value="family"> GIA ĐÌNH - TRẺ EM</option>
-                      </select>
+      <div className="container-fluid container-background pb-5">
+        <div className="">
+          {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
+          <img className="d-block w-100 pt-2" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
+          <section>
+            <div className="mb-3">
+              {/* <hr className="mb-2" /> */}
+              <div className="text-white mt-5 container">
+                <div className="row width-col">
+                  <div className="col-7">
+                    <div className="row">
+                      <div className="col-12 col-sm-6">
+                        <div className="form-group d-flex">
+                          <label className="sign__text font-size-label" for="theloaiSelect">Thể loại:</label>
+                          <select
+                            className="sign__input w-50 ms-3"
+                            id="theloaiSelect"
+                            onChange={(e) => setType(e.target.value)}
+                            value={type}
+                          >
+                            <option value="all">Tất cả</option>
+                            <option value="action">Hành Động</option>
+                            <option value="scifi">Viễn Tưởng</option>
+                            <option value="horror">Kinh Dị</option>
+                            <option value="anime"> Hoạt Hình</option>
+                            <option value="drama"> Chính Kịch</option>
+                            <option value="comedy">Hài</option>
+                            <option value="romantic">Lãng Mạn</option>
+                            <option value="crime">Tội Phạm</option>
+                            <option value="family"> Gia đình - Trẻ em</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-6">
+                        <div className="form-group d-flex">
+                          <label className="sign__text font-size-label" for="theloaiSelect">Quốc gia:</label>
+                          <select
+                            className="sign__input w-50 ms-3"
+                            id="theloaiSelect"
+                            onChange={(e) => setCountry(e.target.value)}
+                            value={country}
+                          >
+                            <option value="all">Tất cả</option>
+                            <option value="us">Mỹ</option>
+                            <option value="ja">Nhật</option>
+                            <option value="ko">Hàn Quốc</option>
+                            <option value="ch">Trung Quốc</option>
+                            <option value="vi">Việt Nam</option>
+                            <option value="es">Tây ban nha</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-group">
-                      <label for="theloaiSelect">Quốc gia:</label>
-                      <select
-                        className="form-control"
-                        id="theloaiSelect"
-                        onChange={(e) => setCountry(e.target.value)}
-                        value={country}
+                  <div className="col-3">
+                    <div className="select-type">
+                      <div className="form-check col-3 p-0 ms-1">
+                        <input
+                          className="form-check-input ms-0 me-1"
+                          type="radio"
+                          name="exampleRadios"
+                          id="allcheck"
+                          defaultChecked
+                          checked={movieOrSeries === "all"}
+                          onChange={() => {
+                            setMovieOrSeries("all");
+                          }}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="allcheck"
+                        >
+                          Tất cả
+                        </label>
+                      </div>
+                      <div className="form-check col-3 p-0  ms-2">
+                        <input
+                          className="form-check-input ms-0  me-1"
+                          type="radio"
+                          name="exampleRadios"
+                          id="moviecheck"
+                          checked={movieOrSeries === "movie"}
+                          onChange={() => {
+                            setMovieOrSeries("movie");
+                          }}
+                        />
+                        <label className="form-check-label" htmlFor="moviecheck">
+                          Movie
+                        </label>
+                      </div>
+                      <div className="form-check col-3 p-0  ms-2">
+                        <input
+                          className="form-check-input  ms-0 me-1"
+                          type="radio"
+                          name="exampleRadios"
+                          id="seriescheck"
+                          checked={movieOrSeries === "series"}
+                          onChange={() => {
+                            setMovieOrSeries("series");
+                          }}
+                        />
+                        <label className="form-check-label" htmlFor="seriescheck">
+                          Series
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-2">
+                    <div className="">
+                      {/* <input
+                        className="me-1 col-lg-7 ms-1"
+                        type="search"
+                        id="search-in-search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        value={keySearch}
+                        onChange={(e) => {
+                          setKeySearch(e.target.value);
+                        }}
+                      /> */}
+                      <button
+                        className="sign__btn"
+                        onClick={() => {
+                          setCountry("all");
+                          setType("all");
+                          setMovieOrSeries("all");
+                          // setKeySearch("");
+                        }}
                       >
-                        <option value="all">Tất cả</option>
-                        <option value="us">Mỹ</option>
-                        <option value="ja">Nhật</option>
-                        <option value="ko">Hàn Quốc</option>
-                        <option value="ch">Trung Quốc</option>
-                        <option value="vi">Việt Nam</option>
-                        <option value="es">Tây ban nha</option>
-                      </select>
+                        Clear filter
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
+              <h1 className="primary-color mt-5 ms-4">Kết quả tìm kiếm</h1>
+              {showSearch.length == 0 || keySearch.length == 0 ? (
+                <div className="container loading-film background-item mt-4">
+                <div className="text-center container-load">
+                  <h1 className="primary-color">Không tìm thấy dữ liệu!</h1>
+                  <p className="primary-color">(Phim đang trong quá trình cập nhật)</p>
+                </div>
+              </div>
+              ) : (
+                <InfiniteScroll
+                  dataLength={showSearch.length}
+                  next={() => setpage(page + 1)}
+                  hasMore={hasMore}
+                  loader={
+                    <div className="d-flex justify-content-center">
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                  }
+                  className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
+                  // endMessage={
+                  //   <p style={{ textAlign: "center" }}>
+                  //     <b>Yay! You have seen it all</b>
+                  //   </p>
+                  // }
+                >
+                  {showSearch.map((e, i) => (
+                    <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1 mt-5">
+                      <FilmCard key={i + "search"} data={e} click={setPopupID} />
+                    </div>
+                  ))}
+                </InfiniteScroll>
+              )}
+              {/* <hr className="mb-3" /> */}
             </div>
-            <h1 className="text-center pt-3">Kết quả tìm kiếm</h1>
-            <hr className="mb-2" />
-            {showSearch.length == 0 || keySearch.length == 0 ? (
-              <p style={{ textAlign: "center" }}>
-                <b>Không tìm thấy!</b>
-              </p>
-            ) : (
-              <InfiniteScroll
-                dataLength={showSearch.length}
-                next={() => setpage(page + 1)}
-                hasMore={hasMore}
-                loader={
-                  <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  </div>
-                }
-                className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
-                endMessage={
-                  <p style={{ textAlign: "center" }}>
-                    <b>Yay! You have seen it all</b>
-                  </p>
-                }
-              >
-                {showSearch.map((e, i) => (
-                  <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
-                    <FilmCard key={i + "search"} data={e} click={setPopupID} />
-                  </div>
-                ))}
-              </InfiniteScroll>
-            )}
-            <hr className="mb-3" />
-          </div>
-          <PopupFilm data={popupId} click={setPopupID} />
-        </section>
-        {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
-        <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
+            <PopupFilm data={popupId} click={setPopupID} />
+          </section>
+          {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
+          {/* <img className="d-block w-100 pb-2" src={qc} alt="" width={800} /> */}
+        </div>
+        <div id="scrolltotop" className="scrollTop" onClick={scrollTop}>
+          <i class="fa fa-upload" aria-hidden="true"></i>
+        </div>
       </div>
+      <Footer/>
     </div>
   );
 };

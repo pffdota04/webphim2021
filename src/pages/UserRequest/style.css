@@ -1,6 +1,84 @@
 .buton-user button{
-  /* padding: .5rem;
-   */
    width: fit-content;
    padding: .3rem;
+   color: #fff;
+}
+.buton-user button:hover {
+  border-color: #ffc312 !important;
+  background-color: transparent !important;
+  color: #ffc312 !important;
+}
+.background-content {
+  background-color: #181818;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgb(0 0 0 / 25%);
+}
+.background-item {
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0 8px 8px rgb(0 0 0 / 25%);
+}
+.icon-user {
+  font-size: 1.8rem !important;
+}
+.text-item {
+  color: #6d6d6d;
+}
+@media (min-width: 1024px) {
+  .mt-voucher {
+    padding-top: 50px !important;
+  }
+}
+@media (max-width: 1023.9px) {
+  #container-ipad > div:nth-child(1),
+  #container-ipad > div:nth-child(3) {
+    width: 100%;
+    margin-bottom: 20px !important;
+  }
+}
+@media (max-width: 599.9px) {
+  #container-ipad h1,
+  #container-ipad h5 {
+    font-size: 1.2rem;
+  }
+  #container-ipad h4 {
+    font-size: 1rem;
+  }
+  #container-ipad p,
+  #container-ipad h6 {
+    font-size: 0.8rem;
+  }
+  #container-ipad .sign__btn {
+    font-size: 0.8rem;
+    height: 2rem;
+    margin: 0;
+  }
+  #container-ipad .modal-content {
+    width: 90% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #container-ipad .modal-body {
+    padding: 8px 0 0 0;
+  }
+  #container-ipad .modal-body i {
+    margin-right: 0.3rem !important;
+  }
+  #container-ipad > div:nth-child(3) > img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px !important;
+  }
+  .w-respon {
+    width: 99% !important;
+  }
+  #nav-tab > button {
+    font-size: 0.88rem;
+  }
+}
+@media (max-width: 374.9px) {
+  #nav-tab > button {
+    font-size: 0.81rem;
+    padding: 4px !important;
+  }
 }

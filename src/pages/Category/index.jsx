@@ -4,7 +4,7 @@ import qc from "./../../assets/images/quang-cao.jpg";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import Footer from "../../components/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addListSeries,
@@ -59,23 +59,23 @@ const Category = (props) => {
     "es"
   ];
   const theloai = [
-    "mới cập nhật",
-    "hành động",
-    "phim lẻ",
-    "phim bộ",
-    "khoa học viễn tưởng",
-    "hài",
-    "hoạt hình",
-    "phiêu lưu",
-    "tài liệu",
-    "kì ảo",
-    "lịch sử",
-    "kinh dị",
-    "lãng mạn",
-    "chiến tranh",
-    "chính kịch",
-    "tội phạm",
-    "gia đình - trẻ em",
+    "Mới Cập Nhật",
+    "Hành Động",
+    "Lẻ",
+    "Bộ",
+    "Khoa Học Viễn Tưởng",
+    "Hài",
+    "Hoạt Hình",
+    "Phiêu Lưu",
+    "Tài Liệu",
+    "Kỳ Ảo",
+    "Lịch Sử",
+    "Kinh Dị",
+    "Lãng Mạn",
+    "Chiến Tranh",
+    "Chính Kịch",
+    "Tội Phạm",
+    "Gia đình - Trẻ em",
     "Mỹ",
     "Nhật",
     "Hàn Quốc",
@@ -206,22 +206,25 @@ const Category = (props) => {
           </div>
         }
         className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! Không còn phim nào nữa</b>
-          </p>
-        }
+        // endMessage={
+        //   <p style={{ textAlign: "center" }}>
+        //     <b>Yay! Không còn phim nào nữa</b>
+        //   </p>
+        // }
       >
         {showThis.map((i, index) => (
-          <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1">
+          <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1 mt-5">
             {/* <PopupFilm key={i.id} data={i} /> */}
             <FilmCard key={i.id} data={i} click={setPopupID} />
           </div>
         ))}
       </InfiniteScroll>
     ) : hasMore == false ? (
-      <div className="text-center ">
-        <h4>Opps! Sao tìm không thấy cái này vậy ta...</h4>
+      <div className="container loading-film background-item mt-4">
+        <div className="text-center container-load">
+          <h1 className="primary-color">Không tìm thấy dữ liệu!</h1>
+          <p className="primary-color">(Phim đang trong quá trình cập nhật)</p>
+        </div>
       </div>
     ) : (
       <div className="text-center ">
@@ -232,25 +235,48 @@ const Category = (props) => {
     );
   }
 
+  const scrollTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const btnScroll = document.getElementById('scrolltotop');
+  window.onscroll = function() {scrollFunction()};
+  function scrollFunction() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      btnScroll.style.display = "flex";
+    } else {
+      btnScroll.style.display = "none";
+    }
+  }
+
   return (
-    <div>
-   
-      <div className="container">
-        {/* Top ADS: */}
-        <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
-        <section>
-          <div className="mb-3">
-            <hr className="mb-2" />
-            <h1 className="text-center">Phim {reType}</h1>
-            <hr className="mb-2" />
-            {categoryData()}
-            <hr className="mb-3" />
-          </div>
-          <PopupFilm data={popupId} click={setPopupID} />
-        </section>
-        {/* End ADS, kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
-        <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
+    <div className="container-background">
+      <div className="container-fluid  pb-5">
+    
+        <div className="">
+          {/* Top ADS: */}
+          <img className="w-100" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
+          <section>
+            <div className="mb-3">
+              {/* <hr className="mb-2" /> */}
+              <h1 className="primary-color mt-5 ms-4">Phim {reType}</h1>
+              {/* <hr className="mb-2" /> */}
+              {categoryData()}
+              {/* <hr className="mb-3" /> */}
+            </div>
+            <PopupFilm data={popupId} click={setPopupID} />
+          </section>
+          {/* End ADS, kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
+          {/* <img className="d-block w-100" src={qc} alt="" width={800} /> */}
+        </div>
+        <div id="scrolltotop" className="scrollTop" onClick={scrollTop}>
+          <i class="fa fa-upload" aria-hidden="true"></i>
+        </div>
       </div>
+      <Footer/>
     </div>
   );
 };

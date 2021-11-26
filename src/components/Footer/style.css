@@ -1,0 +1,23 @@
+:link {
+    text-decoration: none;
+}
+.link-color:hover {
+    color: #f9ab00 !important;
+}
+@media (max-width: 1023.9px) {
+    footer .logo-img {
+        width: 77px !important;
+        height: 52px !important;
+    }
+    footer p, footer span, footer span > a {
+        font-size: 0.9rem !important;
+    }
+}
+@media (max-width: 767.9px) {
+    footer p {
+        margin-bottom: 4px !important;
+    }
+    section > div {
+        padding-top: 0.5rem !important;
+    }
+}

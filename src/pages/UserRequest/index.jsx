@@ -49,23 +49,23 @@ const UserRequest = (props) => {
   ) : (
     // ) : userInfo.checkUser === false ? (
     //   <Redirect to="/xacthuc" />
-    <div>
-      <div className="container">
+    <div className="container-background">
+      <div className="container text-white">
         {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
-        <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
+        <img className="d-block w-100 pt-2" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
         <section>
-          <div className="mb-3">
-            <hr className="mb-2" />
+          <div className="mb-3 mt-5">
+            {/* <hr className="mb-2" /> */}
 
             <div>
               <nav>
                 <div
-                  className="nav nav-tabs justify-content-center buton-user"
+                  className="nav nav-tabs justify-content-left buton-user"
                   id="nav-tab"
                   role="tablist"
                 >
                   <button
-                    className="nav-link active"
+                    className="nav-link p-2 active"
                     id="nav-profile-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-profile"
@@ -77,7 +77,7 @@ const UserRequest = (props) => {
                     <i className="fa fa-user" /> Hồ sơ
                   </button>
                   <button
-                    className="nav-link"
+                    className="nav-link p-2"
                     id="nav-naptien-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-naptien"
@@ -90,7 +90,7 @@ const UserRequest = (props) => {
                     <i className="fa fa-dollar" /> Nạp tiền
                   </button>
                   <button
-                    className="nav-link"
+                    className="nav-link p-2"
                     id="nav-usercode-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-usercode"
@@ -103,7 +103,7 @@ const UserRequest = (props) => {
                     <i className="fa fa-users"></i> Nhập mã
                   </button>
                   <button
-                    className="nav-link"
+                    className="nav-link p-2"
                     id="nav-voucher-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-voucher"
@@ -168,11 +168,11 @@ const UserRequest = (props) => {
                 )}
               </div>
             </div>
-            <hr className="mb-3" />
+            {/* <hr className="mb-3" /> */}
           </div>
         </section>
         {/* End ADS, Cứ kéo đến cuối là thấy, tuy nhiên chỉ thấy trong vài giây chờ fetch data*/}
-        <img className="d-block w-100 pb-2" src={qc} alt="" width={800} />
+        {/* <img className="d-block w-100 pb-2" src={qc} alt="" width={800} /> */}
       </div>
       <Footer />
     </div>

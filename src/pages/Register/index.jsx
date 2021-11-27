@@ -13,19 +13,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserData, setUserDataDetail } from "./../../store/actions/user";
 import XacThuc from "../XacThuc";
 import { Redirect } from "react-router";
-import Register from "../Register";
 
 const firebaseAppAuth = auth();
 const providers = {
   googleProvider: new auth.GoogleAuthProvider(),
 };
 
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userData.curentUser);
-  const [emailLogin, setEmailLogin] = useState("");
-  const [passLogin, setPassLogin] = useState("");
-  const [errorLogin, setErrorLogin] = useState(null);
 
   const [emailSignup, setEmailSignup] = useState("");
   const [passSignup, setPassSignup] = useState("");
@@ -34,57 +30,12 @@ const Login = () => {
   const [imgSignup, setImgSignup] = useState("");
   const [errorSignup, setErrorSignup] = useState(null);
 
-  // useEffect(() => {
-  //   auth().onAuthStateChanged((user) => {
-  //     if (user == null) {
-  //       dispatch(setUserData({ checkUser: "not" }));
-  //       dispatch(setUserDataDetail({ checkUser: "not" }));
-  //     } else {
-  //       dispatch(setUserData(user));
-  //       auth()
-  //         .currentUser.getIdToken(true)
-  //         .then(function (idToken) {
-  //           axios
-  //             .post(process.env.REACT_APP_API_LOCAL + "user/info", {
-  //               token: idToken,
-  //             })
-  //             .then((res) => {
-  //               dispatch(setUserDataDetail(res.data));
-  //             })
-  //             .catch((e) => {
-  //               console.log(e);
-  //             });
-  //         });
-  //     }
-  //   });
-  // }, [auth().currentUser]);
-
   const uiConfig = {
     signInFlow: "popup",
     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
     callbacks: {
       signInSuccess: () => false,
     },
-  };
-
-  const Login = () => {
-    if (emailLogin === "" || passLogin == "") {
-      setErrorLogin("Error: The email address or password is badly formatted");
-    } else
-      auth()
-        .signInWithEmailAndPassword(emailLogin, passLogin)
-        .then((userCredential) => {
-          alert(
-            "Xin chào " +
-              userCredential.user.displayName +
-              ", bạn đã đăng nhập thành công!"
-          );
-          window.location = "/";
-        })
-        .catch((error) => {
-          var errorMessage = error.message;
-          setErrorLogin("Lỗi: " + errorMessage);
-        });
   };
 
   const Signup = () => {
@@ -130,49 +81,85 @@ const Login = () => {
                     <div className="col-12">
                       <div className="logo-img"></div>
                     </div>
-                    
+                    <div className="col-12 mx-auto">
+                      <label htmlFor="nameSignup"></label>
+                      <input
+                        type="text"
+                        className="sign__input"
+                        id="nameSignup"
+                        placeholder="Name"
+                        value={nameSignup}
+                        onChange={(e) => setNameSignup(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-12 mx-auto">
+                      <label htmlFor="imgSignup"></label>
+                      <input
+                        type="text"
+                        className="sign__input"
+                        id="imgSignup"
+                        placeholder="Link avatar"
+                        value={imgSignup}
+                        onChange={(e) => setImgSignup(e.target.value)}
+                      />
+                    </div>
                     <div className="col-12 mx-auto">
                       <label
-                        htmlFor="exampleInputEmail1"
+                        htmlFor="emailSignup"
                         className="form-label"
                       >
                       </label>
                       <input
                         type="email"
                         className="sign__input"
-                        id="exampleInputEmail1"
+                        id="emailSignup"
                         aria-describedby="emailHelp"
                         placeholder="Email"
-                        value={emailLogin}
-                        onChange={(e) => setEmailLogin(e.target.value)}
+                        value={emailSignup}
+                        onChange={(e) => setEmailSignup(e.target.value)}
                       />
                     </div>
                     <div className="col-12 mx-auto">
                       <label
-                        htmlFor="exampleInputPassword1"
+                        htmlFor="passSignup"
                         className="form-label"
                       >
                       </label>
                       <input
                         type="password"
                         className="sign__input"
-                        id="exampleInputPassword1"
+                        id="passSignup"
                         placeholder="Password"
-                        value={passLogin}
-                        onChange={(e) => setPassLogin(e.target.value)}
+                        value={passSignup}
+                        onChange={(e) => setPassSignup(e.target.value)}
                       />
                     </div>
-                    {errorLogin === null ? (
+                    <div className="col-12 mx-auto">
+                      <label
+                        htmlFor="repassSignup"
+                        className="form-label"
+                      >
+                      </label>
+                      <input
+                        type="password"
+                        className="sign__input"
+                        id="repassSignup"
+                        placeholder="Password again"
+                        value={repassSignup}
+                        onChange={(e) => setRePassSignup(e.target.value)}
+                      />
+                    </div>                    
+                    {errorSignup === null ? (
                       <p></p>
                     ) : (
-                      <p className="text-danger">{errorLogin}</p>
+                      <p className="text-danger">{errorSignup}</p>
                     )}
                     <div className="col-12">
                       <button
                         className="sign__btn"
-                        onClick={() => Login()}
+                        onClick={() => Signup()}
                       >
-                        SIGN IN
+                        SIGN UP
                       </button>
                       <hr className="w-50 mx-auto" />
                     </div>
@@ -189,16 +176,12 @@ const Login = () => {
                       <hr className="w-50 mx-auto pd-1" />
                     </div>
                     <div className="col-12">
-                      <span class="sign__text">Don't have an account? 
-                      <Link to="/register">Sign up!</Link></span>
-                      <span class="sign__text">
-                      <Link to="/forgotpw">Forgot password?</Link></span>
+                      <span class="sign__text">Already have an account? 
+                      <Link to="/login">Sign in!</Link></span>
                     </div>
-                    
                   </div>
                 </div>
                 
-                {/* <h2 className="text-center  mt-2 mb-2 text-light fw-bold fst-italics"> */}
                 {/* <div className="col-12 col-md-4 p-2 sign-up text-center">
                   <div className="row ps-4 pe-4 ps-sm-2 pe-sm-2">
                     <h2 className="col-12">Đăng kí (sắp có)</h2>
@@ -272,15 +255,17 @@ const Login = () => {
                 </div> */}
               </div>
             ) : (
-              <div className="text-center sign__form">
-                <h3 className="text-white">Chào mừng <span className="primary-color">{userInfo.displayName}</span> đến với KPHIM</h3>
-                <Link
-                  className="w-40 h-30 btn btn-sm mt-3 background-primary" to="/home"
+              <div>
+                <h3>Xin chào, {userInfo.displayName}</h3>
+                <button
+                  className="w-40 h-30 btn btn-sm btn-danger"
+                  onClick={() =>
+                    firebase.auth().signOut().then(alert("Sign out!!!"))
+                  }
                 >
-                  Xem phim ngay!
-                </Link>
+                  Đăng xuất <i className="fas fa-sign-out-alt"></i>
+                </button>
               </div>
-              
             )}
           </div>
         </div>
@@ -290,4 +275,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

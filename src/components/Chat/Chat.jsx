@@ -174,13 +174,13 @@ const Chat = (props) => {
         } else
           setState({
             ...state,
-            writeError: "tin nhắn dài hơn quy định (" + send.length + "/300)",
+            writeError: "Bình luận của bạn quá dài (" + send.length + "/300)",
           });
-      } else setState({ ...state, writeError: "tin nhắn trống" });
+      } else setState({ ...state, writeError: "Bình luận trắng" });
     } else
       setState({
         ...state,
-        writeError: "Chờ vài giây trước khi gửi tin nhắn tiếp theo",
+        writeError: "Vui lòng đợi vài giây trước khi gửi bình luận tiếp theo!",
       });
   };
 
@@ -193,14 +193,14 @@ const Chat = (props) => {
   };
   return (
     <div
-      className="chat-component w-100 pb-1 "
-      style={{ backgroundImage: `url(${backimg})` }}
+      className="chat-component background-comment"
+      // style={{ backgroundImage: `url(${backimg})` }}
     >
       {/* {console.log(state.lasttime)} */}
       {chats.length === 0 && (
-        <p className="text-dark">
-          Chưa có tin nhắn nào, hãy là người mở đầu cuộc trò chuyện!
-        </p>
+        <span className="text-white background-item p-3 descriptions-comment">
+          Chưa có bình luận nào, hãy là người đầu tiên cho ý kiến về bộ phim này!
+        </span>
       )}
 
       <div className="chat-area" ref={myRef}>
@@ -220,65 +220,81 @@ const Chat = (props) => {
               <div>
                 {userInfo != null ? (
                   // đã login =>> check tn để float right
-                  <p
-                    key={chat.timestamp}
-                    className={
-                      "chat-bubble chat-content no-bottom " +
-                      (userInfo.email === chat.email ? "current-user" : "")
-                    }
-                  >
-                    <div className="userAndTime">
-                      {chat.username} (
-                      <span
-                        className="chat-time float-right"
-                        style={{ display: "inline-block" }}
-                      >
-                        {formatTime(chat.timestamp)}
-                      </span>
-                      ):
-                    </div>
-                    <br></br>
+                  <div className="d-flex p-2">
+                    <img className="d-block mb-4 rounded-circle avatar-default"
+                      src={"https://static.fptplay.net/static/img/share/structure/08_05_2015/default_user_icon08-05-2015_16g50-27.jpg?w=200&mode=scale"}
+                      alt=""
+                      width={50}
+                      height={50}
+                    />
                     <p
-                      style={{
-                        float: "left",
-                        textAlign: "left",
-                        overflowWrap: "anywhere",
-                      }}
-                      className="no-bottom"
+                      key={chat.timestamp}
+                      className={
+                        "chat-bubble chat-content no-bottom" +
+                        (userInfo.email === chat.email ? "current-user" : "")
+                      }
                     >
-                      {" "}
-                      {chat.content}
+                      <div className="userAndTime">
+                        {chat.username} 
+                        <span
+                          className="chat-time float-right ms-3"
+                          style={{ display: "inline-block" }}
+                        >
+                          {formatTime(chat.timestamp)}
+                        </span>
+                        
+                      </div>
+                      <br></br>
+                      <p
+                        // style={{
+                        //   float: "left",
+                        //   textAlign: "left",
+                        //   overflowWrap: "anywhere",
+                        // }}
+                        className="content-comment"
+                      >
+                        {" "}
+                        {chat.content}
+                      </p>
                     </p>
-                  </p>
+                  </div>
                 ) : (
                   // chưa login => full float feft
-                  <p
-                    // style={{ display: "block" }}
-                    key={chat.timestamp}
-                    className="chat-bubble chat-content no-bottom "
-                  >
-                    <div className="userAndTime">
-                      {chat.username} (
-                      <span
-                        className="chat-time float-right"
-                        style={{ display: "inline-block" }}
-                      >
-                        {formatTime(chat.timestamp)}
-                      </span>
-                      ):
-                    </div>
-                    <br></br>
+                  <div className="d-flex">
+                    <img className="d-block mb-4 rounded-circle"
+                      src={"https://static.fptplay.net/static/img/share/structure/08_05_2015/default_user_icon08-05-2015_16g50-27.jpg?w=200&mode=scale"}
+                      alt=""
+                      width={50}
+                      height={50}
+                    />
                     <p
-                      style={{
-                        float: "left",
-                        textAlign: "left",
-                        overflowWrap: "anywhere",
-                      }}
-                      className="no-bottom"
+                      // style={{ display: "block" }}
+                      key={chat.timestamp}
+                      className="chat-bubble chat-content no-bottom ms-3"
                     >
-                      {chat.content}
+                      <div className="userAndTime">
+                        {chat.username} (
+                        <span
+                          className="chat-time float-right ms-3"
+                          style={{ display: "inline-block" }}
+                        >
+                          {formatTime(chat.timestamp)}
+                        </span>
+                        ):
+                      </div>
+                      <br></br>
+                      <p
+                        style={{
+                          float: "left",
+                          textAlign: "left",
+                          overflowWrap: "anywhere",
+                        }}
+                        className="no-bottom"
+                      >
+                        {chat.content}
+                      </p>
                     </p>
-                  </p>
+                  </div>
                 )}
               </div>
             );
@@ -292,9 +308,9 @@ const Chat = (props) => {
           </div>
         </div>
       ) : userInfo.checkUser != "not" ? (
-        <form onSubmit={handleSubmit} className="mx-3">
+        <div onSubmit={handleSubmit} className="d-flex background-input-chat mt-3">
           <textarea
-            className="form-control"
+            className="input-chat text-white"
             name="content"
             onChange={(e) => {
               setState({ limitLenght: false });
@@ -303,32 +319,32 @@ const Chat = (props) => {
             onKeyDown={onEnterPress}
             value={content}
             // maxle=ngth="300"
-            placeholder={
-              "Chat với tên " + userInfo.displayName + " (tối đa 300 kí tự)"
+            placeholder={ "Nhập bình luận của bạn"
+              // "Chat với tên " + userInfo.displayName + " (tối đa 300 kí tự)"
             }
           ></textarea>
           {lasttime == -1 ? (
             <button
               type="submit"
-              className="btn btn-submit btn-success px-5 d-block mx-auto mt-2 mb-2"
+              className="btn-comment"
             >
-              Gửi
+              <i class="fa fa-paper-plane text-white" aria-hidden="true"></i>
             </button>
           ) : (
             <button
               type="submit"
-              className="btn btn-secondary px-5 d-block mx-auto mt-2 mb-2"
+              className="btn-comment primary-color"
               disabled
             >
               {lasttime}
             </button>
           )}
-        </form>
+        </div>
       ) : (
-        <div className="d-block mx-auto bg-danger  w-fit text-light ps-1 pe-1">
-          Login to comment{" "}
-          <Link to="/login" className="text-light">
-            Login now
+        <div className="d-block mx-auto w-fit text-light p-4">
+          <span className="out-title-ipad">Vui lòng đăng nhập để được bình luận!</span>{" "}
+          <Link to="/login" className="background-primary ms-4 btn outsign-ipad">
+            Đăng nhập ngay!
           </Link>
         </div>
       )}

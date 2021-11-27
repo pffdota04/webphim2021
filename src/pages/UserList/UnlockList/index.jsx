@@ -86,13 +86,13 @@ const UnlockList = () => {
   ) : userInfo.checkUser == "not" ? (
     <Redirect push to="/login" />
   ) : (
-    <div>
-      <div className="container">
-        <img className="d-block w-100 pt-2" src={qc} alt="" width={800} />
+    <div className="container-background">
+      <div className="container text-white">
+        <img className="d-block w-100 pt-2" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
         <section>
           <div className="mb-3">
-            <hr className="mb-2" />
-            <h1 className="text-center">PHIM BẠN ĐÃ MỞ KHÓA</h1>
+            {/* <hr className="mb-2" /> */}
+            <h1 className="primary-color mt-5 ms-4 mb-4">PHIM BẠN ĐÃ MỞ KHÓA</h1>
             <hr className="mb-2" />
 
             {data.init == true ? (
@@ -102,14 +102,14 @@ const UnlockList = () => {
                 </div>
               </div>
             ) : userDetail.saveFilm == undefined ? (
-              <h3>Không có phim, hãy thêm vài phim vào đây</h3>
+              <h3 className="text-center">Bạn chưa lưu phim nào vào danh sách này</h3>
             ) : (
               showData()
             )}
             <hr className="mb-3" />
           </div>
         </section>
-        <img className="d-block w-100 pt-2 pb-2" src={qc} alt="" width={800} />
+        {/* <img className="d-block w-100 pt-2 pb-2" src={qc} alt="" width={800} /> */}
         <PopupFilm data={popupId} click={setPopupID} />
       </div>
       <Footer />

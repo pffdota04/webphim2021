@@ -8,7 +8,9 @@ import Category from './pages/Category';
 import Search from './pages/Search';
 import UserRequest from './pages/UserRequest';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Watch from './pages/Watch';
+import DetailFilm from './pages/DetailFilm';
 import UnlockList from './pages/UserList/UnlockList';
 import WatchLaterList from "./pages/UserList/WatchLaterList";
 import Admin from './pages/Admin';
@@ -27,6 +29,7 @@ function App() {
             <Route path="/search/:value" component={Search}></Route>
             <Route path="/user" component={UserRequest}></Route>
             <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
             <Route
               path={["/watch/:id/:name", "/watch/:id"]}
               component={Watch}
@@ -36,6 +39,7 @@ function App() {
             <Route path="/xacthuc" component={XacThuc} />
             <Route path="/admin" component={Admin} />
             <Route exact path={["/", "/home"]} component={Home} />
+            <Route path="/detailfilm" component={DetailFilm}/>
             <Route path="/404" component={() => <ErrorPage error={404} />} />
             <Redirect to="/404" />
           </Switch>

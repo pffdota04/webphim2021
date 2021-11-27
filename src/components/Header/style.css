@@ -1,53 +1,131 @@
 /* HEADER */
 #header {
-  background-color: rgb(255, 172, 172);
   text-align: center !important;
   display: block;
 }
-
-.dropdown-memu {
-  position: absolute;
-  z-index: 1000;
-  display: none;
-  min-width: 10rem;
-  padding: 0.5rem 0;
-  margin: 0;
-  font-size: 1rem;
-  color: #212529;
-  text-align: left;
-  list-style: none;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
-}
-
 #header-real {
   padding: 0;
   margin: 0;
 }
-#userlogo {
-  text-align: center !important;
-}
-
-.usermenu li,
-.usermenu hr {
-  text-align: left !important;
-  width: inherit;
-}
-.usermenu form input {
-  width: 4.3rem;
-}
-
-.usermenu {
-  min-width: fit-content !important;
-}
-
 .header-nav-bar div {
   max-height: 62px;
 }
+.show-category {
+  display: none !important;
+}
+.user-action {
+  display: none !important;
+}
+.show-search-tablet {
+  display: none;
+}
+/* Search */
+.btn-search {
+  width: 30px;
+  padding-right: 8px;
+  margin-right: 8px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--primary-color);
+}
+.input_search {
+  outline: none !important;
+  border: none !important;
+}
+.search-container {
+  max-width: 234px;
+  height: 34px;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-@media (max-width: 1068px) {
+/* Menu category and user*/
+.dropdown-show:hover .menu-dropdown {
+  display: block;
+}
+.menu-dropdown {
+  position: absolute;
+  top: 90%;
+  display: none;
+  z-index: 1000;
+  min-width: 10rem;
+  max-width: 38.1rem;
+  padding: 1rem 2rem;
+  margin: 0;
+  font-size: 1rem;
+  text-align: left;
+  list-style: none;
+  background-clip: padding-box;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+.min-height-type {
+  min-height: 10rem;
+}
+.max-width-nation {
+  max-width: 25rem;
+}
+.max-width-user {
+  max-width: 12rem;
+}
+.menu-dropdown > li {
+  display: inline;
+}
+.menu-dropdown-item {
+  line-height: 38px;
+  padding: 8px;
+}
+.menu-dropdown-item:hover,
+.menu-dropdown-item:hover > span {
+  color: #f9ab00 !important;
+}
+.user-item > .menu-dropdown-item {
+  display: block !important;
+  border: none;
+  outline: none;
+  padding: 0;
+  background-color: transparent;
+}
+
+/* Responsive */
+@media (min-width: 1024px) and (max-width: 1200px) {
+  .search-container > input {
+    max-width: 100px;
+  }
+  .nav-item > a {
+    font-size: 0.85rem;
+  }
+  .menu-dropdown {
+    max-width: 36rem;
+  }
+  .max-width-nation {
+    max-width: 25rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023.9px) {
+  .hidden-ipad {
+    display: none !important;
+  }
+  .show-category {
+    display: block !important;
+  }
+  .NavLogo {
+    margin-left: 20px !important;
+  }
+  #search {
+    margin-left: 100px !important;
+  }
+  #userlogo {
+    margin-left: 70px !important;
+  }
+  .menu-dropdown {
+    top: 80%;
+    right: 0;
+  }
+}
+
+/* @media (max-width: 1068px) {
   #header-real div div ul li,
   #header-real div div button,
   #header-real div div form input,
@@ -71,30 +149,49 @@
 }
 
 /* Header Small screen hone */
-@media (max-width: 767px) {
+@media (max-width: 767.9px) {
+  .main {
+    padding-top: 52px !important;
+  }
+  .hidden-small-tablet {
+    display: none !important;
+  }
+  .show-search-tablet {
+    display: block !important;
+  }
+  .user-action {
+    display: block !important;
+  }
   .header-nav-bar div {
     max-height: fit-content;
   }
-  #userlogo {
-    text-align: center !important;
-    margin-bottom: 5px;
-    margin-top: 5px;
+  .menu-dropdown-item {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 !important;
+  }
+  #category {
+    border-top: 1px solid rgb(107, 106, 106);
+  }
+  #category > .nav-item > .nav-link {
+    width: 100%;
+  }
+  .user-item > button {
+    width: 100%;
+  }
+  .btn_login {
+    width: 100% !important;
+    display: block;
+    font-weight: bolder;
+    padding: 10px 0;
   }
   #header-real div div ul li,
   #header-real div div button,
-  #header-real div div form input,
   #header-real div div form button {
     font-size: 100%;
     margin: 0;
     padding-top: 5px;
     padding-bottom: 5px;
-  }
-  .formsearch {
-    padding-bottom: 1rem;
-  }
-  .usermenu li,
-  .usermenu hr {
-    text-align: center !important;
   }
   .logomenu {
     margin-left: 50vw !important;
@@ -106,21 +203,17 @@
   }
 }
 
-
+/* Line under category*/
 .strong-three{
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* background: #1f1f1f; */
 }
-
 .strong-three a  {
   position: relative;
   text-decoration: none;
   overflow: hidden;
 }
 .strong-three a ::before {
-  /* width: fit-content; */
   overflow: hidden;
   content: "";
   position: absolute;
@@ -133,10 +226,12 @@
   transition: transform 1s ease;
 }
 .strong-three a :hover::before {
-  /* overflow: hidden; */
   transform: translateX(110%);
+  color: #f9ab00;
 }
-
+.strong-three:hover > a > strong {
+  color: #f9ab00;
+}
 li a{
   cursor: pointer;
 }

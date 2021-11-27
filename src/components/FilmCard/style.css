@@ -2,8 +2,9 @@
 .card {
   width: 100%;
   margin: 0 auto !important;
+  background-color: transparent !important;
+  border: none !important;
 }
-
 .card .film-item {
   height: 20rem;
   height: 40vw !important;
@@ -11,6 +12,7 @@
 
 .card img {
   user-select: none !important;
+  border-radius: 10px;
 }
 
 @media (min-width: 576px) {
@@ -34,27 +36,38 @@
   }
 }
  
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   .card {
-    width: 15vw !important;
+    width: 20vw !important;
   }
   .card .film-item {
-    height: 17rem;
-    height: 20vw !important;
+    height: 30vw !important;
   }
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 575.9px) {
   .card {
-    width: 100% !important;
-    margin: 4px 2px;
+    width: 25vw !important;
   }
   .card .film-item {
-    height: 30rem!important;
-    height: 20vw ;
+    height: 10rem!important;
+  }
+  .card-title {
+    font-size: 0.7rem !important;
+  }
+  .card-text {
+    font-size: 0.5rem !important;
+  }
+  .sodem {
+    width: 10vw !important;
+    height: 5vh !important;
   }
 }
-
+@media (max-width: 374.9px) {
+  .card .film-item {
+    height: 8rem!important;
+  }
+}
 
 /* HOVER IMGAE */
 .film-item, .sodem {
@@ -65,4 +78,5 @@
 .film-item:hover {
   opacity: 0.6;
   filter: sepia(30%);
+  cursor: pointer;
 }

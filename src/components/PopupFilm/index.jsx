@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import meo from "./../../assets/images/hinhmeo.png";
+import { Link, useHistory } from "react-router-dom";
 import "./style.css";
 
 const PopupFilm = (props) => {
   const { data, click } = props;
+  const history = useHistory();
 
   const params_theloai = [
     "action",
@@ -60,7 +60,7 @@ const PopupFilm = (props) => {
     if (data != null) {
       if (params_quocgia.indexOf(data.country) != -1)
         data.country2 = params_quocgia.indexOf(data.country);
-        //  quocgia[params_quocgia.indexOf(data.country)];
+      //  quocgia[params_quocgia.indexOf(data.country)];
 
       Object.keys(data.type).map((e) => {
         if (params_theloai.indexOf(e) != -1)
@@ -183,10 +183,13 @@ const PopupFilm = (props) => {
                 <Link
                   className="w-100 p-0 m-0 mt-1 mb-1 btn btn-danger text-center pb-1"
                   aria-label="Close"
-                  to={"/watch/" + data.id + "/" + data.title}
+                  // to={"/watch/" + data.id + "/" + data.title}
+                  to={"/detailfilm/" + data.id + "/" + data.title}
                 >
                   Xem ngay
                 </Link>
+
+            
               </div>
             </div>
           </div>

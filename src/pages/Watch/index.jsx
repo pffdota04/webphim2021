@@ -9,6 +9,7 @@ import { setUserDataDetail } from "./../../store/actions/user";
 import { Link } from "react-router-dom";
 import Chat from "../../components/Chat/Chat";
 import Loading from "../../components/Loading";
+import MetaTags from "react-meta-tags";
 
 const Watch = () => {
   const { id, name } = useParams();
@@ -173,14 +174,6 @@ const Watch = () => {
             </div>
           ))}
         </div>
-        {/* <div className="d-block justify-content-center d-flex mt-2">
-          <p
-            onClick={() => setIsFull(!isFull)}
-            className="btn btn-sm background-primary m-1"
-          >
-            Change view
-          </p>
-        </div> */}
         <div className="container mt-4">
           <div className="row fs-ipad">
             <div className="col-9">
@@ -404,6 +397,18 @@ const Watch = () => {
 
   return (
     <div>
+      <MetaTags>
+        <title>{"Bạn đang xem " + name}</title>
+        <meta
+          name="description"
+          content={
+            "Xem " +
+            name +
+            " tại Kphim.xyz với chất lượng cao, tốc độ cực mạnh!. " +
+            dataFilmState.description
+          }
+        />
+      </MetaTags>
       {isLoading && <Loading />}
       <main className="container-fluid container-background pb-5">
         <div className="pt-1">

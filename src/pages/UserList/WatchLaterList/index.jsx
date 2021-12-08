@@ -11,6 +11,7 @@ import FilmCard from "../../../components/FilmCard";
 import Footer from "../../../components/Footer";
 import axios from "axios";
 import { Redirect } from "react-router";
+import MetaTags from "react-meta-tags";
 
 const WatchLaterList = () => {
   const data = useSelector((state) => state.listUser.watchLater);
@@ -78,6 +79,15 @@ const WatchLaterList = () => {
     <Redirect push to="/login" />
   ) : (
     <div className="container-background">
+      <MetaTags>
+        <title>Phim đã lưu</title>
+        <meta
+          name="description"
+          content={
+            "Xem nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       <div className="container text-white">
         <img
           className="d-block w-100 pt-2"

@@ -10,6 +10,7 @@ import FilmCard from "./../../components/FilmCard";
 import axios from "axios";
 import { setListSearch } from "./../../store/actions/listPhim_Action";
 import { Link } from "react-router-dom";
+import MetaTags from "react-meta-tags";
 
 const style = {
   height: 30,
@@ -108,6 +109,15 @@ const Search = (props) => {
 
   return (
     <div>
+      <MetaTags>
+        <title>Kết quả tìm kiếm '{keySearch}'</title>
+        <meta
+          name="description"
+          content={
+            "Xem nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       <div className="container-fluid container-background pb-5">
         <div className="">
           {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}

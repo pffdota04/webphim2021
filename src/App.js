@@ -1,22 +1,20 @@
-
-import './App.css';
+import "./App.css";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import Header from './components/Header';
-import Home from './pages/Home';
-import Category from './pages/Category';
-import Search from './pages/Search';
-import UserRequest from './pages/UserRequest';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Watch from './pages/Watch';
-import DetailFilm from './pages/DetailFilm';
-import UnlockList from './pages/UserList/UnlockList';
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Category from "./pages/Category";
+import Search from "./pages/Search";
+import UserRequest from "./pages/UserRequest";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Watch from "./pages/Watch";
+import DetailFilm from "./pages/DetailFilm";
+import UnlockList from "./pages/UserList/UnlockList";
 import WatchLaterList from "./pages/UserList/WatchLaterList";
-import Admin from './pages/Admin';
-import ErrorPage from './pages/ErrorPage';
-import XacThuc from './pages/XacThuc';
-
+import Admin from "./pages/Admin";
+import ErrorPage from "./pages/ErrorPage";
+import XacThuc from "./pages/XacThuc";
 
 function App() {
   return (
@@ -39,7 +37,10 @@ function App() {
             <Route path="/xacthuc" component={XacThuc} />
             <Route path="/admin" component={Admin} />
             <Route exact path={["/", "/home"]} component={Home} />
-            <Route path="/detailfilm" component={DetailFilm}/>
+            <Route
+              path={["/detailfilm/:id/:name", "/detailfilm/:id"]}
+              component={DetailFilm}
+            />
             <Route path="/404" component={() => <ErrorPage error={404} />} />
             <Redirect to="/404" />
           </Switch>

@@ -1,6 +1,7 @@
 import "./style.css";
 import filmCard from "../../assets/images/film-loading.jpg";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const FilmCard = (props) => {
   const { numberTrend, loading, data, click } = props;
@@ -42,33 +43,35 @@ const FilmCard = (props) => {
     </div>
   ) : (
     <div className="card">
-      <div>
-        {numberTrend !== undefined && (
+      <Link to={"/detailfilm/" + data.id + "/" + data.title}>
+        <div>
+          {numberTrend !== undefined && (
+            <img
+              src={numberImage}
+              className="card-img-top position-absolute start-0 sodem"
+              alt="..."
+              draggable="false"
+              // onClick={() => click(data)}
+            />
+          )}
+        </div>
+        <div className="hover-image">
           <img
-            src={numberImage}
-            className="card-img-top position-absolute start-0 sodem"
+            src={data.img}
+            className="card-img-top film-item"
             alt="..."
+            // onClick={() => click(data)}
             draggable="false"
-            onClick={() => click(data)}
           />
-        )}
-      </div>
-      <div className="hover-image">
-        <img
-          src={data.img}
-          className="card-img-top film-item"
-          alt="..."
-          onClick={() => click(data)}
-          draggable="false"
-        />
-      </div>
-      <div className="text-center text-white text-des">
-        <h6 className="card-title mb-0 mt-3">{data.title}</h6>
-        <p className="card-text">
-          {data.title_origin}
-          &nbsp;({data.year})
-        </p>
-      </div>
+        </div>
+        <div className="text-center text-white text-des">
+          <h6 className="card-title mb-0 mt-3">{data.title}</h6>
+          <p className="card-text">
+            {data.title_origin}
+            &nbsp;({data.year})
+          </p>
+        </div>
+      </Link>
     </div>
   );
 };

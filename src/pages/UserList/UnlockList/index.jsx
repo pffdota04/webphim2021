@@ -11,6 +11,7 @@ import FilmCard from "../../../components/FilmCard";
 import Footer from "../../../components/Footer";
 import axios from "axios";
 import { Redirect } from "react-router";
+import MetaTags from "react-meta-tags";
 
 const UnlockList = () => {
   const data = useSelector((state) => state.listUser.unlockList);
@@ -31,7 +32,7 @@ const UnlockList = () => {
         data.map((e) => {
           arrHold.push(e.id);
         });
-        
+
         let is_same =
           arrHold.length == Object.keys(userDetail.unlockFilm).length &&
           arrHold.every(function (element, index) {
@@ -93,6 +94,15 @@ const UnlockList = () => {
     <Redirect push to="/login" />
   ) : (
     <div className="container-background">
+      <MetaTags>
+        <title>Phim đã mở khóa</title>
+        <meta
+          name="description"
+          content={
+            "Xem nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       <div className="container text-white">
         <img
           className="d-block w-100 pt-2"

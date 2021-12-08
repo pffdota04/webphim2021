@@ -2,6 +2,7 @@ import "./style.css";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import MetaTags from "react-meta-tags";
 
 // firebase
 import withFirebaseAuth from "react-with-firebase-auth";
@@ -118,6 +119,15 @@ const Login = () => {
     <Redirect to="/xacthuc" />
   ) : (
     <div>
+      <MetaTags>
+        <title>Đăng nhập</title>
+        <meta
+          name="description"
+          content={
+            "Đăng nhập ngay để xem thêm nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       <main id="main">
         <div>
           <div className="container">

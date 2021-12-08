@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setListHome } from "../../store/actions/listPhim_Action";
 import { Link } from "react-router-dom";
 import PopupFilm from "../../components/PopupFilm";
-import qc from "./../../assets/images/quang-cao.jpg";
+import MetaTags from "react-meta-tags";
 
 const responsive_multi_carsousel = {
   superLargeDesktop: {
@@ -308,6 +308,15 @@ const Home = () => {
 
   return (
     <div className="container-home">
+      <MetaTags>
+        <title>Trang chủ Kphim</title>
+        <meta
+          name="description"
+          content={
+            "Xem nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       {topFilm()}
       <div className="container-fluid container-background pt-5 pb-5">
         {/* <hr className="mt-5 mb-2" /> */}

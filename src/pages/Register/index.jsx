@@ -2,6 +2,7 @@ import "./style.css";
 import Footer from "../../components/Footer";
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import MetaTags from "react-meta-tags";
 
 // firebase
 import withFirebaseAuth from "react-with-firebase-auth";
@@ -69,6 +70,15 @@ const Register = () => {
     <Redirect to="/xacthuc" />
   ) : (
     <div>
+      <MetaTags>
+        <title>Đăng kí</title>
+        <meta
+          name="description"
+          content={
+            "Đăng kí ngay để xem nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       <main id="main">
         <div>
           <div className="container">
@@ -107,8 +117,7 @@ const Register = () => {
                       <label
                         htmlFor="emailSignup"
                         className="form-label"
-                      >
-                      </label>
+                      ></label>
                       <input
                         type="email"
                         className="sign__input"
@@ -123,8 +132,7 @@ const Register = () => {
                       <label
                         htmlFor="passSignup"
                         className="form-label"
-                      >
-                      </label>
+                      ></label>
                       <input
                         type="password"
                         className="sign__input"
@@ -138,8 +146,7 @@ const Register = () => {
                       <label
                         htmlFor="repassSignup"
                         className="form-label"
-                      >
-                      </label>
+                      ></label>
                       <input
                         type="password"
                         className="sign__input"
@@ -148,25 +155,20 @@ const Register = () => {
                         value={repassSignup}
                         onChange={(e) => setRePassSignup(e.target.value)}
                       />
-                    </div>                    
+                    </div>
                     {errorSignup === null ? (
                       <p></p>
                     ) : (
                       <p className="text-danger">{errorSignup}</p>
                     )}
                     <div className="col-12">
-                      <button
-                        className="sign__btn"
-                        onClick={() => Signup()}
-                      >
+                      <button className="sign__btn" onClick={() => Signup()}>
                         SIGN UP
                       </button>
                       <hr className="w-50 mx-auto" />
                     </div>
                     <div className="col-12">
-                      <strong className="text-light">
-                        OR
-                      </strong>
+                      <strong className="text-light">OR</strong>
                     </div>
                     <div className="col-12">
                       <StyledFirebaseAuth
@@ -176,12 +178,14 @@ const Register = () => {
                       <hr className="w-50 mx-auto pd-1" />
                     </div>
                     <div className="col-12">
-                      <span class="sign__text">Already have an account? 
-                      <Link to="/login">Sign in!</Link></span>
+                      <span class="sign__text">
+                        Already have an account?
+                        <Link to="/login">Sign in!</Link>
+                      </span>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* <div className="col-12 col-md-4 p-2 sign-up text-center">
                   <div className="row ps-4 pe-4 ps-sm-2 pe-sm-2">
                     <h2 className="col-12">Đăng kí (sắp có)</h2>

@@ -18,8 +18,9 @@ import {
 // import PopupFilm from "./../../components/PopupFilm";
 import FilmCard from "./../../components/FilmCard";
 import axios from "axios";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import PopupFilm from "../../components/PopupFilm";
+import MetaTags from "react-meta-tags";
 
 const Category = (props) => {
   const [hasMore, sethasMore] = useState(true);
@@ -56,7 +57,7 @@ const Category = (props) => {
     "ko",
     "vi",
     "ch",
-    "es"
+    "es",
   ];
   const theloai = [
     "Mới Cập Nhật",
@@ -96,8 +97,7 @@ const Category = (props) => {
     // change type
     if (params_theloai.indexOf(type) != -1)
       setreType(theloai[params_theloai.indexOf(type)]);
-    else 
-      setreType(type);
+    else setreType(type);
   }, [type]);
 
   let fetchMoreData = async (dataOf, lastid) => {
@@ -242,12 +242,17 @@ const Category = (props) => {
     });
   };
 
-  const btnScroll = document.getElementById('scrolltotop');
-  window.onscroll = function() {scrollFunction()};
+  const btnScroll = document.getElementById("scrolltotop");
+  window.onscroll = function () {
+    scrollFunction();
+  };
   function scrollFunction() {
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+    if (
+      document.body.scrollTop > 300 ||
+      document.documentElement.scrollTop > 300
+    ) {
       btnScroll.style.display = "flex";
-    } 
+    }
     // else {
     //   btnScroll.style.display = "none";
     // }
@@ -255,11 +260,24 @@ const Category = (props) => {
 
   return (
     <div className="container-background">
+      <MetaTags>
+        <title>Phim {type}</title>
+        <meta
+          name="description"
+          content={
+            "Xem nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       <div className="container-fluid  pb-5">
-    
         <div className="">
           {/* Top ADS: */}
-          <img className="w-100" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
+          <img
+            className="w-100"
+            src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+            alt=""
+            width={800}
+          />
           <section>
             <div className="mb-3">
               {/* <hr className="mb-2" /> */}
@@ -277,7 +295,7 @@ const Category = (props) => {
           <i class="fa fa-upload" aria-hidden="true"></i>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

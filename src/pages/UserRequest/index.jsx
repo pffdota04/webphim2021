@@ -15,6 +15,8 @@ import axios from "axios";
 import { auth } from "../../services/firebase";
 import Loading from "../../components/Loading";
 
+import MetaTags from "react-meta-tags";
+
 const style = {
   height: 30,
   border: "1px solid green",
@@ -50,9 +52,23 @@ const UserRequest = (props) => {
     // ) : userInfo.checkUser === false ? (
     //   <Redirect to="/xacthuc" />
     <div className="container-background">
+      <MetaTags>
+        <title>Hồ sơ của bạn</title>
+        <meta
+          name="description"
+          content={
+            "Xem nhiều phim hay cập nhật liên tục tại Kphim.xyz với chất lượng cao HD, fullHD, 4K, Bluray,.. với tốc độ cực mạnh!"
+          }
+        />
+      </MetaTags>
       <div className="container text-white">
         {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
-        <img className="d-block w-100 pt-2" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
+        <img
+          className="d-block w-100 pt-2"
+          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          alt=""
+          width={800}
+        />
         <section>
           <div className="mb-3 mt-5">
             {/* <hr className="mb-2" /> */}

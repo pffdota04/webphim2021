@@ -21,18 +21,24 @@ const UnlockList = () => {
   const [popupId, setPopupID] = useState(null);
 
   useEffect(() => {
+    console.log(data);
+    console.log(data.unlockFilm);
+
     if (data.init == true) getData();
     else {
-      let arrHold = new Array();
-      data.map((e) => {
-        arrHold.push(e.id);
-      });
-      let is_same =
-        arrHold.length == Object.keys(userDetail.unlockFilm).length &&
-        arrHold.every(function (element, index) {
-          return element == Object.keys(userDetail.unlockFilm)[index];
+      if (userDetail.unlockFilm != null && userDetail.unlockFilm != undefined) {
+        let arrHold = new Array();
+        data.map((e) => {
+          arrHold.push(e.id);
         });
-      if (is_same == false) getData();
+        
+        let is_same =
+          arrHold.length == Object.keys(userDetail.unlockFilm).length &&
+          arrHold.every(function (element, index) {
+            return element == Object.keys(userDetail.unlockFilm)[index];
+          });
+        if (is_same == false) getData();
+      }
     }
   }, [userDetail]);
 
@@ -88,11 +94,18 @@ const UnlockList = () => {
   ) : (
     <div className="container-background">
       <div className="container text-white">
-        <img className="d-block w-100 pt-2" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
+        <img
+          className="d-block w-100 pt-2"
+          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          alt=""
+          width={800}
+        />
         <section>
           <div className="mb-3">
             {/* <hr className="mb-2" /> */}
-            <h1 className="primary-color mt-5 ms-4 mb-4">PHIM BẠN ĐÃ MỞ KHÓA</h1>
+            <h1 className="primary-color mt-5 ms-4 mb-4">
+              PHIM BẠN ĐÃ MỞ KHÓA
+            </h1>
             <hr className="mb-2" />
 
             {data.init == true ? (
@@ -101,8 +114,10 @@ const UnlockList = () => {
                   <span className="sr-only">Loading...</span>
                 </div>
               </div>
-            ) : userDetail.saveFilm == undefined ? (
-              <h3 className="text-center">Bạn chưa lưu phim nào vào danh sách này</h3>
+            ) : userDetail.unlockFilm == undefined ? (
+              <h3 className="text-center">
+                Bạn chưa lưu phim nào vào danh sách này
+              </h3>
             ) : (
               showData()
             )}

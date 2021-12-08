@@ -89,14 +89,21 @@ const Search = (props) => {
     });
   };
 
-  const btnScroll = document.getElementById('scrolltotop');
-  window.onscroll = function() {scrollFunction()};
+  const btnScroll = document.getElementById("scrolltotop");
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
   function scrollFunction() {
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-      btnScroll.style.display = "flex";
-    } else {
-      btnScroll.style.display = "none";
-    }
+    if (btnScroll !== undefined)
+      if (
+        document.body.scrollTop > 300 ||
+        document.documentElement.scrollTop > 300
+      ) {
+        btnScroll.style.display = "flex";
+      } else {
+        btnScroll.style.display = "none";
+      }
   }
 
   return (
@@ -104,7 +111,12 @@ const Search = (props) => {
       <div className="container-fluid container-background pb-5">
         <div className="">
           {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
-          <img className="d-block w-100 pt-2" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
+          <img
+            className="d-block w-100 pt-2"
+            src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+            alt=""
+            width={800}
+          />
           <section>
             <div className="mb-3">
               {/* <hr className="mb-2" /> */}
@@ -114,7 +126,12 @@ const Search = (props) => {
                     <div className="row">
                       <div className="col-12 col-sm-6">
                         <div className="form-group d-flex">
-                          <label className="sign__text font-size-label" for="theloaiSelect">Thể loại:</label>
+                          <label
+                            className="sign__text font-size-label"
+                            for="theloaiSelect"
+                          >
+                            Thể loại:
+                          </label>
                           <select
                             className="sign__input w-50 ms-3"
                             id="theloaiSelect"
@@ -136,7 +153,12 @@ const Search = (props) => {
                       </div>
                       <div className="col-12 col-sm-6">
                         <div className="form-group d-flex">
-                          <label className="sign__text font-size-label" for="theloaiSelect">Quốc gia:</label>
+                          <label
+                            className="sign__text font-size-label"
+                            for="theloaiSelect"
+                          >
+                            Quốc gia:
+                          </label>
                           <select
                             className="sign__input w-50 ms-3"
                             id="theloaiSelect"
@@ -169,10 +191,7 @@ const Search = (props) => {
                             setMovieOrSeries("all");
                           }}
                         />
-                        <label
-                          className="form-check-label"
-                          htmlFor="allcheck"
-                        >
+                        <label className="form-check-label" htmlFor="allcheck">
                           Tất cả
                         </label>
                       </div>
@@ -187,7 +206,10 @@ const Search = (props) => {
                             setMovieOrSeries("movie");
                           }}
                         />
-                        <label className="form-check-label" htmlFor="moviecheck">
+                        <label
+                          className="form-check-label"
+                          htmlFor="moviecheck"
+                        >
                           Movie
                         </label>
                       </div>
@@ -202,7 +224,10 @@ const Search = (props) => {
                             setMovieOrSeries("series");
                           }}
                         />
-                        <label className="form-check-label" htmlFor="seriescheck">
+                        <label
+                          className="form-check-label"
+                          htmlFor="seriescheck"
+                        >
                           Series
                         </label>
                       </div>
@@ -239,11 +264,13 @@ const Search = (props) => {
               <h1 className="primary-color mt-5 ms-4">Kết quả tìm kiếm</h1>
               {showSearch.length == 0 || keySearch.length == 0 ? (
                 <div className="container loading-film background-item mt-4">
-                <div className="text-center container-load">
-                  <h1 className="primary-color">Không tìm thấy dữ liệu!</h1>
-                  <p className="primary-color">(Phim đang trong quá trình cập nhật)</p>
+                  <div className="text-center container-load">
+                    <h1 className="primary-color">Không tìm thấy dữ liệu!</h1>
+                    <p className="primary-color">
+                      (Phim đang trong quá trình cập nhật)
+                    </p>
+                  </div>
                 </div>
-              </div>
               ) : (
                 <InfiniteScroll
                   dataLength={showSearch.length}
@@ -265,7 +292,11 @@ const Search = (props) => {
                 >
                   {showSearch.map((e, i) => (
                     <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1 mt-5">
-                      <FilmCard key={i + "search"} data={e} click={setPopupID} />
+                      <FilmCard
+                        key={i + "search"}
+                        data={e}
+                        click={setPopupID}
+                      />
                     </div>
                   ))}
                 </InfiniteScroll>
@@ -281,7 +312,7 @@ const Search = (props) => {
           <i class="fa fa-upload" aria-hidden="true"></i>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

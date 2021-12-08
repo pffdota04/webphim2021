@@ -1,5 +1,5 @@
 /* A film item */
-.card {
+/* .card {
   width: 100%;
   margin: 0 auto !important;
   background-color: transparent !important;
@@ -8,6 +8,17 @@
 .card .film-item {
   height: 20rem;
   height: 40vw !important;
+} */
+
+.card {
+  margin: 0 auto;
+  width: 100%;
+  background-color: transparent !important;
+  border: none !important;
+  padding: 4px 2px;
+}
+.card .film-item {
+  height: 300px !important;
 }
 
 .card img {
@@ -16,32 +27,31 @@
 }
 
 @media (min-width: 576px) {
-  .card {
+  /* .card {
     width: 23vw !important;
     margin: 4px 2px;
   }
   .card .film-item {
     height: 32vw !important;
-  }
+  } */
 }
-
 
 @media (min-width: 768px) {
   .card {
-    width: 23.5vw !important;
-    margin: 4px 2px;
+    width: 200px !important;
+    /* margin: 4px 2px; */
   }
   .card .film-item {
-    height: 32vw !important;
+    height: 300px !important;
   }
 }
- 
-@media (min-width: 1024px) {
+
+@media (min-width: 1440px) {
   .card {
-    width: 20vw !important;
+    width: 250px !important;
   }
   .card .film-item {
-    height: 30vw !important;
+    height: 370px !important;
   }
 }
 
@@ -50,7 +60,7 @@
     width: 25vw !important;
   }
   .card .film-item {
-    height: 10rem!important;
+    height: 10rem !important;
   }
   .card-title {
     font-size: 0.7rem !important;
@@ -65,13 +75,14 @@
 }
 @media (max-width: 374.9px) {
   .card .film-item {
-    height: 8rem!important;
+    height: 8rem !important;
   }
 }
 
 /* HOVER IMGAE */
-.film-item, .sodem {
-  transition: .3s ease;
+.film-item,
+.sodem {
+  transition: 0.3s ease;
   backface-visibility: hidden;
 }
 

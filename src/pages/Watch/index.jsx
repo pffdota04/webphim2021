@@ -116,7 +116,10 @@ const Watch = () => {
   function contentVideoView() {
     return loadingData == true ? (
       <div className="container loading-film background-item mt-4">
-        <h1 className="text-center primary-color container-load"> Đang tải dữ liệu...</h1>
+        <h1 className="text-center primary-color container-load">
+          {" "}
+          Đang tải dữ liệu...
+        </h1>
       </div>
     ) : dataLink == null ? (
       <div className="container loading-film background-item mt-4">
@@ -127,7 +130,6 @@ const Watch = () => {
       </div>
     ) : (
       <div>
-        {/* <hr className="m-2" /> */}
         <div
           id="filmView"
           className={
@@ -165,8 +167,7 @@ const Watch = () => {
                     <div
                       className="iframe-here"
                       dangerouslySetInnerHTML={{ __html: e.link }}
-                    >
-                    </div>
+                    ></div>
                   </div>
                 ))}
             </div>
@@ -189,29 +190,31 @@ const Watch = () => {
             </div>
             <div className="col-3">
               <h2 className="primary-color">Server</h2>
-                {serverFilm()}
+              {serverFilm()}
             </div>
           </div>
         </div>
         <div className="container mt-4">
-            <h2 className="primary-color mt-5 mb-3 fs-bl">Bình luận</h2>
-            <div className="background-comment p-4 col-9 pb-5 container-bl">
-              <div className="d-flex justify-content-between p-4 text-item">
-                <span className="number-bl">123 Bình luận</span>
-                <div className="d-flex col-4 ss">
-                  <label className="text-item" for="theloaiSelect">Sắp xếp theo:</label>
-                  <select
-                    className="sign__input w-50 ms-3 p-1 input-arr"
-                    id="theloaiSelect"
-                  >
-                    <option value="new">Mới nhất</option>
-                    <option value="old">Cũ nhất</option>
-                  </select>
-                </div>
+          <h2 className="primary-color mt-5 mb-3 fs-bl">Bình luận</h2>
+          <div className="background-comment p-4 col-9 pb-5 container-bl">
+            <div className="d-flex justify-content-between p-4 text-item">
+              <span className="number-bl">123 Bình luận</span>
+              <div className="d-flex col-4 ss">
+                <label className="text-item" for="theloaiSelect">
+                  Sắp xếp theo:
+                </label>
+                <select
+                  className="sign__input w-50 ms-3 p-1 input-arr"
+                  id="theloaiSelect"
+                >
+                  <option value="new">Mới nhất</option>
+                  <option value="old">Cũ nhất</option>
+                </select>
               </div>
-              <Chat place={id} backimg={dataFilmState.backimg} />
             </div>
+            <Chat place={id} backimg={dataFilmState.backimg} />
           </div>
+        </div>
         {/* {chapAndServer()} */}
       </div>
     );
@@ -242,7 +245,7 @@ const Watch = () => {
           </ul>
         </div>
       </nav>
-    )
+    );
   }
   function serverFilm() {
     return (
@@ -320,10 +323,12 @@ const Watch = () => {
 
   function buttonServerRender(sver, isVip) {
     if (isVip == true)
-      if (sver == nowServer) return "btn background-primary me-1 text-white btn-respon";
+      if (sver == nowServer)
+        return "btn background-primary me-1 text-white btn-respon";
       else return "btn border-btn-film me-1 text-white btn-respon";
     else {
-      if (sver == nowServer) return "btn background-primary me-1 text-white btn-respon";
+      if (sver == nowServer)
+        return "btn background-primary me-1 text-white btn-respon";
       else return "btn border-btn-film me-1 text-white btn-respon";
     }
   }
@@ -346,7 +351,9 @@ const Watch = () => {
             alert("Mở khóa thành công, bạn còn lại " + res.data.total);
             let newDetail = userDetail;
             newDetail.coin = res.data.total;
-            newDetail.unlockFilm[id] = res.data.info;
+            if (newDetail.unlockFilm === undefined)
+              newDetail.unlockFilm = { [id]: res.data.info };
+            else newDetail.unlockFilm[id] = res.data.info;
             dispatch(setUserDataDetail(newDetail));
             setIconUnlock(
               Math.round(
@@ -359,7 +366,7 @@ const Watch = () => {
           setIsLoading(false);
         })
         .catch((e) => {
-          alert(e.response.data.message);
+          console.log(e);
           setIsLoading(false);
         });
     }
@@ -380,7 +387,9 @@ const Watch = () => {
           let newDetail = userDetail;
           if (res.data.complete == "added") {
             setIconSave(1);
-            newDetail.saveFilm[id] = { fid: parseInt(id) };
+            if (newDetail.saveFilm === undefined)
+              newDetail.saveFilm = { [id]: { fid: parseInt(id) } };
+            else newDetail.saveFilm[id] = { fid: parseInt(id) };
           } else if (res.data.complete == "removed") {
             setIconSave(-1);
             delete newDetail.saveFilm[id];
@@ -388,7 +397,7 @@ const Watch = () => {
           dispatch(setUserDataDetail(newDetail));
         })
         .catch((e) => {
-          alert(e.response.data.message);
+          console.log(e);
         });
     }
   }
@@ -398,8 +407,8 @@ const Watch = () => {
       {isLoading && <Loading />}
       <main className="container-fluid container-background pb-5">
         <div className="pt-1">
-          {/* <img className="d-block w-100 pb-2" src={qc} alt="" /> */}
-          {/* {dataFilmState.title == undefined ? (
+          {/*  */}
+          {dataFilmState.title == undefined ? (
             <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">
                 <span className="sr-only">Loading...</span>
@@ -407,7 +416,6 @@ const Watch = () => {
             </div>
           ) : (
             <h2 className="text-center">
-              {dataFilmState.title} ({dataFilmState.title_origin})
               {loadingData == true ? (
                 <div className="d-flex justify-content-center">
                   <div className="spinner-border" role="status"></div>
@@ -467,7 +475,8 @@ const Watch = () => {
                 </div>
               )}
             </h2>
-          )} */}
+          )}
+          {/*  */}
           {contentVideoView()}
           {/* <div className="container">
             <h2 className="primary-color mt-5 mb-3">Bình luận</h2>
@@ -520,13 +529,15 @@ const Watch = () => {
                   <div className="row p-1">
                     {userDetail.checkUser == "not" ? (
                       <h5 className="text-center mb-3">
-                        <Link to="/login">Đăng nhập</Link> để thực hiện chức năng
+                        <Link to="/login">Đăng nhập</Link> để thực hiện chức
+                        năng
                       </h5>
-                    ) : (userDetail.checkUser == "not verified" ? 
+                    ) : userDetail.checkUser == "not verified" ? (
                       <h5 className="text-center mb-3">
-                        <Link to="/xacthuc">Xác thực email</Link> để thực hiện chức năng
+                        <Link to="/xacthuc">Xác thực email</Link> để thực hiện
+                        chức năng
                       </h5>
-                      :
+                    ) : (
                       <h5 className="text-center mb-3">
                         Số dư của bạn: {userDetail.coin} Koin
                       </h5>
@@ -581,7 +592,7 @@ const Watch = () => {
           </div>
         </div>
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 };

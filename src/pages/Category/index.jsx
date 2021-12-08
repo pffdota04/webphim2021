@@ -247,9 +247,10 @@ const Category = (props) => {
   function scrollFunction() {
     if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
       btnScroll.style.display = "flex";
-    } else {
-      btnScroll.style.display = "none";
-    }
+    } 
+    // else {
+    //   btnScroll.style.display = "none";
+    // }
   }
 
   return (

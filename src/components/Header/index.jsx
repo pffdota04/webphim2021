@@ -172,7 +172,8 @@ const Header = () => {
                   className="btn_login text-white link-color"
                   to="/login"
                   onClick={() => setOpenHeader(false)}
-                >ĐĂNG NHẬP
+                >
+                  ĐĂNG NHẬP
                 </Link>
               ) : userInfo.checkUser == false ? (
                 <ul
@@ -212,15 +213,19 @@ const Header = () => {
                       onClick={() => setOpenHeader(false)}
                     >
                       <img
-                        src={userInfo.photoURL == undefined
-                          ? userLogo
-                          : userInfo.photoURL}
+                        src={
+                          userInfo.photoURL == undefined
+                            ? userLogo
+                            : userInfo.photoURL
+                        }
                         alt="mdo"
                         width={32}
                         height={32}
                         className="rounded-circle"
                       />
-                      <span className="text-white p-2 resps-ipad">{userInfo.displayName}</span>
+                      <span className="text-white p-2 resps-ipad">
+                        {userInfo.displayName}
+                      </span>
                     </Link>
                   </li>
                   <li className="user-item">
@@ -248,7 +253,7 @@ const Header = () => {
                       onClick={() => {
                         auth().signOut();
                         setOpenHeader(false);
-                      } }
+                      }}
                     >
                       <i className="fa fa-sign-out" /> Đăng xuất
                     </button>
@@ -256,9 +261,12 @@ const Header = () => {
                 </ul>
               )}
             </div>
-            
+
             {/* Category */}
-            <ul className="navbar-nav me-auto mb-2 mb-md-0 mr-auto p-2 hidden-ipad" id="category">
+            <ul
+              className="navbar-nav me-auto mb-2 mb-md-0 mr-auto p-2 hidden-ipad"
+              id="category"
+            >
               <li className="nav-item strong-three p-2 user-item">
                 <Link
                   className="nav-link active nv"
@@ -380,7 +388,7 @@ const Header = () => {
                       />
                       <Link
                         class="btn btn-outline-secondary"
-                        style={{ minWidth: "40px"}}
+                        style={{ minWidth: "40px" }}
                         type="button"
                         to={"/phim/" + searchValueTime}
                         onClick={() => setOpenHeader(false)}
@@ -534,7 +542,7 @@ const Header = () => {
                           onClick={() => setOpenHeader(false)}
                         >
                           PHIM MỸ
-                      </Link>
+                        </Link>
                       </li>
                       <li>
                         <Link
@@ -621,10 +629,13 @@ const Header = () => {
                 />
               </div>
             </div>
-            
+
             {/* Dropdown user action */}
-            <div className="nav-item dropdown-show hidden-small-tablet" id="userlogo">
-                {/* <a
+            <div
+              className="nav-item dropdown-show hidden-small-tablet"
+              id="userlogo"
+            >
+              {/* <a
                   href="/"
                   className="d-block nav-link dropdown-toggle"
                   id="hidden_login"
@@ -660,50 +671,70 @@ const Header = () => {
                   className="dashbox__mores_user"
                   to="/login"
                   onClick={() => setOpenHeader(false)}
-                >Đăng nhập
-                </Link>
-                  // <ul
-                  //   className="dropdown-menu dropdown-menu-dark logomenu"
-                  //   aria-labelledby="dropdownUser1"
-                  // >
-                  //     <li>
-                  //       <Link
-                  //         className="dropdown-item"
-                  //         to="/login"
-                  //         onClick={() => setOpenHeader(false)}
-                  //       >
-                  //         <i className="fa fa-sign-in" /> Đăng nhập
-                  //       </Link>
-                  //     </li>
-                  //   </ul></>
-              ) : userInfo.checkUser == false ? (
-                <ul
-                  className="dropdown-menu dropdown-menu-dark logomenu"
-                  aria-labelledby="dropdownUser1"
                 >
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/xacthuc"
-                      onClick={() => setOpenHeader(false)}
-                    >
-                      <i className="fa fa-user" /> Xác thực email
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      className="dropdown-item text-danger "
-                      onClick={() => {
-                        auth().signOut().then(alert("da dang xuat"));
-                        setOpenHeader(false);
-                      }}
-                    >
-                      <i className="fa fa-sign-out" /> Đăng xuất
-                    </button>
-                  </li>
-                </ul>
+                  Đăng nhập
+                </Link>
+              ) : // <ul
+              //   className="dropdown-menu dropdown-menu-dark logomenu"
+              //   aria-labelledby="dropdownUser1"
+              // >
+              //     <li>
+              //       <Link
+              //         className="dropdown-item"
+              //         to="/login"
+              //         onClick={() => setOpenHeader(false)}
+              //       >
+              //         <i className="fa fa-sign-in" /> Đăng nhập
+              //       </Link>
+              //     </li>
+              //   </ul></>
+              userInfo.checkUser == false ? (
+                <>
+                  <a
+                    className="d-block nav-link"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src={userLogo}
+                      alt="mdo"
+                      width={32}
+                      height={32}
+                      className="rounded-circle"
+                    />
+                    <span className="text-white p-2 resps-ipad">
+                      {userInfo.displayName}
+                    </span>
+                  </a>
+                  <ul
+                    className="max-width-user bg-black col-12"
+                    aria-labelledby="dropdownUser1"
+                  >
+                    <li className="user-item">
+                      <Link
+                        className="dropdown-item  menu-dropdown-item text-light"
+                        to="/xacthuc"
+                        onClick={() => setOpenHeader(false)}
+                      >
+                        <i className="fa fa-user" /> Xác thực email
+                      </Link>
+                    </li>
+                    <li className="user-item">
+                      <button
+                        className="dropdown-item text-danger "
+                        onClick={() => {
+                          auth().signOut().then(alert("da dang xuat"));
+                          setOpenHeader(false);
+                        }}
+                      >
+                        <i className="fa fa-sign-out" /> Đăng xuất
+                      </button>
+                    </li>
+                  </ul>
+                </>
               ) : (
-                <><a
+                <>
+                  <a
                     href="/"
                     className="d-block nav-link"
                     id=""
@@ -711,15 +742,19 @@ const Header = () => {
                     aria-expanded="false"
                   >
                     <img
-                      src={userInfo.photoURL == undefined
-                        ? userLogo
-                        : userInfo.photoURL}
+                      src={
+                        userInfo.photoURL == undefined
+                          ? userLogo
+                          : userInfo.photoURL
+                      }
                       alt="mdo"
                       width={32}
                       height={32}
                       className="rounded-circle"
                     />
-                    <span className="text-white p-2 resps-ipad">{userInfo.displayName}</span>
+                    <span className="text-white p-2 resps-ipad">
+                      {userInfo.displayName}
+                    </span>
                   </a>
                   <ul
                     className="menu-dropdown min-height-type max-width-user bg-black col-12"
@@ -759,7 +794,7 @@ const Header = () => {
                         onClick={() => {
                           auth().signOut();
                           setOpenHeader(false);
-                        } }
+                        }}
                       >
                         <i className="fa fa-sign-out" /> Đăng xuất
                       </button>
@@ -896,7 +931,7 @@ const Header = () => {
                     />
                     <Link
                       class="btn btn-outline-secondary"
-                      style={{ minWidth: "40px"}}
+                      style={{ minWidth: "40px" }}
                       type="button"
                       to={"/phim/" + searchValueTime}
                       onClick={() => setOpenHeader(false)}
@@ -1050,7 +1085,7 @@ const Header = () => {
                         onClick={() => setOpenHeader(false)}
                       >
                         PHIM MỸ
-                    </Link>
+                      </Link>
                     </li>
                     <li>
                       <Link

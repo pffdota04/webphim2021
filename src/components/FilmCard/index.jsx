@@ -20,61 +20,54 @@ const FilmCard = (props) => {
 
   // loading > xoa het modal
   return loading ? (
-    <div>
-      <div className="card">
-        {numberTrend !== undefined && (
-          <img
-            src={numberImage}
-            className="card-img-top position-absolute bottom-0 start-0 sodem"
-            alt="..."
-          />
-        )}
+    <div className="card">
+      {numberTrend !== undefined && (
         <img
-          className="card-img-top film-item"
-          style={{ width: "100%", height: "50vh" }}
-          src={filmCard}
+          src={numberImage}
+          className="card-img-top position-absolute bottom-0 start-0 sodem"
+          alt="..."
         />
-        <h6 className="card-title text-center text-one-line mb-0 mt-1">
-          Loading...
-        </h6>
-        <div className="card-body pb-1 pt-0">
-          <p className="card-text text-center text-one-line ">Loading...</p>
-        </div>
+      )}
+      <img
+        className="card-img-top film-item"
+        style={{ width: "100%", height: "50vh" }}
+        src={filmCard}
+      />
+      <h6 className="card-title text-center text-one-line mb-0 mt-1">
+        Loading...
+      </h6>
+      <div className="card-body pb-1 pt-0">
+        <p className="card-text text-center text-one-line ">Loading...</p>
       </div>
     </div>
   ) : (
-    <div>
-      {/* className="card border border-danger border-3 rounded-2 border-outsets */}
-      <div className="card">
-        <div>
-          {numberTrend !== undefined && (
-            <img
-              src={numberImage}
-              className="card-img-top position-absolute start-0 sodem"
-              alt="..."
-              draggable="false"
-              onClick={() => click(data)}
-            />
-          )}
-        </div>
-        <div className="hover-image">
+    <div className="card">
+      <div>
+        {numberTrend !== undefined && (
           <img
-            src={data.img}
-            className="card-img-top film-item"
+            src={numberImage}
+            className="card-img-top position-absolute start-0 sodem"
             alt="..."
-            onClick={() => click(data)}
             draggable="false"
+            onClick={() => click(data)}
           />
-        </div>
-        <div className="text-center text-white text-des">
-          <h6 className="card-title mb-0 mt-3">
-            {data.title}
-          </h6>
-          <p className="card-text">
-            {data.title_origin}
-            &nbsp;({data.year})
-          </p>
-        </div>
+        )}
+      </div>
+      <div className="hover-image">
+        <img
+          src={data.img}
+          className="card-img-top film-item"
+          alt="..."
+          onClick={() => click(data)}
+          draggable="false"
+        />
+      </div>
+      <div className="text-center text-white text-des">
+        <h6 className="card-title mb-0 mt-3">{data.title}</h6>
+        <p className="card-text">
+          {data.title_origin}
+          &nbsp;({data.year})
+        </p>
       </div>
     </div>
   );

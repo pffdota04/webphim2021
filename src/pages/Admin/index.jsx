@@ -157,6 +157,8 @@ const Admin = () => {
             let sum = 0;
             Object.values(res.data.doanhthu).map((e) => (sum = sum + e));
             res.data.sum = sum;
+            console.log(res.data)
+
             setDataDas(res.data);
           })
           .catch((e) => {
@@ -336,7 +338,7 @@ const Admin = () => {
               <div className="icon-card mb-30">
                 <div className="stats">
                   <p className="text-bold mb-10 d-none d-sm-block">
-                    {dataDas.user}
+                    {dataAllUser.length}
                   </p>
                   <h6 className=" mx-auto ms-sm-0 ">
                     <Link

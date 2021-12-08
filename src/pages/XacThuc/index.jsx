@@ -21,27 +21,28 @@ const XacThuc = () => {
       .then((res) => {
         if (res.data === "okok") {
           window.location.reload();
-        }else alert("Sai mã xác thực");
+        } else alert("Sai mã xác thực");
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-    const resend = () => {
-      axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/resendmail", {
-          token: userDetail.token,
-        })
-        .then((res) => {
-          if (res.data === "okok") 
-             alert("Đã gửi một mã khác, hãy kiểm tra kỹ email của bạn, (kể cả thư mục spam)");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
-
+  const resend = () => {
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "user/resendmail", {
+        token: userDetail.token,
+      })
+      .then((res) => {
+        if (res.data === "okok")
+          alert(
+            "Đã gửi một mã khác, hãy kiểm tra kỹ email của bạn, (kể cả thư mục spam)"
+          );
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return userDetail.checkUser == "init" ? (
     <Loading />
@@ -49,7 +50,7 @@ const XacThuc = () => {
     <Redirect push to="/login" />
   ) : (
     <div>
-      <main id="main">
+      <main id="main ">
         <div>
           <div className="container container-login">
             <h4>

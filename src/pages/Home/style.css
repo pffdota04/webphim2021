@@ -9,12 +9,12 @@
 }
 /* LIST TRENDING  */
 
-.Invisible{
-    height: 100vh;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100vw;
+.Invisible {
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
 }
 .mg-card {
   margin-left: -15px;
@@ -45,7 +45,6 @@
   background: rgba(0, 0, 0, 0.5) 50% !important;
   background-repeat: no-repeat;
   border: none;
-
 }
 
 .sodem {
@@ -69,16 +68,16 @@
 .background-primary:hover {
   opacity: 0.9;
 }
-.play{
-      height: 72px;
-    width: 72px;
-    left: 50%;
-    top: 50%;
-    margin-left: -36px;
-    margin-top: -36px;
-    position: absolute;
-    background: url('//i.imgur.com/TxzC70f.png') no-repeat;
-    cursor: pointer;
+.play {
+  height: 72px;
+  width: 72px;
+  left: 50%;
+  top: 50%;
+  margin-left: -36px;
+  margin-top: -36px;
+  position: absolute;
+  background: url("//i.imgur.com/TxzC70f.png") no-repeat;
+  cursor: pointer;
 }
 /* <!-- end - TRENDING LIST --> */
 /* Responsive */

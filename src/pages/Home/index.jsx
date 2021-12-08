@@ -15,19 +15,19 @@ import qc from "./../../assets/images/quang-cao.jpg";
 
 const responsive_multi_carsousel = {
   superLargeDesktop: {
-    breakpoint: { max: 9999, min: 2048 },
-    items: 8,
-  },
-  largeDesktop: {
-    breakpoint: { max: 2048, min: 1440 },
+    breakpoint: { max: 9999, min: 1440 },
     items: 5,
   },
+  // largeDesktop: {
+  //   breakpoint: { max: 2048, min: 1440 },
+  //   items: 4,
+  // },
   desktop: {
-    breakpoint: { max: 1440, min: 768 },
+    breakpoint: { max: 1440, min: 1000 },
     items: 4,
   },
   tablet: {
-    breakpoint: { max: 768, min: 0 },
+    breakpoint: { max: 1000, min: 0 },
     items: 3,
   },
 };
@@ -45,12 +45,12 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
         onClick={() => previous()}
       >
         <svg
-            width="40"
-            height="40"
-            viewBox="0 0 24 24"
-            style={{ fill: '#d1d5db' }}
+          width="40"
+          height="40"
+          viewBox="0 0 24 24"
+          style={{ fill: "#d1d5db" }}
         >
-            <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
+          <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
         </svg>
       </button>
       <button
@@ -70,12 +70,12 @@ const ButtonGroup = ({ next, previous, ...rest }) => {
         onClick={() => next()}
       >
         <svg
-            width="40"
-            height="40"
-            viewBox="0 0 24 24"
-            style={{ fill: '#d1d5db' }}
+          width="40"
+          height="40"
+          viewBox="0 0 24 24"
+          style={{ fill: "#d1d5db" }}
         >
-            <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
+          <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
         </svg>
       </button>
     </div>
@@ -91,9 +91,13 @@ const Home = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const local= JSON.parse(localStorage.getItem("home"));
+    const local = JSON.parse(localStorage.getItem("home"));
     if (Object.keys(homeData).length === 0)
-      if (local == undefined || parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()) // call new api sau 3 tieng
+      if (
+        local == undefined ||
+        parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
+      )
+        // call new api sau 3 tieng
         axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
           dispatch(setListHome(res.data));
           res.data.time = Date.now();
@@ -136,7 +140,9 @@ const Home = () => {
               <div className="carousel-caption text-start">
                 <h1> Loading...</h1>
                 <p className="mota">. . .</p>
-                <button className="btn btn-lg background-primary">Loading...</button>
+                <button className="btn btn-lg background-primary">
+                  Loading...
+                </button>
               </div>
             </div>
           ) : (
@@ -236,11 +242,11 @@ const Home = () => {
                 ? loadLoading(6, false)
                 : Object.keys(homeData.recommend).map((e, i) => (
                     <div className="">
-                    <FilmCard
-                      data={homeData.recommend[e]}
-                      key={homeData.recommend[e].id + "recom"}
-                      click={setPopupID}
-                    />
+                      <FilmCard
+                        data={homeData.recommend[e]}
+                        key={homeData.recommend[e].id + "recom"}
+                        click={setPopupID}
+                      />
                     </div>
                   ))}
             </Carousel>
@@ -265,11 +271,11 @@ const Home = () => {
                 ? loadLoading(6, false)
                 : Object.keys(homeData.last).map((e, i) => (
                     <div className="">
-                    <FilmCard
-                      key={homeData.last[e].id + "last"}
-                      data={homeData.last[e]}
-                      click={setPopupID}
-                    />
+                      <FilmCard
+                        key={homeData.last[e].id + "last"}
+                        data={homeData.last[e]}
+                        click={setPopupID}
+                      />
                     </div>
                   ))}
             </Carousel>
@@ -295,7 +301,7 @@ const Home = () => {
         {/* <div className="text-center mx-auto pb-5 pt-3">
           <Link to="/phim/tatca">Xem thêm</Link>
         </div> */}
-          {/* <img className="d-block w-100 pb-2" src={qc} alt="" width={800} /> */}
+        {/* <img className="d-block w-100 pb-2" src={qc} alt="" width={800} /> */}
       </section>
     );
   };
@@ -312,7 +318,7 @@ const Home = () => {
         {lastFilm()}
       </div>
       <PopupFilm data={popupId} click={setPopupID} />
-      
+
       <Footer />
     </div>
   );

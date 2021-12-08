@@ -1,6 +1,6 @@
 import "./style.css";
 import Footer from "../../components/Footer";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 // firebase
@@ -130,13 +130,12 @@ const Login = () => {
                     <div className="col-12">
                       <div className="logo-img"></div>
                     </div>
-                    
+
                     <div className="col-12 mx-auto">
                       <label
                         htmlFor="exampleInputEmail1"
                         className="form-label"
-                      >
-                      </label>
+                      ></label>
                       <input
                         type="email"
                         className="sign__input"
@@ -151,8 +150,7 @@ const Login = () => {
                       <label
                         htmlFor="exampleInputPassword1"
                         className="form-label"
-                      >
-                      </label>
+                      ></label>
                       <input
                         type="password"
                         className="sign__input"
@@ -168,18 +166,13 @@ const Login = () => {
                       <p className="text-danger">{errorLogin}</p>
                     )}
                     <div className="col-12">
-                      <button
-                        className="sign__btn"
-                        onClick={() => Login()}
-                      >
+                      <button className="sign__btn" onClick={() => Login()}>
                         SIGN IN
                       </button>
                       <hr className="w-50 mx-auto" />
                     </div>
                     <div className="col-12">
-                      <strong className="text-light">
-                        OR
-                      </strong>
+                      <strong className="text-light">OR</strong>
                     </div>
                     <div className="col-12">
                       <StyledFirebaseAuth
@@ -189,15 +182,17 @@ const Login = () => {
                       <hr className="w-50 mx-auto pd-1" />
                     </div>
                     <div className="col-12">
-                      <span class="sign__text">Don't have an account? 
-                      <Link to="/register">Sign up!</Link></span>
                       <span class="sign__text">
-                      <Link to="/forgotpw">Forgot password?</Link></span>
+                        Don't have an account?
+                        <Link to="/register">Sign up!</Link>
+                      </span>
+                      <span class="sign__text">
+                        <Link to="/forgotpw">Forgot password?</Link>
+                      </span>
                     </div>
-                    
                   </div>
                 </div>
-                
+
                 {/* <h2 className="text-center  mt-2 mb-2 text-light fw-bold fst-italics"> */}
                 {/* <div className="col-12 col-md-4 p-2 sign-up text-center">
                   <div className="row ps-4 pe-4 ps-sm-2 pe-sm-2">
@@ -273,14 +268,18 @@ const Login = () => {
               </div>
             ) : (
               <div className="text-center sign__form">
-                <h3 className="text-white">Chào mừng <span className="primary-color">{userInfo.displayName}</span> đến với KPHIM</h3>
+                <h3 className="text-white">
+                  Chào mừng{" "}
+                  <span className="primary-color">{userInfo.displayName}</span>{" "}
+                  đến với KPHIM
+                </h3>
                 <Link
-                  className="w-40 h-30 btn btn-sm mt-3 background-primary" to="/home"
+                  className="w-40 h-30 btn btn-sm mt-3 background-primary"
+                  to="/home"
                 >
                   Xem phim ngay!
                 </Link>
               </div>
-              
             )}
           </div>
         </div>

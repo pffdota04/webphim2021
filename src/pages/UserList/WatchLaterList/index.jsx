@@ -23,20 +23,24 @@ const WatchLaterList = () => {
 
   useEffect(() => {
     // if (true) {
+    console.log(data);
+    console.log(userDetail.saveFilm);
+
     if (data.init == true) getData();
     else {
-      let arrHold = new Array();
-      data.map((e) => {
-        arrHold.push(e.id);
-      });
-      let is_same =
-        arrHold.length == Object.keys(userDetail.saveFilm).length &&
-        arrHold.every(function (element, index) {
-          return element == Object.keys(userDetail.saveFilm)[index];
+      if (userDetail.saveFilm != null && userDetail.saveFilm != undefined) {
+        let arrHold = new Array();
+        data.map((e) => {
+          arrHold.push(e.id);
         });
-      if (is_same == false) getData();
+        let is_same =
+          arrHold.length == Object.keys(userDetail.saveFilm).length &&
+          arrHold.every(function (element, index) {
+            return element == Object.keys(userDetail.saveFilm)[index];
+          });
+        if (is_same == false) getData();
+      }
     }
-    // }
   }, [userDetail]);
 
   function getData() {
@@ -75,7 +79,12 @@ const WatchLaterList = () => {
   ) : (
     <div className="container-background">
       <div className="container text-white">
-        <img className="d-block w-100 pt-2" src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg" alt="" width={800} />
+        <img
+          className="d-block w-100 pt-2"
+          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          alt=""
+          width={800}
+        />
         <section>
           <div className="mb-3">
             {/* <hr className="mb-2" /> */}
@@ -89,7 +98,9 @@ const WatchLaterList = () => {
                 </div>
               </div>
             ) : userDetail.saveFilm == undefined ? (
-              <h3 className="text-center">Bạn chưa lưu phim nào vào danh sách này</h3>
+              <h3 className="text-center">
+                Bạn chưa lưu phim nào vào danh sách này
+              </h3>
             ) : (
               showData()
             )}

@@ -20,19 +20,19 @@ import MetaTags from "react-meta-tags";
 
 const responsive_multi_carsousel = {
   superLargeDesktop: {
-    breakpoint: { max: 9999, min: 2048 },
-    items: 8,
-  },
-  largeDesktop: {
-    breakpoint: { max: 2048, min: 1440 },
+    breakpoint: { max: 9999, min: 1440 },
     items: 5,
   },
+  // largeDesktop: {
+  //   breakpoint: { max: 2048, min: 1440 },
+  //   items: 4,
+  // },
   desktop: {
-    breakpoint: { max: 1440, min: 768 },
+    breakpoint: { max: 1440, min: 1000 },
     items: 4,
   },
   tablet: {
-    breakpoint: { max: 768, min: 0 },
+    breakpoint: { max: 1000, min: 0 },
     items: 3,
   },
 };
@@ -265,8 +265,8 @@ const DetailFilm = () => {
 
   function unlockTHis(plan) {
     setPopupVip(null);
-    if (userDetail.checkUser == "not") alert("please login!");
-    if (userDetail.checkUser == false) alert("please verified email!");
+    if (userDetail.checkUser == "not") alert("Please login!");
+    else if (userDetail.checkUser == false) alert("please verified email!");
     else {
       setIsLoading(true);
       setIconUnlock(0);
@@ -305,7 +305,7 @@ const DetailFilm = () => {
   function saveThis() {
     if (userDetail.checkUser == "not")
       // return history.push("/login");
-      alert("please login!");
+      alert("Please login!");
     else {
       setIconSave(0);
       axios
@@ -366,7 +366,7 @@ const DetailFilm = () => {
             </div>
             <div className="details-info">
               <h1 className="details-info-title">
-                {id}. {data.title}
+                 {data.title}
               </h1>
               <p className="details-info-overview">{data.description}</p>
               <p className="genres">

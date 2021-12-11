@@ -163,13 +163,23 @@ const Home = () => {
                 <div className="carousel-caption text-start">
                   <h1>{homeData.top[e].title}</h1>
                   <p className="mota">{homeData.top[e].description}</p>
-
-                  <button
+                  {/* <button
                     className="btn btn-lg background-primary"
-                    onClick={() => setPopupID(homeData.top[e])}
+                    onClick={() => console.log(homeData.top[e])}
                   >
                     Xem ngay!
-                  </button>
+                  </button> */}
+                  <Link
+                    className="btn btn-lg background-primary"
+                    to={
+                      "/detailfilm/" +
+                      homeData.top[e].id +
+                      "/" +
+                      homeData.top[e].title
+                    }
+                  >
+                    Xem ngay!
+                  </Link>
                 </div>
               </div>
             ))

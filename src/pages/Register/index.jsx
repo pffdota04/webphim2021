@@ -102,7 +102,7 @@ const Register = () => {
                         onChange={(e) => setNameSignup(e.target.value)}
                       />
                     </div>
-                    <div className="col-12 mx-auto">
+                    {/* <div className="col-12 mx-auto">
                       <label htmlFor="imgSignup"></label>
                       <input
                         type="text"
@@ -112,7 +112,7 @@ const Register = () => {
                         value={imgSignup}
                         onChange={(e) => setImgSignup(e.target.value)}
                       />
-                    </div>
+                    </div> */}
                     <div className="col-12 mx-auto">
                       <label
                         htmlFor="emailSignup"

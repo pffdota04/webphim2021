@@ -4,6 +4,9 @@
 .link-color:hover {
     color: #f9ab00 !important;
 }
+.fs-mb {
+    font-size: 1.2rem;
+}
 @media (max-width: 1023.9px) {
     footer .logo-img {
         width: 77px !important;
@@ -19,5 +22,18 @@
     }
     section > div {
         padding-top: 0.5rem !important;
+    }
+}
+@media (max-width: 599.9px) {
+    footer .logo-img {
+        width: 77px !important;
+        height: 52px !important;
+    }
+    footer p, footer span, footer span > a {
+        font-size: 0.7rem !important;
+    }
+    .fs-mb {
+        font-size: 0.8rem !important;
+        margin-bottom: 5px !important;
     }
 }

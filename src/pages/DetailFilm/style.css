@@ -40,11 +40,11 @@
   height: 444px;
   border-radius: 8px;
 }
-.details-poster-img > img {
+/* .details-poster-img > img {
   width: 100%;
   height: 350px;
   object-fit: cover;
-}
+} */
 .details-info {
   width: 68%;
   max-width: 100%;
@@ -65,19 +65,22 @@
   height: 30rem;
 }
 .btn-group-detail > .right {
-  right: 10px !important;
+  right: 40px !important;
 }
 .btn-group-detail > .left {
-  left: 10px !important;
+  left: 40px !important;
 }
-@media (min-width: 1024px) and (max-width: 1999.9px) {
+@media (min-width: 1024px) and (max-width: 1199.9px) {
   .btn-group-detail > .left {
-    left: 8px !important;
+    left: 12px !important;
+    top: 10vw;
+  }
+  .btn-group-detail > .right {
+    right: 14px !important;
+    top: 10vw;
   }
   .details-poster-img {
-      /* width: ; */
-    width: 18vw;
-    height: 34vw;
+    width: 28vw !important;
   }
 }
 @media (min-width: 768px) and (max-width: 1023.9px) {
@@ -85,14 +88,14 @@
     width: 100%;
   }
   .btn-group-detail > .left {
-    left: 16px !important;
+    left: 1vw !important;
   }
   .btn-group-detail > .right {
-    right: 17px !important;
+    right: 1vw !important;
   }
   .details-poster-img {
-    width: 18vw;
-    height: 34vw;
+    width: 26vw;
+    height: 43vw;
   }
 }
 @media (min-width: 600px) and (max-width: 767.9px) {
@@ -100,19 +103,21 @@
     width: 100%;
   }
   .btn-group-detail > .left {
-    left: 8px !important;
+    left: 3.3vw !important;
   }
   .btn-group-detail > .right {
-    right: 10px !important;
+    right: 3.3vw !important;
   }
   .details-poster-img {
-    width: 18vw;
-    height: 34vw;
+    width: 22vw;
+    height: 38vw;
   }
   .details-info-title {
     font-size: 1.2rem;
   }
-  .details-info-overview,
+  .details-info-overview {
+    font-size: 0.8rem;
+  }
   .genres,
   .nation,
   .time-film,
@@ -120,8 +125,8 @@
     font-size: 1rem;
   }
   .watch > .btn,
-  .save > .btn_save {
-    font-size: 0.7rem;
+  .btn_save {
+    font-size: 0.7rem !important;
   }
 }
 @media (max-width: 599.9px) {
@@ -130,12 +135,17 @@
   }
   #title-video-trailer .video-trailer {
     width: 100%;
+    height: 50vw !important;
+  }
+  #title-video-trailer .video-trailer > iframe {
+    width: 100% !important;
+    height: 60vw !important;
   }
   .btn-group-detail > .left {
-    left: 4px !important;
+    left: 1.7vw !important;
   }
   .btn-group-detail > .right {
-    right: 4px !important;
+    right: 1.7vw !important;
   }
   .details-container {
     display: inline-flex;
@@ -144,22 +154,13 @@
     width: 100%;
     margin-top: 10px;
   }
-}
-@media (min-width: 414px) and (max-width: 599.9px) {
-  .details-poster-img {
-    width: 24vw;
-    height: 54vw;
-    margin-left: 100px;
-    margin-right: 90px;
+  .details-poster {
+    margin-left: auto;
+    margin-right: auto;
   }
-}
-@media (max-width: 413.9px) {
   .details-poster-img {
-    min-width: 21vw;
-    max-width: 23vw;
-    height: 58vw;
-    margin-left: 80px;
-    margin-right: 90px;
+    width: 100%;
+    height: 36vw;
   }
   .details-info-title {
     font-size: 1.2rem;
@@ -169,10 +170,10 @@
   .nation,
   .time-film,
   .year-film {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .watch > .btn,
-  .save > .btn_save {
-    font-size: 0.7rem;
+  .btn_save {
+    font-size: 0.7rem !important;
   }
 }

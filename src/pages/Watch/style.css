@@ -39,7 +39,9 @@
   min-height: 26rem;
   max-height: 50rem;
 }
-
+.float-mk {
+  float: right !important;
+}
 /* .isFull div div >*{
   width: 100%;
   min-width: 40rem;
@@ -176,6 +178,10 @@
   }
   .ss > #theloaiSelect {
     width: 44% !important;
+  }
+  .float-mk {
+    width: 100% !important;
+    margin-top: 4px !important;
   }
 }
 @media (min-width: 414px) and (max-width: 599px) {

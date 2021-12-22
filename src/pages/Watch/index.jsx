@@ -190,7 +190,7 @@ const Watch = () => {
         <div className="container mt-4">
           <h2 className="primary-color mt-5 mb-3 fs-bl">Bình luận</h2>
           <div className="background-comment p-4 col-9 pb-5 container-bl">
-            <div className="d-flex justify-content-between p-4 text-item">
+            {/* <div className="d-flex justify-content-between p-4 text-item">
               <span className="number-bl">123 Bình luận</span>
               <div className="d-flex col-4 ss">
                 <label className="text-item" for="theloaiSelect">
@@ -204,7 +204,7 @@ const Watch = () => {
                   <option value="old">Cũ nhất</option>
                 </select>
               </div>
-            </div>
+            </div> */}
             <Chat place={id} backimg={dataFilmState.backimg} />
           </div>
         </div>
@@ -426,58 +426,56 @@ const Watch = () => {
                   <div className="spinner-border" role="status"></div>
                 </div>
               ) : (
-                <div className="">
-                  <button
-                    className="btn btn-danger btn-sm me-1"
-                    onClick={() => saveThis()}
-                  >
-                    {iconSave === 0 ? (
-                      <div>
-                        <div
-                          className="spinner-border spinner-border-sm me-1"
-                          role="status"
-                        ></div>
-                        Đang tải ...
-                      </div>
-                    ) : iconSave === 1 ? (
-                      <div>
-                        <i class="fa fa-trash"></i> Xóa khỏi danh sách
-                      </div>
-                    ) : (
-                      <div>
-                        <i class="fa fa-plus"></i> Thêm vào danh sách
-                      </div>
-                    )}
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm ms-1"
-                    // data-bs-toggle="modal"
-                    // data-bs-target="#unlockFilmPlan"
-                    onClick={() => {
-                      setPopupVip(1);
-                    }}
-                    disabled={iconUnlock > 0 && "true"}
-                  >
-                    {iconUnlock === 0 ? (
-                      <div>
-                        <div
-                          className="spinner-border spinner-border-sm me-1"
-                          role="status"
-                        ></div>
-                        Đang tải ...
-                      </div>
-                    ) : iconUnlock === -1 ? (
-                      <div>
-                        <i class="fa fa-unlock-alt"></i> Mở khóa vip
-                      </div>
-                    ) : (
-                      <div>
-                        <i class="fa fa-hourglass"></i> Còn lại {iconUnlock}{" "}
-                        ngày VIP
-                      </div>
-                    )}
-                  </button>
-                </div>
+                <div className="mt-3">
+                <button
+                  className="btn text-white btn_save"
+                  onClick={() => saveThis()}
+                >
+                  {iconSave === 0 ? (
+                    <div>
+                      <div
+                        className="spinner-border spinner-border-sm me-1"
+                        role="status"
+                      ></div>
+                      Đang tải ...
+                    </div>
+                  ) : iconSave === 1 ? (
+                    <div>
+                      <i class="fa fa-trash"></i> Xóa khỏi danh sách
+                    </div>
+                  ) : (
+                    <div>
+                      <i class="fa fa-plus"></i> Thêm vào danh sách
+                    </div>
+                  )}
+                </button>
+                <button
+                  className="btn text-white btn_save ms-2"
+                  onClick={() => {
+                    setPopupVip(1);
+                  }}
+                  disabled={iconUnlock > 0 && "true"}
+                >
+                  {iconUnlock === 0 ? (
+                    <div>
+                      <div
+                        className="spinner-border spinner-border-sm me-1"
+                        role="status"
+                      ></div>
+                      Đang tải ...
+                    </div>
+                  ) : iconUnlock === -1 ? (
+                    <div>
+                      <i class="fa fa-unlock-alt"></i> Mở khóa vip
+                    </div>
+                  ) : (
+                    <div>
+                      <i class="fa fa-hourglass"></i> Còn lại {iconUnlock} ngày
+                      VIP
+                    </div>
+                  )}
+                </button>
+              </div>
               )}
             </h2>
           )}
@@ -518,9 +516,9 @@ const Watch = () => {
           >
             <div className="Invisible" onClick={() => setPopupVip(null)}></div>
             <div class="modal-dialog  modal-dialog-centered ">
-              <div class="modal-content bg-dark p-3 border border-danger border-3 rounded-3">
+              <div class="modal-content bg-dark p-3 border border-3 rounded-3">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">
+                  <h5 class="modal-title primary-color" id="staticBackdropLabel">
                     Mở khóa VIP cho phim này
                   </h5>
                   <button
@@ -544,37 +542,39 @@ const Watch = () => {
                       </h5>
                     ) : (
                       <h5 className="text-center mb-3">
-                        Số dư của bạn: {userDetail.coin} Koin
+                        Số dư của bạn: <strong className="primary-color">{userDetail.coin}</strong> Coin
                       </h5>
                     )}
 
-                    <div className="col-12 border border-danger mb-3 p-1">
-                      Mở khóa <strong>3</strong> ngày với{" "}
-                      <strong>{dataFilmState.price}</strong> Koin
+                    <div className="col-12 border mb-3 p-2">
+                      <span>
+                        Mở khóa <strong className="primary-color">3</strong> ngày với{" "}
+                        <strong className="primary-color">{dataFilmState.price}</strong> Coin
+                      </span>
                       <button
-                        className="btn btn-sm btn-danger float-end"
+                        className="btn btn-sm background-primary float-mk"
                         disabled={userDetail.coin < dataFilmState.price}
                         onClick={() => unlockTHis(0)}
                       >
                         Mở khóa
                       </button>
                     </div>
-                    <div className="col-12 border border-danger mb-3  p-1">
-                      Mở khóa <strong>7</strong> ngày với{" "}
-                      <strong>{dataFilmState.price * 2}</strong> Koin
+                    <div className="col-12 border mb-3  p-2">
+                      Mở khóa <strong className="primary-color">7</strong> ngày với{" "}
+                      <strong className="primary-color">{dataFilmState.price * 2}</strong> Coin
                       <button
-                        className="btn btn-sm btn-danger float-end"
+                        className="btn btn-sm background-primary float-mk"
                         disabled={userDetail.coin < dataFilmState.price * 2}
                         onClick={() => unlockTHis(1)}
                       >
                         Mở khóa
                       </button>
                     </div>
-                    <div className="col-12 border border-danger mb-3  p-1">
-                      Mở khóa <strong>14</strong> ngày với{" "}
-                      <strong>{dataFilmState.price * 3}</strong> Koin
+                    <div className="col-12 border mb-3  p-2">
+                      Mở khóa <strong className="primary-color">14</strong> ngày với{" "}
+                      <strong className="primary-color">{dataFilmState.price * 3}</strong> Coin
                       <button
-                        className="btn btn-sm btn-danger float-end "
+                        className="btn btn-sm background-primary float-mk "
                         disabled={userDetail.coin < dataFilmState.price * 3}
                         onClick={() => unlockTHis(2)}
                       >

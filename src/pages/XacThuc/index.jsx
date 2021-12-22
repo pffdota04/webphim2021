@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router";
 import Loading from "../../components/Loading";
 import { setUserData, setUserDataDetail } from "./../../store/actions/user";
+import "./style.css";
 
 const XacThuc = () => {
   const userInfo = useSelector((state) => state.userData.curentUser);
@@ -50,25 +51,26 @@ const XacThuc = () => {
     <Redirect push to="/login" />
   ) : (
     <div>
-      <main id="main ">
+      <main id="main" className="container-background">
         <div>
-          <div className="container container-login">
-            <h4>
+          <div className="container mt-4 mb-5 text-white container-mb">
+            <h4 className="primary-color">
               Xin chào,
               {userInfo.displayName}
             </h4>
             {userInfo.checkUser === false ? (
               <div>
                 <h1>Có vẻ email này chưa được xác thực...</h1>
-                <h4>Chúng tôi đã gửi một email cho bạn kèm theo mã xác thực</h4>
+                <h5>Chúng tôi đã gửi một email cho bạn kèm theo mã xác thực</h5>
                 <label htmlFor="maxacthuc"> Mã xác thực: </label>
                 <input
+                  className="maxacthuc"
                   id="maxacthuc"
                   type="text"
                   onChange={(e) => setmaxacthuc(e.target.value)}
                 ></input>
                 <button
-                  className="btn btn-sm btn-primary ms-2"
+                  className="btn btn-sm btn-primary ms-2 btn_xacnhan"
                   onClick={() => xacthuc()}
                 >
                   Xác nhận

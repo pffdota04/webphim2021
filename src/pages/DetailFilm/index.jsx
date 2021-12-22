@@ -526,13 +526,13 @@ const DetailFilm = () => {
                       </h5>
                     ) : (
                       <h5 className="text-center mb-3">
-                        Số dư của bạn: {userDetail.coin} Koin
+                        Số dư của bạn: {userDetail.coin} Coin
                       </h5>
                     )}
 
                     <div className="col-12 border border-danger mb-3 p-1">
                       Mở khóa <strong>3</strong> ngày với{" "}
-                      <strong>{data.price}</strong> Koin
+                      <strong>{data.price}</strong> Coin
                       <button
                         className="btn btn-sm btn-danger float-end"
                         disabled={userDetail.coin < data.price}
@@ -543,7 +543,7 @@ const DetailFilm = () => {
                     </div>
                     <div className="col-12 border border-danger mb-3  p-1">
                       Mở khóa <strong>7</strong> ngày với{" "}
-                      <strong>{data.price * 2}</strong> Koin
+                      <strong>{data.price * 2}</strong> Coin
                       <button
                         className="btn btn-sm btn-danger float-end"
                         disabled={userDetail.coin < data.price * 2}
@@ -554,7 +554,7 @@ const DetailFilm = () => {
                     </div>
                     <div className="col-12 border border-danger mb-3  p-1">
                       Mở khóa <strong>14</strong> ngày với{" "}
-                      <strong>{data.price * 3}</strong> Koin
+                      <strong>{data.price * 3}</strong> Coin
                       <button
                         className="btn btn-sm btn-danger float-end "
                         disabled={userDetail.coin < data.price * 3}

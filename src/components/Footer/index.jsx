@@ -19,7 +19,7 @@ function Footer() {
               <span>© 2021 Copyright: &nbsp;<a className="primary-color fw-bold link-color">KPHIM</a></span>
             </div>
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-              <h6 className="text-uppercase fs-5 fw-bold mb-4 primary-color">Giới thiệu</h6>
+              <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">Giới thiệu</h6>
               <p>
                 <Link to="#!" href="#!" className="text-reset link-color">
                   Quy chế dịch vụ
@@ -37,8 +37,8 @@ function Footer() {
               </p>
             </div>
 
-            <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-              <h6 className="text-uppercase fs-5 fw-bold mb-4 primary-color">Liên hệ</h6>
+            <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 fs-mb">
+              <h6 className="text-uppercase fw-bold mb-4 primary-color">Liên hệ</h6>
               <p>
                 <Link to="#!" className="text-reset link-color">
                 <i className="fa fa-instagram me-3" />Instagram
@@ -58,7 +58,7 @@ function Footer() {
 
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               {/* Links */}
-              <h6 className="text-uppercase fs-5 fw-bold mb-4 primary-color">Hỗ trợ</h6>
+              <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">Hỗ trợ</h6>
               <p className="link-color">
                 <i className="fa fa-envelope me-3" />
                 kphim.contact@gmail.com

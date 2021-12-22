@@ -177,23 +177,23 @@ const Header = () => {
                 </Link>
               ) : userInfo.checkUser == false ? (
                 <ul
-                  className="dropdown-menu dropdown-menu-dark logomenu"
+                  className="navbar-nav me-auto mr-auto p-2"
                   aria-labelledby="dropdownUser1"
                 >
-                  <li>
+                  <li className="user-item">
                     <Link
-                      className="dropdown-item"
+                      className="menu-dropdown-item text-white"
                       to="/xacthuc"
                       onClick={() => setOpenHeader(false)}
                     >
                       <i className="fa fa-user" /> Xác thực email
                     </Link>
                   </li>
-                  <li>
+                  <li className="user-item">
                     <button
-                      className="dropdown-item text-danger "
+                      className="menu-dropdown-item primary-color"
                       onClick={() => {
-                        auth().signOut().then(alert("da dang xuat"));
+                        auth().signOut();
                         setOpenHeader(false);
                       }}
                     >
@@ -623,7 +623,7 @@ const Header = () => {
                 <input
                   className="me-2 input_search"
                   type="search"
-                  placeholder="Search"
+                  placeholder="Tìm kiếm"
                   aria-label="Search"
                   onChange={onSubmitSearch}
                 />
@@ -691,7 +691,7 @@ const Header = () => {
               userInfo.checkUser == false ? (
                 <>
                   <a
-                    className="d-block nav-link"
+                    className="d-block nav-link user_info"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
@@ -707,12 +707,12 @@ const Header = () => {
                     </span>
                   </a>
                   <ul
-                    className="max-width-user bg-black col-12"
+                    className="menu-dropdown max-width-user bg-black col-12 user__dropdown"
                     aria-labelledby="dropdownUser1"
                   >
                     <li className="user-item">
                       <Link
-                        className="dropdown-item  menu-dropdown-item text-light"
+                        className="menu-dropdown-item text-white"
                         to="/xacthuc"
                         onClick={() => setOpenHeader(false)}
                       >
@@ -721,9 +721,9 @@ const Header = () => {
                     </li>
                     <li className="user-item">
                       <button
-                        className="dropdown-item text-danger "
+                        className="menu-dropdown-item primary-color"
                         onClick={() => {
-                          auth().signOut().then(alert("da dang xuat"));
+                          auth().signOut();
                           setOpenHeader(false);
                         }}
                       >

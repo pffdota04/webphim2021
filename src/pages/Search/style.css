@@ -23,8 +23,21 @@
   text-overflow: ellipsis;
 }
 
+.showSearch {
+  display: none;
+  margin-bottom: 10px;
+}
+
+.search_film {
+  margin-top: -10px !important;
+  outline: none !important;
+  padding: 4px 8px !important;
+  border-radius: 10px;
+  border: none !important;
+}
+
 /* responsive */
-@media (max-width: 768px) and (max-width: 1023.9px) {
+@media (min-width: 768px) and (max-width: 1023.9px) {
   .font-size-label {
     font-size: 1rem !important;
     margin-top: 20px !important;
@@ -50,6 +63,9 @@
 }
 
 @media (max-width: 767.9px) {
+  .showSearch {
+    display: block !important;
+  }
   .font-size-label {
     font-size: 1rem !important;
     margin-top: 10px !important;
@@ -57,6 +73,14 @@
   #theloaiSelect {
     padding: 0 !important;
     width: 100px !important;
+  }
+  .select-type {
+    display: inline !important;
+  }
+  .select-type > div {
+    margin-left: 4px !important;
+    display: flex;
+    width: 100%;
   }
 }
 @media (max-width: 599.9px) {
@@ -84,5 +108,8 @@
   }
   .width-col > div:nth-child(3) {
     width: 100% !important;
+  }
+  .showSearch {
+    margin-bottom: 50px !important;
   }
 }

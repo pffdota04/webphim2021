@@ -61,12 +61,20 @@ const Register = () => {
         })
         .then((res) => {
           if (res.data == "okok") {
-            alert("Đăng kí thành công!");
+          //   var add = document.getElementById('toast');
+          //   var move = document.getElementById('main');
+          //   add.classList.add('show');
+          //   window.setTimeout(function () {
+          //     move.removeChild(add);
+          // }, 2000)
+            alert("Đăng ký thành công !");
             setEmailSignup("");
             setPassSignup("");
             setRePassSignup("");
             setImgSignup("");
-          } else if (res.data == "exist") alert("Email đã được đăng kí");
+          } else if (res.data == "exist") {
+            setErrorSignup("Email đã được đăng ký!");
+          }
         })
         .catch((e) => alert(e));
   };
@@ -85,10 +93,21 @@ const Register = () => {
         />
       </MetaTags>
       <main id="main">
+        {/* <div id="toast" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex align-items-center alert-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2 ms-3" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+          </svg>
+            <div class="toast-body">
+              Đăng ký thành công!
+            </div>
+            <button type="button" class="btn-close btn-close-dark me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div> */}
         <div>
           <div className="container">
             {userInfo.checkUser === "init" ? (
-              <h1>CHECKING...</h1>
+              <h1 className="primary-color">ĐANG KIỂM TRA...</h1>
             ) : userInfo.checkUser === "not" ? (
               <div className="">
                 <div className="text-center sign__form">
@@ -190,78 +209,6 @@ const Register = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* <div className="col-12 col-md-4 p-2 sign-up text-center">
-                  <div className="row ps-4 pe-4 ps-sm-2 pe-sm-2">
-                    <h2 className="col-12">Đăng kí (sắp có)</h2>
-                    <div className="col-12 col-sm-6">
-                      <label htmlFor="emailSignup">Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="emailSignup"
-                        placeholder="Email"
-                        value={emailSignup}
-                        onChange={(e) => setEmailSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 col-sm-6">
-                      <label htmlFor="nameSignup">Tên hiển thị</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="nameSignup"
-                        placeholder="Tên hiển thị"
-                        value={nameSignup}
-                        onChange={(e) => setNameSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 mt-2 mb-2">
-                      <label htmlFor="imgSignup">Ảnh đại diện</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="imgSignup"
-                        placeholder="Link ảnh"
-                        value={imgSignup}
-                        onChange={(e) => setImgSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 col-sm-6 ">
-                      <label htmlFor="passSignup">Password:</label>
-                      <input
-                        type="password"
-                        className="form-control "
-                        placeholder="Password"
-                        id="passSignup"
-                        value={passSignup}
-                        onChange={(e) => setPassSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 col-sm-6 ">
-                      <label htmlFor="repassSignup">Xác nhận password:</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Password again"
-                        id="repassSignup"
-                        value={repassSignup}
-                        onChange={(e) => setRePassSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 mt-3">
-                      <p className="text-danger">{errorSignup}</p>
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-50 mx-auto d-block"
-                        onClick={() => Signup()}
-                      >
-                        Đăng kí
-                      </button>
-                    </div>
-                    <hr className="w-50 mx-auto" />
-                  </div>
-                </div> */}
               </div>
             ) : (
               <div>

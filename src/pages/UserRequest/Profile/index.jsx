@@ -70,19 +70,9 @@ const Profile = (props) => {
                       <h5 className="mb-4">Bạn có thể liên hệ qua:</h5>
                       <div className="d-flex justify-content-between">
                         <p>
-                          <Link to="#!" className="text-reset link-color">
-                          <i className="fa fa-instagram me-3" />Instagram
-                          </Link>
-                        </p>
-                        <p>
-                          <Link to="#!" className="text-reset link-color">
+                          <a href="https://www.facebook.com/tkiet1999" className="text-reset link-color">
                           <i className="fa fa-facebook me-3" />Facebook
-                          </Link>
-                        </p>
-                        <p>
-                          <Link to="#!" className="text-reset link-color">
-                          <i className="fa fa-youtube me-3" />Youtube
-                          </Link>
+                          </a>
                         </p>
                       </div>
                       <input

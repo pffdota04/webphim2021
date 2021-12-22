@@ -87,6 +87,13 @@
   padding: 0;
   background-color: transparent;
 }
+.user_info:hover {
+  cursor: pointer;
+}
+.user__dropdown {
+  right: 0 !important;
+  width: 18% !important;
+}
 
 /* Responsive */
 @media (min-width: 1024px) and (max-width: 1200px) {
@@ -122,6 +129,10 @@
   .menu-dropdown {
     top: 80%;
     right: 0;
+  }
+  .user__dropdown {
+    right: 0 !important;
+    width: 80% !important;
   }
 }
 

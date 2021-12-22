@@ -131,6 +131,19 @@ const Search = (props) => {
             <div className="mb-3">
               {/* <hr className="mb-2" /> */}
               <div className="text-white mt-5 container">
+                <div className="col-12 showSearch">
+                  <input
+                      className="search_film"
+                      type="search"
+                      id="search-in-search"
+                      placeholder="Tìm kiếm"
+                      aria-label="Search"
+                      value={keySearch}
+                      onChange={(e) => {
+                        setKeySearch(e.target.value);
+                      }}
+                    />
+                </div>
                 <div className="row width-col">
                   <div className="col-7">
                     <div className="row">
@@ -265,7 +278,7 @@ const Search = (props) => {
                           // setKeySearch("");
                         }}
                       >
-                        Clear filter
+                        Xóa bộ lọc
                       </button>
                     </div>
                   </div>

@@ -170,7 +170,7 @@ const Home = () => {
                     Xem ngay!
                   </button> */}
                   <Link
-                    className="btn btn-lg background-primary"
+                    className="btn btn-lg background-primary res-btn"
                     to={
                       "/detailfilm/" +
                       homeData.top[e].id +

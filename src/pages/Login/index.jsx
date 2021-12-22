@@ -28,13 +28,6 @@ const Login = () => {
   const [passLogin, setPassLogin] = useState("");
   const [errorLogin, setErrorLogin] = useState(null);
 
-  const [emailSignup, setEmailSignup] = useState("");
-  const [passSignup, setPassSignup] = useState("");
-  const [repassSignup, setRePassSignup] = useState("");
-  const [nameSignup, setNameSignup] = useState("");
-  const [imgSignup, setImgSignup] = useState("");
-  const [errorSignup, setErrorSignup] = useState(null);
-
   // useEffect(() => {
   //   auth().onAuthStateChanged((user) => {
   //     if (user == null) {
@@ -69,9 +62,20 @@ const Login = () => {
   };
 
   const Login = () => {
-    if (emailLogin === "" || passLogin == "") {
-      setErrorLogin("Error: The email address or password is badly formatted");
-    } else
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailLogin === "" && passLogin == "") {
+      setErrorLogin("Vui lòng nhập Email và Mật khẩu!");
+    }
+    else if (! re.test(emailLogin)) {
+      setErrorLogin("Email không hợp lệ!");
+    }
+    else if (emailLogin === "") {
+      setErrorLogin("Vui lòng nhập Email!");
+    }
+    else if (passLogin == "") {
+      setErrorLogin("Vui lòng nhập Mật khẩu!");
+    }
+    else
       auth()
         .signInWithEmailAndPassword(emailLogin, passLogin)
         .then((userCredential) => {
@@ -83,36 +87,10 @@ const Login = () => {
           window.location = "/";
         })
         .catch((error) => {
-          var errorMessage = error.message;
-          setErrorLogin("Lỗi: " + errorMessage);
+          // var errorMessage = error.message;
+          // setErrorLogin("Lỗi: " + errorMessage);
+          setErrorLogin("Email hoặc mật khẩu không đúng!");
         });
-  };
-
-  const Signup = () => {
-    if (emailSignup === "" || passSignup === "" || nameSignup === "")
-      setErrorSignup("Không được để trống");
-    else if (passSignup !== repassSignup)
-      setErrorSignup("Password xác nhận không chính xác");
-    else if (passSignup.length <= 6)
-      setErrorSignup("Password phải dài hơn 6 kí tự");
-    else
-      axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/signup", {
-          newmail: emailSignup,
-          newpassword: passSignup,
-          name: nameSignup,
-          img: imgSignup,
-        })
-        .then((res) => {
-          if (res.data == "okok") {
-            alert("Đăng kí thành công!");
-            setEmailSignup("");
-            setPassSignup("");
-            setRePassSignup("");
-            setImgSignup("");
-          } else if (res.data == "exist") alert("Email đã được đăng kí");
-        })
-        .catch((e) => alert(e));
   };
 
   return userInfo.checkUser === false ? (
@@ -165,7 +143,7 @@ const Login = () => {
                         type="password"
                         className="sign__input"
                         id="exampleInputPassword1"
-                        placeholder="Password"
+                        placeholder="Mật khẩu"
                         value={passLogin}
                         onChange={(e) => setPassLogin(e.target.value)}
                       />
@@ -173,16 +151,16 @@ const Login = () => {
                     {errorLogin === null ? (
                       <p></p>
                     ) : (
-                      <p className="text-danger">{errorLogin}</p>
+                      <p className="primary-color">{errorLogin}</p>
                     )}
                     <div className="col-12">
                       <button className="sign__btn" onClick={() => Login()}>
-                        SIGN IN
+                        ĐĂNG NHẬP
                       </button>
                       <hr className="w-50 mx-auto" />
                     </div>
                     <div className="col-12">
-                      <strong className="text-light">OR</strong>
+                      <strong className="text-light">HOẶC</strong>
                     </div>
                     <div className="col-12">
                       <StyledFirebaseAuth
@@ -193,12 +171,12 @@ const Login = () => {
                     </div>
                     <div className="col-12">
                       <span class="sign__text">
-                        Don't have an account?
-                        <Link to="/register">Sign up!</Link>
+                        Bạn chưa có tài khoản?
+                        <Link to="/register">ĐĂNG KÝ!</Link>
                       </span>
-                      <span class="sign__text">
+                      {/* <span class="sign__text">
                         <Link to="/forgotpw">Forgot password?</Link>
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>

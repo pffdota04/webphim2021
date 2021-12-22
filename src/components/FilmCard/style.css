@@ -26,14 +26,13 @@
   border-radius: 10px;
 }
 
-@media (min-width: 576px) {
-  /* .card {
-    width: 23vw !important;
-    margin: 4px 2px;
+@media (min-width: 600px) and (max-width: 767.9px) {
+  .card {
+    width: 20vw !important;
   }
   .card .film-item {
-    height: 32vw !important;
-  } */
+    height: 31vw !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -60,7 +59,7 @@
     width: 25vw !important;
   }
   .card .film-item {
-    height: 10rem !important;
+    height: 36vw !important;
   }
   .card-title {
     font-size: 0.7rem !important;
@@ -70,12 +69,12 @@
   }
   .sodem {
     width: 10vw !important;
-    height: 5vh !important;
+    height: 10vw !important;
   }
 }
 @media (max-width: 374.9px) {
   .card .film-item {
-    height: 8rem !important;
+    height: 36vw !important;
   }
 }
 

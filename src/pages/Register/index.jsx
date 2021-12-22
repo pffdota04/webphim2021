@@ -40,12 +40,17 @@ const Register = () => {
   };
 
   const Signup = () => {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailSignup === "" || passSignup === "" || nameSignup === "")
-      setErrorSignup("Không được để trống");
+      setErrorSignup("Vui lòng nhập đủ các trường!");
+    else if (! re.test(emailSignup))
+      setErrorSignup("Email không hợp lệ!");
+    else if (nameSignup.length <= 6)
+      setErrorSignup("Tên tài khoản phải dài hơn 6 kí tự");
     else if (passSignup !== repassSignup)
-      setErrorSignup("Password xác nhận không chính xác");
+      setErrorSignup("Mật khẩu xác nhận không chính xác");
     else if (passSignup.length <= 6)
-      setErrorSignup("Password phải dài hơn 6 kí tự");
+      setErrorSignup("Mật khẩu phải dài hơn 6 kí tự");
     else
       axios
         .post(process.env.REACT_APP_API_LOCAL + "user/signup", {
@@ -97,7 +102,7 @@ const Register = () => {
                         type="text"
                         className="sign__input"
                         id="nameSignup"
-                        placeholder="Name"
+                        placeholder="Tên tài khoản"
                         value={nameSignup}
                         onChange={(e) => setNameSignup(e.target.value)}
                       />
@@ -137,7 +142,7 @@ const Register = () => {
                         type="password"
                         className="sign__input"
                         id="passSignup"
-                        placeholder="Password"
+                        placeholder="Mật khẩu"
                         value={passSignup}
                         onChange={(e) => setPassSignup(e.target.value)}
                       />
@@ -151,7 +156,7 @@ const Register = () => {
                         type="password"
                         className="sign__input"
                         id="repassSignup"
-                        placeholder="Password again"
+                        placeholder="Nhập lại mật khẩu"
                         value={repassSignup}
                         onChange={(e) => setRePassSignup(e.target.value)}
                       />
@@ -159,16 +164,16 @@ const Register = () => {
                     {errorSignup === null ? (
                       <p></p>
                     ) : (
-                      <p className="text-danger">{errorSignup}</p>
+                      <p className="primary-color">{errorSignup}</p>
                     )}
                     <div className="col-12">
                       <button className="sign__btn" onClick={() => Signup()}>
-                        SIGN UP
+                        ĐĂNG KÝ
                       </button>
                       <hr className="w-50 mx-auto" />
                     </div>
                     <div className="col-12">
-                      <strong className="text-light">OR</strong>
+                      <strong className="text-light">HOẶC</strong>
                     </div>
                     <div className="col-12">
                       <StyledFirebaseAuth
@@ -179,8 +184,8 @@ const Register = () => {
                     </div>
                     <div className="col-12">
                       <span class="sign__text">
-                        Already have an account?
-                        <Link to="/login">Sign in!</Link>
+                        Bạn đã có tài khoản?
+                        <Link to="/login">ĐĂNG NHẬP!</Link>
                       </span>
                     </div>
                   </div>

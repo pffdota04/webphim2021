@@ -25,8 +25,8 @@
   width: 40px;
   height: 80px;
   padding: 0;
-  top: 14vw;
-  left: 15px;
+  top: 9vw;
+  left: 3.4vw;
   border-radius: 6px;
   background-repeat: no-repeat;
   background: rgba(0, 0, 0, 0.5) 50% !important;
@@ -38,8 +38,8 @@
   width: 40px;
   height: 80px;
   padding: 0;
-  top: 14vw;
-  right: 15px;
+  top: 9vw;
+  right: 3.4vw;
   border-radius: 6px;
   background-repeat: no-repeat;
   background: rgba(0, 0, 0, 0.5) 50% !important;
@@ -83,7 +83,15 @@
 /* Responsive */
 @media (min-width: 1024px) and (max-width: 1279.9px) {
   .img-info-film {
-    height: 35vh !important;
+    height: 45vw !important;
+  }
+  .carousel-button-group .left {
+    left: 2.2vw !important;
+    top: 9.5vw;
+  }
+  .carousel-button-group .right {
+    right: 2vw !important;
+    top: 9.5vw;
   }
 }
 @media (min-width: 768px) and (max-width: 1023.9px) {
@@ -92,28 +100,38 @@
     margin-top: -10px !important;
   }
   .carousel-button-group .left {
-    left: 30px;
+    left: 23px;
+    top: 13vw;
   }
   .carousel-button-group .right {
-    right: 30px;
+    right: 23px;
+    top: 13vw;
   }
 }
 @media (min-width: 600px) and (max-width: 1023.9px) {
   .img-info-film {
-    height: 35vh !important;
+    height: 50vw !important;
   }
 }
 @media (min-width: 600px) and (max-width: 767.9px) {
   .carousel-button-group .left {
-    left: 21px;
+    left: 5.5vw;
+    top: 10.5vw;
   }
   .carousel-button-group .right {
-    right: 21px;
+    right: 5.5vw;
+    top: 10.5vw;
+  }
+  .res-btn {
+    font-size: 1rem !important;
   }
 }
 @media (max-width: 599.9px) {
   .img-info-film {
-    height: 25vh !important;
+    height: 45vw !important;
+  }
+  .res-btn {
+    font-size: 0.8rem !important;
   }
   .carousel-caption > h1 {
     font-size: 1.2rem;
@@ -121,18 +139,15 @@
   .carousel-caption > p {
     font-size: 0.6rem;
   }
-  .carousel-caption > button {
-    font-size: 0.8rem;
-  }
   .carousel-button-group .left {
-    left: 10px;
-    top: 18vw;
+    left: 3.1vw;
+    top: 14vw;
     width: 40px;
     height: 40px;
   }
   .carousel-button-group .right {
-    top: 18vw;
-    right: 8px;
+    top: 14vw;
+    right: 2.7vw;
     width: 40px;
     height: 40px;
   }
@@ -145,17 +160,15 @@
   .carousel-caption > h1 {
     font-size: 1rem;
   }
-  .carousel-caption > button {
-    font-size: 0.6rem;
-  }
   .carousel-button-group .left {
-    left: 7px;
-    top: 16vw;
+    left: 3vw;
+    top: 14vw;
     width: 36px;
     height: 36px;
   }
   .carousel-button-group .right {
-    top: 16vw;
+    top: 14vw;
+    right: 3vw;
     width: 36px;
     height: 36px;
   }

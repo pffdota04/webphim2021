@@ -79,11 +79,11 @@ const Login = () => {
       auth()
         .signInWithEmailAndPassword(emailLogin, passLogin)
         .then((userCredential) => {
-          alert(
-            "Xin chào " +
-              userCredential.user.displayName +
-              ", bạn đã đăng nhập thành công!"
-          );
+          // alert(
+          //   "Xin chào " +
+          //     userCredential.user.displayName +
+          //     ", bạn đã đăng nhập thành công!"
+          // );
           window.location = "/";
         })
         .catch((error) => {
@@ -110,7 +110,7 @@ const Login = () => {
         <div>
           <div className="container">
             {userInfo.checkUser === "init" ? (
-              <h1>CHECKING...</h1>
+              <h1 className="primary-color">ĐANG KIỂM TRA...</h1>
             ) : userInfo.checkUser === "not" ? (
               <div className="">
                 <div className="text-center sign__form">
@@ -180,94 +180,22 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* <h2 className="text-center  mt-2 mb-2 text-light fw-bold fst-italics"> */}
-                {/* <div className="col-12 col-md-4 p-2 sign-up text-center">
-                  <div className="row ps-4 pe-4 ps-sm-2 pe-sm-2">
-                    <h2 className="col-12">Đăng kí (sắp có)</h2>
-                    <div className="col-12 col-sm-6">
-                      <label htmlFor="emailSignup">Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="emailSignup"
-                        placeholder="Email"
-                        value={emailSignup}
-                        onChange={(e) => setEmailSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 col-sm-6">
-                      <label htmlFor="nameSignup">Tên hiển thị</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="nameSignup"
-                        placeholder="Tên hiển thị"
-                        value={nameSignup}
-                        onChange={(e) => setNameSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 mt-2 mb-2">
-                      <label htmlFor="imgSignup">Ảnh đại diện</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="imgSignup"
-                        placeholder="Link ảnh"
-                        value={imgSignup}
-                        onChange={(e) => setImgSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 col-sm-6 ">
-                      <label htmlFor="passSignup">Password:</label>
-                      <input
-                        type="password"
-                        className="form-control "
-                        placeholder="Password"
-                        id="passSignup"
-                        value={passSignup}
-                        onChange={(e) => setPassSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 col-sm-6 ">
-                      <label htmlFor="repassSignup">Xác nhận password:</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Password again"
-                        id="repassSignup"
-                        value={repassSignup}
-                        onChange={(e) => setRePassSignup(e.target.value)}
-                      />
-                    </div>
-                    <div className="col-12 mt-3">
-                      <p className="text-danger">{errorSignup}</p>
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-50 mx-auto d-block"
-                        onClick={() => Signup()}
-                      >
-                        Đăng kí
-                      </button>
-                    </div>
-                    <hr className="w-50 mx-auto" />
-                  </div>
-                </div> */}
               </div>
             ) : (
-              <div className="text-center sign__form">
-                <h3 className="text-white">
-                  Chào mừng{" "}
-                  <span className="primary-color">{userInfo.displayName}</span>{" "}
-                  đến với KPHIM
-                </h3>
-                <Link
-                  className="w-40 h-30 btn btn-sm mt-3 background-primary"
-                  to="/home"
-                >
-                  Xem phim ngay!
-                </Link>
-              </div>
+              // <div className="text-center sign__form">
+              //   <h3 className="text-white">
+              //     Chào mừng{" "}
+              //     <span className="primary-color">{userInfo.displayName}</span>{" "}
+              //     đến với KPHIM
+              //   </h3>
+              //   <Link
+              //     className="w-40 h-30 btn btn-sm mt-3 background-primary"
+              //     to="/home"
+              //   >
+              //     Xem phim ngay!
+              //   </Link>
+              // </div>
+              window.location = "/"
             )}
           </div>
         </div>

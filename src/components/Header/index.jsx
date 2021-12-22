@@ -1,6 +1,6 @@
 import "./style.css";
 import brandLogo from "./../../assets/images/logo1.png";
-import userLogo from "./../../assets/images/user-logo.jpg";
+import userLogo from "./../../assets/images/default_user.jpg";
 import { Link, Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -757,7 +757,7 @@ const Header = () => {
                     </span>
                   </a>
                   <ul
-                    className="menu-dropdown min-height-type max-width-user bg-black col-12"
+                    className="menu-dropdown min-height-type max-width-user user__dropdown bg-black col-12"
                     aria-labelledby="dropdownUser1"
                   >
                     <li className="user-item">

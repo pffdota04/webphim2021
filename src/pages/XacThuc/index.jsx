@@ -92,7 +92,7 @@ const XacThuc = () => {
             ) : (
               <div>
                 <h1>
-                  Tài khoản của bạn đã được xác thực, chúc bạn xem phim vui vẻ!{" "}
+                  Tài khoản của bạn đã được xác thực, giờ đây bạn có thể khám phá nhiều hơn về trang web, chúc bạn xem phim vui vẻ!{" "}
                 </h1>
               </div>
             )}

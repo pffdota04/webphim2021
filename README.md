@@ -1,7 +1,8 @@
 # Trang web xem phim trực tuyến K-Phim
 [Live Demo](https://kphim.xyz/)
 
-(Để chạy trang web cần cả 2 phần frontend và backend chạy cùng lúc!)
+## Tác giả: 
+Nguyễn Tuấn Kiệt; Mai Văn Lượng
 
 ## Cài đặt
 1. Clone this repo
@@ -14,4 +15,3 @@ npm i
 npm start
 ```
 4. Web đang chạy trên ```http://localhost:3000/```
-

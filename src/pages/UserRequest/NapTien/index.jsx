@@ -11,7 +11,7 @@ const NapTien = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   function sendRequest() {
-        setIsLoading(true);
+    setIsLoading(true);
 
     axios
       .post(process.env.REACT_APP_API_LOCAL + "user/napkoin", {
@@ -60,8 +60,10 @@ const NapTien = (props) => {
             <p>- Ghi chú (nếu có)</p>
             <p>- Nhấn "Gửi"</p>
             <hr />
-            <h6>Thông tin nạp của bạn sẽ được kiểm tra và cập nhật (trong vòng
-              24h)</h6>
+            <h6>
+              Thông tin nạp của bạn sẽ được kiểm tra và cập nhật (trong vòng
+              24h)
+            </h6>
             <hr />
             <h6 className="text-center">Thông tin chuyển khoản</h6>
             <p className="text-uppercase text-center primary-color">
@@ -146,10 +148,7 @@ const NapTien = (props) => {
             ></input>
           </div>
           <div className="col-12 col-md-8 mx-auto">
-            <button
-              className="sign__btn"
-              onClick={() => sendRequest()}
-            >
+            <button className="sign__btn" onClick={() => sendRequest()}>
               Gửi
             </button>
           </div>

@@ -2,7 +2,9 @@ import { findByLabelText } from "@testing-library/dom";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import { DebounceInput } from "react-debounce-input";
 import Loading from "../../../components/Loading";
+import { db } from "../../../services/firebase";
 import "./style.css";
 
 const Phims = (props) => {
@@ -13,6 +15,8 @@ const Phims = (props) => {
   const [dataFilm, setDataFilm] = useState(dataF);
 
   const [onLoading, setonLoading] = useState(false);
+  const [onTrend, setOnTren] = useState(false);
+  const [onRecom, setOnRecom] = useState(false);
 
   const [choseF, setChoseF] = useState(0); // id phim đang chọn, mặc định 0
   const [currentPhim, setCurrentPhim] = useState(dataFilm[choseF]); // lưu thông tin phim đang chọn
@@ -55,6 +59,45 @@ const Phims = (props) => {
     "crime",
     "family",
   ];
+
+  const changeTrending = (id, e) => {
+    setonLoading(true);
+    let hold = [...dataF];
+
+    // setDataFilm(hold);
+
+    if (e.target.value == "-1") {
+      db.ref()
+        .child("phiminfo2/" + id + "/trending")
+        .remove()
+        .then(() => setonLoading(false));
+      hold[id].trending = undefined;
+    } else {
+      db.ref()
+        .child("phiminfo2/" + id)
+        .update({ trending: parseInt(e.target.value) })
+        .then(() => setonLoading(false));
+      hold[id].trending = parseInt(e.target.value);
+    }
+  };
+
+  const changeRecom = (id, e) => {
+    setonLoading(true);
+    let hold = [...dataF];
+    hold[id].recommend = parseInt(e.target.value);
+    // setDataFilm(hold);
+
+    if (e.target.value == "-1")
+      db.ref()
+        .child("phiminfo2/" + id + "/recommend")
+        .remove()
+        .then(() => setonLoading(false));
+    else
+      db.ref()
+        .child("phiminfo2/" + id)
+        .update({ recommend: parseInt(e.target.value) })
+        .then(() => setonLoading(false));
+  };
 
   // Form input, hiển thị current và thay đổi state bằng setNew
   const formPhim = (currentPhim, setNew) => {
@@ -495,6 +538,36 @@ const Phims = (props) => {
     setDataFilm(a);
   };
 
+  const onlyTren = () => {
+    if (onTrend) {
+      setOnTren(false);
+      setDataFilm([...dataF]);
+      return;
+    }
+
+    let a = Object.values([...dataF]).filter((item) => {
+      return item.trending !== undefined;
+    });
+    setDataFilm(a);
+    setOnTren(true);
+    setOnRecom(false);
+  };
+
+  const onlyRecom = () => {
+    if (onRecom) {
+      setOnRecom(false);
+      setDataFilm([...dataF]);
+      return;
+    }
+
+    let a = Object.values([...dataF]).filter((item) => {
+      return item.recommend !== undefined;
+    });
+    setDataFilm(a);
+    setOnTren(false);
+    setOnRecom(true);
+  };
+
   return (
     <div className="container my-2 mb-3">
       {" "}
@@ -521,9 +594,10 @@ const Phims = (props) => {
           </h4>
         </div>
 
-        <div className="col-12 col-xl-6 mt-2">
+        <div className="col-12 col-xl-7 mt-2">
           <label htmlFor="timkiem">Tìm kiếm: </label>
-          <input
+          <DebounceInput
+            debounceTimeout={300}
             id="timkiem"
             className="ms-1"
             onChange={(e) => searching(e.target.value)}
@@ -534,9 +608,10 @@ const Phims = (props) => {
               <table class="table table-hover table-striped table-dark">
                 <thead>
                   <tr>
-                    <th>STT</th>
                     <th>ID</th>
                     <th>Title</th>
+                    <th onClick={() => onlyTren()}>Trend</th>
+                    <th onClick={() => onlyRecom()}>Recom</th>
                     <th>Price</th>
                     <th>Action</th>
                   </tr>
@@ -545,9 +620,46 @@ const Phims = (props) => {
                 <tbody>
                   {dataFilm.map((e, i) => (
                     <tr>
-                      <td>{i}</td>
                       <td>{e.id}</td>
                       <td className="w-50">{e.title}</td>
+                      <td>
+                        <select
+                          value={e.trending == undefined ? -1 : e.trending}
+                          onChange={(event) => changeTrending(e.id, event)}
+                        >
+                          <option selected value={-1}>
+                            NO
+                          </option>
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                          <option value={4}>4</option>
+                          <option value={5}>5</option>
+                          <option value={6}>6</option>
+                          <option value={7}>7</option>
+                          <option value={8}>8</option>
+                          <option value={9}>9</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select
+                          value={e.recommend == undefined ? -1 : e.recommend}
+                          onChange={(event) => changeRecom(e.id, event)}
+                        >
+                          <option selected value={-1}>
+                            NO
+                          </option>
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                          <option value={4}>4</option>
+                          <option value={5}>5</option>
+                          <option value={6}>6</option>
+                          <option value={7}>7</option>
+                          <option value={8}>8</option>
+                          <option value={9}>9</option>
+                        </select>
+                      </td>
                       <td>{e.price}</td>
                       <td className="w-25">
                         <a
@@ -604,7 +716,7 @@ const Phims = (props) => {
             </div>
           )}
         </div>
-        <div className="col-12 col-xl-6 mt-2">
+        <div className="col-12 col-xl-5 mt-2">
           <h4 className="text-center">
             <strong id="editfilm" className="display-6 fw-bold fst-italic ">
               Edit Film

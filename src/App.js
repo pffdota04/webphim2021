@@ -15,6 +15,7 @@ import WatchLaterList from "./pages/UserList/WatchLaterList";
 import Admin from "./pages/Admin";
 import ErrorPage from "./pages/ErrorPage";
 import XacThuc from "./pages/XacThuc";
+import KitKot from "./pages/KitKot";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/mylist" component={WatchLaterList} />
             <Route path="/xacthuc" component={XacThuc} />
             <Route path="/admin" component={Admin} />
+            <Route path="/kitkot" component={KitKot} />
             <Route exact path={["/", "/home"]} component={Home} />
             <Route
               path={["/detailfilm/:id/:name", "/detailfilm/:id"]}

@@ -1,0 +1,73 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-tik {
+  display: block;
+  height: 500px !important;
+  background-color: rgb(224, 0, 0);
+  color: #fff;
+}
+
+.swip-tik {
+  height: 500px !important;
+}
+
+.swip-tik .silde-title {
+  height: 8px;
+}
+
+.swip-tik .slide-ytb {
+  height: 420px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  /* display: none !important; */
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  top: 92% !important;
+}
+
+.swiper-button-next {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20data-prefix%3D%22fas%22%20data-icon%3D%22angle-down%22%20class%3D%22svg-inline--fa%20fa-angle-down%20fa-w-10%22%20role%3D%22img%22%20viewBox%3D%220%200%20320%20512%22%3E%3Cpath%20fill%3D%22currentColor%22%20d%3D%22M143%20352.3L7%20216.3c-9.4-9.4-9.4-24.6%200-33.9l22.6-22.6c9.4-9.4%2024.6-9.4%2033.9%200l96.4%2096.4%2096.4-96.4c9.4-9.4%2024.6-9.4%2033.9%200l22.6%2022.6c9.4%209.4%209.4%2024.6%200%2033.9l-136%20136c-9.2%209.4-24.4%209.4-33.8%200z%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.swiper-button-prev {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20data-prefix%3D%22fas%22%20data-icon%3D%22angle-up%22%20class%3D%22svg-inline--fa%20fa-angle-up%20fa-w-10%22%20role%3D%22img%22%20viewBox%3D%220%200%20320%20512%22%3E%3Cpath%20fill%3D%22currentColor%22%20d%3D%22M177%20159.7l136%20136c9.4%209.4%209.4%2024.6%200%2033.9l-22.6%2022.6c-9.4%209.4-24.6%209.4-33.9%200L160%20255.9l-96.4%2096.4c-9.4%209.4-24.6%209.4-33.9%200L7%20329.7c-9.4-9.4-9.4-24.6%200-33.9l136-136c9.4-9.5%2024.6-9.5%2034-.1z%22%2F%3E%3C%2Fsvg%3E");
+}
+
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}

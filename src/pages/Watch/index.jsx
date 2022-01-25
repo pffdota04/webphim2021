@@ -25,6 +25,7 @@ const Watch = () => {
   const [iconSave, setIconSave] = useState(0);
   const [iconUnlock, setIconUnlock] = useState(0);
   const [popupVip, setPopupVip] = useState(null);
+  const [isDisable, setIsDisable] = useState(false);
 
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userData.userDetail);
@@ -38,14 +39,21 @@ const Watch = () => {
   useEffect(() => {
     if (dataFilmState.id == undefined) {
       axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
+        console.log(res.data[0]);
         if (name != res.data[0].title)
           history.push("/watch/" + id + "/" + res.data[0].title);
         setDataFilmState(res.data[0]);
       });
     }
-    if (userDetail.checkUser != "init") {
-      if (userDetail.checkUser === "not") getDataByParamsId();
-      else getDataByTokenId();
+    if (dataFilmState.disabled) {
+      setLoading(false);
+      setIsDisable(true);
+    } else {
+      if (dataLink == null)
+        if (userDetail.checkUser != "init") {
+          if (userDetail.checkUser === "not") getDataByParamsId();
+          else getDataByTokenId();
+        }
     }
   }, [userDetail]);
 
@@ -121,6 +129,12 @@ const Watch = () => {
           {" "}
           Đang tải dữ liệu...
         </h1>
+      </div>
+    ) : isDisable ? (
+      <div className="container loading-film background-item mt-4">
+        <div className="text-center container-load">
+          <h1 className="primary-color">Tạm thời không thể xem phim này!</h1>
+        </div>
       </div>
     ) : dataLink == null ? (
       <div className="container loading-film background-item mt-4">
@@ -427,55 +441,55 @@ const Watch = () => {
                 </div>
               ) : (
                 <div className="mt-3">
-                <button
-                  className="btn text-white btn_save"
-                  onClick={() => saveThis()}
-                >
-                  {iconSave === 0 ? (
-                    <div>
-                      <div
-                        className="spinner-border spinner-border-sm me-1"
-                        role="status"
-                      ></div>
-                      Đang tải ...
-                    </div>
-                  ) : iconSave === 1 ? (
-                    <div>
-                      <i class="fa fa-trash"></i> Xóa khỏi danh sách
-                    </div>
-                  ) : (
-                    <div>
-                      <i class="fa fa-plus"></i> Thêm vào danh sách
-                    </div>
-                  )}
-                </button>
-                <button
-                  className="btn text-white btn_save ms-2"
-                  onClick={() => {
-                    setPopupVip(1);
-                  }}
-                  disabled={iconUnlock > 0 && "true"}
-                >
-                  {iconUnlock === 0 ? (
-                    <div>
-                      <div
-                        className="spinner-border spinner-border-sm me-1"
-                        role="status"
-                      ></div>
-                      Đang tải ...
-                    </div>
-                  ) : iconUnlock === -1 ? (
-                    <div>
-                      <i class="fa fa-unlock-alt"></i> Mở khóa vip
-                    </div>
-                  ) : (
-                    <div>
-                      <i class="fa fa-hourglass"></i> Còn lại {iconUnlock} ngày
-                      VIP
-                    </div>
-                  )}
-                </button>
-              </div>
+                  <button
+                    className="btn text-white btn_save"
+                    onClick={() => saveThis()}
+                  >
+                    {iconSave === 0 ? (
+                      <div>
+                        <div
+                          className="spinner-border spinner-border-sm me-1"
+                          role="status"
+                        ></div>
+                        Đang tải ...
+                      </div>
+                    ) : iconSave === 1 ? (
+                      <div>
+                        <i class="fa fa-trash"></i> Xóa khỏi danh sách
+                      </div>
+                    ) : (
+                      <div>
+                        <i class="fa fa-plus"></i> Thêm vào danh sách
+                      </div>
+                    )}
+                  </button>
+                  <button
+                    className="btn text-white btn_save ms-2"
+                    onClick={() => {
+                      setPopupVip(1);
+                    }}
+                    disabled={iconUnlock > 0 && "true"}
+                  >
+                    {iconUnlock === 0 ? (
+                      <div>
+                        <div
+                          className="spinner-border spinner-border-sm me-1"
+                          role="status"
+                        ></div>
+                        Đang tải ...
+                      </div>
+                    ) : iconUnlock === -1 ? (
+                      <div>
+                        <i class="fa fa-unlock-alt"></i> Mở khóa vip
+                      </div>
+                    ) : (
+                      <div>
+                        <i class="fa fa-hourglass"></i> Còn lại {iconUnlock}{" "}
+                        ngày VIP
+                      </div>
+                    )}
+                  </button>
+                </div>
               )}
             </h2>
           )}
@@ -518,7 +532,10 @@ const Watch = () => {
             <div class="modal-dialog  modal-dialog-centered ">
               <div class="modal-content bg-dark p-3 border border-3 rounded-3">
                 <div class="modal-header">
-                  <h5 class="modal-title primary-color" id="staticBackdropLabel">
+                  <h5
+                    class="modal-title primary-color"
+                    id="staticBackdropLabel"
+                  >
                     Mở khóa VIP cho phim này
                   </h5>
                   <button
@@ -542,14 +559,22 @@ const Watch = () => {
                       </h5>
                     ) : (
                       <h5 className="text-center mb-3">
-                        Số dư của bạn: <strong className="primary-color">{userDetail.coin}</strong> Coin
+                        Số dư của bạn:{" "}
+                        <strong className="primary-color">
+                          {userDetail.coin}
+                        </strong>{" "}
+                        Coin
                       </h5>
                     )}
 
                     <div className="col-12 border mb-3 p-2">
                       <span>
-                        Mở khóa <strong className="primary-color">3</strong> ngày với{" "}
-                        <strong className="primary-color">{dataFilmState.price}</strong> Coin
+                        Mở khóa <strong className="primary-color">3</strong>{" "}
+                        ngày với{" "}
+                        <strong className="primary-color">
+                          {dataFilmState.price}
+                        </strong>{" "}
+                        Coin
                       </span>
                       <button
                         className="btn btn-sm background-primary float-mk"
@@ -560,8 +585,12 @@ const Watch = () => {
                       </button>
                     </div>
                     <div className="col-12 border mb-3  p-2">
-                      Mở khóa <strong className="primary-color">7</strong> ngày với{" "}
-                      <strong className="primary-color">{dataFilmState.price * 2}</strong> Coin
+                      Mở khóa <strong className="primary-color">7</strong> ngày
+                      với{" "}
+                      <strong className="primary-color">
+                        {dataFilmState.price * 2}
+                      </strong>{" "}
+                      Coin
                       <button
                         className="btn btn-sm background-primary float-mk"
                         disabled={userDetail.coin < dataFilmState.price * 2}
@@ -571,8 +600,12 @@ const Watch = () => {
                       </button>
                     </div>
                     <div className="col-12 border mb-3  p-2">
-                      Mở khóa <strong className="primary-color">14</strong> ngày với{" "}
-                      <strong className="primary-color">{dataFilmState.price * 3}</strong> Coin
+                      Mở khóa <strong className="primary-color">14</strong> ngày
+                      với{" "}
+                      <strong className="primary-color">
+                        {dataFilmState.price * 3}
+                      </strong>{" "}
+                      Coin
                       <button
                         className="btn btn-sm background-primary float-mk "
                         disabled={userDetail.coin < dataFilmState.price * 3}
@@ -598,6 +631,7 @@ const Watch = () => {
         </div>
       )}
       <Footer />
+      {console.log(isDisable)}
     </div>
   );
 };

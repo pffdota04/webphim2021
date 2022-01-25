@@ -256,6 +256,7 @@ const User = (props) => {
                             e.disabled ? "text-decoration-line-through" : ""
                           }
                         />
+                        {e.signup !== undefined && "?"}
                       </td>
 
                       <td>

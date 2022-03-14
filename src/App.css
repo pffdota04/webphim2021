@@ -40,3 +40,7 @@
 .main {
   padding-top: 62px;
 }
+
+.bg-faded{
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}

@@ -56,6 +56,7 @@ const Header = () => {
           dispatch(setUserData(userinfo));
           user.getIdToken(true).then(function (idToken) {
             console.log(idToken);
+            console.log(userinfo);
             axios
               .post(process.env.REACT_APP_API_LOCAL + "user/info", {
                 token: idToken,
@@ -253,6 +254,15 @@ const Header = () => {
                       onClick={() => setOpenHeader(false)}
                     >
                       <i className="fa fa-hand-pointer-o"></i> Luớt KitKot
+                    </Link>
+                  </li>
+                  <li className="user-item">
+                    <Link
+                      className="menu-dropdown-item text-white"
+                      to="/tintuc"
+                      onClick={() => setOpenHeader(false)}
+                    >
+                      <i className="fa fa-hand-pointer-o"></i> Tin phim
                     </Link>
                   </li>
                   <li className="user-item">
@@ -802,6 +812,15 @@ const Header = () => {
                         onClick={() => setOpenHeader(false)}
                       >
                         <i className="fa fa-hand-pointer-o"></i> Luớt KitKot
+                      </Link>
+                    </li>
+                    <li className="user-item">
+                      <Link
+                        className="menu-dropdown-item text-white"
+                        to="/tintuc"
+                        onClick={() => setOpenHeader(false)}
+                      >
+                        <i className="fa fa-hand-pointer-o"></i>Tin phim
                       </Link>
                     </li>
                     <li className="user-item">

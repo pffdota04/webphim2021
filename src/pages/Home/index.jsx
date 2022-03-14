@@ -434,6 +434,17 @@ const Home = () => {
       </MetaTags>
       {topFilm()}
       <div className="container-fluid container-background pt-5 pb-5">
+        <div className="text-center text-light">
+          Chức năng mới:
+          <br />
+          <Link to="/kitkot" className="btn btn-danger me-1">
+            Kitkot
+          </Link>{" "}
+          <Link to="/tintuc" className="btn btn-danger">
+            Tin phim
+          </Link>
+        </div>
+
         {/* <hr className="mt-5 mb-2" /> */}
         {trendingFilm()}
         {/* <hr className="mt-5 mb-2" /> */}

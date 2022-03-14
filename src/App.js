@@ -16,6 +16,9 @@ import Admin from "./pages/Admin";
 import ErrorPage from "./pages/ErrorPage";
 import XacThuc from "./pages/XacThuc";
 import KitKot from "./pages/KitKot";
+import News from "./pages/News";
+import NewsContent from "./pages/NewsContent";
+import SoanTin from "./pages/SoanTin";
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
             <Route path="/xacthuc" component={XacThuc} />
             <Route path="/admin" component={Admin} />
             <Route path="/kitkot" component={KitKot} />
+            <Route path="/tintuc/:id" component={NewsContent} />
+            <Route path="/tintuc" component={News} />
+            <Route path="/soantin" component={SoanTin} />
             <Route exact path={["/", "/home"]} component={Home} />
             <Route
               path={["/detailfilm/:id/:name", "/detailfilm/:id"]}

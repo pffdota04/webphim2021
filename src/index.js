@@ -12,6 +12,7 @@ import "../node_modules/@popperjs/core/dist/umd/popper";
 import "../node_modules/popper.js/dist/popper.min.js";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
 
+import "draft-js/dist/Draft.css";
 
 import { Provider } from "react-redux";
 import { createStore } from "redux";

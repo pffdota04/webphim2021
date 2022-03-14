@@ -32,7 +32,7 @@ const KitKot = () => {
     },
   ]);
 
-  const [nowShow, setNowShow] = useState();
+  const [nowShow, setNowShow] = useState(0);
 
   const [random, setRandom] = useState();
 
@@ -67,6 +67,9 @@ const KitKot = () => {
   };
 
   const changeCarousel = (currentSlide) => {
+    // toggleVideo("hide", currentSlide - 1);
+    toggleVideo(currentSlide);
+    setNowShow(currentSlide);
     if (allData.length - 1 == currentSlide) {
       fetchMore();
     }
@@ -79,6 +82,29 @@ const KitKot = () => {
       partialVisibilityGutter: 30, // this is needed to tell the amount of px that should be visible.
     },
   };
+  function toggleVideo(i) {
+    // if state == 'hide', hide. Else: show video
+    allData.map((e, ii) => {
+      var div = document.getElementById("ytb-top" + ii);
+      var iframe = div.getElementsByTagName("iframe")[0].contentWindow;
+      if (ii == i) {
+        div.style.display = "block";
+        iframe.postMessage(
+          '{"event":"command","func":"playVideo","args":""}',
+          "*"
+        );
+      } else {
+        console.log(div.style.display);
+        if (div.style.display !== "none") {
+          div.style.display = "none";
+          iframe.postMessage(
+            '{"event":"command","func":"pauseVideo","args":""}',
+            "*"
+          );
+        }
+      }
+    });
+  }
 
   return (
     <div>
@@ -92,43 +118,51 @@ const KitKot = () => {
         />
       </MetaTags>
 
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={1}
-        navigation={true}
-        pagination={true}
-        scrollbar={{ draggable: true }}
-        onSlideChange={(e) => changeCarousel(e.activeIndex)}
-        direction="vertical"
-        className="swip-tik"
-      >
-        {allData.map((e, i) => (
-          <SwiperSlide className="slide-tik">
-            <div className="slide-ytb">
-              <iframe
-                className=" h-100 w-100"
-                src={"https://www.youtube.com/embed/" + e.yttrailer}
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <div className="silde-title w-100 p-0 m-0">
-              {e.title} ({e.year && e.year})
-              <br />
-              <Link
-                className="btn btn-primary"
-                to={"/detailfilm/" + e.id + "/" + e.title}
-              >
-                Xem phim
-              </Link>
-            </div>
-          </SwiperSlide>
-        ))}
-        ...
-      </Swiper>
-      <Footer />
+      <div className="container-md p-0">
+        <Swiper
+          spaceBetween={0}
+          slidesPerView={1}
+          navigation={true}
+          // pagination={true}
+          scrollbar={{ draggable: true }}
+          onSlideChange={(e) => changeCarousel(e.activeIndex)}
+          direction="vertical"
+          className="swip-tik "
+        >
+          {allData.map((e, i) => (
+            <SwiperSlide className="slide-tik">
+              <div className="slide-ytb" id={"ytb-top" + i}>
+                <iframe
+                  className=" h-100 w-100"
+                  src={
+                    "https://www.youtube.com/embed/" +
+                    e.yttrailer +
+                    "?html5=1&enablejsapi=1&showinfo=0&autohide=1&control=0"
+                  }
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  id={"iframe-ytb" + i}
+                ></iframe>
+              </div>
+              <div className="silde-title w-100 p-0 m-0">
+                <div>
+                  <p className="p-0 m-0 ps-3 pe-3">{e.title} <br/>({e.year && e.year}){/*   {i}_{nowShow} */}</p>
+                  <Link
+                    className="btn btn-primary"
+                    to={"/detailfilm/" + e.id + "/" + e.title}
+                  >
+                    Xem phim
+                  </Link>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+          ...
+        </Swiper>
+      </div>
+      {/* <Footer /> */}
     </div>
   );
 };

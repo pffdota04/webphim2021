@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 // import PopupFilm from "./../../components/PopupFilm";
 import { Redirect, Route, Switch, useHistory } from "react-router";
 import { useSelector } from "react-redux";
-import { auth } from "../../services/firebase";
+import { auth, db } from "../../services/firebase";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -20,6 +20,8 @@ import Reports from "./Report";
 
 import Dashboard from "./Dashboard";
 import Loading from "../../components/Loading";
+import SoanTin from "../SoanTin";
+import KitKotAd from "./KitKot";
 
 const Admin = () => {
   const history = useHistory();
@@ -50,6 +52,14 @@ const Admin = () => {
       link: "loading",
       server: 0,
       chap: 0,
+    },
+  ]);
+  const [dataAllKitkot, setDataAllKitkot] = useState([
+    {
+      id: 0,
+      title: "Loading",
+      year: "...",
+      yttrailer: "",
     },
   ]);
   const [dataAllVoucher, setDataAllVoucher] = useState([
@@ -94,6 +104,7 @@ const Admin = () => {
   const [fetchPhim, setFetchPhim] = useState(false);
   const [fetchUser, setFetchUser] = useState(false);
   const [fetchLink, setFetchLink] = useState(false);
+  const [fetchKitkot, setFetchKikot] = useState(false);
   const [fetchVoucher, setFetchVoucher] = useState(false);
   const [fetchCoin, setFetchCoin] = useState(false);
   const [fetchComment, setFetchComment] = useState(false);
@@ -157,7 +168,7 @@ const Admin = () => {
             let sum = 0;
             Object.values(res.data.doanhthu).map((e) => (sum = sum + e));
             res.data.sum = sum;
-            console.log(res.data)
+            console.log(res.data);
 
             setDataDas(res.data);
           })
@@ -173,6 +184,7 @@ const Admin = () => {
       getDataPhim();
       getDataUser();
       getDataLink();
+      getDataKitkot();
       getDataVoucher();
       getDataCoin();
       getDataComment();
@@ -191,6 +203,10 @@ const Admin = () => {
   useEffect(() => {
     if (fetchLink) getDataLink();
   }, [fetchLink]);
+
+  useEffect(() => {
+    if (fetchKitkot) getDataKitkot();
+  }, [fetchKitkot]);
 
   useEffect(() => {
     if (fetchVoucher) getDataVoucher();
@@ -246,6 +262,29 @@ const Admin = () => {
           setDataAllLink(holdLink);
         })
         .catch((e) => console.log(e));
+  }
+
+  function getDataKitkot() {
+    setFetchLink(false);
+    if (adminToken != null)
+     db.ref()
+       .child("/kitkot")
+       .get()
+       .then((res) => {
+         let holdLink = res.val();
+         console.log(holdLink);
+         setDataAllKitkot(holdLink);
+       })
+       .catch((e) => console.log(e));
+    // axios
+    //   .post(process.env.REACT_APP_API_LOCAL + "admin/kitkot", {
+    //     token: adminToken,
+    //   })
+    //   .then((res) => {
+    //     let holdLink = res.data;
+    //     setDataAllKitkot(holdLink);
+    //   })
+    //   .catch((e) => console.log(e));
   }
 
   function getDataVoucher() {
@@ -545,6 +584,20 @@ const Admin = () => {
                     dataReport={dataAllReport}
                     setFetchReport={setFetchReport}
                     token={adminToken}
+                  />
+                )}
+              />
+              <Route
+                path={"/admin/soantin"}
+                component={() => <SoanTin token={adminToken} />}
+              />
+              <Route
+                path={"/admin/kitkot"}
+                component={() => (
+                  <KitKotAd
+                    dataL={dataAllKitkot}
+                    token={adminToken}
+                    setFetchLink={setFetchKikot}
                   />
                 )}
               />

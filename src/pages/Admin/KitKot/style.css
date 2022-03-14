@@ -1,0 +1,54 @@
+.mycode {
+  width: fit-content;
+}
+
+.main__table_link-btn--delete { 
+  color: #fff !important;
+  background-color: #eb5757 !important;
+}
+.main__table_link-btn--delete:hover {
+  border: 1px solid #eb5757 !important;
+  background-color: rgba(235,87,87,0.2) !important;
+  color: #eb5757 !important;
+}
+.main__table_link-btn--edit {
+  color: #fff !important;
+  background-color: #2f80ed !important;
+}
+.main__table_link-btn--edit:hover {
+  border: 1px solid #2f80ed !important;
+  color: #2f80ed !important;
+  background-color: rgba(47,128,237,0.2) !important;
+}
+
+.dashbox__mores_link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 40px;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffc312;
+  border-radius: 6px;
+  border: 1px solid #ffc312;
+}
+.dashboxs_link {
+  display: flex;
+  justify-content: flex-end;
+}
+.dashbox__mores_link:hover {
+  background-color: #f9ab00;
+  color: #000;
+}
+
+.pd-link {
+  height: 300px;
+}
+.table-link{
+  max-height: 750px;
+  overflow-y: auto;
+
+}

@@ -32,21 +32,38 @@
 
 .slide-tik {
   display: block;
-  height: 500px !important;
+  height: calc(100vh - 62px) !important;
+  /* height: 530px !important; */
   background-color: rgb(224, 0, 0);
   color: #fff;
 }
 
 .swip-tik {
-  height: 500px !important;
+  height: calc(100vh - 62px) !important;
+  /* height: 530px !important; */
 }
 
 .swip-tik .silde-title {
-  height: 8px;
+  height: 100px;
+  position: relative;
 }
-
-.swip-tik .slide-ytb {
-  height: 420px;
+.swip-tik .silde-title div {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.swip-tik .silde-title div p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100vw;
+  text-align: center;
+  white-space: nowrap;
+}
+.slide-ytb {
+  /* height: 460px; */
+  height: calc(100vh - 62px - 100px) !important;
 }
 
 .swiper-button-next,
@@ -55,17 +72,18 @@
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
-  top: 92% !important;
+  top: 94% !important;
 }
 
 .swiper-button-next {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20data-prefix%3D%22fas%22%20data-icon%3D%22angle-down%22%20class%3D%22svg-inline--fa%20fa-angle-down%20fa-w-10%22%20role%3D%22img%22%20viewBox%3D%220%200%20320%20512%22%3E%3Cpath%20fill%3D%22currentColor%22%20d%3D%22M143%20352.3L7%20216.3c-9.4-9.4-9.4-24.6%200-33.9l22.6-22.6c9.4-9.4%2024.6-9.4%2033.9%200l96.4%2096.4%2096.4-96.4c9.4-9.4%2024.6-9.4%2033.9%200l22.6%2022.6c9.4%209.4%209.4%2024.6%200%2033.9l-136%20136c-9.2%209.4-24.4%209.4-33.8%200z%22%2F%3E%3C%2Fsvg%3E");
+  right: 5%;
 }
 
 .swiper-button-prev {
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20aria-hidden%3D%22true%22%20focusable%3D%22false%22%20data-prefix%3D%22fas%22%20data-icon%3D%22angle-up%22%20class%3D%22svg-inline--fa%20fa-angle-up%20fa-w-10%22%20role%3D%22img%22%20viewBox%3D%220%200%20320%20512%22%3E%3Cpath%20fill%3D%22currentColor%22%20d%3D%22M177%20159.7l136%20136c9.4%209.4%209.4%2024.6%200%2033.9l-22.6%2022.6c-9.4%209.4-24.6%209.4-33.9%200L160%20255.9l-96.4%2096.4c-9.4%209.4-24.6%209.4-33.9%200L7%20329.7c-9.4-9.4-9.4-24.6%200-33.9l136-136c9.4-9.5%2024.6-9.5%2034-.1z%22%2F%3E%3C%2Fsvg%3E");
+  left: 5%;
 }
-
 
 .swiper-button-next::after,
 .swiper-button-prev::after {

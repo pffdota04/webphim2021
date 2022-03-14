@@ -162,9 +162,9 @@
 
 /* Header Small screen hone */
 @media (max-width: 767.9px) {
-  .main {
+  /* .main {
     padding-top: 52px !important;
-  }
+  } */
   .hidden-small-tablet {
     display: none !important;
   }

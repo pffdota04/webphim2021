@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Chat from "../../components/Chat/Chat";
 import Loading from "../../components/Loading";
 import MetaTags from "react-meta-tags";
+import { db } from "../../services/firebase";
 
 const Watch = () => {
   const { id, name } = useParams();
@@ -26,6 +27,7 @@ const Watch = () => {
   const [iconUnlock, setIconUnlock] = useState(0);
   const [popupVip, setPopupVip] = useState(null);
   const [isDisable, setIsDisable] = useState(false);
+  const [view, setView] = useState(null);
 
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userData.userDetail);
@@ -33,6 +35,36 @@ const Watch = () => {
   const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // chueyenr qua api
+    let clear;
+    db.ref()
+      .child("view/" + id)
+      .get()
+      .then((res) => {
+        let a = res.val();
+        if (a == null) {
+          setView(0);
+        } else {
+          setView(a.view);
+        }
+        clear = setTimeout(() => {
+          db.ref()
+            .child("view/" + id)
+            .get()
+            .then((newRes) => {
+              if (newRes.val() == null) {
+                newRes.ref.update({ view: 0 });
+              } else {
+                let x = newRes.val().view + 1;
+                newRes.ref.update({ view: x }, (e) => console.log(e));
+              }
+            });
+        }, 30000);
+      })
+      .catch((e) => console.log(e));
+
+    return () => clearInterval(clear);
     // getDataByParamsId();
   }, []);
 
@@ -176,6 +208,7 @@ const Watch = () => {
                           <h5 className="primary-color">
                             {dataFilmState.title} ({dataFilmState.title_origin})
                           </h5>
+                          <span>{view} lượt xem</span>
                         </div>
                       )}
                     </div>

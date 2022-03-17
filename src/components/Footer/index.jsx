@@ -13,20 +13,29 @@ function Footer() {
                 {/* <i className="fab fa-kickstarter" /> KPHIM */}
               </h6>
               <p>
-                KPHIM là trang web xem phim trực tuyến sử dụng công nghệ Reactjs (Bootstrap 5), server
-                Expressjs.
+                KPHIM là trang web xem phim trực tuyến sử dụng công nghệ Reactjs
+                (Bootstrap 5), server Expressjs.
               </p>
-              <span>© 2021 Copyright: &nbsp;<a className="primary-color fw-bold link-color">KPHIM</a></span>
+              <span>
+                © 2021 Copyright: &nbsp;
+                <a className="primary-color fw-bold link-color">KPHIM</a>
+              </span>
             </div>
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-              <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">Giới thiệu</h6>
+              <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">
+                Giới thiệu
+              </h6>
               <p>
-                <Link to="#!" href="#!" className="text-reset link-color">
+                <Link
+                  to="/quychedichvu"
+                  href="#!"
+                  className="text-reset link-color"
+                >
                   Quy chế dịch vụ
                 </Link>
               </p>
               <p>
-                <Link to="#!" className="text-reset link-color">
+                <Link to="/chinhsachbaomat" className="text-reset link-color">
                   Chính sách bảo mật
                 </Link>
               </p>
@@ -38,27 +47,34 @@ function Footer() {
             </div>
 
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 fs-mb">
-              <h6 className="text-uppercase fw-bold mb-4 primary-color">Liên hệ</h6>
+              <h6 className="text-uppercase fw-bold mb-4 primary-color">
+                Liên hệ
+              </h6>
               <p>
                 <Link to="#!" className="text-reset link-color">
-                <i className="fa fa-instagram me-3" />Instagram
+                  <i className="fa fa-instagram me-3" />
+                  Instagram
                 </Link>
               </p>
               <p>
                 <Link to="#!" className="text-reset link-color">
-                <i className="fa fa-facebook me-3" />Facebook
+                  <i className="fa fa-facebook me-3" />
+                  Facebook
                 </Link>
               </p>
               <p>
                 <Link to="#!" className="text-reset link-color">
-                <i className="fa fa-youtube me-3" />Youtube
+                  <i className="fa fa-youtube me-3" />
+                  Youtube
                 </Link>
               </p>
             </div>
 
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               {/* Links */}
-              <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">Hỗ trợ</h6>
+              <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">
+                Hỗ trợ
+              </h6>
               <p className="link-color">
                 <i className="fa fa-envelope me-3" />
                 kphim.contact@gmail.com

@@ -5,7 +5,7 @@ import { useHistory, useParams } from "react-router";
 import axios from "axios";
 import Footer from "../../components/Footer";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserDataDetail } from "./../../store/actions/user";
+import { setUserDataDetail } from "../../store/actions/user";
 import { Link } from "react-router-dom";
 import Chat from "../../components/Chat/Chat";
 import Loading from "../../components/Loading";
@@ -15,12 +15,11 @@ import { db } from "../../services/firebase";
 import { Player } from "react-tuby";
 import "react-tuby/css/main.css";
 
-const Watch = () => {
+const WatchNew = () => {
   const { id, name } = useParams();
 
   const [dataFilmState, setDataFilmState] = useState({});
   const [dataLink, setDataLink] = useState();
-  const [isFull, setIsFull] = useState(false);
   const [nowChap, setnowChap] = useState(-1);
   const [nowServer, setnowServer] = useState(-1);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +67,6 @@ const Watch = () => {
       .catch((e) => console.log(e));
 
     return () => clearInterval(clear);
-    // getDataByParamsId();
   }, []);
 
   useEffect(() => {
@@ -76,7 +74,7 @@ const Watch = () => {
       axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
         console.log(res.data[0]);
         if (name != res.data[0].title)
-          history.push("/watch/" + id + "/" + res.data[0].title);
+          history.push("/watchnew/" + id + "/" + res.data[0].title);
         setDataFilmState(res.data[0]);
       });
     }
@@ -122,28 +120,54 @@ const Watch = () => {
   }, [userDetail]);
 
   const getDataByParamsId = () => {
-    axios.get(process.env.REACT_APP_API_LOCAL + "link/" + id).then((res) => {
-      setDataLink(res.data);
-      if (res.data != null) {
-        setnowServer(res.data[0].server);
-        setnowChap(res.data[0].chap);
-      }
-      setLoading(false);
-    });
+    // axios.get(process.env.REACT_APP_API_LOCAL + "link/" + id).then((res) => {
+    //   setDataLink(res.data);
+    //   if (res.data != null) {
+    //     setnowServer(res.data[0].server);
+    //     setnowChap(res.data[0].chap);
+    //   }
+    //   setLoading(false);
+    // });
+
+    db.ref()
+      .child("phimlinkdefaul")
+      .orderByChild("film_id")
+      .equalTo(parseInt(id))
+      .get()
+      .then((res) => {
+        setDataLink(Object.values(res.val()));
+        if (res.val() != null) {
+          setnowChap(Object.values(res.val())[0].chap);
+        }
+        console.log(Object.values(res.val()));
+        setLoading(false);
+      })
+      .catch((e) => alert(e));
   };
 
   const getDataByTokenId = () => {
+    // db.ref()
+    //   .child("phimlinkdefaul")
+    //   .orderByChild("film_id")
+    //   .equalTo(parseInt(id))
+    //   .get()
+    //   .then((res) => {
+    //     setDataLink(Object.values(res.val()));
+    //     if (res.val() != null) {
+    //       setnowChap(Object.values(res.val())[0].chap);
+    //     }
+    //     console.log(Object.values(res.val()));
+    //     setLoading(false);
+    //   })
+    //   .catch((e) => alert(e));
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "link/vip", {
+      .post("http://localhost:5000/api/link/vip2", {
         token: userDetail.token,
         fid: id,
       })
       .then((res) => {
+        console.log(res.data);
         setDataLink(res.data);
-        if (res.data != null) {
-          setnowServer(res.data[0].server);
-          setnowChap(res.data[0].chap);
-        }
         setLoading(false);
       })
       .catch((e) => alert(e));
@@ -180,47 +204,50 @@ const Watch = () => {
       </div>
     ) : (
       <div>
-        <div
-          id="filmView"
-          className={
-            "container ps-5 pe-5"
-            // isFull ? "container-fluir p-2 pt-0 isFull" : "container ps-5 pe-5"
-          }
-        >
+        <div id="filmView" className={"container ps-5 pe-5"}>
           {dataLink.map((e, i) => (
             <div className="text-center">
-              {e.chap == nowChap &&
-                e.server == nowServer &&
-                (e.link == "vip only" ? (
-                  <img
-                    src="https://i.imgur.com/JNZDQy0.png"
-                    alt="VIP ONLY"
-                    className="img-vip mt-4 pt-1"
-                  />
-                ) : (
-                  <div>
-                    <div className="text-white title-film">
-                      {dataFilmState.title == undefined ? (
-                        <div className="d-flex justify-content-center">
-                          <div className="spinner-border" role="status">
-                            <span className="sr-only">Loading...</span>
-                          </div>
+              {e.chap == nowChap && e.server == nowServer && (
+                <div>
+                  <div className="text-white title-film">
+                    {dataFilmState.title == undefined ? (
+                      <div className="d-flex justify-content-center">
+                        <div className="spinner-border" role="status">
+                          <span className="sr-only">Loading...</span>
                         </div>
-                      ) : (
-                        <div className="container">
-                          <h5 className="primary-color">
-                            {dataFilmState.title} ({dataFilmState.title_origin})
-                          </h5>
-                          <span>{view} lượt xem</span>
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      className="iframe-here"
-                      dangerouslySetInnerHTML={{ __html: e.link }}
-                    ></div>
+                      </div>
+                    ) : (
+                      <div className="container">
+                        <h5 className="primary-color">
+                          {dataFilmState.title} ({dataFilmState.title_origin})
+                        </h5>
+                        <span>{view} lượt xem</span>
+                        {/* {JSON.stringify(dataLink)} */}
+                      </div>
+                    )}
                   </div>
-                ))}
+                  {JSON.stringify(e)}
+                  <Player
+                    src={Object.keys(e.link).map((e2) => {
+                      console.log(e2);
+                      return { quality: e2, url: e.link[e2] };
+                    })}
+                    subtitles={Object.keys(dataLink[0].sub).map((e) => {
+                      return {
+                        lang: e,
+                        url: dataLink[0].sub[e],
+                        language:
+                          e === "en"
+                            ? "Tiếng Anh"
+                            : e === "fr"
+                            ? "Tiếng Pháp"
+                            : "Tiếng Việt",
+                      };
+                    })}
+                    poster={dataFilmState.backimg}
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -231,34 +258,14 @@ const Watch = () => {
               {chapFilm()}
               {/* {serverFilm()} */}
             </div>
-            <div className="col-3">
-              <h2 className="primary-color">Server</h2>
-              {serverFilm()}
-            </div>
           </div>
         </div>
         <div className="container mt-4">
           <h2 className="primary-color mt-5 mb-3 fs-bl">Bình luận</h2>
           <div className="background-comment p-4 col-9 pb-5 container-bl">
-            {/* <div className="d-flex justify-content-between p-4 text-item">
-              <span className="number-bl">123 Bình luận</span>
-              <div className="d-flex col-4 ss">
-                <label className="text-item" for="theloaiSelect">
-                  Sắp xếp theo:
-                </label>
-                <select
-                  className="sign__input w-50 ms-3 p-1 input-arr"
-                  id="theloaiSelect"
-                >
-                  <option value="new">Mới nhất</option>
-                  <option value="old">Cũ nhất</option>
-                </select>
-              </div>
-            </div> */}
             <Chat place={id} backimg={dataFilmState.backimg} />
           </div>
         </div>
-        {/* {chapAndServer()} */}
       </div>
     );
   }
@@ -289,91 +296,6 @@ const Watch = () => {
         </div>
       </nav>
     );
-  }
-  function serverFilm() {
-    return (
-      <nav>
-        <div>
-          <ul className="pagination d-flex flex-wrap">
-            {dataLink.map(
-              (e, i) =>
-                e.chap == nowChap && (
-                  <li className="p-2">
-                    <button
-                      className={buttonServerRender(e.server, e.vip)}
-                      onClick={() => {
-                        setnowServer(e.server);
-                        // window.scrollTo(0, 0);
-                      }}
-                    >
-                      Server {e.server}
-                    </button>
-                  </li>
-                )
-            )}
-          </ul>
-        </div>
-      </nav>
-    );
-  }
-  // function chapAndServer() {
-  //   return (
-  //     <nav>
-  //       <div>
-  //         <ul className="pagination justify-content-center">
-  //           {uniqByKeepFirst(dataLink, (i) => i.chap).map((e, i) => (
-  //             <li>
-  //               <button
-  //                 className={
-  //                   "btn btn-outline-secondary me-1 " +
-  //                   (e.chap == nowChap && " btn-secondary text-light")
-  //                 }
-  //                 onClick={() => {
-  //                   setnowChap(e.chap);
-  //                   setnowServer(e.server);
-  //                   // window.scrollTo(0, 0);
-  //                 }}
-  //               >
-  //                 {e.chap}
-  //               </button>
-  //             </li>
-  //           ))}
-  //         </ul>
-  //         <ul className="pagination justify-content-center">
-  //           {dataLink.map(
-  //             (e, i) =>
-  //               e.chap == nowChap && (
-  //                 <li>
-  //                   <button
-  //                     className={buttonServerRender(e.server, e.vip)}
-  //                     onClick={() => {
-  //                       setnowServer(e.server);
-  //                       // window.scrollTo(0, 0);
-  //                     }}
-  //                   >
-  //                     {e.server}
-  //                   </button>
-  //                 </li>
-  //               )
-  //           )}
-  //         </ul>
-  //       </div>
-
-  //       <hr className="m-2" />
-  //     </nav>
-  //   );
-  // }
-
-  function buttonServerRender(sver, isVip) {
-    if (isVip == true)
-      if (sver == nowServer)
-        return "btn background-primary me-1 text-white btn-respon";
-      else return "btn border-btn-film me-1 text-white btn-respon";
-    else {
-      if (sver == nowServer)
-        return "btn background-primary me-1 text-white btn-respon";
-      else return "btn border-btn-film me-1 text-white btn-respon";
-    }
   }
 
   function unlockTHis(plan) {
@@ -531,27 +453,6 @@ const Watch = () => {
           )}
           {/*  */}
           {contentVideoView()}
-          {/* <div className="container">
-            <h2 className="primary-color mt-5 mb-3">Bình luận</h2>
-            <div className="background-comment p-4 col-9 pb-5">
-              <div className="d-flex justify-content-between p-4 text-item">
-                <span>123 Bình luận</span>
-                <div className="d-flex col-4">
-                  <label className="text-item" for="theloaiSelect">Sắp xếp theo:</label>
-                  <select
-                    className="sign__input w-50 ms-3 p-1 input-arr"
-                    id="theloaiSelect"
-                  >
-                    <option value="new">Mới nhất</option>
-                    <option value="old">Cũ nhất</option>
-                  </select>
-                </div>
-              </div>
-              <Chat place={id} backimg={dataFilmState.backimg} />
-            </div>
-          </div> */}
-
-          {/* <img className="d-block w-100 pt-2" src={qc} alt="" /> */}
         </div>
       </main>
 
@@ -667,10 +568,9 @@ const Watch = () => {
         </div>
       )}
 
-   
       <Footer />
       {console.log(isDisable)}
     </div>
   );
 };
-export default Watch;
+export default WatchNew;

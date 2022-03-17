@@ -390,7 +390,7 @@ const DetailFilm = () => {
               <div className="watch mb-4">
                 <Link
                   className="background-primary btn btn-go-film"
-                  to={"/watch/" + id + "/" + data.title}
+                  to={"/watchnew/" + id + "/" + data.title}
                 >
                   Xem phim
                 </Link>

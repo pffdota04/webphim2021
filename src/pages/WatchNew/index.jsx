@@ -161,7 +161,8 @@ const WatchNew = () => {
     //   })
     //   .catch((e) => alert(e));
     axios
-      .post("http://localhost:5000/api/link/vip2", {
+      .post(process.env.REACT_APP_API_LOCAL + "link/vip2", {
+        // .post("http://localhost:5000/api/link/vip2", {
         token: userDetail.token,
         fid: id,
       })

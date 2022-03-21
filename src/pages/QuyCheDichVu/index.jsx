@@ -2,11 +2,13 @@ import Footer from "../../components/Footer";
 
 function QuyCheDichVu() {
   return (
-    <>
-      <div className="container">
-        <h1 className="text-center">Quy chế dịch vụ </h1>
+    <div className="container-background">
+      <div className="container p-5 contain-cs">
+        <h1 className="text-center primary-color">Quy chế dịch vụ </h1>
+        <p className="mt-4 text-light">
         Khi sử dụng trang web này, có nghĩa là bạn đồng ý với các quy chế sau:
-        <ul>
+        </p>
+        <ul className="text-light">
           <li> Không trao đổi, mua bán tài khoản và koin.</li>
           <li>
             Không sao chép nội, chỉnh sửa bất kỳ phần nào hoặc toàn bộ nội dung
@@ -40,7 +42,7 @@ function QuyCheDichVu() {
           <li>
             {" "}
             Trong quá trình sử dụng, nếu phát sinh bất cứ lỗi nào hãy liên hệ
-            ngay cho chúng tôi (Hồ sơ > Báo lỗi).
+            ngay cho chúng tôi (Hồ sơ/Báo lỗi).
           </li>
           <li>
             {" "}
@@ -58,7 +60,8 @@ function QuyCheDichVu() {
           <li>
             Trong mọi trường hợp, quyết định từ Kphim là quyết định cuối cùng.
           </li>
-          <strong>
+        </ul>
+          <strong className="primary-color">
             {" "}
             TÔI ĐÃ ĐỌC CÁC ĐIỀU KHOẢN DỊCH VỤ NÀY VÀ ĐỒNG Ý VỚI TẤT CẢ CÁC ĐIỀU
             KHOẢN NHƯ TRÊN CŨNG NHƯ BẤT KỲ ĐIỀU KHOẢN NÀO ĐƯỢC CHỈNH SỬA SAU
@@ -67,10 +70,9 @@ function QuyCheDichVu() {
             HIỂU RẰNG NÓ CÓ GIÁ TRỊ VÀ HIỆU LỰC TƯƠNG TỰ NHƯ CHỮ KÝ TÔI KÝ BẰNG
             TAY.
           </strong>
-        </ul>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

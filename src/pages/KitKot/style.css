@@ -1,3 +1,7 @@
+.container-background {
+  background-color: #111111 !important;
+}
+
 .swiper {
   width: 100%;
   height: 100%;
@@ -6,7 +10,7 @@
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
+  /* background: #fff; */
 
   /* Center slide text vertically */
   display: -webkit-box;
@@ -34,7 +38,8 @@
   display: block;
   height: calc(100vh - 62px) !important;
   /* height: 530px !important; */
-  background-color: rgb(224, 0, 0);
+  background: rgb(255,138,138);
+  background: linear-gradient(90deg, rgba(255,138,138,1) 0%, rgba(255,154,53,1) 50%, rgba(253,156,156,1) 100%);
   color: #fff;
 }
 
@@ -72,7 +77,7 @@
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
-  top: 94% !important;
+  top: 90% !important;
 }
 
 .swiper-button-next {
@@ -88,4 +93,29 @@
 .swiper-button-next::after,
 .swiper-button-prev::after {
   display: none;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.btn_watch {
+  color: #ffffff;
+  background: #6BD0E2;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  padding: 0.5em 1em;
+  display: inline-block;
+  margin: 0.5em;
+  margin-left: 0em !important;
+  border-radius: 25px;
+}
+
+.btn_watch:hover {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.video_watch {
+  width: 100%;
+  height: 100%;
 }

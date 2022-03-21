@@ -70,7 +70,7 @@ const News = () => {
   function toggleVideo(i) {}
 
   return (
-    <div>
+    <div className="container-background">
       <MetaTags>
         <title>Tin Tức phim</title>
         <meta
@@ -82,24 +82,24 @@ const News = () => {
       </MetaTags>
 
       <div className="container p-2 bg-dark">
-        <h1 className="text-light text-center">Tin phim mới nhất</h1>
+        <h1 className="primary-color text-center">Tin phim mới nhất</h1>
         <div className="row p-0 m-0">
           {allData.map((e, i) => (
-            <div className="col-12 mt-2 bg-light">
-              <div className="border border-dark border-2 row p-2">
-                <img
-                  src={e.img}
-                  alt={e.title}
-                  width={300}
-                  className="col-12 col-md-4 img-news"
-                />
+            <div className="col-12 mt-2 bg-light container-main">
+              <div className="border border-dark border-2 row p-2 container-new">
+                  <img
+                    src={e.img}
+                    alt={e.title}
+                    // width={300}
+                    className="col-12 col-md-4 img-news"
+                  />
                 <div className="col-12 col-md-8  ">
                   <h5>{e.title}</h5>
                   <p className="text-muted">
                     <i className="fa fa-clock-o"></i> {e.year}
                   </p>
                   <p>{e.desc}</p>
-                  <Link to={"/tintuc/" + e.id + "/" + e.title}>
+                  <Link to={"/tintuc/" + e.id + "/" + e.title} className="btn_watch">
                     Xem chi tiết
                   </Link>
                 </div>

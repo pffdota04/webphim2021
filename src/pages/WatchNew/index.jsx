@@ -1,5 +1,4 @@
 import "./style.css";
-import qc from "./../../assets/images/quang-cao.jpg";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
@@ -15,6 +14,8 @@ import { db } from "../../services/firebase";
 import { Player } from "react-tuby";
 import "react-tuby/css/main.css";
 
+// import "./noSub.vtt"
+
 const WatchNew = () => {
   const { id, name } = useParams();
 
@@ -29,7 +30,10 @@ const WatchNew = () => {
   const [iconUnlock, setIconUnlock] = useState(0);
   const [popupVip, setPopupVip] = useState(null);
   const [isDisable, setIsDisable] = useState(false);
+  const [nowDataInfo, setNowDataInfo] = useState({});
   const [view, setView] = useState(null);
+  const [uploadSub, setUploadSub] = useState(null);
+  const [forceupdate, setforceupdate] = useState(0);
 
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userData.userDetail);
@@ -72,7 +76,7 @@ const WatchNew = () => {
   useEffect(() => {
     if (dataFilmState.id == undefined) {
       axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
-        console.log(res.data[0]);
+        // console.log(res.data[0]);
         if (name != res.data[0].title)
           history.push("/watchnew/" + id + "/" + res.data[0].title);
         setDataFilmState(res.data[0]);
@@ -120,15 +124,6 @@ const WatchNew = () => {
   }, [userDetail]);
 
   const getDataByParamsId = () => {
-    // axios.get(process.env.REACT_APP_API_LOCAL + "link/" + id).then((res) => {
-    //   setDataLink(res.data);
-    //   if (res.data != null) {
-    //     setnowServer(res.data[0].server);
-    //     setnowChap(res.data[0].chap);
-    //   }
-    //   setLoading(false);
-    // });
-
     db.ref()
       .child("phimlinkdefaul")
       .orderByChild("film_id")
@@ -138,41 +133,74 @@ const WatchNew = () => {
         setDataLink(Object.values(res.val()));
         if (res.val() != null) {
           setnowChap(Object.values(res.val())[0].chap);
+          setNowDataInfo(Object.values(res.val())[0]);
         }
-        console.log(Object.values(res.val()));
+        // console.log(Object.values(res.val()));
         setLoading(false);
       })
       .catch((e) => alert(e));
   };
 
   const getDataByTokenId = () => {
-    // db.ref()
-    //   .child("phimlinkdefaul")
-    //   .orderByChild("film_id")
-    //   .equalTo(parseInt(id))
-    //   .get()
-    //   .then((res) => {
-    //     setDataLink(Object.values(res.val()));
-    //     if (res.val() != null) {
-    //       setnowChap(Object.values(res.val())[0].chap);
-    //     }
-    //     console.log(Object.values(res.val()));
-    //     setLoading(false);
-    //   })
-    //   .catch((e) => alert(e));
     axios
       .post(process.env.REACT_APP_API_LOCAL + "link/vip2", {
-        // .post("http://localhost:5000/api/link/vip2", {
         token: userDetail.token,
         fid: id,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setDataLink(res.data);
         setLoading(false);
+        setnowChap(res.data[0].chap);
+        setNowDataInfo(res.data[0]);
+
+        // console.log(res.data);
       })
       .catch((e) => alert(e));
   };
+
+  function getFile(filePath) {
+    return filePath.substr(filePath.lastIndexOf("\\") + 1).split(".")[0];
+  }
+
+  function renameFile(originalFile, newName) {
+    return new File([originalFile], newName, {
+      type: originalFile.type,
+      lastModified: originalFile.lastModified,
+    });
+  }
+
+  const onFileChange = (event) => {
+    setUploadSub(event.target.files[0]);
+
+    let a = event.target.files[0];
+    let name = getFile(a.name);
+    let ext = a.name.split(".")[1];
+
+    let rename = renameFile(
+      a,
+      name + Math.random().toString(36).substring(8) + "." + ext
+    );
+    // console.log(rename);
+
+    const data = new FormData();
+    data.append("file", rename);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "public/subs/user-upload", data)
+      .then((res) => {
+        console.log(res.data);
+        let copyNowdata = nowDataInfo;
+        copyNowdata.sub["upload"] =
+          process.env.REACT_APP_API_LOCAL + "public/subs/" + res.data;
+        console.log(copyNowdata.sub);
+        setNowDataInfo(copyNowdata);
+        setforceupdate(forceupdate + 1);
+      });
+  };
+
+  // useEffect(() => {
+  //   console.log(nowDataInfo);
+  // }, [nowDataInfo]);
 
   function uniqByKeepFirst(a, key) {
     let seen = new Set();
@@ -208,7 +236,8 @@ const WatchNew = () => {
         <div id="filmView" className={"container ps-5 pe-5"}>
           {dataLink.map((e, i) => (
             <div className="text-center">
-              {e.chap == nowChap && e.server == nowServer && (
+              {e.chap == nowChap && (
+                //  && e.server == nowServer
                 <div>
                   <div className="text-white title-film">
                     {dataFilmState.title == undefined ? (
@@ -220,31 +249,46 @@ const WatchNew = () => {
                     ) : (
                       <div className="container">
                         <h5 className="primary-color">
-                          {dataFilmState.title} ({dataFilmState.title_origin})
+                          {dataFilmState.title} ({dataFilmState.title_origin}){" "}
+                          {/* {forceupdate} */}
                         </h5>
                         <span>{view} lượt xem</span>
-                        {/* {JSON.stringify(dataLink)} */}
+                        {/* {JSON.stringify(dataLink[nowChap])}.................*/}
+                        {/* {JSON.stringify(nowDataInfo.sub)} */}
                       </div>
                     )}
                   </div>
-                  {JSON.stringify(e)}
                   <Player
                     src={Object.keys(e.link).map((e2) => {
-                      console.log(e2);
+                      // console.log(e2);
                       return { quality: e2, url: e.link[e2] };
                     })}
-                    subtitles={Object.keys(dataLink[0].sub).map((e) => {
-                      return {
-                        lang: e,
-                        url: dataLink[0].sub[e],
-                        language:
-                          e === "en"
-                            ? "Tiếng Anh"
-                            : e === "fr"
-                            ? "Tiếng Pháp"
-                            : "Tiếng Việt",
-                      };
-                    })}
+                    subtitles={
+                      nowDataInfo.sub !== undefined
+                        ? Object.keys(nowDataInfo.sub).map((e) => {
+                            return {
+                              lang: e,
+                              url: nowDataInfo.sub[e],
+                              language:
+                                e === "en"
+                                  ? "Tiếng Anh"
+                                  : e === "fr"
+                                  ? "Tiếng Pháp"
+                                  : e === "upload"
+                                  ? uploadSub.name
+                                  : "Tiếng Việt",
+                            };
+                          })
+                        : [
+                            {
+                              lang: "vi",
+                              url:
+                                process.env.REACT_APP_API_LOCAL +
+                                "public/subs/noSub.vtt",
+                              language: "Tiếng Việt",
+                            },
+                          ]
+                    }
                     poster={dataFilmState.backimg}
                   />
                 </div>
@@ -252,7 +296,26 @@ const WatchNew = () => {
             </div>
           ))}
         </div>
-        <div className="container mt-4">
+        {/* <input type="file" onChange={onFileChange} /> */}
+        <div className="text-center mt-2">
+          <label for="files" class="btn btn-danger ">
+            Tải Sub
+          </label>
+          <span className="text-muted ms-1">(.vtt only)</span>
+          {uploadSub !== null && (
+            <span className="text-warning ms-1">
+              (đã tải lên: {uploadSub.name})
+            </span>
+          )}
+        </div>
+
+        <input
+          id="files"
+          style={{ display: "none" }}
+          type="file"
+          onChange={onFileChange}
+        ></input>
+        <div className="container mt-1">
           <div className="row fs-ipad">
             <div className="col-9">
               <h2 className="primary-color">Tập Phim</h2>
@@ -285,7 +348,9 @@ const WatchNew = () => {
                   }
                   onClick={() => {
                     setnowChap(e.chap);
-                    setnowServer(e.server);
+                    setNowDataInfo(e);
+
+                    // setnowServer(e.server);
                     // window.scrollTo(0, 0);
                   }}
                 >
@@ -570,7 +635,7 @@ const WatchNew = () => {
       )}
 
       <Footer />
-      {console.log(isDisable)}
+      {/* {console.log(isDisable)} */}
     </div>
   );
 };

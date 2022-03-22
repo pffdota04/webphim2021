@@ -1,12 +1,13 @@
 import Footer from "../../components/Footer";
+import "./ChinhSachBaoMat.css"
 
 function ChinhSachBaoMat() {
   return (
-    <>
-      <div className="container">
-        <h1 className="text-center">Chính sách bảo mật </h1>
-        Kphim tôn trọng dữ liệu cá nhân của bạn khi sử dụng dịch vụ tại Kphim!
-        <ul>
+    <div className="container-background">
+      <div className="container p-5 contain-cs">
+        <h1 className="text-center primary-color">Chính sách bảo mật </h1>
+        <p className="mt-4 text-light">Kphim tôn trọng dữ liệu cá nhân của bạn khi sử dụng dịch vụ tại Kphim!</p>
+        <ul className="text-light">
           <li>
             Kphim có quyền thu thập dữ liệu về bạn khi bạn nhấn ĐĂNG NHẬP/ĐĂNG
             KÝ SỬ DỤNG TRANG KHPIM.
@@ -31,15 +32,15 @@ function ChinhSachBaoMat() {
           <li>
             Các dịch vụ trên trang web không dành cho trẻ em dưới 13 tuổi.
           </li>
-          <strong>
+        </ul>
+          <strong className="primary-color">
             NẾU BẠN KHÔNG ĐỒNG Ý CHO PHÉP XỬ LÝ DỮ LIỆU CÁ NHÂN CỦA BẠN NHƯ MÔ
             TẢ TRONG CHÍNH SÁCH NÀY, VUI LÒNG KHÔNG SỬ DỤNG CÁC DỊCH VỤ CỦA
             CHÚNG TÔI HAY TRUY CẬP NỀN TẢNG HOẶC TRANG WEB CỦA CHÚNG TÔI.
           </strong>
-        </ul>
       </div>
       <Footer/>
-    </>
+    </div>
   );
 }
 

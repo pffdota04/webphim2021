@@ -1,0 +1,14 @@
+@media (max-width: 767.9px) {
+    .contain-cs {
+        padding: 10px !important;
+    }    
+}
+
+@media (max-width: 599.9px) {
+    .contain-cs p, li {
+        font-size: 14px;
+    }
+    .contain-cs strong {
+        font-size: 10px;
+    }
+}

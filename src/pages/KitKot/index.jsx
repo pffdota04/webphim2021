@@ -107,7 +107,7 @@ const KitKot = () => {
   }
 
   return (
-    <div>
+    <div className="container-background">
       <MetaTags>
         <title>KitKot</title>
         <meta
@@ -133,7 +133,7 @@ const KitKot = () => {
             <SwiperSlide className="slide-tik">
               <div className="slide-ytb" id={"ytb-top" + i}>
                 <iframe
-                  className=" h-100 w-100"
+                  className="video_watch"
                   src={
                     "https://www.youtube.com/embed/" +
                     e.yttrailer +
@@ -148,9 +148,9 @@ const KitKot = () => {
               </div>
               <div className="silde-title w-100 p-0 m-0">
                 <div>
-                  <p className="p-0 m-0 ps-3 pe-3">{e.title} <br/>({e.year && e.year}){/*   {i}_{nowShow} */}</p>
+                  <p className="title p-0 m-0 ps-3 pe-3">{e.title} ({e.year && e.year}){/*   {i}_{nowShow} */}</p>
                   <Link
-                    className="btn btn-primary"
+                    className="btn_watch"
                     to={"/detailfilm/" + e.id + "/" + e.title}
                   >
                     Xem phim

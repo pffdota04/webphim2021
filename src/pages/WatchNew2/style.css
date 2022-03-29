@@ -34,7 +34,7 @@
 .input-arr {
   margin-top: -8px;
 }
-.iframe-here >* {
+.iframe-here > * {
   width: 71%;
   min-height: 26rem;
   max-height: 50rem;
@@ -48,7 +48,7 @@
   max-height: 40rem;
 } */
 @media (min-width: 1024px) and (max-width: 1119.9px) {
-  .iframe-here  >* {
+  .iframe-here > * {
     width: 81%;
     min-height: 25rem;
   }
@@ -60,7 +60,7 @@
   }
 }
 @media (max-width: 1023.9px) {
-  .iframe-here  >* {
+  .iframe-here > * {
     width: 100%;
     min-height: 16rem;
   }
@@ -118,7 +118,7 @@
   .loading-film > h1 {
     font-size: 1.2rem;
   }
-  .iframe-here  >* {
+  .iframe-here > * {
     width: 100%;
     max-height: 10rem;
   }
@@ -146,7 +146,7 @@
   #filmView {
     padding: 0 !important;
   }
-  .iframe-here  >* {
+  .iframe-here > * {
     width: 94%;
     min-height: 11rem;
   }
@@ -184,14 +184,20 @@
     margin-top: 4px !important;
   }
 }
+
+.tuby-show {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 @media (min-width: 414px) and (max-width: 599px) {
-  .iframe-here  >* {
+  .iframe-here > * {
     width: 96% !important;
     min-height: 13rem !important;
   }
 }
 @media (max-width: 374.9px) {
-  .iframe-here  >* {
+  .iframe-here > * {
     width: 98% !important;
     min-height: 10rem !important;
   }

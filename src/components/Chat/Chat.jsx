@@ -20,6 +20,7 @@ const Chat = (props) => {
     writeError: null,
     loadingChats: false,
   });
+  const [checkkeypress, setCheckkeypress] = useState(false);
   const [isLoadingChat, setLoadingChat] = useState(false);
   // const [isCountDown, setLoadingChat] = useState(false);
   const [chats, setChats] = useState({});
@@ -29,7 +30,26 @@ const Chat = (props) => {
   const [oldChat, setoldChat] = useState(undefined);
 
   const myRef = createRef();
-
+  useEffect(() => {
+    if (checkkeypress) {
+      console.log("ehhe");
+      document.getElementById("chat-input").addEventListener(
+        "keyup",
+        function (e) {
+          e.stopPropagation();
+        },
+        false
+      );
+      // document.getElementById("chat-input").addEventListener(
+      //   "keydown",
+      //   function (e) {
+      //     onEnterPress(e);
+      //     e.stopPropagation();
+      //   },
+      //   false
+      // );
+    }
+  }, [checkkeypress]);
   useEffect(() => {
     setState({ ...state, readError: null, loadingChats: true });
     let fixbugCoundown = false;
@@ -78,6 +98,10 @@ const Chat = (props) => {
   }, [userInfo]);
 
   const onEnterPress = (e) => {
+    e.stopPropagation();
+    setCheckkeypress(true);
+    console.log(e.keyCode);
+
     if (e.keyCode == 13 && e.shiftKey == false) {
       e.preventDefault();
       handleSubmit(e);
@@ -102,7 +126,6 @@ const Chat = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     let limit = 20;
     if (place == "home") limit = 40;
     if (lasttime == -1) {
@@ -199,7 +222,8 @@ const Chat = (props) => {
       {/* {console.log(state.lasttime)} */}
       {chats.length === 0 && (
         <span className="text-white background-item p-3 descriptions-comment">
-          Chưa có bình luận nào, hãy là người đầu tiên cho ý kiến về bộ phim này!
+          Chưa có bình luận nào, hãy là người đầu tiên cho ý kiến về bộ phim
+          này!
         </span>
       )}
 
@@ -221,8 +245,11 @@ const Chat = (props) => {
                 {userInfo != null ? (
                   // đã login =>> check tn để float right
                   <div className="d-flex p-2">
-                    <img className="d-block mb-4 rounded-circle avatar-default"
-                      src={"https://static.fptplay.net/static/img/share/structure/08_05_2015/default_user_icon08-05-2015_16g50-27.jpg?w=200&mode=scale"}
+                    <img
+                      className="d-block mb-4 rounded-circle avatar-default"
+                      src={
+                        "https://static.fptplay.net/static/img/share/structure/08_05_2015/default_user_icon08-05-2015_16g50-27.jpg?w=200&mode=scale"
+                      }
                       alt=""
                       width={50}
                       height={50}
@@ -235,14 +262,13 @@ const Chat = (props) => {
                       }
                     >
                       <div className="userAndTime">
-                        {chat.username} 
+                        {chat.username}
                         <span
                           className="chat-time float-right ms-3"
                           style={{ display: "inline-block" }}
                         >
                           {formatTime(chat.timestamp)}
                         </span>
-                        
                       </div>
                       <br></br>
                       <p
@@ -261,8 +287,11 @@ const Chat = (props) => {
                 ) : (
                   // chưa login => full float feft
                   <div className="d-flex">
-                    <img className="d-block mb-4 rounded-circle"
-                      src={"https://static.fptplay.net/static/img/share/structure/08_05_2015/default_user_icon08-05-2015_16g50-27.jpg?w=200&mode=scale"}
+                    <img
+                      className="d-block mb-4 rounded-circle"
+                      src={
+                        "https://static.fptplay.net/static/img/share/structure/08_05_2015/default_user_icon08-05-2015_16g50-27.jpg?w=200&mode=scale"
+                      }
                       alt=""
                       width={50}
                       height={50}
@@ -308,26 +337,29 @@ const Chat = (props) => {
           </div>
         </div>
       ) : userInfo.checkUser != "not" ? (
-        <div onSubmit={handleSubmit} className="d-flex background-input-chat mt-3">
+        <div
+          onSubmit={handleSubmit}
+          className="d-flex background-input-chat mt-3"
+        >
           <textarea
             className="input-chat text-white"
             name="content"
+            id="chat-input"
             onChange={(e) => {
               setState({ limitLenght: false });
+              console.log(e.target.value);
               setcontent(e.target.value);
             }}
             onKeyDown={onEnterPress}
             value={content}
             // maxle=ngth="300"
-            placeholder={ "Nhập bình luận của bạn"
+            placeholder={
+              "Nhập bình luận của bạn"
               // "Chat với tên " + userInfo.displayName + " (tối đa 300 kí tự)"
             }
           ></textarea>
           {lasttime == -1 ? (
-            <button
-              type="submit"
-              className="btn-comment"
-            >
+            <button type="submit" className="btn-comment">
               <i class="fa fa-paper-plane text-white" aria-hidden="true"></i>
             </button>
           ) : (
@@ -342,8 +374,13 @@ const Chat = (props) => {
         </div>
       ) : (
         <div className="d-block mx-auto w-fit text-light p-4">
-          <span className="out-title-ipad">Vui lòng đăng nhập để được bình luận!</span>{" "}
-          <Link to="/login" className="background-primary ms-4 btn outsign-ipad">
+          <span className="out-title-ipad">
+            Vui lòng đăng nhập để được bình luận!
+          </span>{" "}
+          <Link
+            to="/login"
+            className="background-primary ms-4 btn outsign-ipad"
+          >
             Đăng nhập ngay!
           </Link>
         </div>

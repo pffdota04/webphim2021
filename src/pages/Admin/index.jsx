@@ -22,6 +22,7 @@ import Dashboard from "./Dashboard";
 import Loading from "../../components/Loading";
 import SoanTin from "../SoanTin";
 import KitKotAd from "./KitKot";
+import LinkPhim from "./LinkPhim";
 
 const Admin = () => {
   const history = useHistory();
@@ -46,12 +47,18 @@ const Admin = () => {
   ]);
   const [dataAllUser, setDataAllUser] = useState([]);
   const [dataAllLink, setDataAllLink] = useState([
+    // {
+    //   id: 0,
+    //   film_id: 0,
+    //   link: "loading",
+    //   server: 0,
+    //   chap: 0,
+    // },
     {
-      id: 0,
       film_id: 0,
-      link: "loading",
-      server: 0,
       chap: 0,
+      link: {},
+      sub: {},
     },
   ]);
   const [dataAllKitkot, setDataAllKitkot] = useState([
@@ -254,10 +261,11 @@ const Admin = () => {
     setFetchLink(false);
     if (adminToken != null)
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/alllink", {
+        .post(process.env.REACT_APP_API_LOCAL + "admin/linkdefaul", {
           token: adminToken,
         })
         .then((res) => {
+          console.log(res.data);
           let holdLink = res.data;
           setDataAllLink(holdLink);
         })
@@ -267,15 +275,15 @@ const Admin = () => {
   function getDataKitkot() {
     setFetchLink(false);
     if (adminToken != null)
-     db.ref()
-       .child("/kitkot")
-       .get()
-       .then((res) => {
-         let holdLink = res.val();
-         console.log(holdLink);
-         setDataAllKitkot(holdLink);
-       })
-       .catch((e) => console.log(e));
+      db.ref()
+        .child("/kitkot")
+        .get()
+        .then((res) => {
+          let holdLink = res.val();
+          console.log(holdLink);
+          setDataAllKitkot(holdLink);
+        })
+        .catch((e) => console.log(e));
     // axios
     //   .post(process.env.REACT_APP_API_LOCAL + "admin/kitkot", {
     //     token: adminToken,
@@ -355,11 +363,6 @@ const Admin = () => {
     <div className="all-admin">
       <section className="section container">
         <div className="container-fluid pt-1">
-          {" "}
-          {/* <h6>
-            (user ok) __ (film ok) __ link còn delete __(Voucer ok) __ (napkoin
-            ok)__ (STK ok) __ Report ok
-          </h6> */}
           <div className="row mt-4">
             <div class="col-6 col-lg-3">
               <div class="stats">
@@ -540,11 +543,17 @@ const Admin = () => {
               <Route
                 path={"/admin/link"}
                 component={() => (
-                  <Links
-                    dataL={dataAllLink}
+                  <LinkPhim
+                    // dataL={dataAllLink}
+                    dataL={dataAllF}
                     token={adminToken}
                     setFetchLink={setFetchLink}
                   />
+                  // <Links
+                  //   dataL={dataAllLink}
+                  //   token={adminToken}
+                  //   setFetchLink={setFetchLink}
+                  // />
                 )}
               />
               <Route

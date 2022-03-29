@@ -12,17 +12,18 @@ import MetaTags from "react-meta-tags";
 import { db } from "../../services/firebase";
 
 import { Player } from "react-tuby";
-import "react-tuby/css/main.css";
+// import "react-tuby/css/main.css";
+import "./../../../node_modules/react-tuby/css/main.css";
 
 // import "./noSub.vtt"
 
-const WatchNew = () => {
+const WatchNew2 = () => {
   const { id, name } = useParams();
 
   const [dataFilmState, setDataFilmState] = useState({});
   const [dataLink, setDataLink] = useState();
   const [nowChap, setnowChap] = useState(-1);
-  const [nowServer, setnowServer] = useState(-1);
+  const [getSub, setSub] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const [loadingData, setLoading] = useState(true);
@@ -88,6 +89,15 @@ const WatchNew = () => {
     } else {
       if (dataLink == null)
         if (userDetail.checkUser != "init") {
+          db.ref()
+            .child("linksub")
+            .orderByChild("film_id")
+            .equalTo(parseInt(id))
+            .get()
+            .then((res) => {
+              if (res.val() !== null) setSub(Object.values(res.val())[0].chap);
+            });
+
           if (userDetail.checkUser === "not") getDataByParamsId();
           else getDataByTokenId();
         }
@@ -123,19 +133,23 @@ const WatchNew = () => {
     }
   }, [userDetail]);
 
+  useEffect(() => {
+    console.log(dataLink);
+  }, [dataLink]);
+
   const getDataByParamsId = () => {
     db.ref()
-      .child("phimlinkdefaul")
+      .child("phimlinkdefault")
       .orderByChild("film_id")
       .equalTo(parseInt(id))
       .get()
       .then((res) => {
-        setDataLink(Object.values(res.val()));
-        if (res.val() != null) {
-          setnowChap(Object.values(res.val())[0].chap);
+        if (res.val() === null) setDataLink(null);
+        else {
+          setDataLink(Object.values(res.val())[0].chap);
+          setnowChap(Object.keys(Object.values(res.val())[0].chap)[0]);
           setNowDataInfo(Object.values(res.val())[0]);
         }
-        // console.log(Object.values(res.val()));
         setLoading(false);
       })
       .catch((e) => alert(e));
@@ -143,16 +157,36 @@ const WatchNew = () => {
 
   const getDataByTokenId = () => {
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "link/vip2", {
+      .post(process.env.REACT_APP_API_LOCAL + "link/vip3", {
         token: userDetail.token,
         fid: id,
       })
       .then((res) => {
-        // console.log(res.data);
-        setDataLink(res.data);
+        console.log(res.data);
+        if (res.data !== null && res.data.vip) {
+          let thuong = res.data.data[0].chap;
+          let vip = res.data.data[1].chap;
+          let merger = {};
+          Object.keys(thuong).map((e) => {
+            merger[e] = { link: thuong[e].link };
+            if (vip[e] !== undefined)
+              merger[e].link = { ...merger[e].link, ...vip[e].link };
+            console.log(merger);
+          });
+          Object.keys(vip).map((e) => {
+            if (merger[e] === undefined) {
+              merger[e] = { link: vip[e].link };
+              console.log(merger);
+            }
+          });
+
+          setDataLink(merger);
+          setnowChap(Object.keys(merger)[0][0]);
+        } else setDataLink(res.data);
         setLoading(false);
-        setnowChap(res.data[0].chap);
-        setNowDataInfo(res.data[0]);
+        // setLoading(false);
+        // setnowChap(res.data[0].chap);
+        // setNowDataInfo(res.data[0]);
 
         // console.log(res.data);
       })
@@ -175,11 +209,10 @@ const WatchNew = () => {
 
     let a = event.target.files[0];
     let name = getFile(a.name);
-    let ext = a.name.split(".")[1];
 
     let rename = renameFile(
       a,
-      name + Math.random().toString(36).substring(8) + "." + ext
+      Math.random().toString(36).substring(4) + ".vtt"
     );
     // console.log(rename);
 
@@ -189,11 +222,14 @@ const WatchNew = () => {
       .post(process.env.REACT_APP_API_LOCAL + "public/subs/user-upload", data)
       .then((res) => {
         console.log(res.data);
-        let copyNowdata = nowDataInfo;
-        copyNowdata.sub["upload"] =
+        let copyNowdata = getSub;
+        if (name.length > 13) name = name.substring(0, 10) + "...";
+        name = name + "(" + res.data.slice(0, -6) + ")";
+        copyNowdata[nowChap].sub[name] =
           process.env.REACT_APP_API_LOCAL + "public/subs/" + res.data;
-        console.log(copyNowdata.sub);
-        setNowDataInfo(copyNowdata);
+
+        setSub(copyNowdata);
+
         setforceupdate(forceupdate + 1);
       });
   };
@@ -234,9 +270,9 @@ const WatchNew = () => {
     ) : (
       <div>
         <div id="filmView" className={"container ps-5 pe-5"}>
-          {dataLink.map((e, i) => (
+          {Object.keys(dataLink).map((e) => (
             <div className="text-center">
-              {e.chap == nowChap && (
+              {e == nowChap && (
                 //  && e.server == nowServer
                 <div>
                   <div className="text-white title-film">
@@ -259,33 +295,34 @@ const WatchNew = () => {
                     )}
                   </div>
                   <Player
-                    src={Object.keys(e.link).map((e2) => {
+                    primaryColor="#ff0000"
+                    src={Object.keys(dataLink[e].link).map((e2) => {
                       // console.log(e2);
-                      return { quality: e2, url: e.link[e2] };
+                      return { quality: e2, url: dataLink[e].link[e2] };
                     })}
                     subtitles={
-                      nowDataInfo.sub !== undefined
-                        ? Object.keys(nowDataInfo.sub).map((e) => {
+                      getSub[e] !== undefined
+                        ? Object.keys(getSub[e].sub).map((e2) => {
                             return {
-                              lang: e,
-                              url: nowDataInfo.sub[e],
+                              lang: e2,
+                              url: getSub[e].sub[e2],
                               language:
-                                e === "en"
+                                e2 === "en"
                                   ? "Tiếng Anh"
-                                  : e === "fr"
+                                  : e2 === "fr"
                                   ? "Tiếng Pháp"
-                                  : e === "upload"
-                                  ? uploadSub.name
-                                  : "Tiếng Việt",
+                                  : e2 === "vi"
+                                  ? "Tiếng Việt"
+                                  : e2,
                             };
                           })
                         : [
                             {
-                              lang: "vi",
+                              lang: "no",
                               url:
                                 process.env.REACT_APP_API_LOCAL +
                                 "public/subs/noSub.vtt",
-                              language: "Tiếng Việt",
+                              language: "Chưa có sub",
                             },
                           ]
                     }
@@ -298,15 +335,28 @@ const WatchNew = () => {
         </div>
         {/* <input type="file" onChange={onFileChange} /> */}
         <div className="text-center mt-2">
-          <label for="files" class="btn btn-danger ">
-            Tải Sub
-          </label>
-          <span className="text-muted ms-1">(.vtt only)</span>
-          {uploadSub !== null && (
+          <div>
+            <label for="files" class="btn btn-danger ">
+              Tải Sub
+            </label>
+            <span className="text-muted ms-1">(.vtt only)</span>
+          </div>
+
+          {getSub[nowChap] !== undefined &&
+            Object.keys(getSub[nowChap].sub).map((e) => {
+              if (e !== "fr" && e !== "en" && e !== "vi")
+                return (
+                  <>
+                    <span className="text-warning ms-1">Đã tải: {e}</span>;
+                    <br />
+                  </>
+                );
+            })}
+          {/* {uploadSub !== null && (
             <span className="text-warning ms-1">
               (đã tải lên: {uploadSub.name})
             </span>
-          )}
+          )} */}
         </div>
 
         <input
@@ -339,22 +389,21 @@ const WatchNew = () => {
       <nav>
         <div>
           <ul className="pagination  d-flex flex-wrap">
-            {uniqByKeepFirst(dataLink, (i) => i.chap).map((e, i) => (
+            {/* {uniqByKeepFirst(dataLink, (i) => i.chap).map((e, i) => ( */}
+            {Object.keys(dataLink).map((e, i) => (
               <li className="p-2">
                 <button
                   className={
                     "text-white border-btn-film btn me-1 btn-respon" +
-                    (e.chap == nowChap && " background-primary text-light")
+                    (e == nowChap && " background-primary text-light")
                   }
                   onClick={() => {
-                    setnowChap(e.chap);
-                    setNowDataInfo(e);
-
-                    // setnowServer(e.server);
+                    setnowChap(e);
+                    // setNowDataInfo(e);
                     // window.scrollTo(0, 0);
                   }}
                 >
-                  Tập {e.chap}
+                  Tập {e}
                 </button>
               </li>
             ))}
@@ -448,6 +497,12 @@ const WatchNew = () => {
         />
       </MetaTags>
       {isLoading && <Loading />}
+      {/* {JSON.stringify(dataLink)}
+      <br />
+      {JSON.stringify(nowChap)}
+      <br />
+      {JSON.stringify(getSub)} */}
+
       <main className="container-fluid container-background pb-5">
         <div className="pt-1">
           {/*  */}
@@ -635,8 +690,7 @@ const WatchNew = () => {
       )}
 
       <Footer />
-      {/* {console.log(isDisable)} */}
     </div>
   );
 };
-export default WatchNew;
+export default WatchNew2;

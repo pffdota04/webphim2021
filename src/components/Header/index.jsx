@@ -25,6 +25,20 @@ const Header = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    document.getElementById("search-input").addEventListener(
+      "keyup",
+      function (e) {
+        e.stopPropagation();
+      },
+      false
+    );
+    document.getElementById("search-input").addEventListener(
+      "keydown",
+      function (e) {
+        e.stopPropagation();
+      },
+      false
+    );
     if (finalCheckToken === false) {
       setfinalCheckToken(true);
       auth().onAuthStateChanged((user) => {
@@ -78,6 +92,7 @@ const Header = () => {
   }, [finalCheckToken]);
 
   const onSubmitSearch = (e) => {
+    e.stopPropagation();
     if (Object.keys(data).length == 0 && !calling) {
       const local = JSON.parse(localStorage.getItem("search"));
       setcalling(true);
@@ -643,7 +658,11 @@ const Header = () => {
                   type="search"
                   placeholder="Tìm kiếm"
                   aria-label="Search"
-                  onChange={onSubmitSearch}
+                  id="search-input"
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    onSubmitSearch(e);
+                  }}
                 />
               </div>
             </div>

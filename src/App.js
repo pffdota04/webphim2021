@@ -21,7 +21,7 @@ import NewsContent from "./pages/NewsContent";
 import SoanTin from "./pages/SoanTin";
 import QuyCheDichVu from "./pages/QuyCheDichVu";
 import ChinhSachBaoMat from "./pages/ChinhSachBaoMat/ChinhSachBaoMat";
-import WatchNew from "./pages/WatchNew";
+import WatchNew2 from "./pages/WatchNew2";
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
             />
             <Route
               path={["/watchnew/:id/:name", "/watchnew/:id"]}
-              component={WatchNew}
+              component={WatchNew2}
             />
             <Route path="/unlock" x component={UnlockList} />
             <Route path="/mylist" component={WatchLaterList} />

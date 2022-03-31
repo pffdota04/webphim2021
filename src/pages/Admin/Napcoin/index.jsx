@@ -1,8 +1,7 @@
 import axios from "axios";
-import { data } from "jquery";
-import { useEffect } from "react";
 import { useState } from "react";
 import Loading from "../../../components/Loading";
+import Comments from "../Comment";
 import "./style.css";
 
 const Napcoins = (props) => {
@@ -10,8 +9,6 @@ const Napcoins = (props) => {
   const [dataNapCoin, setdataNapCoin] = useState(dataNC);
 
   const [onLoading, setonLoading] = useState(false);
-  const [choseNC, setChoseNC] = useState(0);
-  const [currentCoin, setCurrentCoin] = useState(dataNapCoin[choseNC]); // mặc định là voucher  đầu tiên
 
   function Refresh() {
     setFetchCoin(true);
@@ -213,6 +210,7 @@ const Napcoins = (props) => {
           }
         </div>
       </div>
+      <Comments token={token}/>
     </div>
   );
 };

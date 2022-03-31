@@ -90,13 +90,11 @@ const Admin = () => {
     },
   ]);
 
-  const [dataAllComment, setDataAllComment] = useState([
+  const [dataAllKnews, setdataAllKnews] = useState([
     {
       id: 0,
-      uid: "Loading",
-      username: "Loading",
       content: "Loading",
-      timestamp: 0,
+      title: "Loading",
     },
   ]);
   const [dataAllReport, setDataAllReport] = useState([
@@ -324,17 +322,20 @@ const Admin = () => {
   }
 
   function getDataComment() {
-    // all user
     setFetchComment(false);
-    if (adminToken != null)
-      axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/allstk", {
-          token: adminToken,
-        })
-        .then((res) => {
-          setDataAllComment(res.data);
-        })
-        .catch((e) => console.log(e));
+    db.ref()
+      .child("newscontent")
+      .get()
+      .then((snap) => setdataAllKnews(Object.values(snap.val()).reverse()));
+    // if (adminToken != null)
+    //   axios
+    //     .post(process.env.REACT_APP_API_LOCAL + "admin/allstk", {
+    //       token: adminToken,
+    //     })
+    //     .then((res) => {
+    //       setdataAllKnews(res.data);
+    //     })
+    //     .catch((e) => console.log(e));
   }
 
   function getDataReport() {
@@ -480,14 +481,15 @@ const Admin = () => {
                 </div>
                 <div className="stats">
                   <p className="text-bold mb-10 d-none d-sm-block">
-                    {Object.keys(dataAllComment).length}
+                    {Object.keys(dataAllKnews).length}
                   </p>
                   <h6 className=" mx-auto ms-sm-0 ">
                     <Link
                       className="btn btn-sm btn-link ms-1 mt-1"
-                      to="/admin/stk"
+                      to="/admin/soantin"
                     >
-                      <i className="fa fa-bank d-none d-sm-block" /> Tài khoản
+                      <i className="fa fa-newspaper-o d-none d-sm-block" />{" "}
+                      KNews
                     </Link>
                   </h6>
                 </div>
@@ -507,7 +509,7 @@ const Admin = () => {
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/report"
                     >
-                      <i className="fa fa-newspaper-o  d-none d-sm-block" />
+                      <i className="fa fa-bullhorn   d-none d-sm-block" />
                       Report
                     </Link>
                   </h6>
@@ -576,16 +578,16 @@ const Admin = () => {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 path={"/admin/stk"}
                 component={() => (
                   <Comments
-                    dataComment={dataAllComment}
+                    dataComment={dataAllKnews}
                     setFetchComment={setFetchComment}
                     token={adminToken}
                   />
                 )}
-              />
+              /> */}
               <Route
                 path={"/admin/report"}
                 component={() => (
@@ -598,7 +600,13 @@ const Admin = () => {
               />
               <Route
                 path={"/admin/soantin"}
-                component={() => <SoanTin token={adminToken} />}
+                component={() => (
+                  <SoanTin
+                    token={adminToken}
+                    dataNew={dataAllKnews}
+                    setFetch={setFetchComment}
+                  />
+                )}
               />
               <Route
                 path={"/admin/kitkot"}

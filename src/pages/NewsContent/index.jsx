@@ -144,9 +144,7 @@ const NewsContent = (props) => {
   return (
     <div>
       <MetaTags>
-        <title>
-          {nowShow !== null ? nowShow.title :"Tin Tức phim"}
-        </title>
+        <title>{nowShow !== null ? nowShow.title : "Tin Tức phim"}</title>
         <meta
           name="description"
           content={
@@ -195,7 +193,13 @@ const NewsContent = (props) => {
               {nowShow !== null ? nowShow.title : "..."}
             </li>
           </ol>
-        </nav>
+        </nav>{" "}
+        <img
+          className="w-100"
+          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          alt=""
+          width={800}
+        />
         {nowShow !== null ? (
           <div
             dangerouslySetInnerHTML={{
@@ -240,7 +244,13 @@ const NewsContent = (props) => {
               </div>
             </div>
           ))}
-        </div>
+        </div>{" "}
+        <img
+          className="w-100"
+          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          alt=""
+          width={800}
+        />
       </div>
       <Footer />
     </div>

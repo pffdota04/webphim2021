@@ -50,7 +50,7 @@ function App() {
             <Route path="/kitkot" component={KitKot} />
             <Route path="/tintuc/:id" component={NewsContent} />
             <Route path="/tintuc" component={News} />
-            <Route path="/soantin" component={SoanTin} />
+            {/* <Route path="/soantin" component={SoanTin} /> */}
             <Route path="/quychedichvu" component={QuyCheDichVu} />
             <Route path="/chinhsachbaomat" component={ChinhSachBaoMat} />
             <Route exact path={["/", "/home"]} component={Home} />

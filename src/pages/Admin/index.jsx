@@ -97,6 +97,7 @@ const Admin = () => {
       title: "Loading",
     },
   ]);
+
   const [dataAllReport, setDataAllReport] = useState([
     {
       user: "Loading",
@@ -271,7 +272,9 @@ const Admin = () => {
   }
 
   function getDataKitkot() {
-    setFetchLink(false);
+    console.log("fetching kitkot");
+
+    setFetchKikot(false);
     if (adminToken != null)
       db.ref()
         .child("/kitkot")
@@ -482,6 +485,7 @@ const Admin = () => {
                 <div className="stats">
                   <p className="text-bold mb-10 d-none d-sm-block">
                     {Object.keys(dataAllKnews).length}
+                    (test)
                   </p>
                   <h6 className=" mx-auto ms-sm-0 ">
                     <Link
@@ -511,6 +515,28 @@ const Admin = () => {
                     >
                       <i className="fa fa-bullhorn   d-none d-sm-block" />
                       Report
+                    </Link>
+                  </h6>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3  col-6">
+              <div className="icon-card mb-30">
+                <div className="icon orange">
+                  <i className="lni lni-user" />
+                </div>
+                <div className="stats">
+                  <p className="text-bold mb-10 d-none d-sm-block">
+                    {/* {Object.keys(dataAllReport).length} */}
+                    (test)
+                  </p>
+                  <h6 className=" mx-auto ms-sm-0 ">
+                    <Link
+                      className="btn btn-sm btn-link ms-1 mt-1"
+                      to="/admin/kitkot"
+                    >
+                      <i className="fa fa-arrows-v    d-none d-sm-block" />
+                      KitKot
                     </Link>
                   </h6>
                 </div>
@@ -614,7 +640,7 @@ const Admin = () => {
                   <KitKotAd
                     dataL={dataAllKitkot}
                     token={adminToken}
-                    setFetchLink={setFetchKikot}
+                    setFetchKikot={setFetchKikot}
                   />
                 )}
               />

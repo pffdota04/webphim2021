@@ -1,24 +1,28 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Loading from "../../../components/Loading";
+import { db } from "../../../services/firebase";
 import "./style.css";
 
 const KitKotAd = (props) => {
-  const { dataL, token, setFetchLink } = props;
+  const { dataL, token, setFetchKikot } = props;
   const [choseL, setChoseL] = useState(0);
+  const [choseDelete, setChoseDelete] = useState(undefined);
   const [dataL2, setdataL] = useState(dataL);
 
   const [onLoading, setonLoading] = useState(false);
   const [currentLink, setCurrentLink] = useState(dataL[choseL]); // mặc định là link  đầu tiên
   const [adddataLink, setAddLink] = useState({}); // mặc định là link  đầu tiên
+  const [editKitkot, setEditKitKot] = useState(dataL[choseL]); // mặc định là link  đầu tiên
 
   function Refresh() {
-    setFetchLink(true);
+    setFetchKikot(true);
   }
 
   const formLink = (currentLink, setNew) => {
     return (
       <div className="row g-3" id="editFilm">
+        {JSON.stringify(editKitkot)}
         <div className="col-sm-6">
           <label htmlFor="firstName" className="form-label">
             Fid
@@ -29,6 +33,7 @@ const KitKotAd = (props) => {
             id="firstName"
             placeholder
             value={currentLink.id === undefined ? "auto" : currentLink.id}
+            disabled
           />
         </div>
 
@@ -41,12 +46,12 @@ const KitKotAd = (props) => {
             className="form-control"
             id="lastName"
             placeholder
-            value={currentLink.year === undefined ? "" : currentLink.year}
+            value={editKitkot.year === undefined ? "" : editKitkot.year}
             required
             onChange={(e) =>
-              setNew((prevState) => ({
+              setEditKitKot((prevState) => ({
                 ...prevState,
-                chap: parseInt(e.target.value),
+                year: parseInt(e.target.value),
               }))
             }
           />
@@ -61,13 +66,13 @@ const KitKotAd = (props) => {
             id="firstName"
             placeholder
             value={
-              currentLink.yttrailer === undefined ? "" : currentLink.yttrailer
+              editKitkot.yttrailer === undefined ? "" : editKitkot.yttrailer
             }
             required
             onChange={(e) =>
-              setNew((prevState) => ({
+              setEditKitKot((prevState) => ({
                 ...prevState,
-                server: e.target.value,
+                yttrailer: e.target.value,
               }))
             }
           />
@@ -81,12 +86,12 @@ const KitKotAd = (props) => {
             className="form-control"
             id="firstName"
             placeholder
-            value={currentLink.title === undefined ? "" : currentLink.title}
+            value={editKitkot.title === undefined ? "" : editKitkot.title}
             required
             onChange={(e) =>
-              setNew((prevState) => ({
+              setEditKitKot((prevState) => ({
                 ...prevState,
-                server: e.target.value,
+                title: e.target.value,
               }))
             }
           />
@@ -98,29 +103,24 @@ const KitKotAd = (props) => {
   function updateLink() {
     // LObject là một object chứa thông tin User sau khi cập nhật
     setonLoading(true);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/update/link", {
-        token: token,
-        LObject: currentLink,
-      })
+    console.log(dataL[choseL]);
+    db.ref()
+      .child("/kitkot")
+      .orderByChild("id")
+      .equalTo(dataL[choseL].id)
+      .get()
       .then((res) => {
-        if (res.data === "okok") {
-          alert("Cập nhật thành công");
-          dataL.map((e, i) => {
-            if (e.id === currentLink.id) {
-              let b = dataL;
-              b[i] = currentLink;
-              setdataL(b);
-            }
-          });
-        }
-        setonLoading(false);
-        // bấm nút refresh để update data sau khi cập nhâtk
-      })
-      .catch((e) => {
-        alert(e);
-        setonLoading(false);
+        db.ref()
+          .child("/kitkot/" + Object.keys(res.val())[0])
+          .update(editKitkot);
       });
+    setonLoading(false);
+    //   // bấm nút refresh để update data sau khi cập nhâtk
+    // })
+    // .catch((e) => {
+    //   alert(e);
+    //   setonLoading(false);
+    // });
   }
 
   function addLink() {
@@ -145,36 +145,28 @@ const KitKotAd = (props) => {
       });
   }
 
-  function removeLink(lid) {
+  function removeLink(current) {
     setonLoading(true);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/deletelink", {
-        token: token,
-        lid: lid,
-      })
+    db.ref()
+      .child("kitkot")
+      .orderByChild("id")
+      .equalTo(current.id)
+      .get()
       .then((res) => {
-        alert(res.data);
-        if (res.data === "okok") {
-          let a = [...dataL];
-          a.map((e, i) => {
-            if (e.id == lid) a.splice(i, 1);
+        db.ref()
+          .child("/kitkot/" + Object.keys(res.val())[0])
+          .remove()
+          .then((snap2) => setonLoading(false))
+          .catch((e) => {
+            alert(e);
+            setonLoading(false);
           });
-          setdataL(a);
-        }
-        // console.log(...dataL)
-        // if (res.data === "okok") {
-        // adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
-        // setdataL([...dataL, adddataLink]);
-        setAddLink({});
-        // }
-        setonLoading(false);
       })
       .catch((e) => {
         alert(e);
         setonLoading(false);
       });
   }
-
 
   const searching = (keySearch) => {
     if (keySearch == undefined || keySearch == "") {
@@ -223,14 +215,8 @@ const KitKotAd = (props) => {
                 <thead>
                   <tr className="text-center">
                     {/* <th>STT</th> */}
-                    <th>
-                      Fid
-                     
-                    </th>
-                    <th>
-                      Title
-                    
-                    </th>
+                    <th>Fid</th>
+                    <th>Title</th>
                     <th>Youtube</th>
                     <th>Year</th>
                   </tr>
@@ -247,6 +233,8 @@ const KitKotAd = (props) => {
                         <button
                           className="btn btn-sm  main__table_link-btn--edit"
                           onClick={() => {
+                            setChoseL(i);
+                            setEditKitKot(e);
                             setCurrentLink(dataL2[i]);
                             window.scrollTo({
                               top:
@@ -266,8 +254,7 @@ const KitKotAd = (props) => {
                           data-bs-toggle="modal"
                           data-bs-target="#warningModel"
                           onClick={() => {
-                            setChoseL(e.id);
-                            // removeLink(e.id);
+                            setChoseDelete(e);
                           }}
                         >
                           Delete
@@ -366,16 +353,18 @@ const KitKotAd = (props) => {
                   <i className="fa fa-close" />
                 </button>
               </div>
-              <div className="modal-body">
-                <h2> Remove link id = {choseL}</h2>
-                <button
-                  className="btn btn-outline-danger mx-auto d-block"
-                  data-bs-dismiss="modal"
-                  onClick={() => removeLink(choseL)}
-                >
-                  Remove
-                </button>
-              </div>
+              {choseDelete !== undefined && (
+                <div className="modal-body">
+                  <h2> Remove kitkot id = {choseDelete.id}</h2>
+                  <button
+                    className="btn btn-outline-danger mx-auto d-block"
+                    data-bs-dismiss="modal"
+                    onClick={() => removeLink(choseDelete)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

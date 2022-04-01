@@ -131,17 +131,21 @@ const SoanTin = (props) => {
                     <img src={e.img} width="100" height={100} alt="anh bia" />
                   </td>
                   <td>
-                    <Link to={"/tintuc/" + e.id} target="_blank">
-                      xem
+                    <Link
+                      className="btn btn-primary mb-2"
+                      to={"/tintuc/" + e.id}
+                      target="_blank"
+                    >
+                      <i className="fa fa-external-link" />
                     </Link>
                     <span
-                      className="btn btn-primary"
+                      className="btn btn-danger"
                       data-bs-toggle="modal"
                       data-bs-target="#editmodal"
                       onClick={() => {
                         setEdit(e.id);
                         setImg2(e.img === undefined ? "" : e.img);
-                        setPreview2(e.preview === undefined ? "": e.preview);
+                        setPreview2(e.preview === undefined ? "" : e.preview);
                         setTitle2(e.title === undefined ? "" : e.title);
                         setEditorState2(
                           EditorState.createWithContent(
@@ -242,13 +246,13 @@ const SoanTin = (props) => {
                         Đăng tin
                       </div>
                     </div>
-                    <textarea
+                    {/* <textarea
                       // value={JSON.stringify(
                       //   convertToRaw(editorState.getCurrentContent())
                       // )}
                       value={JSON.stringify(editorState)}
                       className="w-100 "
-                    />
+                    /> */}
                   </div>
                 </div>
               </>

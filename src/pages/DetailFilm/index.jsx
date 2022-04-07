@@ -103,14 +103,36 @@ const DetailFilm = () => {
   const [iconUnlock, setIconUnlock] = useState(0);
   const dispatch = useDispatch();
 
+  // new:
+  const [info, setInfo] = useState({});
+  const [detail, setDetail] = useState({});
+
   useEffect(() => {
     window.scrollTo(0, 0);
     if (location.state === undefined) {
       //call api lay data
       axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
         if (res.data == null) setData(false);
-        else convert(res.data[0]);
+        else {
+          convert(res.data[0]);
+        }
       });
+
+      axios
+        .get(process.env.REACT_APP_API_DEPLOYED + "film/info/" + id)
+        .then((res) => {
+          setInfo(res.data);
+        })
+        .catch(setInfo(undefined));
+
+      axios
+        .get(process.env.REACT_APP_API_DEPLOYED + "film/detail/" + id)
+        .then((res) => {
+          let a = res.data;
+          if (res.data.backimg === undefined) a.backimg = backdetail;
+          setDetail(a);
+        })
+        .catch(setDetail(undefined));
     } else {
       convert(location.state.data);
     }
@@ -332,12 +354,14 @@ const DetailFilm = () => {
     }
   }
 
-  return data === false ? (
+  // return data === false ? (
+  return info === null ? (
     <Redirect to="/404" />
   ) : (
     <div>
       <MetaTags>
-        <title>{data.title}</title>
+        <title>{!!info && info.title}</title>
+        {/* <title>{data.title}</title> */}
         <meta
           name="description"
           content={
@@ -350,25 +374,28 @@ const DetailFilm = () => {
       <div
         className="details w-100"
         style={{
-          backgroundImage:
-            data.backimg === undefined
-              ? "url(" + backdetail + ")"
-              : "url(" + data.backimg + ")",
+          backgroundImage: detail != undefined && detail.backimg,
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
-          // backgroundRepeat: "round",
         }}
       >
         <div className="container">
           <div className="details-container">
             <div className="details-poster">
-              <img className="details-poster-img" src={data.img} alt="poster" />
+              <img
+                className="details-poster-img"
+                src={info !== undefined ? info.img : ""}
+                alt="poster"
+              />
             </div>
             <div className="details-info">
               <h1 className="details-info-title">
-                 {data.title}
+                {info !== undefined && info.title}
               </h1>
-              <p className="details-info-overview">{data.description}</p>
+              <p className="details-info-overview">
+                {detail !== undefined && detail.description}
+              </p>
+
               <p className="genres">
                 Thể loại:
                 {data.converted === true &&
@@ -382,15 +409,24 @@ const DetailFilm = () => {
                   ))}
               </p>
               <p className="nation">Quốc gia: {quocgia[data.country2]}</p>
-              <p className="time-film">Thời lượng: {data.length}</p>
-              <p className="year-film">Năm: {data.year}</p>
+              <p className="time-film">
+                Số tập: {detail !== undefined && detail.length}
+              </p>
               <p className="year-film">
-                Giá VIP: <u>{data.price} Koin</u>
+                Năm: {info !== undefined && info.year}
+              </p>
+              <p className="year-film">
+                Giá VIP: <u>{detail !== undefined && detail.price} Koin</u>
               </p>
               <div className="watch mb-4">
                 <Link
                   className="background-primary btn btn-go-film"
-                  to={"/watchnew/" + id + "/" + data.title}
+                  to={
+                    "/watchnew/" +
+                    id +
+                    "/" +
+                    (info !== undefined ? info.title : "")
+                  }
                 >
                   Xem phim
                 </Link>
@@ -400,6 +436,7 @@ const DetailFilm = () => {
                 >
                   Xem Trailer
                 </a>
+                {/* {JSON.stringify(detail)} */}
               </div>
               <div className="">
                 <button

@@ -43,7 +43,7 @@ const FilmCard = (props) => {
     </div>
   ) : (
     <div className="card">
-      <Link to={"/detailfilm/" + data.id + "/" + data.title}>
+      <Link to={"/detailfilm/" + data._id + "/" + data.title}>
         <div>
           {numberTrend !== undefined && (
             <img

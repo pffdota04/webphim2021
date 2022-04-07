@@ -12,6 +12,8 @@ import MetaTags from "react-meta-tags";
 import { db } from "../../services/firebase";
 
 import { Player } from "react-tuby";
+import ReactHlsPlayer from "react-hls-player";
+
 // import "react-tuby/css/main.css";
 import "./../../../node_modules/react-tuby/css/main.css";
 
@@ -24,9 +26,9 @@ const WatchNew2 = () => {
   const [dataLink, setDataLink] = useState();
   const [nowChap, setnowChap] = useState(-1);
   const [getSub, setSub] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [loadingData, setLoading] = useState(true);
+  const [loadingData, setLoading] = useState(false);
   const [iconSave, setIconSave] = useState(0);
   const [iconUnlock, setIconUnlock] = useState(0);
   const [popupVip, setPopupVip] = useState(null);
@@ -36,13 +38,59 @@ const WatchNew2 = () => {
   const [uploadSub, setUploadSub] = useState(null);
   const [forceupdate, setforceupdate] = useState(0);
 
+  //
+  const [urlVideo, setUrl] = useState({});
+  const [urlCurrent, setUrlCurrnent] = useState([]);
+  const [listChap, setListChap] = useState([]);
+  const [infoFilm, setInfo] = useState({});
+
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userData.userDetail);
 
   const history = useHistory();
+
+  const getinfo = () => {
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED + "film/info/" + id)
+      .then((res) => {
+        if (name != res.data.title)
+          history.push("/watchnew/" + id + "/" + res.data.title);
+        setInfo(res.data);
+      })
+      .catch((e) => console.log(e));
+  };
+  const getLink = (token) => {
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED + "link/alllink/" + id, {
+        headers: { Authorization: `${token}` },
+      })
+      .then((res) => {
+        if (res.data == false) setIsDisable(true);
+        else {
+          setUrl(res.data);
+          if (res.data.data.default[0].chap == "Full") {
+            setListChap(["Full"]);
+            setnowChap("Full");
+          } else {
+            let list = [];
+            res.data.data.default.map((e) => {
+              list.push(e.chap);
+            });
+            res.data.data.vip.map((e) => {
+              if (!list.includes(e.chap)) list.push(e.chap);
+            });
+            setnowChap(list[0]);
+            setListChap(list);
+          }
+          setLoading(false);
+          setIsLoading(false);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
-
     // chueyenr qua api
     let clear;
     db.ref()
@@ -75,32 +123,13 @@ const WatchNew2 = () => {
   }, []);
 
   useEffect(() => {
-    if (dataFilmState.id == undefined) {
-      axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
-        // console.log(res.data[0]);
-        if (name != res.data[0].title)
-          history.push("/watchnew/" + id + "/" + res.data[0].title);
-        setDataFilmState(res.data[0]);
-      });
-    }
-    if (dataFilmState.disabled) {
-      setLoading(false);
-      setIsDisable(true);
-    } else {
-      if (dataLink == null)
-        if (userDetail.checkUser != "init") {
-          db.ref()
-            .child("linksub")
-            .orderByChild("film_id")
-            .equalTo(parseInt(id))
-            .get()
-            .then((res) => {
-              if (res.val() !== null) setSub(Object.values(res.val())[0].chap);
-            });
-
-          if (userDetail.checkUser === "not") getDataByParamsId();
-          else getDataByTokenId();
-        }
+    getinfo();
+    if (userDetail.checkUser != "init") {
+      if (userDetail.checkUser == "not") {
+        getLink("not");
+      } else {
+        getLink(userDetail.token);
+      }
     }
   }, [userDetail]);
 
@@ -134,64 +163,84 @@ const WatchNew2 = () => {
   }, [userDetail]);
 
   useEffect(() => {
-    console.log(dataLink);
-  }, [dataLink]);
+    changeChap();
+  }, [nowChap]);
 
-  const getDataByParamsId = () => {
-    db.ref()
-      .child("phimlinkdefault")
-      .orderByChild("film_id")
-      .equalTo(parseInt(id))
-      .get()
-      .then((res) => {
-        if (res.val() === null) setDataLink(null);
-        else {
-          setDataLink(Object.values(res.val())[0].chap);
-          setnowChap(Object.keys(Object.values(res.val())[0].chap)[0]);
-          setNowDataInfo(Object.values(res.val())[0]);
-        }
-        setLoading(false);
-      })
-      .catch((e) => alert(e));
+  const changeChap = () => {
+    if (urlVideo.data !== undefined) {
+      let currentUrl = [];
+      urlVideo.data.default.map((e, i) => {
+        if (e.chap == "Full") currentUrl = e.link;
+        else if (e.chap == nowChap) currentUrl = e.link;
+      });
+
+      if (urlVideo.data.vip !== undefined)
+        urlVideo.data.vip.map((e, i) => {
+          if (e.chap == "Full") currentUrl = currentUrl.concat(e.link);
+          else if (e.chap == nowChap) currentUrl = currentUrl.concat(e.link);
+        });
+      setUrlCurrnent(currentUrl);
+    }
   };
 
-  const getDataByTokenId = () => {
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "link/vip3", {
-        token: userDetail.token,
-        fid: id,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data !== null && res.data.vip) {
-          let thuong = res.data.data[0].chap;
-          let vip = res.data.data[1].chap;
-          let merger = {};
-          Object.keys(thuong).map((e) => {
-            merger[e] = { link: thuong[e].link };
-            if (vip[e] !== undefined)
-              merger[e].link = { ...merger[e].link, ...vip[e].link };
-            console.log(merger);
-          });
-          Object.keys(vip).map((e) => {
-            if (merger[e] === undefined) {
-              merger[e] = { link: vip[e].link };
-              console.log(merger);
-            }
-          });
+  // const getDataByParamsId = () => {
+  //   db.ref()
+  //     .child("phimlinkdefault")
+  //     .orderByChild("film_id")
+  //     .equalTo(parseInt(id))
+  //     .get()
+  //     .then((res) => {
+  //       if (res.val() === null) setDataLink(null);
+  //       else {
+  //         setDataLink(Object.values(res.val())[0].chap);
+  //         setnowChap(Object.keys(Object.values(res.val())[0].chap)[0]);
+  //         setNowDataInfo(Object.values(res.val())[0]);
+  //       }
+  //       setLoading(false);
+  //     })
+  //     .catch((e) => alert(e));
+  // };
 
-          setDataLink(merger);
-          setnowChap(Object.keys(merger)[0][0]);
-        } else setDataLink(res.data);
-        setLoading(false);
-        // setLoading(false);
-        // setnowChap(res.data[0].chap);
-        // setNowDataInfo(res.data[0]);
+  // const getDataByTokenId = () => {
+  //   axios
+  //     .post(process.env.REACT_APP_API_LOCAL + "link/vip3", {
+  //       token: userDetail.token,
+  //       fid: id,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       if (res.data !== null && res.data.vip) {
+  //         let thuong = res.data.data[0].chap;
+  //         let vip = res.data.data[1].chap;
+  //         let merger = {};
+  //         Object.keys(thuong).map((e) => {
+  //           if (thuong[e] !== null && thuong[e] !== undefined) {
+  //             merger[e] = { link: thuong[e].link };
+  //             if (vip[e] !== undefined && vip[e] !== null)
+  //               merger[e].link = { ...merger[e].link, ...vip[e].link };
+  //           }
+  //           console.log(merger);
+  //         });
 
-        // console.log(res.data);
-      })
-      .catch((e) => alert(e));
-  };
+  //         Object.keys(vip).map((e) => {
+  //           if (merger[e] === null && vip[e] !== null) {
+  //             merger[e] = { link: vip[e].link };
+  //             console.log(merger);
+  //           }
+  //         });
+
+  //         setDataLink(merger);
+  //         setnowChap(Object.keys(merger)[0][0]);
+  //       } else setDataLink(res.data);
+  //       setLoading(false);
+  //       // setLoading(false);
+  //       // setnowChap(res.data[0].chap);
+  //       // setNowDataInfo(res.data[0]);
+
+  //       // console.log(res.data);
+  //     })
+  //     .catch((e) => alert(e + " <<<< "));
+  // };
 
   function getFile(filePath) {
     return filePath.substr(filePath.lastIndexOf("\\") + 1).split(".")[0];
@@ -247,7 +296,7 @@ const WatchNew2 = () => {
   }
 
   function contentVideoView() {
-    return loadingData == true ? (
+    return loadingData ? (
       <div className="container loading-film background-item mt-4">
         <h1 className="text-center primary-color container-load">
           {" "}
@@ -260,89 +309,85 @@ const WatchNew2 = () => {
           <h1 className="primary-color">Tạm thời không thể xem phim này!</h1>
         </div>
       </div>
-    ) : dataLink == null ? (
-      <div className="container loading-film background-item mt-4">
-        <div className="text-center container-load">
-          <h1 className="primary-color">Không tìm thấy dữ liệu!</h1>
-          <p className="primary-color">(Phim đang trong quá trình cập nhật)</p>
-        </div>
-      </div>
     ) : (
       <div>
         <div id="filmView" className={"container ps-5 pe-5"}>
-          {Object.keys(dataLink).map((e) => (
-            <div className="text-center">
-              {e == nowChap && (
-                //  && e.server == nowServer
-                <div>
-                  <div className="text-white title-film">
-                    {dataFilmState.title == undefined ? (
-                      <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status">
-                          <span className="sr-only">Loading...</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="container">
-                        <h5 className="primary-color">
-                          {dataFilmState.title} ({dataFilmState.title_origin}){" "}
-                          {/* {forceupdate} */}
-                        </h5>
-                        <span>{view} lượt xem</span>
-                        {/* {JSON.stringify(dataLink[nowChap])}.................*/}
-                        {/* {JSON.stringify(nowDataInfo.sub)} */}
-                      </div>
-                    )}
+          <div className="text-center">
+            <div className="text-white title-film">
+              {infoFilm.title === undefined ? (
+                <div className="d-flex justify-content-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                   </div>
-                  <Player
-                    primaryColor="#ff0000"
-                    src={Object.keys(dataLink[e].link).map((e2) => {
-                      // console.log(e2);
-                      return { quality: e2, url: dataLink[e].link[e2] };
-                    })}
-                    subtitles={
-                      getSub[e] !== undefined
-                        ? Object.keys(getSub[e].sub).map((e2) => {
-                            return {
-                              lang: e2,
-                              url: getSub[e].sub[e2],
-                              language:
-                                e2 === "en"
-                                  ? "Tiếng Anh"
-                                  : e2 === "fr"
-                                  ? "Tiếng Pháp"
-                                  : e2 === "vi"
-                                  ? "Tiếng Việt"
-                                  : e2,
-                            };
-                          })
-                        : [
-                            {
-                              lang: "no",
-                              url:
-                                process.env.REACT_APP_API_LOCAL +
-                                "public/subs/noSub.vtt",
-                              language: "Chưa có sub",
-                            },
-                          ]
-                    }
-                    poster={dataFilmState.backimg}
-                  />
+                </div>
+              ) : (
+                <div className="container">
+                  <h5 className="primary-color">
+                    {infoFilm.title} ({infoFilm.title_origin}){" "}
+                  </h5>
+                  <span>{view} lượt xem</span>
                 </div>
               )}
             </div>
-          ))}
+            {/* <p className="text-light">{JSON.stringify(urlVideo)}</p> */}
+            {urlCurrent.length !== 0 && (
+              <Player
+                src={urlCurrent}
+                subtitles={
+                  getSub[nowChap] !== undefined
+                    ? Object.keys(getSub[nowChap].sub).map((e2) => {
+                        return {
+                          lang: e2,
+                          url: getSub[nowChap].sub[e2],
+                          language:
+                            e2 === "en"
+                              ? "Tiếng Anh"
+                              : e2 === "fr"
+                              ? "Tiếng Pháp"
+                              : e2 === "vi"
+                              ? "Tiếng Việt"
+                              : e2,
+                        };
+                      })
+                    : [
+                        {
+                          lang: "no",
+                          url:
+                            process.env.REACT_APP_API_LOCAL +
+                            "public/subs/noSub.vtt",
+                          language: "Chưa có sub",
+                        },
+                      ]
+                }
+                poster={infoFilm.img}
+              >
+                {(ref, props) => {
+                  const url = props.src;
+                  if (url.substr(url.length - 4) === "m3u8")
+                    return <ReactHlsPlayer playerRef={ref} {...props} />;
+                  else return <video ref={ref} {...props} autoPlay loop />;
+                }}
+              </Player>
+            )}
+            <div className="container mt-1">
+              <div className="row fs-ipad">
+                <div className="col-9">
+                  <h2 className="primary-color">Tập Phim</h2>
+                  {chapFilm2()}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* <input type="file" onChange={onFileChange} /> */}
         <div className="text-center mt-2">
-          <div>
+          {/* <div>
             <label for="files" class="btn btn-danger ">
               Tải Sub
             </label>
             <span className="text-muted ms-1">(.vtt only)</span>
-          </div>
+          </div> */}
 
-          {getSub[nowChap] !== undefined &&
+          {/* {getSub[nowChap] !== undefined &&
             Object.keys(getSub[nowChap].sub).map((e) => {
               if (e !== "fr" && e !== "en" && e !== "vi")
                 return (
@@ -351,12 +396,7 @@ const WatchNew2 = () => {
                     <br />
                   </>
                 );
-            })}
-          {/* {uploadSub !== null && (
-            <span className="text-warning ms-1">
-              (đã tải lên: {uploadSub.name})
-            </span>
-          )} */}
+            })} */}
         </div>
 
         <input
@@ -365,15 +405,7 @@ const WatchNew2 = () => {
           type="file"
           onChange={onFileChange}
         ></input>
-        <div className="container mt-1">
-          <div className="row fs-ipad">
-            <div className="col-9">
-              <h2 className="primary-color">Tập Phim</h2>
-              {chapFilm()}
-              {/* {serverFilm()} */}
-            </div>
-          </div>
-        </div>
+
         <div className="container mt-4">
           <h2 className="primary-color mt-5 mb-3 fs-bl">Bình luận</h2>
           <div className="background-comment p-4 col-9 pb-5 container-bl">
@@ -413,6 +445,33 @@ const WatchNew2 = () => {
     );
   }
 
+  function chapFilm2() {
+    return (
+      <nav>
+        <div>
+          <ul className="pagination  d-flex flex-wrap">
+            {listChap.length !== 0 &&
+              listChap.map((e) => (
+                <li className="p-2">
+                  <button
+                    className={
+                      "text-white border-btn-film btn me-1 btn-respon" +
+                      (e == nowChap && " background-primary text-light")
+                    }
+                    onClick={() => {
+                      setnowChap(e);
+                    }}
+                  >
+                    {e}
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </div>
+      </nav>
+    );
+  }
+
   function unlockTHis(plan) {
     setPopupVip(null);
     if (userDetail.checkUser == "not") alert("please login!");
@@ -440,7 +499,7 @@ const WatchNew2 = () => {
                 (res.data.info.end - Date.now()) / (1000 * 60 * 60 * 24)
               )
             );
-            getDataByTokenId();
+            // getDataByTokenId();
             // forceUpdate();
           } else alert(res.data.complete);
           setIsLoading(false);
@@ -506,7 +565,7 @@ const WatchNew2 = () => {
       <main className="container-fluid container-background pb-5">
         <div className="pt-1">
           {/*  */}
-          {dataFilmState.title == undefined ? (
+          {infoFilm.title == undefined ? (
             <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">
                 <span className="sr-only">Loading...</span>

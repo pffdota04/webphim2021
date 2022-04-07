@@ -106,16 +106,14 @@ const Home = () => {
     window.scrollTo(0, 0);
     const local = JSON.parse(localStorage.getItem("home"));
     if (Object.keys(homeData).length === 0)
-      // if (
-      //   local == undefined ||
-      //   parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
-      // )
-      // call new api sau 3 tieng
-      axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
-        dispatch(setListHome(res.data));
-        res.data.time = Date.now();
-        localStorage.setItem("home", JSON.stringify(res.data));
-      });
+      // axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
+      axios
+        .get(process.env.REACT_APP_API_DEPLOYED + "film/homepage")
+        .then((res) => {
+          dispatch(setListHome(res.data));
+          res.data.time = Date.now();
+          localStorage.setItem("home", JSON.stringify(res.data));
+        });
     else dispatch(setListHome(local));
   }, []);
 
@@ -172,20 +170,15 @@ const Home = () => {
           pauseOnMouseEnter: true,
         }}
       >
-        {Object.keys(homeData.top).map((e, i) => (
+        {homeData.top.map((e, i) => (
           <SwiperSlide className="slide-top">
             {/* <div> */}
             <div className="carousel-caption text-start">
-              <h1>{homeData.top[e].title}</h1>
-              <p className="mota">{homeData.top[e].description}</p>
+              <h1>{e.title}</h1>
+              <p className="mota">{homeData.topdetail[i].description}</p>
               <Link
                 className="btn btn-lg background-primary res-btn"
-                to={
-                  "/detailfilm/" +
-                  homeData.top[e].id +
-                  "/" +
-                  homeData.top[e].title
-                }
+                to={"/detailfilm/" + e._id + "/" + e.title}
               >
                 Xem ngay!
               </Link>
@@ -197,7 +190,7 @@ const Home = () => {
                 objectFit: "cover",
               }}
               className="img-info-film mx-auto  d-block"
-              src={homeData.top[e].backimg}
+              src={homeData.topdetail[i].backimg}
               alt="ảnh top"
             />
             {/* </div> */}
@@ -205,96 +198,6 @@ const Home = () => {
         ))}
       </Swiper>
     );
-
-    //// Last version:
-    // return (
-    //   <section
-    //     id="carouselExampleControls"
-    //     className="carousel slide"
-    //     data-bs-ride="carousel"
-    //   >
-    //     <div className="carousel-inner">
-    //       {Object.keys(homeData).length == 0 ? (
-    //         <div className="carousel-item active backimg">
-    //           <svg
-    //             className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
-    //             style={{ width: "100%", height: "60vh" }}
-    //             role="img"
-    //             aria-label="Placeholder: First slide"
-    //             preserveAspectRatio="xMidYMid slice"
-    //             focusable="false"
-    //           >
-    //             <title>Đang tải</title>
-    //             <rect width="100%" height="100%" fill="#555" />
-    //           </svg>
-    //           <div className="carousel-caption text-start">
-    //             <h1> Loading...</h1>
-    //             <p className="mota">. . .</p>
-    //             <button className="btn btn-lg background-primary">
-    //               Loading...
-    //             </button>
-    //           </div>
-    //         </div>
-    //       ) : (
-    //         Object.keys(homeData.top).map((e, i) => (
-    //           <div
-    //             className={"carousel-item backimg" + (i == 0 ? " active " : "")}
-    //           >
-    //             <img
-    //               style={{
-    //                 width: "100%",
-    //                 height: "90vh",
-    //                 objectFit: "cover",
-    //               }}
-    //               className="img-info-film mx-auto  d-block"
-    //               src={homeData.top[e].backimg}
-    //               alt="ảnh top"
-    //             ></img>
-    //             <div className="carousel-caption text-start">
-    //               <h1>{homeData.top[e].title}</h1>
-    //               <p className="mota">{homeData.top[e].description}</p>
-    //               {/* <button
-    //                 className="btn btn-lg background-primary"
-    //                 onClick={() => console.log(homeData.top[e])}
-    //               >
-    //                 Xem ngay!
-    //               </button> */}
-    //               <Link
-    //                 className="btn btn-lg background-primary res-btn"
-    //                 to={
-    //                   "/detailfilm/" +
-    //                   homeData.top[e].id +
-    //                   "/" +
-    //                   homeData.top[e].title
-    //                 }
-    //               >
-    //                 Xem ngay!
-    //               </Link>
-    //             </div>
-    //           </div>
-    //         ))
-    //       )}
-    //     </div>
-    //     <button
-    //       className="carousel-control-prev"
-    //       type="button"
-    //       data-bs-target="#carouselExampleControls"
-    //       data-bs-slide="prev"
-    //     >
-    //       <span className="carousel-control-prev-icon" aria-hidden="true" />
-    //       <span className="visually-hidden">Previous</span>
-    //     </button>
-    //     <button
-    //       className="carousel-control-next"
-    //       type="button"
-    //       data-bs-target="#carouselExampleControls"
-    //       data-bs-slide="next"
-    //     >
-    //       <span className="carousel-control-next-icon" aria-hidden="true" />
-    //       <span className="visually-hidden">Next</span>
-    //     </button>
-    //   </section>
-    // );
   };
 
   const trendingFilm = () => {
@@ -353,11 +256,11 @@ const Home = () => {
             >
               {Object.keys(homeData).length == 0
                 ? loadLoading(6, false)
-                : Object.keys(homeData.recommend).map((e, i) => (
+                : homeData.recommend.map((e, i) => (
                     <div className="">
                       <FilmCard
-                        data={homeData.recommend[e]}
-                        key={homeData.recommend[e].id + "recom"}
+                        data={e}
+                        key={e._id + "recom"}
                         click={setPopupID}
                       />
                     </div>
@@ -382,41 +285,18 @@ const Home = () => {
             >
               {Object.keys(homeData).length == 0
                 ? loadLoading(6, false)
-                : Object.keys(homeData.last)
-                    .reverse()
-                    .map((e, i) => (
-                      <div className="">
-                        <FilmCard
-                          key={homeData.last[e].id + "last"}
-                          data={homeData.last[e]}
-                          click={setPopupID}
-                        />
-                      </div>
-                    ))}
+                : Object.values(homeData.last).map((e, i) => (
+                    <div className="">
+                      <FilmCard
+                        data={e}
+                        key={e._id + "recom"}
+                        click={setPopupID}
+                      />
+                    </div>
+                  ))}
             </Carousel>
           </div>
-          {/* <div className="row mg-card justify-content-md-center last-update-list mx-auto overflow-hidden">
-            {Object.keys(homeData).length == 0
-              ? [...Array(12)].map((e, i) => (
-                  <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1">
-                    <FilmCard loading={true} />
-                  </div>
-                ))
-              : Object.keys(homeData.last).map((e, i) => (
-                  <div className="col-4 col-xl-3 pb-2 mx-auto ps-0 pe-1">
-                    <FilmCard
-                      key={homeData.last[e].id + "last"}
-                      data={homeData.last[e]}
-                      click={setPopupID}
-                    />
-                  </div>
-                ))}
-          </div> */}
         </div>
-        {/* <div className="text-center mx-auto pb-5 pt-3">
-          <Link to="/phim/tatca">Xem thêm</Link>
-        </div> */}
-        {/* <img className="d-block w-100 pb-2" src={qc} alt="" width={800} /> */}
       </section>
     );
   };
@@ -434,8 +314,14 @@ const Home = () => {
       </MetaTags>
       {topFilm()}
       <div className="container-fluid container-background pt-5 pb-5">
+        <h4 className="text-warning text-center">
+          Hiện tại đang free vip, chỉ cần đăng nhập, xem thả ga!
+        </h4>
+
         <div className="text-center text-light">
-          Chức năng mới:
+          Chức năng sắp ra mắt: use .m3u8 for stream + tối ưu all database (BIG
+          UPDATE) <br />
+          Chức năng thử nghiệm:
           <br />
           <Link to="/kitkot" className="btn btn-danger me-1">
             Kitkot
@@ -443,13 +329,14 @@ const Home = () => {
           <Link to="/tintuc" className="btn btn-danger">
             Tin phim
           </Link>
+          <h6 className="text-danger text-center">
+            Thông báo: Databse đang được tối ưu, một số tính năng cũ có thể gặp
+            lỗi!
+          </h6>
         </div>
 
-        {/* <hr className="mt-5 mb-2" /> */}
         {trendingFilm()}
-        {/* <hr className="mt-5 mb-2" /> */}
         {recommendFilm()}
-        {/* <hr className="mt-5 mb-2" /> */}
         {lastFilm()}
       </div>
       <PopupFilm data={popupId} click={setPopupID} />

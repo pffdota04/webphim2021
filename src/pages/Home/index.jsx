@@ -315,13 +315,18 @@ const Home = () => {
       {topFilm()}
       <div className="container-fluid container-background pt-5 pb-5">
         <h4 className="text-warning text-center">
-          Hiện tại đang free vip, chỉ cần đăng nhập, xem thả ga!
+          Free vip now! Đăng nhập để xem tất cả quality!
+          <span className="text-muted">
+            {" "}
+            (real film in quality '1080p VIP1')
+          </span>
         </h4>
-
+        <h6 className="text-danger text-center">
+          Thông báo: Database đang được tối ưu, một số tính năng cũ có thể gặp
+          lỗi! (---READY FOR BIG UPDATES---)
+        </h6>
         <div className="text-center text-light">
-          Chức năng sắp ra mắt: use .m3u8 for stream + tối ưu all database (BIG
-          UPDATE) <br />
-          Chức năng thử nghiệm:
+          Chức năng đang thử nghiệm:
           <br />
           <Link to="/kitkot" className="btn btn-danger me-1">
             Kitkot
@@ -329,10 +334,6 @@ const Home = () => {
           <Link to="/tintuc" className="btn btn-danger">
             Tin phim
           </Link>
-          <h6 className="text-danger text-center">
-            Thông báo: Databse đang được tối ưu, một số tính năng cũ có thể gặp
-            lỗi!
-          </h6>
         </div>
 
         {trendingFilm()}

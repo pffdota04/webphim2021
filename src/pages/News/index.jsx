@@ -20,7 +20,7 @@ const News = () => {
     // setAllData(allData.reverse());
     db.ref()
       .child("newscontent")
-      .limitToLast(2)
+      .limitToLast(3)
       .get()
       .then((snap) => {
         setAllData(Object.values(snap.val()).reverse());
@@ -33,7 +33,7 @@ const News = () => {
       .child("newscontent")
       .orderByChild("id")
       .endBefore(allData[allData.length - 1].id, lastKey)
-      .limitToLast(3)
+      .limitToLast(4)
       .get()
       .then((snap) => {
         let a = snap.val();
@@ -61,7 +61,7 @@ const News = () => {
 
       <div className="container p-2 bg-dark">
         <h1 className="primary-color text-center">
-          Tin phim mới nhất {lastKey}
+          Tin phim mới nhất 
         </h1>
         <div className="row p-0 m-0">
           {allData == undefined ? (
@@ -80,7 +80,7 @@ const News = () => {
               }
               className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
               endMessage={
-                <p style={{ textAlign: "center" }}>
+                <p className="text-danger" style={{ textAlign: "center" }}>
                   <b>Yay! Không còn tin nào nữa</b>
                 </p>
               }

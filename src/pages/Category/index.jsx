@@ -33,6 +33,7 @@ const Category = (props) => {
   const [dataOther, setDataOther] = useState({});
   const [popupId, setPopupID] = useState(null);
   const [reType, setreType] = useState(type);
+  const [lastKey, setLastKey] = useState(-1);
 
   const params_theloai = [
     "tatca",
@@ -106,27 +107,28 @@ const Category = (props) => {
 
     await axios
       .get(
-        process.env.REACT_APP_API_LOCAL +
-          "film/caterogy/" +
-          dataOf +
-          "/" +
-          lastid
+        process.env.REACT_APP_BACKUP + "film/caterogy/" + dataOf + "/" + lastid
       )
       .then((res) => {
         // console.log(res.headers);
         resulf = res.data;
+        setLastKey(res.data.lastKey);
       });
 
-    let a = resulf;
+    let a = resulf.data;
+    if (a == null || a == "null") {
+      sethasMore(false);
+      return null;
+    }
     // Nếu call nhanh quá thì delay chút cho người ta đọc quảng cáo
-    if (Date.now() - startTime < 500)
-      a = await new Promise((resolve) => {
-        setTimeout(() => resolve(resulf), 500);
-      });
-    if (a == null || a == "null") sethasMore(false);
-    else a = resulf;
-
-    return a;
+    else {
+      if (Date.now() - startTime < 500)
+        a = await new Promise((resolve) => {
+          setTimeout(() => resolve(resulf), 500);
+        });
+      a = resulf.data;
+      return a;
+    }
   };
 
   // if check == -1 (switch type) check xem đã có data chưa
@@ -196,7 +198,8 @@ const Category = (props) => {
     return showThis.length != undefined && showThis.length != 0 ? (
       <InfiniteScroll
         dataLength={showThis.length}
-        next={() => setData(showThis[showThis.length - 1].id)}
+        next={() => setData(lastKey)}
+        // next={() => setData(showThis[showThis.length - 1].id)}
         hasMore={hasMore}
         loader={
           <div className="text-center">

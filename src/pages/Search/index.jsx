@@ -42,12 +42,10 @@ const Search = (props) => {
         local == undefined ||
         parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
       )
-        axios
-          .get(process.env.REACT_APP_API_LOCAL + "film/search")
-          .then((res) => {
-            dispatch(setListSearch(res.data));
-            localStorage.setItem("search", JSON.stringify(res.data));
-          });
+        axios.get(process.env.REACT_APP_BACKUP + "film/all").then((res) => {
+          dispatch(setListSearch(res.data));
+          localStorage.setItem("search", JSON.stringify(res.data));
+        });
       else dispatch(setListSearch(local));
     }
 

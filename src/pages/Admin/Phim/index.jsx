@@ -12,15 +12,19 @@ const Phims = (props) => {
   // dataFilm --> là all Data Phim,
   // setFetchPhim --> để gọi lại api lấy dataFilm mới
   const { token, dataF, setFetchPhim } = props;
-  const [dataFilm, setDataFilm] = useState(dataF);
+  const [dataFilm, setDataFilm] = useState(Object.values(dataF));
 
   const [onLoading, setonLoading] = useState(false);
   const [onTrend, setOnTren] = useState(false);
   const [onRecom, setOnRecom] = useState(false);
+  const [onTop, setOnTop] = useState(false);
+  const [homeId, setHomeId] = useState(undefined);
+  const [detaitFilm, setDetaitFilm] = useState({});
 
   const [choseF, setChoseF] = useState(0); // id phim đang chọn, mặc định 0
   const [currentPhim, setCurrentPhim] = useState(dataFilm[choseF]); // lưu thông tin phim đang chọn
   const [addPhim, setaddPhim] = useState({}); // lưu thông tin phim đang chọn
+  const [addPhimDetail, setaddPhimDetail] = useState({}); // lưu thông tin phim đang chọn
 
   // just convert tiếng việt ra viết tắt để lưu trong dababase
   const theloai = [
@@ -60,9 +64,23 @@ const Phims = (props) => {
     "family",
   ];
 
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_API_LOCAL + "film/homeId").then((res) => {
+      setHomeId(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(process.env.REACT_APP_API_LOCAL + "film/detail/" + choseF)
+      .then((res) => {
+        setDetaitFilm(res.data);
+      });
+  }, [choseF]);
+
   const changeTrending = (id, e) => {
     setonLoading(true);
-    let hold = [...dataF];
+    let hold = [...Object.values(dataF)];
 
     // setDataFilm(hold);
 
@@ -83,7 +101,7 @@ const Phims = (props) => {
 
   const changeRecom = (id, e) => {
     setonLoading(true);
-    let hold = [...dataF];
+    let hold = [...Object.values(dataF)];
     hold[id].recommend = parseInt(e.target.value);
     // setDataFilm(hold);
 
@@ -100,10 +118,10 @@ const Phims = (props) => {
   };
 
   // Form input, hiển thị current và thay đổi state bằng setNew
-  const formPhim = (currentPhim, setNew) => {
+  const formPhim = (currentPhim, setNew, detaitFilm, setDetaitFilm) => {
     return (
       <div className="row g-3" id="editFilm">
-        <div className="col-6 col-md-1">
+        <div className="col-6 col-md-2">
           <label htmlFor="firstName" className="form-label">
             ID
           </label>
@@ -112,7 +130,7 @@ const Phims = (props) => {
             className="form-control"
             id="firstName"
             placeholder
-            value={currentPhim.id === undefined ? "" : currentPhim.id}
+            value={currentPhim._id === undefined ? "" : currentPhim._id}
             disabled
           />
         </div>
@@ -125,10 +143,10 @@ const Phims = (props) => {
             className="form-control"
             id="lastName"
             placeholder
-            value={currentPhim.price === undefined ? "" : currentPhim.price}
+            value={detaitFilm.price === undefined ? "" : detaitFilm.price}
             required
             onChange={(e) =>
-              setNew((prevState) => ({
+              setDetaitFilm((prevState) => ({
                 ...prevState,
                 price: parseInt(e.target.value),
               }))
@@ -150,22 +168,22 @@ const Phims = (props) => {
             }
           />
         </div>
-        <div className="col-6  col-md-2">
+        <div className="col-6  col-md-3">
           <label className="form-label">Độ dài</label>
           <input
             type="text"
             className="form-control"
-            value={currentPhim.length === undefined ? "" : currentPhim.length}
+            value={detaitFilm.length === undefined ? "" : detaitFilm.length}
             required
             onChange={(e) =>
-              setNew((prevState) => ({
+              setDetaitFilm((prevState) => ({
                 ...prevState,
                 length: e.target.value,
               }))
             }
           />
         </div>
-        <div className="col-6 col-md-2">
+        <div className="col-6 col-md-3">
           <label htmlFor="country" className="form-label">
             Quốc gia
           </label>
@@ -188,34 +206,6 @@ const Phims = (props) => {
             <option value="vi">Việt</option>
             <option value="ch">Trung</option>
           </select>
-        </div>
-        <div className="col-6 col-md-3">
-          <label htmlFor="address2" className="form-label">
-            Youtube (
-            <a
-              target="_blank"
-              href={
-                currentPhim.yttrailer != undefined
-                  ? "https://www.youtube.com/watch?v=" + currentPhim.yttrailer
-                  : undefined
-              }
-            >
-              Xem
-            </a>
-            )
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="address2"
-            value={!currentPhim.yttrailer ? "" : currentPhim.yttrailer}
-            onChange={(e) =>
-              setNew((prevState) => ({
-                ...prevState,
-                yttrailer: e.target.value,
-              }))
-            }
-          />
         </div>
 
         <div className="col-sm-6">
@@ -281,16 +271,16 @@ const Phims = (props) => {
           <label className="form-label">
             Background
             <span className="text-muted"> (Link)</span>{" "}
-            <a target="_blank" href={currentPhim.backimg}>
+            <a target="_blank" href={detaitFilm.backimg}>
               Xem
             </a>
           </label>
           <input
             type="text"
             className="form-control"
-            value={!currentPhim.backimg ? "" : currentPhim.backimg}
+            value={!detaitFilm.backimg ? "" : detaitFilm.backimg}
             onChange={(e) =>
-              setNew((prevState) => ({
+              setDetaitFilm((prevState) => ({
                 ...prevState,
                 backimg: e.target.value,
               }))
@@ -302,11 +292,9 @@ const Phims = (props) => {
           <input
             type="text"
             className="form-control"
-            value={
-              currentPhim.director === undefined ? "" : currentPhim.director
-            }
+            value={detaitFilm.director === undefined ? "" : detaitFilm.director}
             onChange={(e) =>
-              setNew((prevState) => ({
+              setDetaitFilm((prevState) => ({
                 ...prevState,
                 director: e.target.value,
               }))
@@ -318,15 +306,44 @@ const Phims = (props) => {
           <input
             type="text"
             className="form-control"
-            value={currentPhim.actor === undefined ? "" : currentPhim.actor}
+            value={detaitFilm.actor === undefined ? "" : detaitFilm.actor}
             onChange={(e) =>
-              setNew((prevState) => ({
+              setDetaitFilm((prevState) => ({
                 ...prevState,
                 actor: e.target.value,
               }))
             }
           />
         </div>
+        <div className="col-6">
+          <label htmlFor="address2" className="form-label">
+            Youtube (
+            <a
+              target="_blank"
+              href={
+                currentPhim.yttrailer != undefined
+                  ? "https://www.youtube.com/watch?v=" + currentPhim.yttrailer
+                  : undefined
+              }
+            >
+              Xem
+            </a>
+            )
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="address2"
+            value={!detaitFilm.yttrailer ? "" : detaitFilm.yttrailer}
+            onChange={(e) =>
+              setDetaitFilm((prevState) => ({
+                ...prevState,
+                yttrailer: e.target.value,
+              }))
+            }
+          />
+        </div>
+
         <div className="col-12">
           <label htmlFor="address2" className="form-label">
             Mô tả
@@ -335,12 +352,10 @@ const Phims = (props) => {
             type="text"
             className="form-control pd"
             value={
-              currentPhim.description === undefined
-                ? ""
-                : currentPhim.description
+              detaitFilm.description === undefined ? "" : detaitFilm.description
             }
             onChange={(e) =>
-              setNew((prevState) => ({
+              setDetaitFilm((prevState) => ({
                 ...prevState,
                 description: e.target.value,
               }))
@@ -405,21 +420,35 @@ const Phims = (props) => {
     if (JSON.stringify(dataFilm[choseF]) == JSON.stringify(currentPhim))
       alert("Not thing change!");
     else {
+      console.log(currentPhim);
+      console.log(detaitFilm);
+      let keyInfo = "xx";
+      console.log(keyInfo);
+      try {
+        Object.values(dataF).forEach(function (e, i) {
+          console.log(i);
+          if (e._id == currentPhim._id) {
+            keyInfo = Object.keys(dataF)[i];
+            throw "a";
+          }
+        });
+      } catch (e) {}
+      console.log(keyInfo);
+
       setonLoading(true);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/update/phim", {
-          token: token,
-          FObject: currentPhim,
-        })
+        .put(
+          process.env.REACT_APP_API_LOCAL + "film",
+          {
+            phimdetail: detaitFilm,
+            phiminfo: { ...currentPhim, key: keyInfo },
+          },
+          { headers: { Authorization: `${token}` } }
+        )
         .then((res) => {
-          alert(res.data);
-          if (res.data === "okok") {
+          if (res.data === "ok") {
             alert("Cập nhật thành công");
-            let b = dataFilm;
-            b.map((e, i) => {
-              if (e.id === currentPhim.id) dataFilm[i] = currentPhim;
-            });
-          }
+          } else alert(res.data);
           setonLoading(false);
         })
         .catch((e) => {
@@ -430,32 +459,36 @@ const Phims = (props) => {
   }
 
   function addnewPhim() {
-    let hold = [...dataF];
+    let hold = [...Object.values(dataF)];
     setonLoading(true);
     if (
       !addPhim.title ||
       !addPhim.title_origin ||
       !addPhim.type ||
-      !addPhim.yttrailer ||
+      !addPhimDetail.yttrailer ||
       !addPhim.year ||
       !addPhim.img ||
-      !addPhim.backimg ||
-      !addPhim.price ||
-      !addPhim.description ||
+      !addPhimDetail.backimg ||
+      !addPhimDetail.price ||
+      !addPhimDetail.description ||
       !addPhim.country
     ) {
       setonLoading(false);
       alert("Điền đầy đủ thông tin để tiếp tục");
       return;
     }
-    addPhim.id = dataFilm[dataFilm.length - 1].id + 1;
+    addPhim._id = dataFilm[dataFilm.length - 1]._id + 1;
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/addphim", {
-        token: token,
-        FObject: addPhim,
-      })
+      .post(
+        process.env.REACT_APP_API_LOCAL + "film",
+        {
+          phimdetail: addPhimDetail,
+          phiminfo: addPhim,
+        },
+        { headers: { Authorization: `${token}` } }
+      )
       .then((res) => {
-        if (res.data == "okok") {
+        if (res.data == "ok") {
           alert("Đã thêm thành công");
           hold.push(addPhim);
           setDataFilm(hold);
@@ -479,7 +512,7 @@ const Phims = (props) => {
       .then((res) => {
         if (res.data == "okok") {
           alert("Đã disable phim");
-          let hold = [...dataF];
+          let hold = [...Object.values(dataF)];
           hold.forEach((e, i) => {
             if (e.id == fid) hold[i].disabled = true;
           });
@@ -503,7 +536,7 @@ const Phims = (props) => {
       .then((res) => {
         if (res.data == "okok") {
           alert("Đã Enable phim");
-          let hold = [...dataF];
+          let hold = [...Object.values(dataF)];
           hold.forEach((e, i) => {
             if (e.id == fid) hold[i].disabled = null;
           });
@@ -524,10 +557,10 @@ const Phims = (props) => {
 
   const searching = (keySearch) => {
     if (keySearch == undefined || keySearch == "") {
-      setDataFilm([...dataF]);
+      setDataFilm([...Object.values(dataF)]);
       return;
     }
-    let a = Object.values([...dataF]).filter((item) => {
+    let a = Object.values([...Object.values(dataF)]).filter((item) => {
       return (
         (item.title !== undefined &&
           item.title.toLowerCase().includes(keySearch.toLowerCase())) ||
@@ -541,36 +574,65 @@ const Phims = (props) => {
   const onlyTren = () => {
     if (onTrend) {
       setOnTren(false);
-      setDataFilm([...dataF]);
+      setDataFilm([...Object.values(dataF)]);
       return;
     }
 
-    let a = Object.values([...dataF]).filter((item) => {
-      return item.trending !== undefined;
+    let a = [];
+    [...Object.values(dataF)].map((e) => {
+      if (homeId.trending.indexOf(e._id) != -1) {
+        a.push(e);
+      }
     });
     setDataFilm(a);
     setOnTren(true);
+    setOnTop(false);
     setOnRecom(false);
   };
 
   const onlyRecom = () => {
     if (onRecom) {
       setOnRecom(false);
-      setDataFilm([...dataF]);
+      setDataFilm([...Object.values(dataF)]);
       return;
     }
 
-    let a = Object.values([...dataF]).filter((item) => {
-      return item.recommend !== undefined;
+    let a = [];
+    [...Object.values(dataF)].map((e) => {
+      if (homeId.recommend.indexOf(e._id) != -1) {
+        a.push(e);
+      }
     });
     setDataFilm(a);
     setOnTren(false);
+    setOnTop(false);
     setOnRecom(true);
   };
 
+  const onlyTop = () => {
+    if (onTop) {
+      setOnTop(false);
+      setDataFilm([...Object.values(dataF)]);
+      return;
+    }
+
+    let a = [];
+    [...Object.values(dataF)].map((e) => {
+      if (homeId.top.indexOf(e._id) != -1) {
+        a.push(e);
+      }
+    });
+    setDataFilm(a);
+    setOnTren(false);
+    setOnRecom(false);
+    setOnTop(true);
+  };
   return (
     <div className="container my-2 mb-3">
       {" "}
+      {JSON.stringify(currentPhim)}
+      <hr />
+      {JSON.stringify(detaitFilm)}
       {onLoading && <Loading />}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
@@ -610,9 +672,24 @@ const Phims = (props) => {
                   <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th onClick={() => onlyTren()}>Trend</th>
-                    <th onClick={() => onlyRecom()}>Recom</th>
-                    <th>Price</th>
+                    <th
+                      onClick={() => onlyTren()}
+                      className={onTrend ? "text-danger" : ""}
+                    >
+                      Trend
+                    </th>
+                    <th
+                      onClick={() => onlyRecom()}
+                      className={onRecom ? "text-danger" : ""}
+                    >
+                      Recom
+                    </th>
+                    <th
+                      onClick={() => onlyTop()}
+                      className={onTop ? "text-danger" : ""}
+                    >
+                      Top
+                    </th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -620,52 +697,75 @@ const Phims = (props) => {
                 <tbody>
                   {dataFilm.map((e, i) => (
                     <tr>
-                      <td>{e.id}</td>
+                      <td>{e._id}</td>
                       <td className="w-50">{e.title}</td>
                       <td>
                         <select
-                          value={e.trending == undefined ? -1 : e.trending}
-                          onChange={(event) => changeTrending(e.id, event)}
+                          value={
+                            homeId != undefined &&
+                            homeId.trending.indexOf(e._id)
+                          }
+                          onChange={(event) => changeTrending(e._id, event)}
                         >
-                          <option selected value={-1}>
+                          <option selected value={-2}>
                             NO
                           </option>
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                          <option value={4}>4</option>
-                          <option value={5}>5</option>
-                          <option value={6}>6</option>
-                          <option value={7}>7</option>
-                          <option value={8}>8</option>
-                          <option value={9}>9</option>
+                          <option value={0}>1</option>
+                          <option value={1}>2</option>
+                          <option value={2}>3</option>
+                          <option value={3}>4</option>
+                          <option value={4}>5</option>
+                          <option value={5}>6</option>
+                          <option value={6}>7</option>
+                          <option value={7}>8</option>
+                          <option value={8}>9</option>
+                          <option value={9}>10</option>
                         </select>
                       </td>
                       <td>
                         <select
-                          value={e.recommend == undefined ? -1 : e.recommend}
-                          onChange={(event) => changeRecom(e.id, event)}
+                          value={
+                            homeId != undefined &&
+                            homeId.recommend.indexOf(e._id)
+                          }
+                          onChange={(event) => changeRecom(e._id, event)}
                         >
                           <option selected value={-1}>
                             NO
                           </option>
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                          <option value={4}>4</option>
-                          <option value={5}>5</option>
-                          <option value={6}>6</option>
-                          <option value={7}>7</option>
-                          <option value={8}>8</option>
-                          <option value={9}>9</option>
+                          <option value={0}>1</option>
+                          <option value={1}>2</option>
+                          <option value={2}>3</option>
+                          <option value={3}>4</option>
+                          <option value={4}>5</option>
+                          <option value={5}>6</option>
+                          <option value={6}>7</option>
+                          <option value={7}>8</option>
+                          <option value={8}>9</option>
+                          <option value={9}>10</option>
                         </select>
                       </td>
-                      <td>{e.price}</td>
+                      <td>
+                        <select
+                          value={
+                            homeId != undefined && homeId.top.indexOf(e._id)
+                          }
+                          onChange={(event) => changeRecom(e._id, event)}
+                        >
+                          <option selected value={-1}>
+                            NO
+                          </option>
+                          <option value={0}>1</option>
+                          <option value={1}>2</option>
+                          <option value={2}>3</option>
+                          <option value={3}>4</option>
+                        </select>
+                      </td>
                       <td className="w-25">
                         <a
                           className="btn btn-sm btn-primary ms-1 me-2 mx-auto"
                           onClick={() => {
-                            setChoseF(e.id);
+                            setChoseF(e._id);
                             setCurrentPhim(dataFilm[i]);
                             //scroll to edit
                             // document.getElementById("editfilm").scrollIntoView({
@@ -689,8 +789,8 @@ const Phims = (props) => {
                           <button
                             className="btn btn-sm btn-success "
                             onClick={() => {
-                              setChoseF(e.id);
-                              enablePhim(e.id);
+                              setChoseF(e._id);
+                              enablePhim(e._id);
                             }}
                           >
                             Enable
@@ -701,7 +801,7 @@ const Phims = (props) => {
                             data-bs-toggle="modal"
                             data-bs-target="#warningModel"
                             onClick={() => {
-                              setChoseF(e.id);
+                              setChoseF(e._id);
                               // disablePhim(e.id);
                             }}
                           >
@@ -724,7 +824,7 @@ const Phims = (props) => {
           </h4>
           <hr className="my-4" />
 
-          {formPhim(currentPhim, setCurrentPhim)}
+          {formPhim(currentPhim, setCurrentPhim, detaitFilm, setDetaitFilm)}
           <hr className="my-4" />
           <button
             className="w-100 btn btn-primary btn-lg"
@@ -761,7 +861,12 @@ const Phims = (props) => {
                   </button>
                 </div>
                 <div className="modal-body">
-                  {formPhim(addPhim, setaddPhim)}
+                  {formPhim(
+                    addPhim,
+                    setaddPhim,
+                    addPhimDetail,
+                    setaddPhimDetail
+                  )}
                 </div>
                 <div className="modal-footer">
                   <button

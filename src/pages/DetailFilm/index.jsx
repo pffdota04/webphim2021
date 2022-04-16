@@ -111,12 +111,12 @@ const DetailFilm = () => {
     window.scrollTo(0, 0);
     if (location.state === undefined) {
       //call api lay data
-      axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
-        if (res.data == null) setData(false);
-        else {
-          convert(res.data[0]);
-        }
-      });
+      // axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
+      //   if (res.data == null) setData(false);
+      //   else {
+      //     convert(res.data[0]);
+      //   }
+      // });
 
       axios
         .get(process.env.REACT_APP_API_DEPLOYED + "film/info/" + id)
@@ -134,7 +134,7 @@ const DetailFilm = () => {
         })
         .catch(setDetail(undefined));
     } else {
-      convert(location.state.data);
+      // convert(location.state.data);
     }
 
     //  get recommend
@@ -151,7 +151,7 @@ const DetailFilm = () => {
           localStorage.setItem("home", JSON.stringify(res.data));
         });
       else dispatch(setListHome(local));
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     console.log(userDetail);
@@ -183,23 +183,23 @@ const DetailFilm = () => {
     }
   }, [userDetail]);
 
-  const convert = (predata) => {
-    let type2 = {};
-    let x = predata;
-    if (data.converted !== true && data.init === true) {
-      console.log("SAP");
-      if (params_quocgia.indexOf(x.country) != -1)
-        x.country2 = x.country2 = params_quocgia.indexOf(x.country);
-      Object.keys(x.type).map((e) => {
-        if (params_theloai.indexOf(e) != -1)
-          type2[e] = params_theloai.indexOf(e);
-      });
-      x.type2 = type2;
-      x.converted = true;
-      console.log(x);
-      setData(x);
-    }
-  };
+  // const convert = (predata) => {
+  //   let type2 = {};
+  //   let x = predata;
+  //   if (data.converted !== true && data.init === true) {
+  //     console.log("SAP");
+  //     if (params_quocgia.indexOf(x.country) != -1)
+  //       x.country2 = x.country2 = params_quocgia.indexOf(x.country);
+  //     Object.keys(x.type).map((e) => {
+  //       if (params_theloai.indexOf(e) != -1)
+  //         type2[e] = params_theloai.indexOf(e);
+  //     });
+  //     x.type2 = type2;
+  //     x.converted = true;
+  //     console.log(x);
+  //     setData(x);
+  //   }
+  // };
 
   const loadLoading = (numberItems, withNumber) => {
     if (withNumber)
@@ -210,42 +210,42 @@ const DetailFilm = () => {
       return [...Array(numberItems)].map((e, i) => <FilmCard loading={true} />);
   };
 
-  const params_theloai = [
-    "action",
-    "movie",
-    "series",
-    "scifi",
-    "comedy",
-    "anime",
-    "adventure",
-    "document",
-    "fantasy",
-    "history",
-    "horror",
-    "romance",
-    "war",
-    "drama",
-    "crime",
-    "family",
-  ];
-  const theloai = [
-    "hành động",
-    "phim lẻ",
-    "phim bộ",
-    "khoa học viễn tưởng",
-    "hài",
-    "anime",
-    "phiêu lưu",
-    "tài liệu",
-    "kì ảo",
-    "lịch sử",
-    "kinh dị",
-    "lãng mạn",
-    "chiến tranh",
-    "chính kịch",
-    "tội phạm",
-    "gia đình - trẻ em",
-  ];
+  // const params_theloai = [
+  //   "action",
+  //   "movie",
+  //   "series",
+  //   "scifi",
+  //   "comedy",
+  //   "anime",
+  //   "adventure",
+  //   "document",
+  //   "fantasy",
+  //   "history",
+  //   "horror",
+  //   "romance",
+  //   "war",
+  //   "drama",
+  //   "crime",
+  //   "family",
+  // ];
+  // const theloai = [
+  //   "hành động",
+  //   "phim lẻ",
+  //   "phim bộ",
+  //   "khoa học viễn tưởng",
+  //   "hài",
+  //   "anime",
+  //   "phiêu lưu",
+  //   "tài liệu",
+  //   "kì ảo",
+  //   "lịch sử",
+  //   "kinh dị",
+  //   "lãng mạn",
+  //   "chiến tranh",
+  //   "chính kịch",
+  //   "tội phạm",
+  //   "gia đình - trẻ em",
+  // ];
   const params_quocgia = ["us", "ja", "ko", "ch", "vi", "es"];
   const quocgia = [
     "Mỹ",
@@ -274,7 +274,7 @@ const DetailFilm = () => {
                       <FilmCard
                         data={homeData.recommend[e]}
                         key={homeData.recommend[e].id + "recom"}
-                        click={setPopupID}
+                        // click={setPopupID}
                       />
                     </div>
                   ))}
@@ -395,20 +395,35 @@ const DetailFilm = () => {
               <p className="details-info-overview">
                 {detail !== undefined && detail.description}
               </p>
-
               <p className="genres">
                 Thể loại:
-                {data.converted === true &&
-                  Object.values(data.type2).map((e) => (
-                    <Link
-                      className="btn btn-sm btn-outline-light ms-1 mt-1 mb-1"
-                      to={"/phim/" + params_theloai[e]}
-                    >
-                      {theloai[e]}
-                    </Link>
-                  ))}
+                {
+                  // data.converted === true &&
+                  // Object.values(data.type2)
+                  info !== undefined &&
+                    info.type !== undefined &&
+                    Object.values(info.type).map((e) => (
+                      <Link
+                        className="btn btn-sm btn-outline-light ms-1 mt-1 mb-1"
+                        to={"/phim/" + e}
+                      >
+                        {e}
+                      </Link>
+                    ))
+                }
               </p>
-              <p className="nation">Quốc gia: {quocgia[data.country2]}</p>
+
+              <p className="nation">
+                Quốc gia:{" "}
+                {info !== undefined && info.country !== undefined && (
+                  <Link
+                    className="btn btn-sm btn-outline-light ms-1 mt-1 mb-1"
+                    to={"/phim/" + info.country}
+                  >
+                    {quocgia[params_quocgia.indexOf(info.country)]}
+                  </Link>
+                )}
+              </p>
               <p className="time-film">
                 Số tập: {detail !== undefined && detail.length}
               </p>
@@ -511,16 +526,18 @@ const DetailFilm = () => {
         <div className="container pb-3">
           <h2 className="primary-color text-center mt-4">TRAILER</h2>
           <div className="video-trailer background-item mt-4">
-            <iframe
-              className="w-100 h-100"
-              // width="560"
-              // height="315"
-              src={"https://www.youtube.com/embed/" + data.yttrailer}
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            {detail !== undefined && (
+              <iframe
+                className="w-100 h-100"
+                // width="560"
+                // height="315"
+                src={"https://www.youtube.com/embed/" + detail.yttrailer}
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            )}
             {/* <p className="text-white text-center">Video trailer</p> */}
           </div>
           {recommendFilm()}

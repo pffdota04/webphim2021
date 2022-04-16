@@ -16,6 +16,114 @@ const Links = (props) => {
     setFetchLink(true);
   }
 
+  function updateLink() {
+    // LObject là một object chứa thông tin User sau khi cập nhật
+    setonLoading(true);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "admin/update/link", {
+        token: token,
+        LObject: currentLink,
+      })
+      .then((res) => {
+        if (res.data === "okok") {
+          alert("Cập nhật thành công");
+          dataL.map((e, i) => {
+            if (e.id === currentLink.id) {
+              let b = dataL;
+              b[i] = currentLink;
+              setdataL(b);
+            }
+          });
+        }
+        setonLoading(false);
+        // bấm nút refresh để update data sau khi cập nhâtk
+      })
+      .catch((e) => {
+        alert(e);
+        setonLoading(false);
+      });
+  }
+
+  function addLink() {
+    setonLoading(true);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "admin/addlink", {
+        token: token,
+        LObject: adddataLink,
+      })
+      .then((res) => {
+        if (res.data === "okok") {
+          alert("Thêm thành công");
+          adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
+          setdataL([...dataL, adddataLink]);
+          setAddLink({});
+        }
+        setonLoading(false);
+      })
+      .catch((e) => {
+        alert(e);
+        setonLoading(false);
+      });
+  }
+
+  function removeLink(lid) {
+    setonLoading(true);
+    axios
+      .post(process.env.REACT_APP_API_LOCAL + "admin/deletelink", {
+        token: token,
+        lid: lid,
+      })
+      .then((res) => {
+        alert(res.data);
+        if (res.data === "okok") {
+          let a = [...dataL];
+          a.map((e, i) => {
+            if (e.id == lid) a.splice(i, 1);
+          });
+          setdataL(a);
+        }
+        // console.log(...dataL)
+        // if (res.data === "okok") {
+        // adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
+        // setdataL([...dataL, adddataLink]);
+        setAddLink({});
+        // }
+        setonLoading(false);
+      })
+      .catch((e) => {
+        alert(e);
+        setonLoading(false);
+      });
+  }
+
+  const sortData = (sortBy) => {
+    setonLoading(true);
+    let hold = [...dataL2];
+    if (sortBy == "fid") {
+      hold.sort(function (a, b) {
+        return a.film_id < b.film_id ? 1 : b.film_id < a.film_id ? -1 : 0;
+      });
+      setdataL(hold);
+    } else if (sortBy == "lid") {
+      hold.sort(function (a, b) {
+        return a.id < b.id ? 1 : b.id < a.id ? -1 : 0;
+      });
+      setdataL(hold);
+    }
+    setonLoading(false);
+  };
+
+  const searching = (keySearch) => {
+    if (keySearch == undefined || keySearch == "") {
+      setdataL([...dataL]);
+      return;
+    }
+    let a = Object.values([...dataL]).filter((item) => {
+      return item.film_id == keySearch;
+    });
+    setdataL(a);
+  };
+  
   const formLink = (currentLink, setNew) => {
     return (
       <div className="row g-3" id="editFilm">
@@ -126,115 +234,6 @@ const Links = (props) => {
       </div>
     );
   };
-
-  function updateLink() {
-    // LObject là một object chứa thông tin User sau khi cập nhật
-    setonLoading(true);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/update/link", {
-        token: token,
-        LObject: currentLink,
-      })
-      .then((res) => {
-        if (res.data === "okok") {
-          alert("Cập nhật thành công");
-          dataL.map((e, i) => {
-            if (e.id === currentLink.id) {
-              let b = dataL;
-              b[i] = currentLink;
-              setdataL(b);
-            }
-          });
-        }
-        setonLoading(false);
-        // bấm nút refresh để update data sau khi cập nhâtk
-      })
-      .catch((e) => {
-        alert(e);
-        setonLoading(false);
-      });
-  }
-
-  function addLink() {
-    setonLoading(true);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/addlink", {
-        token: token,
-        LObject: adddataLink,
-      })
-      .then((res) => {
-        if (res.data === "okok") {
-          alert("Thêm thành công");
-          adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
-          setdataL([...dataL, adddataLink]);
-          setAddLink({});
-        }
-        setonLoading(false);
-      })
-      .catch((e) => {
-        alert(e);
-        setonLoading(false);
-      });
-  }
-
-  function removeLink(lid) {
-    setonLoading(true);
-    axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/deletelink", {
-        token: token,
-        lid: lid,
-      })
-      .then((res) => {
-        alert(res.data);
-        if (res.data === "okok") {
-          let a = [...dataL];
-          a.map((e, i) => {
-            if (e.id == lid) a.splice(i, 1);
-          });
-          setdataL(a);
-        }
-        // console.log(...dataL)
-        // if (res.data === "okok") {
-        // adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
-        // setdataL([...dataL, adddataLink]);
-        setAddLink({});
-        // }
-        setonLoading(false);
-      })
-      .catch((e) => {
-        alert(e);
-        setonLoading(false);
-      });
-  }
-
-  const sortData = (sortBy) => {
-    setonLoading(true);
-    let hold = [...dataL2];
-    if (sortBy == "fid") {
-      hold.sort(function (a, b) {
-        return a.film_id < b.film_id ? 1 : b.film_id < a.film_id ? -1 : 0;
-      });
-      setdataL(hold);
-    } else if (sortBy == "lid") {
-      hold.sort(function (a, b) {
-        return a.id < b.id ? 1 : b.id < a.id ? -1 : 0;
-      });
-      setdataL(hold);
-    }
-    setonLoading(false);
-  };
-
-  const searching = (keySearch) => {
-    if (keySearch == undefined || keySearch == "") {
-      setdataL([...dataL]);
-      return;
-    }
-    let a = Object.values([...dataL]).filter((item) => {
-      return item.film_id == keySearch;
-    });
-    setdataL(a);
-  };
-
   return (
     <div className="my-2 mb-3">
       {onLoading && <Loading />}

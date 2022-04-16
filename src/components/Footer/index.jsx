@@ -1,5 +1,5 @@
 import "./style.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -13,13 +13,10 @@ function Footer() {
                 {/* <i className="fab fa-kickstarter" /> KPHIM */}
               </h6>
               <p>
-                KPHIM là trang web xem phim trực tuyến sử dụng công nghệ Reactjs
-                (Bootstrap 5), server Expressjs.
+                KPHIM là trang web xem phim trực tuyến cực mạnh, nội dung cập
+                nhật liên tục. Nhiều tính năng hay ho thú vị đáp ứng nhu cầu
+                giải trí của bạn! Đăng kí ngay để tận hưởng!
               </p>
-              <span>
-                © 2021 Copyright: &nbsp;
-                <a className="primary-color fw-bold link-color">KPHIM</a>
-              </span>
             </div>
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">
@@ -45,7 +42,6 @@ function Footer() {
                 </Link>
               </p>
             </div>
-
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 fs-mb">
               <h6 className="text-uppercase fw-bold mb-4 primary-color">
                 Liên hệ
@@ -69,7 +65,6 @@ function Footer() {
                 </Link>
               </p>
             </div>
-
             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               {/* Links */}
               <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">
@@ -82,8 +77,18 @@ function Footer() {
               <p className="link-color">
                 <i className="fa fa-phone me-3" /> + 0123 456 789
               </p>
+              <p>
+                This web is using React, Redux, Bootstrap, server ExpressJS and
+                Firebase!.
+              </p>
             </div>
           </div>
+          <p className="m-0 p-0 text-center pb-1">
+            <span>
+              © 2021 Copyright: &nbsp;
+              <a className="primary-color fw-bold link-color">KPHIM</a>
+            </span>
+          </p>
         </div>
       </section>
       {/* <hr /> */}

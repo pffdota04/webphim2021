@@ -46,21 +46,7 @@ const Admin = () => {
     },
   ]);
   const [dataAllUser, setDataAllUser] = useState([]);
-  const [dataAllLink, setDataAllLink] = useState([
-    // {
-    //   id: 0,
-    //   film_id: 0,
-    //   link: "loading",
-    //   server: 0,
-    //   chap: 0,
-    // },
-    {
-      film_id: 0,
-      chap: 0,
-      link: {},
-      sub: {},
-    },
-  ]);
+  const [dataAllLink, setDataAllLink] = useState({});
   const [dataAllKitkot, setDataAllKitkot] = useState([
     {
       id: 0,
@@ -234,9 +220,9 @@ const Admin = () => {
     setFetchPhim(false);
     if (adminToken != null)
       axios
-        .get(process.env.REACT_APP_API_LOCAL + "film/search")
+        .get(process.env.REACT_APP_API_LOCAL + "film/all")
         .then((res) => {
-          setDataAllF(Object.values(res.data));
+          setDataAllF(res.data);
         })
         .catch((e) => console.log(e));
   }
@@ -258,17 +244,16 @@ const Admin = () => {
   function getDataLink() {
     // all user
     setFetchLink(false);
-    if (adminToken != null)
-      axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/linkdefaul", {
-          token: adminToken,
-        })
-        .then((res) => {
-          console.log(res.data);
-          let holdLink = res.data;
-          setDataAllLink(holdLink);
-        })
-        .catch((e) => console.log(e));
+    axios
+      .get(process.env.REACT_APP_API_LOCAL + "link/all", {
+        headers: { Authorization: `${adminToken}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+        let holdLink = res.data;
+        setDataAllLink(holdLink);
+      })
+      .catch((e) => console.log(e));
   }
 
   function getDataKitkot() {
@@ -404,7 +389,7 @@ const Admin = () => {
                 </div>
                 <div className="stats">
                   <p className="text-bold mb-10 d-none d-sm-block">
-                    {Object.keys(dataAllF).length}
+                    {Object.keys(Object.values(dataAllF)).length}
                   </p>{" "}
                   <h6 className=" mx-auto ms-sm-0 ">
                     <Link
@@ -424,7 +409,7 @@ const Admin = () => {
                 </div>
                 <div className="stats">
                   <p className="text-bold mb-10 d-none d-sm-block">
-                    {dataAllLink.length}
+                    {Object.keys(dataAllLink).length}
                   </p>
                   <h6 className=" mx-auto ms-sm-0 ">
                     <Link
@@ -572,8 +557,8 @@ const Admin = () => {
                 path={"/admin/link"}
                 component={() => (
                   <LinkPhim
-                    // dataL={dataAllLink}
-                    dataL={dataAllF}
+                    dataL={dataAllLink}
+                    dataF={Object.values(dataAllF)}
                     token={adminToken}
                     setFetchLink={setFetchLink}
                   />

@@ -25,7 +25,7 @@ const KitKot = () => {
 
   const [allData, setAllData] = useState([
     {
-      id: null,
+      _id: -1,
       title: "Đang tải",
       year: "",
       yttrailer: null,
@@ -33,43 +33,39 @@ const KitKot = () => {
   ]);
 
   const [nowShow, setNowShow] = useState(0);
+  const [allKitkot, setAllKitKot] = useState([, , , ,]);
+  const [holdIndex, setHoldIndex] = useState([]);
 
   const [random, setRandom] = useState();
 
   useEffect(() => {
     db.ref()
       .child("/kitkot")
-      .orderByKey()
-      .limitToLast(1)
       .get()
       .then((snap) => {
         let a = snap.val();
-        setRandom(Object.keys(a)[0]);
-        setAllData([Object.values(a)[0]]);
-        fetchMore(Object.keys(a)[0]);
+        console.log(Object.values(a));
+        setAllKitKot(Object.values(a));
+        setAllData([Object.values(a)[0], Object.values(a)[1]]);
+        setHoldIndex([0, 1]);
       });
   }, []);
 
-  const fetchMore = (count = null) => {
-    console.log("fetch...");
-    let ran = Math.floor(Math.random() * (count ? count : random)) + 1;
-    console.log(ran + " <<< ");
-    db.ref()
-      .child("/kitkot")
-      .orderByKey()
-      .startAt(String(ran))
-      .limitToFirst(1)
-      .once("value")
-      .then((snap) => {
-        let a = snap.val();
-        setAllData((prev) => [...prev, Object.values(a)[0]]);
-      });
+  const fetchMore = () => {
+    let ran = Math.floor(Math.random() * allKitkot.length);
+    if (holdIndex.length == allKitkot.length) {
+    } else if (holdIndex.includes(ran)) fetchMore();
+    else {
+      let item = allKitkot[ran];
+      setHoldIndex((prev) => [...prev, ran]);
+      setAllData((prev) => [...prev, item]);
+    }
   };
 
   const changeCarousel = (currentSlide) => {
     // toggleVideo("hide", currentSlide - 1);
     toggleVideo(currentSlide);
-    setNowShow(currentSlide);
+    // setNowShow(currentSlide);
     if (allData.length - 1 == currentSlide) {
       fetchMore();
     }
@@ -129,36 +125,41 @@ const KitKot = () => {
           direction="vertical"
           className="swip-tik "
         >
-          {allData.map((e, i) => (
-            <SwiperSlide className="slide-tik">
-              <div className="slide-ytb" id={"ytb-top" + i}>
-                <iframe
-                  className="video_watch"
-                  src={
-                    "https://www.youtube.com/embed/" +
-                    e.yttrailer +
-                    "?html5=1&enablejsapi=1&showinfo=0&autohide=1&control=0"
-                  }
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                  id={"iframe-ytb" + i}
-                ></iframe>
-              </div>
-              <div className="silde-title w-100 p-0 m-0">
-                <div>
-                  <p className="title p-0 m-0 ps-3 pe-3">{e.title} ({e.year && e.year}){/*   {i}_{nowShow} */}</p>
-                  <Link
-                    className="btn_watch"
-                    to={"/detailfilm/" + e.id + "/" + e.title}
-                  >
-                    Xem phim
-                  </Link>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
+          {allData.map(
+            (e, i) =>
+              e !== undefined && (
+                <SwiperSlide className="slide-tik">
+                  <div className="slide-ytb" id={"ytb-top" + i}>
+                    <iframe
+                      className="video_watch"
+                      src={
+                        "https://www.youtube.com/embed/" +
+                        e.yttrailer +
+                        "?html5=1&enablejsapi=1&showinfo=0&autohide=1&control=0"
+                      }
+                      title="YouTube video player"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      id={"iframe-ytb" + i}
+                    ></iframe>
+                  </div>
+                  <div className="silde-title w-100 p-0 m-0">
+                    <div>
+                      <p className="title p-0 m-0 ps-3 pe-3">
+                        {e.title} ({e.year && e.year}){/*   {i}_{nowShow} */}
+                      </p>
+                      <Link
+                        className="btn_watch"
+                        to={"/detailfilm/" + e._id + "/" + e.title}
+                      >
+                        Xem phim
+                      </Link>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              )
+          )}
           ...
         </Swiper>
       </div>

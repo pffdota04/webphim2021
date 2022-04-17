@@ -434,17 +434,19 @@ const DetailFilm = () => {
                 Giá VIP: <u>{detail !== undefined && detail.price} Koin</u>
               </p>
               <div className="watch mb-4">
-                <Link
-                  className="background-primary btn btn-go-film"
-                  to={
-                    "/watchnew/" +
-                    id +
-                    "/" +
-                    (info !== undefined ? info.title : "")
-                  }
-                >
-                  Xem phim
-                </Link>
+                {info !== undefined && info.disable != true && (
+                  <Link
+                    className="background-primary btn btn-go-film"
+                    to={
+                      "/watchnew/" +
+                      id +
+                      "/" +
+                      (info !== undefined ? info.title : "")
+                    }
+                  >
+                    Xem phim
+                  </Link>
+                )}
                 <a
                   className="background-primary btn ms-4 btn-go-trailer"
                   href="#title-video-trailer"
@@ -453,56 +455,60 @@ const DetailFilm = () => {
                 </a>
                 {/* {JSON.stringify(detail)} */}
               </div>
-              <div className="">
-                <button
-                  className="btn text-white btn_save"
-                  onClick={() => saveThis()}
-                >
-                  {iconSave === 0 ? (
-                    <div>
-                      <div
-                        className="spinner-border spinner-border-sm me-1"
-                        role="status"
-                      ></div>
-                      Đang tải ...
-                    </div>
-                  ) : iconSave === 1 ? (
-                    <div>
-                      <i class="fa fa-trash"></i> Xóa khỏi danh sách
-                    </div>
-                  ) : (
-                    <div>
-                      <i class="fa fa-plus"></i> Thêm vào danh sách
-                    </div>
-                  )}
-                </button>
-                <button
-                  className="btn text-white btn_save ms-2"
-                  onClick={() => {
-                    setPopupVip(1);
-                  }}
-                  disabled={iconUnlock > 0 && "true"}
-                >
-                  {iconUnlock === 0 ? (
-                    <div>
-                      <div
-                        className="spinner-border spinner-border-sm me-1"
-                        role="status"
-                      ></div>
-                      Đang tải ...
-                    </div>
-                  ) : iconUnlock === -1 ? (
-                    <div>
-                      <i class="fa fa-unlock-alt"></i> Mở khóa vip
-                    </div>
-                  ) : (
-                    <div>
-                      <i class="fa fa-hourglass"></i> Còn lại {iconUnlock} ngày
-                      VIP
-                    </div>
-                  )}
-                </button>
-              </div>
+              {info !== undefined && info.disable != true ? (
+                <div className="">
+                  <button
+                    className="btn text-white btn_save"
+                    onClick={() => saveThis()}
+                  >
+                    {iconSave === 0 ? (
+                      <div>
+                        <div
+                          className="spinner-border spinner-border-sm me-1"
+                          role="status"
+                        ></div>
+                        Đang tải ...
+                      </div>
+                    ) : iconSave === 1 ? (
+                      <div>
+                        <i class="fa fa-trash"></i> Xóa khỏi danh sách
+                      </div>
+                    ) : (
+                      <div>
+                        <i class="fa fa-plus"></i> Thêm vào danh sách
+                      </div>
+                    )}
+                  </button>
+                  <button
+                    className="btn text-white btn_save ms-2"
+                    onClick={() => {
+                      setPopupVip(1);
+                    }}
+                    disabled={iconUnlock > 0 && "true"}
+                  >
+                    {iconUnlock === 0 ? (
+                      <div>
+                        <div
+                          className="spinner-border spinner-border-sm me-1"
+                          role="status"
+                        ></div>
+                        Đang tải ...
+                      </div>
+                    ) : iconUnlock === -1 ? (
+                      <div>
+                        <i class="fa fa-unlock-alt"></i> Mở khóa vip
+                      </div>
+                    ) : (
+                      <div>
+                        <i class="fa fa-hourglass"></i> Còn lại {iconUnlock}{" "}
+                        ngày VIP
+                      </div>
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <div>Hiện tại không thể xem phim này!</div>
+              )}
               {/* <div className="save">
                 <button
                   className="btn text-white btn_save"

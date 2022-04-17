@@ -353,7 +353,7 @@ const Admin = () => {
       <section className="section container">
         <div className="container-fluid pt-1">
           <div className="row mt-4">
-            <div class="col-6 col-lg-3">
+            {/* <div class="col-6 col-lg-3">
               <div class="stats">
                 <p className="text-bold mb-10 d-none d-sm-block">
                   {dataDas.sum}K
@@ -364,7 +364,7 @@ const Admin = () => {
                   </Link>
                 </h6>
               </div>
-            </div>
+            </div> */}
             <div className="col-lg-3  col-6">
               <div className="icon-card mb-30">
                 <div className="stats">
@@ -623,7 +623,7 @@ const Admin = () => {
                 path={"/admin/kitkot"}
                 component={() => (
                   <KitKotAd
-                    dataL={dataAllKitkot}
+                    dataK={dataAllKitkot}
                     token={adminToken}
                     setFetchKikot={setFetchKikot}
                   />

@@ -1,39 +1,59 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { DebounceInput } from "react-debounce-input";
 import Loading from "../../../components/Loading";
 import { db } from "../../../services/firebase";
 import "./style.css";
 
 const KitKotAd = (props) => {
-  const { dataL, token, setFetchKikot } = props;
+  const { dataK, token, setFetchKikot } = props;
   const [choseL, setChoseL] = useState(0);
   const [choseDelete, setChoseDelete] = useState(undefined);
-  const [dataL2, setdataL] = useState(dataL);
+  const [dataK2, setdataK] = useState(Object.values(dataK));
+  const [searchFilm, setSearchFilm] = useState("");
 
   const [onLoading, setonLoading] = useState(false);
-  const [currentLink, setCurrentLink] = useState(dataL[choseL]); // mặc định là link  đầu tiên
-  const [adddataLink, setAddLink] = useState({}); // mặc định là link  đầu tiên
-  const [editKitkot, setEditKitKot] = useState(dataL[choseL]); // mặc định là link  đầu tiên
+  const [currentLink, setCurrentLink] = useState(dataK[0]); // mặc định là link  đầu tiên
+  const [adddataKink, setAddLink] = useState({}); // mặc định là link  đầu tiên
+  const [editKitkot, setEditKitKot] = useState(dataK[0]); // mặc định là link  đầu tiên
 
   function Refresh() {
     setFetchKikot(true);
   }
 
-  const formLink = (currentLink, setNew) => {
+  const formLink = (currentLink, setEditKitKot) => {
     return (
       <div className="row g-3" id="editFilm">
-        {JSON.stringify(editKitkot)}
         <div className="col-sm-6">
           <label htmlFor="firstName" className="form-label">
-            Fid
+            Film Id
           </label>
-          <input
+          <DebounceInput
+            debounceTimeout={1500}
             type="number"
             className="form-control"
             id="firstName"
             placeholder
-            value={currentLink.id === undefined ? "auto" : currentLink.id}
-            disabled
+            value={currentLink._id === undefined ? "auto" : currentLink._id}
+            onChange={(e) => {
+              setEditKitKot((prevState) => ({
+                ...prevState,
+                _id: parseInt(e.target.value),
+              }));
+              axios
+                .get(
+                  process.env.REACT_APP_BACKUP + "film/info/" + e.target.value
+                )
+                .then((res) => {
+                  setSearchFilm(res.data ? res.data.title : "Not Found");
+                  setEditKitKot((prevState) => ({
+                    ...prevState,
+                    title: res.data.title,
+                    year: res.data.year,
+                  }));
+                })
+                .catch(() => setSearchFilm("Not Found"));
+            }}
           />
         </div>
 
@@ -46,7 +66,7 @@ const KitKotAd = (props) => {
             className="form-control"
             id="lastName"
             placeholder
-            value={editKitkot.year === undefined ? "" : editKitkot.year}
+            value={currentLink.year === undefined ? "" : currentLink.year}
             required
             onChange={(e) =>
               setEditKitKot((prevState) => ({
@@ -66,7 +86,7 @@ const KitKotAd = (props) => {
             id="firstName"
             placeholder
             value={
-              editKitkot.yttrailer === undefined ? "" : editKitkot.yttrailer
+              currentLink.yttrailer === undefined ? "" : currentLink.yttrailer
             }
             required
             onChange={(e) =>
@@ -86,7 +106,7 @@ const KitKotAd = (props) => {
             className="form-control"
             id="firstName"
             placeholder
-            value={editKitkot.title === undefined ? "" : editKitkot.title}
+            value={currentLink.title === undefined ? "" : currentLink.title}
             required
             onChange={(e) =>
               setEditKitKot((prevState) => ({
@@ -103,40 +123,31 @@ const KitKotAd = (props) => {
   function updateLink() {
     // LObject là một object chứa thông tin User sau khi cập nhật
     setonLoading(true);
-    console.log(dataL[choseL]);
+    let key = "";
+    Object.values(dataK).map((e, i) => {
+      if (e._id == choseL) key = Object.keys(dataK)[i];
+    });
+
     db.ref()
-      .child("/kitkot")
-      .orderByChild("id")
-      .equalTo(dataL[choseL].id)
-      .get()
-      .then((res) => {
-        db.ref()
-          .child("/kitkot/" + Object.keys(res.val())[0])
-          .update(editKitkot);
+      .child("/kitkot/" + key)
+      .update(editKitkot)
+      .then(() => {
+        Refresh();
+        setonLoading(false);
       });
-    setonLoading(false);
-    //   // bấm nút refresh để update data sau khi cập nhâtk
-    // })
-    // .catch((e) => {
-    //   alert(e);
-    //   setonLoading(false);
-    // });
   }
 
   function addLink() {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/addlink", {
-        token: token,
-        LObject: adddataLink,
+      .post(process.env.REACT_APP_BACKUP + "kitkot", {
+        data: adddataKink,
       })
       .then((res) => {
         if (res.data === "okok") {
           alert("Thêm thành công");
-          adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
-          setdataL([...dataL, adddataLink]);
-          setAddLink({});
         }
+        Refresh();
         setonLoading(false);
       })
       .catch((e) => {
@@ -147,21 +158,19 @@ const KitKotAd = (props) => {
 
   function removeLink(current) {
     setonLoading(true);
+    let key = "";
+    Object.values(dataK).map((e, i) => {
+      if (e._id == current._id) key = Object.keys(dataK)[i];
+    });
+
     db.ref()
-      .child("kitkot")
-      .orderByChild("id")
-      .equalTo(current.id)
-      .get()
-      .then((res) => {
-        db.ref()
-          .child("/kitkot/" + Object.keys(res.val())[0])
-          .remove()
-          .then((snap2) => setonLoading(false))
-          .catch((e) => {
-            alert(e);
-            setonLoading(false);
-          });
+      .child("/kitkot/" + key)
+      .remove()
+      .then(() => {
+        setonLoading(false);
+        Refresh();
       })
+
       .catch((e) => {
         alert(e);
         setonLoading(false);
@@ -170,13 +179,13 @@ const KitKotAd = (props) => {
 
   const searching = (keySearch) => {
     if (keySearch == undefined || keySearch == "") {
-      setdataL(dataL);
+      setdataK(dataK);
       return;
     }
-    let a = Object.values([...dataL]).filter((item) => {
+    let a = Object.values([...dataK]).filter((item) => {
       if (item !== undefined) return item.id == keySearch;
     });
-    setdataL(a);
+    setdataK(a);
   };
 
   return (
@@ -209,7 +218,7 @@ const KitKotAd = (props) => {
             onChange={(e) => searching(e.target.value)}
             placeholder="id phim"
           />
-          {dataL2 != undefined && (
+          {dataK2 != undefined && (
             <div className="table-responsive-xl table-link">
               <table class="table table-hover table-dark">
                 <thead>
@@ -217,25 +226,23 @@ const KitKotAd = (props) => {
                     {/* <th>STT</th> */}
                     <th>Fid</th>
                     <th>Title</th>
-                    <th>Youtube</th>
-                    <th>Year</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {dataL2.map((e, i) => (
+                  {dataK2.map((e, i) => (
                     <tr className="text-center">
                       {/* <td>{i}</td> */}
-                      <td>{e.id}</td>
+                      <td>{e._id}</td>
                       <td>{e.title}</td>
-                      <td>{e.yttrailer}</td>
                       <td>
                         <button
                           className="btn btn-sm  main__table_link-btn--edit"
                           onClick={() => {
-                            setChoseL(i);
+                            setChoseL(e._id);
                             setEditKitKot(e);
-                            setCurrentLink(dataL2[i]);
+                            setCurrentLink(dataK2[i]);
                             window.scrollTo({
                               top:
                                 document
@@ -274,7 +281,7 @@ const KitKotAd = (props) => {
             </strong>
           </h4>
           <hr className="my-4" />
-          {currentLink != undefined && formLink(currentLink, setCurrentLink)}
+          {currentLink != undefined && formLink(editKitkot, setEditKitKot)}
           <hr className="my-4" />
 
           <button
@@ -295,7 +302,7 @@ const KitKotAd = (props) => {
             <div className="modal-content bg-dark border-warning">
               <div className="modal-header">
                 <h5 className="modal-title fw-bold" id="exampleModalLabel">
-                  ADD NEW FILM
+                  ADD NEW KITKOT
                 </h5>
                 <button
                   type="button"
@@ -308,7 +315,7 @@ const KitKotAd = (props) => {
                 </button>
               </div>
               <div className="modal-body">
-                {formLink(adddataLink, setAddLink)}
+                {formLink(adddataKink, setAddLink)}
               </div>
               <div className="modal-footer">
                 <button
@@ -355,7 +362,7 @@ const KitKotAd = (props) => {
               </div>
               {choseDelete !== undefined && (
                 <div className="modal-body">
-                  <h2> Remove kitkot id = {choseDelete.id}</h2>
+                  <h2> Remove kitkot id = {choseDelete._id}</h2>
                   <button
                     className="btn btn-outline-danger mx-auto d-block"
                     data-bs-dismiss="modal"

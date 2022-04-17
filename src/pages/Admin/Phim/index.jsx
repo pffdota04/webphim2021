@@ -418,7 +418,7 @@ const Phims = (props) => {
   // Bấm vào nút cập nhật thì lấy currentPhim gửi đi.
   function updatePhim() {
     if (JSON.stringify(dataFilm[choseF]) == JSON.stringify(currentPhim))
-      alert("Not thing change!");
+      alert("Notthing change!");
     else {
       console.log(currentPhim);
       console.log(detaitFilm);
@@ -505,20 +505,23 @@ const Phims = (props) => {
   function disablePhim(fid) {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/disablephim", {
-        token: token,
-        fid: fid,
-      })
+      .put(
+        process.env.REACT_APP_BACKUP + "film/disable",
+        {
+          fid: fid,
+        },
+        { headers: { Authorization: `${token}` } }
+      )
       .then((res) => {
-        if (res.data == "okok") {
+        if (res.data == "ok") {
           alert("Đã disable phim");
           let hold = [...Object.values(dataF)];
           hold.forEach((e, i) => {
-            if (e.id == fid) hold[i].disabled = true;
+            if (e._id == fid) hold[i].disable = true;
           });
           setDataFilm(hold);
-          setonLoading(false);
         }
+        setonLoading(false);
       })
       .catch((e) => {
         alert(e);
@@ -529,16 +532,19 @@ const Phims = (props) => {
   function enablePhim(fid) {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/enablephim", {
-        token: token,
-        fid: fid,
-      })
+      .put(
+        process.env.REACT_APP_BACKUP + "film/enable",
+        {
+          fid: fid,
+        },
+        { headers: { Authorization: `${token}` } }
+      )
       .then((res) => {
-        if (res.data == "okok") {
+        if (res.data == "ok") {
           alert("Đã Enable phim");
           let hold = [...Object.values(dataF)];
           hold.forEach((e, i) => {
-            if (e.id == fid) hold[i].disabled = null;
+            if (e._id == fid) delete hold[i].disable;
           });
           setDataFilm(hold);
           setonLoading(false);
@@ -785,7 +791,7 @@ const Phims = (props) => {
                         >
                           <i class="fa fa-pencil mb-1" />
                         </a>{" "}
-                        {e.disabled == true ? (
+                        {e.disable == true ? (
                           <button
                             className="btn btn-sm btn-success "
                             onClick={() => {
@@ -802,7 +808,7 @@ const Phims = (props) => {
                             data-bs-target="#warningModel"
                             onClick={() => {
                               setChoseF(e._id);
-                              // disablePhim(e.id);
+                              // disablePhim(e._id);
                             }}
                           >
                             Disable

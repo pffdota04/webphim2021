@@ -49,16 +49,19 @@ const WatchNew2 = () => {
 
   const history = useHistory();
 
-  const getinfo = () => {
-    axios
-      .get(process.env.REACT_APP_API_DEPLOYED + "film/info/" + id)
-      .then((res) => {
-        if (name != res.data.title)
-          history.push("/watchnew/" + id + "/" + res.data.title);
-        setInfo(res.data);
-      })
-      .catch((e) => console.log(e));
+  const getinfo = async () => {
+    let res = await axios.get(
+      process.env.REACT_APP_API_DEPLOYED + "film/info/" + id
+    );
+    // disable thi quay ve detail
+    if (res.data.disable) {
+      history.push("/detailfilm/" + id + "/" + res.data.title);
+    } else if (name != res.data.title)
+      history.push("/watchnew/" + id + "/" + res.data.title);
+    setInfo(res.data);
+    return true;
   };
+
   const getLink = (token) => {
     axios
       .get(process.env.REACT_APP_API_DEPLOYED + "link/alllink/" + id, {
@@ -89,41 +92,25 @@ const WatchNew2 = () => {
       .catch((e) => console.log(e));
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    // chueyenr qua api
-    let clear;
-    db.ref()
-      .child("view/" + id)
-      .get()
-      .then((res) => {
-        let a = res.val();
-        if (a == null) {
-          setView(0);
-        } else {
-          setView(a.view);
-        }
-        clear = setTimeout(() => {
-          db.ref()
-            .child("view/" + id)
-            .get()
-            .then((newRes) => {
-              if (newRes.val() == null) {
-                newRes.ref.update({ view: 0 });
-              } else {
-                let x = newRes.val().view + 1;
-                newRes.ref.update({ view: x }, (e) => console.log(e));
-              }
-            });
-        }, 30000);
-      })
-      .catch((e) => console.log(e));
+  const getView = async () => {
+    let a = await axios.get(process.env.REACT_APP_BACKUP + "film/view/" + id);
+    a = a.data;
+    if (a == null) setView(0);
+    else setView(a.view);
+    return setTimeout(() => {
+      axios.put(process.env.REACT_APP_BACKUP + "film/view/" + id);
+    }, 30000); // sau 30s thi tinh 1 view
+  };
 
+  useEffect(async () => {
+    window.scrollTo(0, 0);
+    await getinfo();
+
+    let clear = await getView();
     return () => clearInterval(clear);
   }, []);
 
   useEffect(() => {
-    getinfo();
     if (userDetail.checkUser != "init") {
       if (userDetail.checkUser == "not") {
         getLink("not");

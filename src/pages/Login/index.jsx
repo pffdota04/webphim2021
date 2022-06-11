@@ -39,7 +39,7 @@ const Login = () => {
   //         .currentUser.getIdToken(true)
   //         .then(function (idToken) {
   //           axios
-  //             .post(process.env.REACT_APP_API_LOCAL + "user/info", {
+  //             .post(process.env.REACT_APP_API_DEPLOYED2 + "user/info", {
   //               token: idToken,
   //             })
   //             .then((res) => {

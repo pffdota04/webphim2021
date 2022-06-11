@@ -151,7 +151,12 @@ const KitKot = () => {
                       </p>
                       <Link
                         className="btn_watch"
-                        to={"/detailfilm/" + e._id + "/" + e.title}
+                        to={
+                          "/detailfilm/" +
+                          e._id +
+                          "/" +
+                          e.title.replaceAll(" ", "-")
+                        }
                       >
                         Xem phim
                       </Link>

@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect, Link } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
@@ -50,7 +50,6 @@ function App() {
             <Route path="/kitkot" component={KitKot} />
             <Route path="/tintuc/:id" component={NewsContent} />
             <Route path="/tintuc" component={News} />
-            {/* <Route path="/soantin" component={SoanTin} /> */}
             <Route path="/quychedichvu" component={QuyCheDichVu} />
             <Route path="/chinhsachbaomat" component={ChinhSachBaoMat} />
             <Route exact path={["/", "/home"]} component={Home} />
@@ -61,6 +60,7 @@ function App() {
             <Route path="/404" component={() => <ErrorPage error={404} />} />
             <Redirect to="/404" />
           </Switch>
+
         </main>
       </>
     </BrowserRouter>

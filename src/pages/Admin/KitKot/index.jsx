@@ -42,7 +42,9 @@ const KitKotAd = (props) => {
               }));
               axios
                 .get(
-                  process.env.REACT_APP_BACKUP + "film/info/" + e.target.value
+                  process.env.REACT_APP_API_DEPLOYED2 +
+                    "film/info/" +
+                    e.target.value
                 )
                 .then((res) => {
                   setSearchFilm(res.data ? res.data.title : "Not Found");
@@ -127,20 +129,21 @@ const KitKotAd = (props) => {
     Object.values(dataK).map((e, i) => {
       if (e._id == choseL) key = Object.keys(dataK)[i];
     });
-
     db.ref()
       .child("/kitkot/" + key)
       .update(editKitkot)
       .then(() => {
         Refresh();
         setonLoading(false);
-      });
+        alert("Cập nhật thành công");
+      })
+      .catch((e) => alert(e));
   }
 
   function addLink() {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_BACKUP + "kitkot", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "kitkot", {
         data: adddataKink,
       })
       .then((res) => {
@@ -168,6 +171,8 @@ const KitKotAd = (props) => {
       .remove()
       .then(() => {
         setonLoading(false);
+        alert("Đã xóa");
+
         Refresh();
       })
 

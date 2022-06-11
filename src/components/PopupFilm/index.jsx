@@ -184,12 +184,15 @@ const PopupFilm = (props) => {
                   className="w-100 p-0 m-0 mt-1 mb-1 btn btn-danger text-center pb-1"
                   aria-label="Close"
                   // to={"/watch/" + data.id + "/" + data.title}
-                  to={"/detailfilm/" + data.id + "/" + data.title}
+                  to={
+                    "/detailfilm/" +
+                    data.id +
+                    "/" +
+                    data.title.replaceAll(" ", "-")
+                  }
                 >
                   Xem ngay
                 </Link>
-
-            
               </div>
             </div>
           </div>

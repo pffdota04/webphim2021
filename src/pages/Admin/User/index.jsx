@@ -112,7 +112,7 @@ const User = (props) => {
   function updateUser() {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/update/user", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/update/user", {
         token: token,
         UObject: currentUser,
       })
@@ -147,7 +147,7 @@ const User = (props) => {
   function disabledUser(email) {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/banuser", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/banuser", {
         token: token,
         email: email,
       })
@@ -171,7 +171,7 @@ const User = (props) => {
   function enableUser(email) {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/unbanuser", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/unbanuser", {
         token: token,
         email: email,
       })

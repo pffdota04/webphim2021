@@ -46,7 +46,7 @@ const UnlockList = () => {
   function getData() {
     if (userDetail.unlockFilm != null && userDetail.unlockFilm != undefined) {
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "film/bylistid", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "film/bylistid", {
           list: Object.keys(userDetail.unlockFilm),
         })
         .then((res) => {

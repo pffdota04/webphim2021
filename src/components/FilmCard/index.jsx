@@ -43,7 +43,9 @@ const FilmCard = (props) => {
     </div>
   ) : (
     <div className="card">
-      <Link to={"/detailfilm/" + data._id + "/" + data.title}>
+      <Link
+        to={"/detailfilm/" + data._id + "/" + data.title.replaceAll(" ", "-")}
+      >
         <div>
           {numberTrend !== undefined && (
             <img

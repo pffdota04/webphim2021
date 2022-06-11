@@ -1,5 +1,5 @@
 import "./style.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import axios from "axios";
 import Footer from "../../components/Footer";
@@ -33,7 +33,7 @@ const WatchNew2 = () => {
   const [iconUnlock, setIconUnlock] = useState(0);
   const [popupVip, setPopupVip] = useState(null);
   const [isDisable, setIsDisable] = useState(false);
-  const [nowDataInfo, setNowDataInfo] = useState({});
+  const [detail, setDetail] = useState({});
   const [view, setView] = useState(null);
   const [uploadSub, setUploadSub] = useState(null);
   const [forceupdate, setforceupdate] = useState(0);
@@ -44,6 +44,9 @@ const WatchNew2 = () => {
   const [listChap, setListChap] = useState([]);
   const [infoFilm, setInfo] = useState({});
 
+  const [refVideo, setRefVideo] = useState(null);
+  const [isChangingChap, SetChangingChap] = useState(false);
+
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userData.userDetail);
 
@@ -51,20 +54,30 @@ const WatchNew2 = () => {
 
   const getinfo = async () => {
     let res = await axios.get(
-      process.env.REACT_APP_API_DEPLOYED + "film/info/" + id
+      process.env.REACT_APP_API_DEPLOYED2 + "film/info/" + id
     );
     // disable thi quay ve detail
     if (res.data.disable) {
-      history.push("/detailfilm/" + id + "/" + res.data.title);
+      history.push(
+        "/detailfilm/" + id + "/" + res.data.title.replaceAll(" ", "-")
+      );
     } else if (name != res.data.title)
-      history.push("/watchnew/" + id + "/" + res.data.title);
+      history.push(
+        "/watchnew/" + id + "/" + res.data.title.replaceAll(" ", "-")
+      );
     setInfo(res.data);
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "film/detail/" + id)
+      .then((res) => {
+        setDetail(res.data);
+      })
+      .catch(setDetail(undefined));
     return true;
   };
 
   const getLink = (token) => {
     axios
-      .get(process.env.REACT_APP_API_DEPLOYED + "link/alllink/" + id, {
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "link/alllink/" + id, {
         headers: { Authorization: `${token}` },
       })
       .then((res) => {
@@ -93,12 +106,14 @@ const WatchNew2 = () => {
   };
 
   const getView = async () => {
-    let a = await axios.get(process.env.REACT_APP_BACKUP + "film/view/" + id);
+    let a = await axios.get(
+      process.env.REACT_APP_API_DEPLOYED2 + "film/view/" + id
+    );
     a = a.data;
     if (a == null) setView(0);
     else setView(a.view);
     return setTimeout(() => {
-      axios.put(process.env.REACT_APP_BACKUP + "film/view/" + id);
+      axios.put(process.env.REACT_APP_API_DEPLOYED2 + "film/view/" + id);
     }, 30000); // sau 30s thi tinh 1 view
   };
 
@@ -151,7 +166,15 @@ const WatchNew2 = () => {
 
   useEffect(() => {
     changeChap();
+    SetChangingChap(true);
   }, [nowChap]);
+
+  useEffect(() => {
+    if (isChangingChap)
+      setTimeout(() => {
+        SetChangingChap(false);
+      }, 10);
+  }, [isChangingChap]);
 
   const changeChap = () => {
     if (urlVideo.data !== undefined) {
@@ -190,7 +213,7 @@ const WatchNew2 = () => {
 
   // const getDataByTokenId = () => {
   //   axios
-  //     .post(process.env.REACT_APP_API_LOCAL + "link/vip3", {
+  //     .post(process.env.REACT_APP_API_DEPLOYED2 + "link/vip3", {
   //       token: userDetail.token,
   //       fid: id,
   //     })
@@ -255,14 +278,17 @@ const WatchNew2 = () => {
     const data = new FormData();
     data.append("file", rename);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "public/subs/user-upload", data)
+      .post(
+        process.env.REACT_APP_API_DEPLOYED2 + "public/subs/user-upload",
+        data
+      )
       .then((res) => {
         console.log(res.data);
         let copyNowdata = getSub;
         if (name.length > 13) name = name.substring(0, 10) + "...";
         name = name + "(" + res.data.slice(0, -6) + ")";
         copyNowdata[nowChap].sub[name] =
-          process.env.REACT_APP_API_LOCAL + "public/subs/" + res.data;
+          process.env.REACT_APP_API_DEPLOYED2 + "public/subs/" + res.data;
 
         setSub(copyNowdata);
 
@@ -308,7 +334,7 @@ const WatchNew2 = () => {
                   </div>
                 </div>
               ) : (
-                <div className="container">
+                <div className="d-flex justify-content-center">
                   <h5 className="primary-color">
                     {infoFilm.title} ({infoFilm.title_origin}){" "}
                   </h5>
@@ -317,8 +343,9 @@ const WatchNew2 = () => {
               )}
             </div>
             {/* <p className="text-light">{JSON.stringify(urlVideo)}</p> */}
-            {urlCurrent.length !== 0 && (
+            {urlCurrent.length !== 0 && !isChangingChap ? (
               <Player
+                autoPlay={false}
                 src={urlCurrent}
                 subtitles={
                   getSub[nowChap] !== undefined
@@ -340,7 +367,7 @@ const WatchNew2 = () => {
                         {
                           lang: "no",
                           url:
-                            process.env.REACT_APP_API_LOCAL +
+                            process.env.REACT_APP_API_DEPLOYED2 +
                             "public/subs/noSub.vtt",
                           language: "Chưa có sub",
                         },
@@ -351,14 +378,32 @@ const WatchNew2 = () => {
                 {(ref, props) => {
                   const url = props.src;
                   if (url.substr(url.length - 4) === "m3u8")
-                    return <ReactHlsPlayer playerRef={ref} {...props} />;
-                  else return <video ref={ref} {...props} autoPlay loop />;
+                    return (
+                      <ReactHlsPlayer
+                        playerRef={ref}
+                        autoPlay={false}
+                        {...props}
+                      />
+                    );
+                  else
+                    return <video ref={ref} {...props} autoPlay={false} loop />;
                 }}
               </Player>
+            ) : (
+              <div
+                className="tuby"
+                style={{
+                  width: "100%",
+                  height: "0px",
+                  paddingBottom: "56.25%",
+                }}
+              >
+                <img src={infoFilm.img} className="tuby-poster" />
+              </div>
             )}
             <div className="container mt-1">
               <div className="row fs-ipad">
-                <div className="col-9">
+                <div>
                   <h2 className="primary-color">Tập Phim</h2>
                   {chapFilm2()}
                 </div>
@@ -394,8 +439,10 @@ const WatchNew2 = () => {
         ></input>
 
         <div className="container mt-4">
-          <h2 className="primary-color mt-5 mb-3 fs-bl">Bình luận</h2>
-          <div className="background-comment p-4 col-9 pb-5 container-bl">
+          <h2 className="primary-color mt-5 mb-3 fs-bl text-center">
+            Bình luận
+          </h2>
+          <div className="background-comment p-4  pb-5 container-bl">
             <Chat place={id} backimg={dataFilmState.backimg} />
           </div>
         </div>
@@ -434,28 +481,26 @@ const WatchNew2 = () => {
 
   function chapFilm2() {
     return (
-      <nav>
-        <div>
-          <ul className="pagination  d-flex flex-wrap">
-            {listChap.length !== 0 &&
-              listChap.map((e) => (
-                <li className="p-2">
-                  <button
-                    className={
-                      "text-white border-btn-film btn me-1 btn-respon" +
-                      (e == nowChap && " background-primary text-light")
-                    }
-                    onClick={() => {
-                      setnowChap(e);
-                    }}
-                  >
-                    {e}
-                  </button>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </nav>
+      <div>
+        <ul className="pagination  d-flex flex-wrap justify-content-center">
+          {listChap.length !== 0 &&
+            listChap.map((e) => (
+              <li className="p-2">
+                <button
+                  className={
+                    "text-white border-btn-film btn me-1 btn-respon" +
+                    (e == nowChap && " background-primary text-light")
+                  }
+                  onClick={() => {
+                    setnowChap(e);
+                  }}
+                >
+                  {e}
+                </button>
+              </li>
+            ))}
+        </ul>
+      </div>
     );
   }
 
@@ -467,7 +512,7 @@ const WatchNew2 = () => {
       setIsLoading(true);
       setIconUnlock(0);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/unlock", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/unlock", {
           token: userDetail.token,
           fid: id,
           plan: plan,
@@ -486,6 +531,7 @@ const WatchNew2 = () => {
                 (res.data.info.end - Date.now()) / (1000 * 60 * 60 * 24)
               )
             );
+            getLink(userDetail.token);
             // getDataByTokenId();
             // forceUpdate();
           } else alert(res.data.complete);
@@ -493,6 +539,8 @@ const WatchNew2 = () => {
         })
         .catch((e) => {
           console.log(e);
+          setIconUnlock(-1);
+          alert("Sorry, some thing was wrong!");
           setIsLoading(false);
         });
     }
@@ -505,7 +553,7 @@ const WatchNew2 = () => {
     else {
       setIconSave(0);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/savefilm", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/savefilm", {
           token: userDetail.token,
           fid: id,
         })
@@ -676,13 +724,13 @@ const WatchNew2 = () => {
                         Mở khóa <strong className="primary-color">3</strong>{" "}
                         ngày với{" "}
                         <strong className="primary-color">
-                          {dataFilmState.price}
+                          {detail.price}
                         </strong>{" "}
                         Coin
                       </span>
                       <button
                         className="btn btn-sm background-primary float-mk"
-                        disabled={userDetail.coin < dataFilmState.price}
+                        disabled={userDetail.coin < detail.price}
                         onClick={() => unlockTHis(0)}
                       >
                         Mở khóa
@@ -692,12 +740,12 @@ const WatchNew2 = () => {
                       Mở khóa <strong className="primary-color">7</strong> ngày
                       với{" "}
                       <strong className="primary-color">
-                        {dataFilmState.price * 2}
+                        {detail.price * 2}
                       </strong>{" "}
                       Coin
                       <button
                         className="btn btn-sm background-primary float-mk"
-                        disabled={userDetail.coin < dataFilmState.price * 2}
+                        disabled={userDetail.coin < detail.price * 2}
                         onClick={() => unlockTHis(1)}
                       >
                         Mở khóa
@@ -707,12 +755,12 @@ const WatchNew2 = () => {
                       Mở khóa <strong className="primary-color">14</strong> ngày
                       với{" "}
                       <strong className="primary-color">
-                        {dataFilmState.price * 3}
+                        {detail.price * 3}
                       </strong>{" "}
                       Coin
                       <button
                         className="btn btn-sm background-primary float-mk "
-                        disabled={userDetail.coin < dataFilmState.price * 3}
+                        disabled={userDetail.coin < detail.price * 3}
                         onClick={() => unlockTHis(2)}
                       >
                         Mở khóa

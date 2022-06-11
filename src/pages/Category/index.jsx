@@ -107,7 +107,7 @@ const Category = (props) => {
 
     await axios
       .get(
-        process.env.REACT_APP_API_LOCAL + "film/caterogy/" + dataOf + "/" + lastid
+        process.env.REACT_APP_API_DEPLOYED2 + "film/caterogy/" + dataOf + "/" + lastid
       )
       .then((res) => {
         // console.log(res.headers);

@@ -111,7 +111,7 @@ const DetailFilm = () => {
     window.scrollTo(0, 0);
     if (location.state === undefined) {
       //call api lay data
-      // axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
+      // axios.get(process.env.REACT_APP_API_DEPLOYED2 + "film/" + id).then((res) => {
       //   if (res.data == null) setData(false);
       //   else {
       //     convert(res.data[0]);
@@ -119,14 +119,14 @@ const DetailFilm = () => {
       // });
 
       axios
-        .get(process.env.REACT_APP_API_DEPLOYED + "film/info/" + id)
+        .get(process.env.REACT_APP_API_DEPLOYED2 + "film/info/" + id)
         .then((res) => {
           setInfo(res.data);
         })
         .catch(setInfo(undefined));
 
       axios
-        .get(process.env.REACT_APP_API_DEPLOYED + "film/detail/" + id)
+        .get(process.env.REACT_APP_API_DEPLOYED2 + "film/detail/" + id)
         .then((res) => {
           let a = res.data;
           if (res.data.backimg === undefined) a.backimg = backdetail;
@@ -145,11 +145,13 @@ const DetailFilm = () => {
         parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
       )
         // call new api sau 3 tieng
-        axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
-          dispatch(setListHome(res.data));
-          res.data.time = Date.now();
-          localStorage.setItem("home", JSON.stringify(res.data));
-        });
+        axios
+          .get(process.env.REACT_APP_API_DEPLOYED2 + "film/home")
+          .then((res) => {
+            dispatch(setListHome(res.data));
+            res.data.time = Date.now();
+            localStorage.setItem("home", JSON.stringify(res.data));
+          });
       else dispatch(setListHome(local));
   }, [location.pathname]);
 
@@ -293,7 +295,7 @@ const DetailFilm = () => {
       setIsLoading(true);
       setIconUnlock(0);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/unlock", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/unlock", {
           token: userDetail.token,
           fid: id,
           plan: plan,
@@ -331,7 +333,7 @@ const DetailFilm = () => {
     else {
       setIconSave(0);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/savefilm", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/savefilm", {
           token: userDetail.token,
           fid: id,
         })
@@ -441,7 +443,9 @@ const DetailFilm = () => {
                       "/watchnew/" +
                       id +
                       "/" +
-                      (info !== undefined ? info.title : "")
+                      (info.title !== undefined
+                        ? info.title.replaceAll(" ", "-")
+                        : "")
                     }
                   >
                     Xem phim
@@ -592,10 +596,10 @@ const DetailFilm = () => {
 
                     <div className="col-12 border border-danger mb-3 p-1">
                       Mở khóa <strong>3</strong> ngày với{" "}
-                      <strong>{data.price}</strong> Coin
+                      <strong>{detail.price}</strong> Coin
                       <button
                         className="btn btn-sm btn-danger float-end"
-                        disabled={userDetail.coin < data.price}
+                        disabled={userDetail.coin < detail.price}
                         onClick={() => unlockTHis(0)}
                       >
                         Mở khóa
@@ -603,10 +607,10 @@ const DetailFilm = () => {
                     </div>
                     <div className="col-12 border border-danger mb-3  p-1">
                       Mở khóa <strong>7</strong> ngày với{" "}
-                      <strong>{data.price * 2}</strong> Coin
+                      <strong>{detail.price * 2}</strong> Coin
                       <button
                         className="btn btn-sm btn-danger float-end"
-                        disabled={userDetail.coin < data.price * 2}
+                        disabled={userDetail.coin < detail.price * 2}
                         onClick={() => unlockTHis(1)}
                       >
                         Mở khóa
@@ -614,10 +618,10 @@ const DetailFilm = () => {
                     </div>
                     <div className="col-12 border border-danger mb-3  p-1">
                       Mở khóa <strong>14</strong> ngày với{" "}
-                      <strong>{data.price * 3}</strong> Coin
+                      <strong>{detail.price * 3}</strong> Coin
                       <button
                         className="btn btn-sm btn-danger float-end "
-                        disabled={userDetail.coin < data.price * 3}
+                        disabled={userDetail.coin < detail.price * 3}
                         onClick={() => unlockTHis(2)}
                       >
                         Mở khóa

@@ -47,7 +47,7 @@ const WatchLaterList = () => {
   function getData() {
     if (userDetail.saveFilm != null && userDetail.saveFilm != undefined) {
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "film/bylistid", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "film/bylistid", {
           list: Object.keys(userDetail.saveFilm),
         })
         .then((res) => {
@@ -66,6 +66,7 @@ const WatchLaterList = () => {
       <div className="row justify-content-md-center last-update-list mx-auto overflow-hidden">
         {data.map((i, index) => (
           <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
+            {/* {JSON.stringify(i)} */}
             <FilmCard key={i + "later"} data={i} click={setPopupID} />
           </div>
         ))}

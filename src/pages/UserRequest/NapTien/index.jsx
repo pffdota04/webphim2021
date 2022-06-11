@@ -63,7 +63,7 @@ const NapTien = (props) => {
     setIsLoading(true);
 
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "user/napkoin", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/napkoin", {
         token: userDetail.token,
         mgd: inputCode,
         type: phuongThuc,

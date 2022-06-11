@@ -53,7 +53,7 @@ const Register = () => {
       setErrorSignup("Mật khẩu phải dài hơn 6 kí tự");
     else
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/signup", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/signup", {
           newmail: emailSignup,
           newpassword: passSignup,
           name: nameSignup,

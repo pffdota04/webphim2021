@@ -78,8 +78,8 @@ function Footer() {
                 <i className="fa fa-phone me-3" /> + 0123 456 789
               </p>
               <p>
-                This web is using React, Redux, Bootstrap, server ExpressJS and
-                Firebase!.
+                This web is using React (Create-React-App), Redux, Bootstrap,
+                ExpressJS and Firebase (maybe more...)!
               </p>
             </div>
           </div>

@@ -106,9 +106,9 @@ const Home = () => {
     window.scrollTo(0, 0);
     const local = JSON.parse(localStorage.getItem("home"));
     if (Object.keys(homeData).length === 0)
-      // axios.get(process.env.REACT_APP_API_LOCAL + "film/home").then((res) => {
+      // axios.get(process.env.REACT_APP_API_DEPLOYED2 + "film/home").then((res) => {
       axios
-        .get(process.env.REACT_APP_API_DEPLOYED + "film/homepage")
+        .get(process.env.REACT_APP_API_DEPLOYED2 + "film/homepage")
         .then((res) => {
           dispatch(setListHome(res.data));
           res.data.time = Date.now();
@@ -314,35 +314,35 @@ const Home = () => {
       </MetaTags>
       {topFilm()}
       <div className="container-fluid container-background pt-5 pb-5">
-        <h4 className="text-warning text-center">
+        {/* <h4 className="text-warning text-center">
           Free vip now! Đăng nhập để xem tất cả quality!
           <span className="text-muted">
-            {" "}
             (real film in quality '1080p VIP1')
           </span>
-        </h4>
-        <h6 className="text-danger text-center">
-          Thông báo: Database đang được tối ưu, một số tính năng cũ có thể gặp
-          lỗi! (---READY FOR BIG UPDATES---)
-        </h6>
-        <div className="text-center text-light">
-          Chức năng đang thử nghiệm:
-          <br />
-          <Link to="/kitkot" className="btn btn-danger me-1">
-            Kitkot
-          </Link>{" "}
-          <Link to="/tintuc" className="btn btn-danger">
-            Tin phim
-          </Link>
-        </div>
-
+        </h4> */}
         {trendingFilm()}
         {recommendFilm()}
         {lastFilm()}
+        <h6 className="text-danger text-center">
+          voucher (cái nào đã xài rồi thì thử cái khác): freevoucher, freevoucher1, freevoucher2, freevoucher3,
+          happy, happy1, happy2, happy3, happy4, vou60, vou80, vou100
+        </h6>
       </div>
       <PopupFilm data={popupId} click={setPopupID} />
 
       <Footer />
+      <Link
+        to="/kitkot"
+        className="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center btn-all-screen "
+      >
+        KITKOT
+      </Link>
+      <Link
+        to="/tintuc"
+        className="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center btn-all-screen btn-all-2"
+      >
+        News
+      </Link>
     </div>
   );
 };

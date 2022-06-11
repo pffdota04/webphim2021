@@ -72,7 +72,7 @@ const Header = () => {
             console.log(idToken);
             console.log(userinfo);
             axios
-              .post(process.env.REACT_APP_API_LOCAL + "user/info", {
+              .post(process.env.REACT_APP_API_DEPLOYED2 + "user/info", {
                 token: idToken,
               })
               .then((res) => {
@@ -100,11 +100,13 @@ const Header = () => {
         local == undefined ||
         parseInt(local.time) + 1000 * 60 * 60 * 3 < Date.now()
       )
-        axios.get(process.env.REACT_APP_API_LOCAL + "film/all").then((res) => {
-          dispatch(setListSearch(res.data));
-          localStorage.setItem("search", JSON.stringify(res.data));
-          setcalling(false);
-        });
+        axios
+          .get(process.env.REACT_APP_API_DEPLOYED2 + "film/all")
+          .then((res) => {
+            dispatch(setListSearch(res.data));
+            localStorage.setItem("search", JSON.stringify(res.data));
+            setcalling(false);
+          });
       else dispatch(setListSearch(local));
     }
     e.preventDefault();
@@ -160,7 +162,6 @@ const Header = () => {
           >
             <span className="navbar-toggler-icon" />
           </button> */}
-
           <div
             className={
               "collapse navbar-collapse menu-header " +
@@ -232,7 +233,12 @@ const Header = () => {
                             ? userLogo
                             : userInfo.photoURL
                         }
-                        alt="mdo"
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null; // prevents looping
+                          currentTarget.src =
+                            "https://suno.vn/blog/wp-content/uploads/2014/12/nike-lich-su-thiet-ke-logo.jpg";
+                        }}
+                        alt="user-avt"
                         width={32}
                         height={32}
                         className="rounded-circle"
@@ -657,6 +663,10 @@ const Header = () => {
                   placeholder="Tìm kiếm"
                   aria-label="Search"
                   id="search-input"
+                  onKeyPress={(e) => {
+                    if (e.key == "Enter")
+                      history.push("/search/" + searchValue);
+                  }}
                   onChange={(e) => {
                     e.stopPropagation();
                     onSubmitSearch(e);

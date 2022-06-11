@@ -34,7 +34,7 @@ const UserRequest = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.post(process.env.REACT_APP_API_LOCAL + "admin/allstk").then((res) => {
+    axios.post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk").then((res) => {
       setAllStk(res.data);
     });
   }, []);

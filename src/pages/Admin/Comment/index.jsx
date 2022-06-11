@@ -14,7 +14,7 @@ const Comments = (props) => {
 
   function Refresh() {
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/allstk", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk", {
         token: token,
       })
       .then((res) => {
@@ -29,7 +29,7 @@ const Comments = (props) => {
 
   const edit = () => {
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/update/stk", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/update/stk", {
         token: token,
         stk: { [name]: number },
       })

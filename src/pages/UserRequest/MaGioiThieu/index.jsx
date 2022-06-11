@@ -11,7 +11,7 @@ const MaGioiThieu = (props) => {
   function sendMaGioiThieu() {
     setIsLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "user/usecode", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/usecode", {
         token: userDetail.token,
         code: inputCode,
       })

@@ -17,7 +17,7 @@ const Napcoins = (props) => {
   function deleteRequest(rm_e) {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/deletenap", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/deletenap", {
         token: token,
         mgdtype: rm_e.mgd + rm_e.type,
       })
@@ -37,7 +37,7 @@ const Napcoins = (props) => {
   function deleteOld() {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/deleteoldnap", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/deleteoldnap", {
         token: token,
       })
       .then((res) => {
@@ -57,7 +57,7 @@ const Napcoins = (props) => {
     alert(action);
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/xulynapkoin", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/xulynapkoin", {
         token: token,
         mgdtype: xuly_e.mgd + xuly_e.type,
         action: action,

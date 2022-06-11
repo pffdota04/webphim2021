@@ -1,12 +1,16 @@
+import { useEffect } from "react";
 import Footer from "../../components/Footer";
 
 function QuyCheDichVu() {
+  useEffect(async () => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="container-background">
       <div className="container p-5 contain-cs">
         <h1 className="text-center primary-color">Quy chế dịch vụ </h1>
         <p className="mt-4 text-light">
-        Khi sử dụng trang web này, có nghĩa là bạn đồng ý với các quy chế sau:
+          Khi sử dụng trang web này, có nghĩa là bạn đồng ý với các quy chế sau:
         </p>
         <ul className="text-light">
           <li> Không trao đổi, mua bán tài khoản và koin.</li>
@@ -61,15 +65,14 @@ function QuyCheDichVu() {
             Trong mọi trường hợp, quyết định từ Kphim là quyết định cuối cùng.
           </li>
         </ul>
-          <strong className="primary-color">
-            {" "}
-            TÔI ĐÃ ĐỌC CÁC ĐIỀU KHOẢN DỊCH VỤ NÀY VÀ ĐỒNG Ý VỚI TẤT CẢ CÁC ĐIỀU
-            KHOẢN NHƯ TRÊN CŨNG NHƯ BẤT KỲ ĐIỀU KHOẢN NÀO ĐƯỢC CHỈNH SỬA SAU
-            NÀY. BẰNG CÁCH BẤM NÚT “ĐĂNG KÝ” HOẶC “ĐĂNG NHẬP” KHI ĐĂNG KÝ SỬ
-            DỤNG TRANG SHOPEE, TÔI HIỂU RẰNG TÔI ĐANG TẠO CHỮ KÝ ĐIỆN TỬ MÀ TÔI
-            HIỂU RẰNG NÓ CÓ GIÁ TRỊ VÀ HIỆU LỰC TƯƠNG TỰ NHƯ CHỮ KÝ TÔI KÝ BẰNG
-            TAY.
-          </strong>
+        <strong className="primary-color">
+          {" "}
+          TÔI ĐÃ ĐỌC CÁC ĐIỀU KHOẢN DỊCH VỤ NÀY VÀ ĐỒNG Ý VỚI TẤT CẢ CÁC ĐIỀU
+          KHOẢN NHƯ TRÊN CŨNG NHƯ BẤT KỲ ĐIỀU KHOẢN NÀO ĐƯỢC CHỈNH SỬA SAU NÀY.
+          BẰNG CÁCH BẤM NÚT “ĐĂNG KÝ” HOẶC “ĐĂNG NHẬP” KHI ĐĂNG KÝ SỬ DỤNG TRANG
+          SHOPEE, TÔI HIỂU RẰNG TÔI ĐANG TẠO CHỮ KÝ ĐIỆN TỬ MÀ TÔI HIỂU RẰNG NÓ
+          CÓ GIÁ TRỊ VÀ HIỆU LỰC TƯƠNG TỰ NHƯ CHỮ KÝ TÔI KÝ BẰNG TAY.
+        </strong>
       </div>
       <Footer />
     </div>

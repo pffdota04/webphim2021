@@ -128,7 +128,7 @@ const Admin = () => {
         setAdminToken(token);
         // set data chart && thong ke dasboard
         axios
-          .post(process.env.REACT_APP_API_LOCAL + "admin/dashboard", {
+          .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/dashboard", {
             token: token,
           })
           .then((res) => {
@@ -220,7 +220,7 @@ const Admin = () => {
     setFetchPhim(false);
     if (adminToken != null)
       axios
-        .get(process.env.REACT_APP_API_LOCAL + "film/all")
+        .get(process.env.REACT_APP_API_DEPLOYED2 + "film/all")
         .then((res) => {
           setDataAllF(res.data);
         })
@@ -232,7 +232,7 @@ const Admin = () => {
     setFetchUser(false);
     if (adminToken != null)
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/alluser", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/alluser", {
           token: adminToken,
         })
         .then((res) => {
@@ -245,7 +245,7 @@ const Admin = () => {
     // all user
     setFetchLink(false);
     axios
-      .get(process.env.REACT_APP_API_LOCAL + "link/all", {
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "link/all", {
         headers: { Authorization: `${adminToken}` },
       })
       .then((res) => {
@@ -271,7 +271,7 @@ const Admin = () => {
         })
         .catch((e) => console.log(e));
     // axios
-    //   .post(process.env.REACT_APP_API_LOCAL + "admin/kitkot", {
+    //   .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/kitkot", {
     //     token: adminToken,
     //   })
     //   .then((res) => {
@@ -286,7 +286,7 @@ const Admin = () => {
     setFetchVoucher(false);
     if (adminToken != null)
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/allvoucher", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allvoucher", {
           token: adminToken,
         })
         .then((res) => {
@@ -300,7 +300,7 @@ const Admin = () => {
     setFetchCoin(false);
     if (adminToken != null)
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/allnap", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allnap", {
           token: adminToken,
         })
         .then((res) => {
@@ -317,7 +317,7 @@ const Admin = () => {
       .then((snap) => setdataAllKnews(Object.values(snap.val()).reverse()));
     // if (adminToken != null)
     //   axios
-    //     .post(process.env.REACT_APP_API_LOCAL + "admin/allstk", {
+    //     .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk", {
     //       token: adminToken,
     //     })
     //     .then((res) => {
@@ -331,7 +331,7 @@ const Admin = () => {
     setFetchReport(false);
     if (adminToken != null)
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/allreport", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allreport", {
           token: adminToken,
         })
         .then((res) => {

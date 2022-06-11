@@ -65,14 +65,16 @@ const Phims = (props) => {
   ];
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API_LOCAL + "film/homeId").then((res) => {
-      setHomeId(res.data);
-    });
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "film/homeId")
+      .then((res) => {
+        setHomeId(res.data);
+      });
   }, []);
 
   useEffect(() => {
     axios
-      .get(process.env.REACT_APP_API_LOCAL + "film/detail/" + choseF)
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "film/detail/" + choseF)
       .then((res) => {
         setDetaitFilm(res.data);
       });
@@ -438,7 +440,7 @@ const Phims = (props) => {
       setonLoading(true);
       axios
         .put(
-          process.env.REACT_APP_API_LOCAL + "film",
+          process.env.REACT_APP_API_DEPLOYED2 + "film",
           {
             phimdetail: detaitFilm,
             phiminfo: { ...currentPhim, key: keyInfo },
@@ -480,7 +482,7 @@ const Phims = (props) => {
     addPhim._id = dataFilm[dataFilm.length - 1]._id + 1;
     axios
       .post(
-        process.env.REACT_APP_API_LOCAL + "film",
+        process.env.REACT_APP_API_DEPLOYED2 + "film",
         {
           phimdetail: addPhimDetail,
           phiminfo: addPhim,
@@ -506,7 +508,7 @@ const Phims = (props) => {
     setonLoading(true);
     axios
       .put(
-        process.env.REACT_APP_BACKUP + "film/disable",
+        process.env.REAREACT_APP_API_DEPLOYED2 + "film/disable",
         {
           fid: fid,
         },
@@ -533,7 +535,7 @@ const Phims = (props) => {
     setonLoading(true);
     axios
       .put(
-        process.env.REACT_APP_BACKUP + "film/enable",
+        process.env.REACT_APP_API_DEPLOYED2 + "film/enable",
         {
           fid: fid,
         },
@@ -635,10 +637,10 @@ const Phims = (props) => {
   };
   return (
     <div className="container my-2 mb-3">
-      {" "}
+      {/* {" "}
       {JSON.stringify(currentPhim)}
       <hr />
-      {JSON.stringify(detaitFilm)}
+      {JSON.stringify(detaitFilm)} */}
       {onLoading && <Loading />}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
@@ -704,7 +706,21 @@ const Phims = (props) => {
                   {dataFilm.map((e, i) => (
                     <tr>
                       <td>{e._id}</td>
-                      <td className="w-50">{e.title}</td>
+                      <td className="w-50">
+                        {e.title}{" "}
+                        <a
+                          target="_blank"
+                          href={
+                            window.location.origin +
+                            "/detailfilm/" +
+                            e._id +
+                            "/" +
+                            e.title
+                          }
+                        >
+                          <i class="fa fa-external-link   mb-1" />
+                        </a>
+                      </td>
                       <td>
                         <select
                           value={
@@ -773,10 +789,6 @@ const Phims = (props) => {
                           onClick={() => {
                             setChoseF(e._id);
                             setCurrentPhim(dataFilm[i]);
-                            //scroll to edit
-                            // document.getElementById("editfilm").scrollIntoView({
-                            //   behavior: "smooth",
-                            // });
                             window.scrollTo({
                               top:
                                 document

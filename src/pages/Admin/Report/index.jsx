@@ -21,7 +21,7 @@ const Reports = (props) => {
   const deleteReport = (key) => {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/delet111ereport", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/delet111ereport", {
         token: token,
         key: key,
       })

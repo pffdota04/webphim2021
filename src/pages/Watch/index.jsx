@@ -73,7 +73,7 @@ const Watch = () => {
 
   useEffect(() => {
     if (dataFilmState.id == undefined) {
-      axios.get(process.env.REACT_APP_API_LOCAL + "film/" + id).then((res) => {
+      axios.get(process.env.REACT_APP_API_DEPLOYED2 + "film/" + id).then((res) => {
         console.log(res.data[0]);
         if (name != res.data[0].title)
           history.push("/watch/" + id + "/" + res.data[0].title);
@@ -122,7 +122,7 @@ const Watch = () => {
   }, [userDetail]);
 
   const getDataByParamsId = () => {
-    axios.get(process.env.REACT_APP_API_LOCAL + "link/" + id).then((res) => {
+    axios.get(process.env.REACT_APP_API_DEPLOYED2 + "link/" + id).then((res) => {
       setDataLink(res.data);
       if (res.data != null) {
         setnowServer(res.data[0].server);
@@ -134,7 +134,7 @@ const Watch = () => {
 
   const getDataByTokenId = () => {
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "link/vip", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "link/vip", {
         token: userDetail.token,
         fid: id,
       })
@@ -384,7 +384,7 @@ const Watch = () => {
       setIsLoading(true);
       setIconUnlock(0);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/unlock", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/unlock", {
           token: userDetail.token,
           fid: id,
           plan: plan,
@@ -422,7 +422,7 @@ const Watch = () => {
     else {
       setIconSave(0);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/savefilm", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/savefilm", {
           token: userDetail.token,
           fid: id,
         })

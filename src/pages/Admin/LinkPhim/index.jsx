@@ -32,8 +32,8 @@ const LinkPhim = (props) => {
     if (choseL !== undefined) {
       setIsLoadLink(true);
       axios
-        // .post(process.env.REACT_APP_API_LOCAL + "admin/linkvip2", {
-        .get(process.env.REACT_APP_API_LOCAL + "link/alllink/" + choseL, {
+        // .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/linkvip2", {
+        .get(process.env.REACT_APP_API_DEPLOYED2 + "link/alllink/" + choseL, {
           headers: { Authorization: `${token}` },
         })
         .then((res) => {
@@ -50,7 +50,7 @@ const LinkPhim = (props) => {
         .catch((e) => setIsLoadLink(false));
 
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/linksub", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/linksub", {
           token: token,
           fid: choseL,
         })
@@ -347,7 +347,7 @@ const LinkPhim = (props) => {
     setonLoading(true);
     axios
       .put(
-        process.env.REACT_APP_API_LOCAL + "link",
+        process.env.REACT_APP_API_DEPLOYED2 + "link",
         {
           linkphim: getAll1Link,
         },

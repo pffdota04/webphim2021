@@ -12,7 +12,7 @@ const Profile = (props) => {
     setIsLoading(true);
     if (!!report && report !== "")
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "user/report", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/report", {
           token: token,
           content: report,
         })

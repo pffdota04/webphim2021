@@ -15,7 +15,7 @@ const XacThuc = () => {
 
   const xacthuc = () => {
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "user/checkverifcode", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/checkverifcode", {
         token: userDetail.token,
         code: maxacthuc,
       })
@@ -31,7 +31,7 @@ const XacThuc = () => {
 
   const resend = () => {
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "user/resendmail", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/resendmail", {
         token: userDetail.token,
       })
       .then((res) => {

@@ -152,26 +152,23 @@ const Chat = (props) => {
             "đm",
             "đcm",
             "3que",
-            "cá cược",
+            "ma túy",
             "đỉ ",
             "đĩ",
             "cave",
             "cộng sản",
             "nứng",
             "ba que",
-            "cá độ",
           ];
           let b = "";
-          badWords.forEach((a) => {
-            b = b + a + "|";
-          });
+          badWords.forEach((a) => (b = b + a + "|"));
           const badWordsRegexString = "(" + b + ")";
           const badWordsRegex = new RegExp(badWordsRegexString, "ig");
-
+          // badWordsRegex = /(cặc|lồn|cặt|đụ |địt|duma|......đĩ|cave|cộng sản|nứng|ba que|)/gi
           send = send.replace(badWordsRegex, (badWord) =>
             "*".repeat(badWord.length)
           );
-
+          // send is clean
           try {
             await db.ref("chats/" + place).push({
               content: send,
@@ -359,7 +356,11 @@ const Chat = (props) => {
             }
           ></textarea>
           {lasttime == -1 ? (
-            <button type="submit" className="btn-comment">
+            <button
+              type="submit"
+              className="btn-comment"
+              onClick={() => handleSubmit()}
+            >
               <i class="fa fa-paper-plane text-white" aria-hidden="true"></i>
             </button>
           ) : (
@@ -386,7 +387,7 @@ const Chat = (props) => {
         </div>
       )}
 
-      <div class="bg-light d-block text-danger w-fit ps-1">
+      <div class="d-block text-danger ps-1 text-center">
         {state.writeError}
       </div>
     </div>

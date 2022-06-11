@@ -41,6 +41,20 @@
   padding-top: 62px;
 }
 
-.bg-faded{
+.bg-faded {
   background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-all-screen {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  top: auto;
+  height: 60px;
+  width: 60px;
+  z-index: 9999;
+}
+
+.btn-all-2 {
+  bottom: 70px;
 }

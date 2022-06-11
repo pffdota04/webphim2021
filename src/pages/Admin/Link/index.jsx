@@ -20,7 +20,7 @@ const Links = (props) => {
     // LObject là một object chứa thông tin User sau khi cập nhật
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/update/link", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/update/link", {
         token: token,
         LObject: currentLink,
       })
@@ -47,7 +47,7 @@ const Links = (props) => {
   function addLink() {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/addlink", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/addlink", {
         token: token,
         LObject: adddataLink,
       })
@@ -69,7 +69,7 @@ const Links = (props) => {
   function removeLink(lid) {
     setonLoading(true);
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "admin/deletelink", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/deletelink", {
         token: token,
         lid: lid,
       })

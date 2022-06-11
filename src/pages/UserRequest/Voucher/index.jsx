@@ -12,7 +12,7 @@ const Voucher = (props) => {
     setIsLoading(true);
 
     axios
-      .post(process.env.REACT_APP_API_LOCAL + "user/voucher", {
+      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/voucher", {
         token: userDetail.token,
         code: inputCode,
       })
@@ -33,7 +33,7 @@ const Voucher = (props) => {
 
   return (
     <div className="container mt-4 mb-5">
-      {isLoading && <Loading/>}
+      {isLoading && <Loading />}
       <div className="row" id="container-ipad">
         <div className="col-4 background-content p-4">
           <h4 className="text-center primary-color">
@@ -62,13 +62,13 @@ const Voucher = (props) => {
               id="magiaodich"
               className="w-100 form-control"
               onChange={(e) => setInputCode(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key == "Enter") sendVoucher();
+              }}
             ></input>
           </div>
           <div className="col-12 col-md-8 mx-auto mb-4">
-            <button
-              className="sign__btn"
-              onClick={() => sendVoucher()}
-            >
+            <button className="sign__btn" onClick={() => sendVoucher()}>
               Gửi
             </button>
           </div>

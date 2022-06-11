@@ -33,7 +33,7 @@ const Vouchers = (props) => {
     if (!isBreak) {
       setonLoading(true);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/addvoucher", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/addvoucher", {
           token: token,
           code: code,
           point: point,
@@ -64,7 +64,7 @@ const Vouchers = (props) => {
     if (isBreak) {
       setonLoading(true);
       axios
-        .post(process.env.REACT_APP_API_LOCAL + "admin/deletevoucher", {
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/deletevoucher", {
           token: token,
           code: rmCode,
         })

@@ -17,6 +17,7 @@ import axios from "axios";
 import { setListHome } from "../../store/actions/listPhim_Action";
 import backdetail from "./../../assets/images/backdetail.jpg";
 import MetaTags from "react-meta-tags";
+import ModalAlert from "./../../components/ModalAlart/ModalAlert";
 
 const responsive_multi_carsousel = {
   superLargeDesktop: {
@@ -96,7 +97,7 @@ const DetailFilm = () => {
   const [popupVip, setPopupVip] = useState(null);
   const userDetail = useSelector((state) => state.userData.userDetail);
   const homeData = useSelector((state) => state.listTatCa.homeData);
-  const [popupId, setPopupID] = useState(null);
+  const [showAlert, setShowAlert] = useState(null);
   const [data, setData] = useState({ init: true });
 
   const [iconSave, setIconSave] = useState(0);
@@ -289,8 +290,8 @@ const DetailFilm = () => {
 
   function unlockTHis(plan) {
     setPopupVip(null);
-    if (userDetail.checkUser == "not") alert("Please login!");
-    else if (userDetail.checkUser == false) alert("please verified email!");
+    if (userDetail.checkUser == "not") setShowAlert("Please login!");
+    else if (userDetail.checkUser == false) alert("Please verified email!");
     else {
       setIsLoading(true);
       setIconUnlock(0);
@@ -302,7 +303,7 @@ const DetailFilm = () => {
         })
         .then((res) => {
           if (res.data.complete == true) {
-            alert("Mở khóa thành công, bạn còn lại " + res.data.total);
+            setShowAlert("Mở khóa thành công, bạn còn lại " + res.data.total);
             let newDetail = userDetail;
             newDetail.coin = res.data.total;
             if (newDetail.unlockFilm === undefined)
@@ -329,7 +330,7 @@ const DetailFilm = () => {
   function saveThis() {
     if (userDetail.checkUser == "not")
       // return history.push("/login");
-      alert("Please login!");
+      setShowAlert("Please login!");
     else {
       setIconSave(0);
       axios
@@ -372,7 +373,13 @@ const DetailFilm = () => {
           }
         />
       </MetaTags>
-
+      {showAlert && (
+        <ModalAlert
+          title={"Thông báo"}
+          content={showAlert}
+          close={() => setShowAlert(null)}
+        />
+      )}
       <div
         className="details w-100"
         style={{
@@ -390,10 +397,10 @@ const DetailFilm = () => {
                 alt="poster"
               />
             </div>
+            <h1 className="details-info-title text-light w-100 text-center text-xl-start">
+              {info !== undefined && info.title}
+            </h1>
             <div className="details-info">
-              <h1 className="details-info-title">
-                {info !== undefined && info.title}
-              </h1>
               <p className="details-info-overview">
                 {detail !== undefined && detail.description}
               </p>
@@ -460,9 +467,9 @@ const DetailFilm = () => {
                 {/* {JSON.stringify(detail)} */}
               </div>
               {info !== undefined && info.disable != true ? (
-                <div className="">
+                <div>
                   <button
-                    className="btn text-white btn_save"
+                    className="btn text-white btn_save m-1"
                     onClick={() => saveThis()}
                   >
                     {iconSave === 0 ? (
@@ -484,7 +491,7 @@ const DetailFilm = () => {
                     )}
                   </button>
                   <button
-                    className="btn text-white btn_save ms-2"
+                    className="btn text-white btn_save m-1"
                     onClick={() => {
                       setPopupVip(1);
                     }}

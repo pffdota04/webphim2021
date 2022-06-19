@@ -28,30 +28,6 @@ const Login = () => {
   const [passLogin, setPassLogin] = useState("");
   const [errorLogin, setErrorLogin] = useState(null);
 
-  // useEffect(() => {
-  //   auth().onAuthStateChanged((user) => {
-  //     if (user == null) {
-  //       dispatch(setUserData({ checkUser: "not" }));
-  //       dispatch(setUserDataDetail({ checkUser: "not" }));
-  //     } else {
-  //       dispatch(setUserData(user));
-  //       auth()
-  //         .currentUser.getIdToken(true)
-  //         .then(function (idToken) {
-  //           axios
-  //             .post(process.env.REACT_APP_API_DEPLOYED2 + "user/info", {
-  //               token: idToken,
-  //             })
-  //             .then((res) => {
-  //               dispatch(setUserDataDetail(res.data));
-  //             })
-  //             .catch((e) => {
-  //               console.log(e);
-  //             });
-  //         });
-  //     }
-  //   });
-  // }, [auth().currentUser]);
 
   const uiConfig = {
     signInFlow: "popup",

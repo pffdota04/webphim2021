@@ -14,7 +14,7 @@ const Comments = (props) => {
 
   function Refresh() {
     axios
-      .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk", {
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk", {
         token: token,
       })
       .then((res) => {

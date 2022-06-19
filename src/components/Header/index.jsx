@@ -72,8 +72,8 @@ const Header = () => {
             console.log(idToken);
             console.log(userinfo);
             axios
-              .post(process.env.REACT_APP_API_DEPLOYED2 + "user/info", {
-                token: idToken,
+              .get(process.env.REACT_APP_API_DEPLOYED2 + "user/info", {
+                headers: { Authorization: `${idToken}` },
               })
               .then((res) => {
                 let saveDetail = Object.values(res.data)[0];

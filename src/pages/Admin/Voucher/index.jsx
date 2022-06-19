@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Loading from "../../../components/Loading";
 import "./style.css";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const Vouchers = (props) => {
   const { dataV, token, setFetchVoucher } = props;
@@ -11,7 +12,7 @@ const Vouchers = (props) => {
 
   const [onLoading, setonLoading] = useState(false);
 
-  const [choseV, setChoseV] = useState(0);
+  const [showAlert, setShowAlert] = useState(null);
   const [code, setCode] = useState("");
   const [point, setPoint] = useState(1);
 
@@ -24,7 +25,7 @@ const Vouchers = (props) => {
     let isBreak = false;
     dataVoucher.some((e) => {
       if (e.code == code) {
-        alert("code exit!");
+        setShowAlert("Code đã tồn tại");
         isBreak = true;
         return true;
       }
@@ -39,15 +40,14 @@ const Vouchers = (props) => {
           point: point,
         })
         .then((res) => {
-          alert(res.data);
           if (res.data === "okok") {
-            alert("Đã thêm voucher1");
+            setShowAlert("Đã thêm voucher");
             dataVoucher.push({ code: code, point: point });
           }
           setonLoading(false);
         })
         .catch((e) => {
-          alert(e);
+          setShowAlert(JSON.stringify(e));
           setonLoading(false);
         });
     }
@@ -69,9 +69,9 @@ const Vouchers = (props) => {
           code: rmCode,
         })
         .then((res) => {
-          alert(res.data);
+          // alert(res.data);
           if (res.data === "okok") {
-            alert("Đã xóa voucher");
+            setShowAlert("Đã xóa voucher");
             dataVoucher.some((e, i) => {
               if (e.code == rmCode) dataVoucher.splice(i, 1);
             });
@@ -79,7 +79,7 @@ const Vouchers = (props) => {
           setonLoading(false);
         })
         .catch((e) => {
-          alert(e);
+          setShowAlert(JSON.stringify(e));
           setonLoading(false);
         });
     } else alert("something wrong!");
@@ -109,6 +109,14 @@ const Vouchers = (props) => {
   return (
     <div className="container my-2 mb-3">
       {onLoading && <Loading />}
+      {showAlert && (
+        <ModalAlert
+          title={"Thông báo"}
+          content={showAlert}
+          close={() => setShowAlert(null)}
+        />
+      )}
+
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">

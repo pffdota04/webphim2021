@@ -12,6 +12,7 @@ import Footer from "../../../components/Footer";
 import axios from "axios";
 import { Redirect } from "react-router";
 import MetaTags from "react-meta-tags";
+import ModalAlert from "../../../components/ModalAlart/ModalAlert";
 
 const UnlockList = () => {
   const data = useSelector((state) => state.listUser.unlockList);
@@ -22,9 +23,6 @@ const UnlockList = () => {
   const [popupId, setPopupID] = useState(null);
 
   useEffect(() => {
-    console.log(data);
-    console.log(data.unlockFilm);
-
     if (data.init == true) getData();
     else {
       if (userDetail.unlockFilm != null && userDetail.unlockFilm != undefined) {
@@ -64,25 +62,27 @@ const UnlockList = () => {
     return (
       <div className="row justify-content-md-center last-update-list mx-auto overflow-hidden">
         {data.map(
-          (i, index) =>
-            Object.values(userDetail.unlockFilm)[index].end - Date.now() >=
-              0 && (
-              <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
-                <FilmCard key={i + "later"} data={i} click={setPopupID} />
-                <p className="text-center">
-                  Còn lại
-                  {Math.ceil(
-                    Math.abs(
-                      new Date(
-                        Object.values(userDetail.unlockFilm)[index].end
-                      ) - Date.now()
-                    ) /
-                      (1000 * 60 * 60 * 24)
-                  )}
-                  ngày
-                </p>
-              </div>
-            )
+          (i, index) => (
+            // Object.values(userDetail.unlockFilm)[index].end >= Date.now() && (
+            <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
+              <FilmCard key={i + "later"} data={i} click={setPopupID} />
+              <p className="text-center">
+                Còn lại{" "}
+                {Object.values(userDetail.unlockFilm)[index].end - Date.now()}
+                ...
+                {}
+                {Math.ceil(
+                  Math.abs(
+                    new Date(Object.values(userDetail.unlockFilm)[index].end) -
+                      Date.now()
+                  ) /
+                    (1000 * 60 * 60 * 24)
+                )}
+                ngày
+              </p>
+            </div>
+          )
+          // )
         )}
       </div>
     );
@@ -103,6 +103,7 @@ const UnlockList = () => {
           }
         />
       </MetaTags>
+
       <div className="container text-white">
         <img
           className="d-block w-100 pt-2"

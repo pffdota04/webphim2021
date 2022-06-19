@@ -16,6 +16,7 @@ import ReactHlsPlayer from "react-hls-player";
 
 // import "react-tuby/css/main.css";
 import "./../../../node_modules/react-tuby/css/main.css";
+import ModalAlert from "../../components/ModalAlart/ModalAlert";
 
 // import "./noSub.vtt"
 
@@ -46,6 +47,7 @@ const WatchNew2 = () => {
 
   const [refVideo, setRefVideo] = useState(null);
   const [isChangingChap, SetChangingChap] = useState(false);
+  const [showAlert, setShowAlert] = useState(null);
 
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userData.userDetail);
@@ -519,7 +521,9 @@ const WatchNew2 = () => {
         })
         .then((res) => {
           if (res.data.complete == true) {
-            alert("Mở khóa thành công, bạn còn lại " + res.data.total);
+            // alert("Mở khóa thành công, bạn còn lại " + res.data.total);
+            setShowAlert("Mở khóa thành công, bạn còn lại " + res.data.total);
+
             let newDetail = userDetail;
             newDetail.coin = res.data.total;
             if (newDetail.unlockFilm === undefined)
@@ -591,11 +595,13 @@ const WatchNew2 = () => {
         />
       </MetaTags>
       {isLoading && <Loading />}
-      {/* {JSON.stringify(dataLink)}
-      <br />
-      {JSON.stringify(nowChap)}
-      <br />
-      {JSON.stringify(getSub)} */}
+      {showAlert && (
+        <ModalAlert
+          title={"Thông báo"}
+          content={showAlert}
+          close={() => setShowAlert(null)}
+        />
+      )}
 
       <main className="container-fluid container-background pb-5">
         <div className="pt-1">

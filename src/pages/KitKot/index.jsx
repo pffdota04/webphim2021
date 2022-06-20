@@ -3,8 +3,7 @@ import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 
-// firebase
-import { db } from "../../services/firebase";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,6 +14,7 @@ import "./../../../node_modules/swiper/swiper.scss";
 import "./../../../node_modules/swiper/modules/navigation/navigation.scss";
 import "./../../../node_modules/swiper/modules/pagination/pagination.scss";
 import SwiperCore, { Navigation } from "swiper";
+import axios from "axios";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
@@ -39,16 +39,26 @@ const KitKot = () => {
   const [random, setRandom] = useState();
 
   useEffect(() => {
-    db.ref()
-      .child("/kitkot")
-      .get()
-      .then((snap) => {
-        let a = snap.val();
-        console.log(Object.values(a));
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "kitkot/all")
+      .then((res) => {
+        const a = res.data;
         setAllKitKot(Object.values(a));
         setAllData([Object.values(a)[0], Object.values(a)[1]]);
         setHoldIndex([0, 1]);
-      });
+      })
+      .catch((e) => alert("Đã xảy ra lỗi, hãy thử tải lại trang"));
+
+    // db.ref()
+    //   .child("/kitkot")
+    //   .get()
+    //   .then((snap) => {
+    //     let a = snap.val();
+    //     console.log(Object.values(a));
+    //     setAllKitKot(Object.values(a));
+    //     setAllData([Object.values(a)[0], Object.values(a)[1]]);
+    //     setHoldIndex([0, 1]);
+    //   });
   }, []);
 
   const fetchMore = () => {

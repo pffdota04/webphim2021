@@ -7,6 +7,7 @@ import { db } from "../../services/firebase";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "axios";
 
 const News = () => {
   const dispatch = useDispatch();
@@ -17,32 +18,59 @@ const News = () => {
   const [lastKey, setLastKey] = useState(null);
 
   useEffect(() => {
-    // setAllData(allData.reverse());
-    db.ref()
-      .child("newscontent")
-      .limitToLast(3)
-      .get()
-      .then((snap) => {
-        setAllData(Object.values(snap.val()).reverse());
-        setLastKey(Object.keys(snap.val())[0]);
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "news/page/0/0")
+      .then((res) => {
+        setAllData(Object.values(res.data).reverse());
+        setLastKey(Object.keys(res.data)[0]);
+      })
+      .catch((e) => {
+        console.log(e);
       });
+
+    // db.ref()
+    //   .child("newscontent")
+    //   .limitToLast(3)
+    //   .get()
+    //   .then((snap) => {
+    //     setAllData(Object.values(snap.val()).reverse());
+    //     setLastKey(Object.keys(snap.val())[0]);
+    //   });
   }, []);
 
   let fetchMore = async () => {
-    db.ref()
-      .child("newscontent")
-      .orderByChild("id")
-      .endBefore(allData[allData.length - 1].id, lastKey)
-      .limitToLast(4)
-      .get()
-      .then((snap) => {
-        let a = snap.val();
+    axios
+      .get(
+        process.env.REACT_APP_API_DEPLOYED2 +
+          `news/page/${allData[allData.length - 1].id}/${lastKey}`
+      )
+      .then((res) => {
+        let a = res.data;
         if (a == null || a == "null") sethasMore(false);
         else {
-          setAllData(allData.concat(Object.values(snap.val()).reverse()));
-          setLastKey(Object.keys(snap.val())[0]);
+          setAllData(allData.concat(Object.values(a).reverse()));
+          setLastKey(Object.keys(a)[0]);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
+    // console.log(allData[allData.length - 1].id);
+    // console.log(lastKey);
+    // db.ref()
+    //   .child("newscontent")
+    //   .orderByChild("id")
+    //   .endBefore(allData[allData.length - 1].id, lastKey)
+    //   .limitToLast(4)
+    //   .get()
+    //   .then((snap) => {
+    //     let a = snap.val();
+    //     if (a == null || a == "null") sethasMore(false);
+    //     else {
+    //       setAllData(allData.concat(Object.values(snap.val()).reverse()));
+    //       setLastKey(Object.keys(snap.val())[0]);
+    //     }
+    //   });
   };
 
   function toggleVideo(i) {}
@@ -60,9 +88,7 @@ const News = () => {
       </MetaTags>
 
       <div className="container p-2 bg-dark">
-        <h1 className="primary-color text-center">
-          Tin phim mới nhất 
-        </h1>
+        <h1 className="primary-color text-center">Tin phim mới nhất</h1>
         <div className="row p-0 m-0">
           {allData == undefined ? (
             <h5 className="text-center text-warning">Loading...</h5>

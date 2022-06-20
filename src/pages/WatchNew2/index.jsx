@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import Chat from "../../components/Chat/Chat";
 import Loading from "../../components/Loading";
 import MetaTags from "react-meta-tags";
-import { db } from "../../services/firebase";
 
 import { Player } from "react-tuby";
 import ReactHlsPlayer from "react-hls-player";
@@ -194,65 +193,6 @@ const WatchNew2 = () => {
       setUrlCurrnent(currentUrl);
     }
   };
-
-  // const getDataByParamsId = () => {
-  //   db.ref()
-  //     .child("phimlinkdefault")
-  //     .orderByChild("film_id")
-  //     .equalTo(parseInt(id))
-  //     .get()
-  //     .then((res) => {
-  //       if (res.val() === null) setDataLink(null);
-  //       else {
-  //         setDataLink(Object.values(res.val())[0].chap);
-  //         setnowChap(Object.keys(Object.values(res.val())[0].chap)[0]);
-  //         setNowDataInfo(Object.values(res.val())[0]);
-  //       }
-  //       setLoading(false);
-  //     })
-  //     .catch((e) => alert(e));
-  // };
-
-  // const getDataByTokenId = () => {
-  //   axios
-  //     .post(process.env.REACT_APP_API_DEPLOYED2 + "link/vip3", {
-  //       token: userDetail.token,
-  //       fid: id,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       if (res.data !== null && res.data.vip) {
-  //         let thuong = res.data.data[0].chap;
-  //         let vip = res.data.data[1].chap;
-  //         let merger = {};
-  //         Object.keys(thuong).map((e) => {
-  //           if (thuong[e] !== null && thuong[e] !== undefined) {
-  //             merger[e] = { link: thuong[e].link };
-  //             if (vip[e] !== undefined && vip[e] !== null)
-  //               merger[e].link = { ...merger[e].link, ...vip[e].link };
-  //           }
-  //           console.log(merger);
-  //         });
-
-  //         Object.keys(vip).map((e) => {
-  //           if (merger[e] === null && vip[e] !== null) {
-  //             merger[e] = { link: vip[e].link };
-  //             console.log(merger);
-  //           }
-  //         });
-
-  //         setDataLink(merger);
-  //         setnowChap(Object.keys(merger)[0][0]);
-  //       } else setDataLink(res.data);
-  //       setLoading(false);
-  //       // setLoading(false);
-  //       // setnowChap(res.data[0].chap);
-  //       // setNowDataInfo(res.data[0]);
-
-  //       // console.log(res.data);
-  //     })
-  //     .catch((e) => alert(e + " <<<< "));
-  // };
 
   function getFile(filePath) {
     return filePath.substr(filePath.lastIndexOf("\\") + 1).split(".")[0];

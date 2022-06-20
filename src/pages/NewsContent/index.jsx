@@ -13,6 +13,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 import { now } from "jquery";
+import axios from "axios";
 
 const NewsContent = (props) => {
   const { id } = useParams();
@@ -105,12 +106,10 @@ const NewsContent = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    db.ref("newscontent")
-      .orderByChild("id")
-      .equalTo(id)
-      .get()
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "news/new/" + id)
       .then((res) => {
-        let a = Object.values(res.val())[0];
+        let a = Object.values(res.data)[0];
         try {
           a.content = JSON.parse(a.content);
           console.log(a.content);
@@ -132,9 +131,40 @@ const NewsContent = (props) => {
         }
         setNowShow(a);
       })
-      .catch(() => {
+      .catch((e) => {
         allData.map((e) => e.id == id && setNowShow(e));
       });
+
+    // db.ref("newscontent")
+    //   .orderByChild("id")
+    //   .equalTo(id)
+    //   .get()
+    //   .then((res) => {
+    //     let a = Object.values(res.val())[0];
+    //     try {
+    //       a.content = JSON.parse(a.content);
+    //       console.log(a.content);
+    //     } catch {
+    //       a.content = {
+    //         blocks: [
+    //           {
+    //             key: "b42cs",
+    //             text: "Kphim ra mắt chức năng KitKot cực thú vị",
+    //             type: "header-one",
+    //             depth: 0,
+    //             inlineStyleRanges: [],
+    //             entityRanges: [],
+    //             data: {},
+    //           },
+    //         ],
+    //         entityMap: {},
+    //       };
+    //     }
+    //     setNowShow(a);
+    //   })
+    //   .catch(() => {
+    //     allData.map((e) => e.id == id && setNowShow(e));
+    //   });
   }, [id]);
 
   const fetchMore = (count = null) => {};

@@ -1,11 +1,6 @@
 import { setUnlockList } from "../../../store/actions/userList_Action";
-import qc from "./../../../assets/images/quang-cao.jpg";
-
 import { useSelector, useDispatch } from "react-redux";
-
-import { auth } from "../../../services/firebase";
 import { useEffect, useState } from "react";
-
 import PopupFilm from "../../../components/PopupFilm";
 import FilmCard from "../../../components/FilmCard";
 import Footer from "../../../components/Footer";

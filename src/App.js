@@ -18,7 +18,6 @@ import XacThuc from "./pages/XacThuc";
 import KitKot from "./pages/KitKot";
 import News from "./pages/News";
 import NewsContent from "./pages/NewsContent";
-import SoanTin from "./pages/SoanTin";
 import QuyCheDichVu from "./pages/QuyCheDichVu";
 import ChinhSachBaoMat from "./pages/ChinhSachBaoMat/ChinhSachBaoMat";
 import WatchNew2 from "./pages/WatchNew2";

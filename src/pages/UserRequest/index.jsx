@@ -1,7 +1,5 @@
 import "./style.css";
-import qc from "./../../assets/images/quang-cao.jpg";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import Profile from "./Profile";
 import NapTien from "./NapTien";
 import MaGioiThieu from "./MaGioiThieu";
@@ -12,17 +10,9 @@ import { setUserDataDetail } from "./../../store/actions/user";
 import { Redirect } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { auth } from "../../services/firebase";
 import Loading from "../../components/Loading";
-
 import MetaTags from "react-meta-tags";
 
-const style = {
-  height: 30,
-  border: "1px solid green",
-  margin: 6,
-  padding: 8,
-};
 
 const UserRequest = (props) => {
   const userInfo = useSelector((state) => state.userData.curentUser);

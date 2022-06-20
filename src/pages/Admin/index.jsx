@@ -261,24 +261,14 @@ const Admin = () => {
 
     setFetchKikot(false);
     if (adminToken != null)
-      db.ref()
-        .child("/kitkot")
-        .get()
+      axios
+        .get(process.env.REACT_APP_API_DEPLOYED2 + "kitkot/all")
         .then((res) => {
-          let holdLink = res.val();
+          const holdLink = res.data;
           console.log(holdLink);
           setDataAllKitkot(holdLink);
         })
         .catch((e) => console.log(e));
-    // axios
-    //   .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/kitkot", {
-    //     token: adminToken,
-    //   })
-    //   .then((res) => {
-    //     let holdLink = res.data;
-    //     setDataAllKitkot(holdLink);
-    //   })
-    //   .catch((e) => console.log(e));
   }
 
   function getDataVoucher() {
@@ -311,19 +301,13 @@ const Admin = () => {
 
   function getDataComment() {
     setFetchComment(false);
-    db.ref()
-      .child("newscontent")
-      .get()
-      .then((snap) => setdataAllKnews(Object.values(snap.val()).reverse()));
-    // if (adminToken != null)
-    //   axios
-    //     .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk", {
-    //       token: adminToken,
-    //     })
-    //     .then((res) => {
-    //       setdataAllKnews(res.data);
-    //     })
-    //     .catch((e) => console.log(e));
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "news/all")
+      .then((res) => {
+        const a = res.data;
+        setdataAllKnews(Object.values(a).reverse());
+      })
+      .catch((e) => alert("Đã xảy ra lỗi"));
   }
 
   function getDataReport() {

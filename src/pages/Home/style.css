@@ -69,6 +69,15 @@
   background-position: center;
   background-size: cover;
 }
+.slide-top .shadowContent {
+  left: 0% !important;
+  right: 0% !important;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-bottom: 3.5rem;
+  bottom: -0.1rem;
+  background: linear-gradient(180deg, rgba(255,138,138,0) 0%, rgb(0, 0, 0) 100%) !important;
+}
 /*  */
 
 .text-one-line {
@@ -193,4 +202,12 @@
     width: 36px;
     height: 36px;
   }
+}
+
+.imgGift {
+  width: 200%;
+}
+
+.btn-all-3 {
+  bottom: 140px;
 }

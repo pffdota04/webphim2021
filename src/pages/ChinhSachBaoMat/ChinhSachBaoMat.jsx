@@ -17,7 +17,7 @@ function ChinhSachBaoMat() {
         <ul className="text-light">
           <li>
             Kphim có quyền thu thập dữ liệu về bạn khi bạn nhấn ĐĂNG NHẬP/ĐĂNG
-            KÝ SỬ DỤNG TRANG KHPIM.
+            KÝ sử dụng KPHIM.
           </li>
           <li>
             Dữ liệu Kphim thu thập bao gồm: họ tên; địa chỉ email, ảnh đại diện,

@@ -7,7 +7,7 @@ function Footer() {
       <section>
         <div className="container text-center text-md-start pt-3">
           <div className="row mt-3 text-white">
-            <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">
                 <div className="logo-img"></div>
                 {/* <i className="fab fa-kickstarter" /> KPHIM */}
@@ -37,13 +37,12 @@ function Footer() {
                 </Link>
               </p>
               <p>
-                <Link to="#!" className="text-reset link-color">
-                  Khuyến mãi
-                </Link>
+                Trang web sử dụng React (Create-React-App), Redux, Bootstrap,
+                ExpressJS và Firebase
               </p>
             </div>
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 fs-mb">
-              <h6 className="text-uppercase fw-bold mb-4 primary-color">
+              <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">
                 Liên hệ
               </h6>
               <p>
@@ -53,10 +52,10 @@ function Footer() {
                 </Link>
               </p>
               <p>
-                <Link to="#!" className="text-reset link-color">
+                <a href="https://www.facebook.com/websitexemphimtructuyenKphim" target="_blank" className="text-reset link-color">
                   <i className="fa fa-facebook me-3" />
                   Facebook
-                </Link>
+                </a>
               </p>
               <p>
                 <Link to="#!" className="text-reset link-color">
@@ -65,7 +64,7 @@ function Footer() {
                 </Link>
               </p>
             </div>
-            <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               {/* Links */}
               <h6 className="text-uppercase fw-bold mb-4 primary-color fs-mb">
                 Hỗ trợ
@@ -75,11 +74,7 @@ function Footer() {
                 kphim.contact@gmail.com
               </p>
               <p className="link-color">
-                <i className="fa fa-phone me-3" /> + 0123 456 789
-              </p>
-              <p>
-                This web is using React (Create-React-App), Redux, Bootstrap,
-                ExpressJS and Firebase (maybe more...)!
+                <i className="fa fa-phone me-3" /> 0393930854
               </p>
             </div>
           </div>

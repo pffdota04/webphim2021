@@ -622,8 +622,6 @@ const Admin = () => {
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

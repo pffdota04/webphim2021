@@ -95,7 +95,6 @@ const Napcoins = (props) => {
     let a = Object.values([...dataNC]).filter((item) => {
       return item.mgd.toLowerCase().includes(keySearch.toLowerCase());
     });
-    console.log(a);
     setdataNapCoin(a);
   };
 

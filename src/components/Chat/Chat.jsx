@@ -1,9 +1,7 @@
-import React, { Component, createRef, useEffect, useState } from "react";
-import { auth } from "../../services/firebase";
+import React, { createRef, useEffect, useState } from "react";
 import { db } from "../../services/firebase";
-import firebase from "firebase/app";
 import "./Chat.css";
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Chat = (props) => {
@@ -32,7 +30,6 @@ const Chat = (props) => {
   const myRef = createRef();
   useEffect(() => {
     if (checkkeypress) {
-      console.log("ehhe");
       document.getElementById("chat-input").addEventListener(
         "keyup",
         function (e) {
@@ -40,14 +37,6 @@ const Chat = (props) => {
         },
         false
       );
-      // document.getElementById("chat-input").addEventListener(
-      //   "keydown",
-      //   function (e) {
-      //     onEnterPress(e);
-      //     e.stopPropagation();
-      //   },
-      //   false
-      // );
     }
   }, [checkkeypress]);
   useEffect(() => {
@@ -100,8 +89,6 @@ const Chat = (props) => {
   const onEnterPress = (e) => {
     e.stopPropagation();
     setCheckkeypress(true);
-    console.log(e.keyCode);
-
     if (e.keyCode == 13 && e.shiftKey == false) {
       e.preventDefault();
       handleSubmit(e);
@@ -177,8 +164,6 @@ const Chat = (props) => {
               username: userInfo.displayName,
             });
             countDown(0);
-            // console.log(chats.length + " === " + oldChat);
-
             if (chats.length >= 50) {
               await db.ref("chats/" + place + "/" + oldChat).remove();
             }
@@ -212,11 +197,7 @@ const Chat = (props) => {
     return time;
   };
   return (
-    <div
-      className="chat-component background-comment"
-      // style={{ backgroundImage: `url(${backimg})` }}
-    >
-      {/* {console.log(state.lasttime)} */}
+    <div className="chat-component background-comment">
       {chats.length === 0 && (
         <span className="text-white background-item p-3 descriptions-comment">
           Chưa có bình luận nào, hãy là người đầu tiên cho ý kiến về bộ phim
@@ -344,7 +325,6 @@ const Chat = (props) => {
             id="chat-input"
             onChange={(e) => {
               setState({ limitLenght: false });
-              console.log(e.target.value);
               setcontent(e.target.value);
             }}
             onKeyDown={onEnterPress}
@@ -387,9 +367,7 @@ const Chat = (props) => {
         </div>
       )}
 
-      <div class="d-block text-danger ps-1 text-center">
-        {state.writeError}
-      </div>
+      <div class="d-block text-danger ps-1 text-center">{state.writeError}</div>
     </div>
   );
 };

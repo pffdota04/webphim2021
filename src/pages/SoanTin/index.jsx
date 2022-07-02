@@ -46,7 +46,6 @@ const SoanTin = (props) => {
       .limitToLast(1)
       .once("value")
       .then((res) => {
-        console.log(res.val());
         db.ref("/newscontent").push({
           content: JSON.stringify(
             convertToRaw(editorState.getCurrentContent())
@@ -69,7 +68,6 @@ const SoanTin = (props) => {
       .equalTo(edit)
       .once("value")
       .then((res) => {
-        console.log(Object.keys(res.val())[0]);
         db.ref("/newscontent/" + Object.keys(res.val())[0]).update({
           content: JSON.stringify(
             convertToRaw(editorState2.getCurrentContent())

@@ -49,16 +49,6 @@ const KitKot = () => {
       })
       .catch((e) => alert("Đã xảy ra lỗi, hãy thử tải lại trang"));
 
-    // db.ref()
-    //   .child("/kitkot")
-    //   .get()
-    //   .then((snap) => {
-    //     let a = snap.val();
-    //     console.log(Object.values(a));
-    //     setAllKitKot(Object.values(a));
-    //     setAllData([Object.values(a)[0], Object.values(a)[1]]);
-    //     setHoldIndex([0, 1]);
-    //   });
   }, []);
 
   const fetchMore = () => {
@@ -100,7 +90,6 @@ const KitKot = () => {
           "*"
         );
       } else {
-        console.log(div.style.display);
         if (div.style.display !== "none") {
           div.style.display = "none";
           iframe.postMessage(

@@ -102,7 +102,6 @@ const Vouchers = (props) => {
     let a = Object.values([...dataV]).filter((item) => {
       return item.code.toLowerCase().includes(keySearch.toLowerCase());
     });
-    // console.log(a);
     setdataVoucher(a);
   };
 

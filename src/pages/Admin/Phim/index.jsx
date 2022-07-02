@@ -422,21 +422,15 @@ const Phims = (props) => {
     if (JSON.stringify(dataFilm[choseF]) == JSON.stringify(currentPhim))
       alert("Notthing change!");
     else {
-      console.log(currentPhim);
-      console.log(detaitFilm);
       let keyInfo = "xx";
-      console.log(keyInfo);
       try {
         Object.values(dataF).forEach(function (e, i) {
-          console.log(i);
           if (e._id == currentPhim._id) {
             keyInfo = Object.keys(dataF)[i];
             throw "a";
           }
         });
       } catch (e) {}
-      console.log(keyInfo);
-
       setonLoading(true);
       axios
         .put(

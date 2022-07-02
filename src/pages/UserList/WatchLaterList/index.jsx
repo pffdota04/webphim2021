@@ -19,9 +19,6 @@ const WatchLaterList = () => {
 
   useEffect(() => {
     // if (true) {
-    console.log(data);
-    console.log(userDetail.saveFilm);
-
     if (data.init == true) getData();
     else {
       if (userDetail.saveFilm != null && userDetail.saveFilm != undefined) {

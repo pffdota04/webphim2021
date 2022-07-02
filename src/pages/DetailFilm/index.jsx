@@ -157,7 +157,6 @@ const DetailFilm = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    console.log(userDetail);
     if (userDetail.checkUser == "not") {
       setIconUnlock(-1);
       setIconSave(-1);
@@ -186,23 +185,6 @@ const DetailFilm = () => {
     }
   }, [userDetail]);
 
-  // const convert = (predata) => {
-  //   let type2 = {};
-  //   let x = predata;
-  //   if (data.converted !== true && data.init === true) {
-  //     console.log("SAP");
-  //     if (params_quocgia.indexOf(x.country) != -1)
-  //       x.country2 = x.country2 = params_quocgia.indexOf(x.country);
-  //     Object.keys(x.type).map((e) => {
-  //       if (params_theloai.indexOf(e) != -1)
-  //         type2[e] = params_theloai.indexOf(e);
-  //     });
-  //     x.type2 = type2;
-  //     x.converted = true;
-  //     console.log(x);
-  //     setData(x);
-  //   }
-  // };
 
   const loadLoading = (numberItems, withNumber) => {
     if (withNumber)
@@ -291,7 +273,7 @@ const DetailFilm = () => {
   function unlockTHis(plan) {
     setPopupVip(null);
     if (userDetail.checkUser == "not") setShowAlert("Please login!");
-    else if (userDetail.checkUser == false) alert("Please verified email!");
+    else if (userDetail.checkUser == false) setShowAlert("Please verified email!");
     else {
       setIsLoading(true);
       setIconUnlock(0);
@@ -317,7 +299,7 @@ const DetailFilm = () => {
             );
             // getDataByTokenId();
             // forceUpdate();
-          } else alert(res.data.complete);
+          } else setShowAlert(res.data.complete);
           setIsLoading(false);
         })
         .catch((e) => {
@@ -520,20 +502,6 @@ const DetailFilm = () => {
               ) : (
                 <div>Hiện tại không thể xem phim này!</div>
               )}
-              {/* <div className="save">
-                <button
-                  className="btn text-white btn_save"
-                  onClick={() => console.log(quocgia[data.country2])}
-                >
-                  <i class="fa fa-plus"></i> Thêm vào danh sách
-                </button>
-                <button
-                  className="btn text-white btn_save ms-4"
-                  onClick={() => console.log(data)}
-                >
-                  <i class="fa fa-unlock-alt"></i> Mở khóa vip
-                </button>
-              </div> */}
             </div>
           </div>
         </div>

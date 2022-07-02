@@ -82,7 +82,6 @@ const Links = (props) => {
           });
           setdataL(a);
         }
-        // console.log(...dataL)
         // if (res.data === "okok") {
         // adddataLink.id = [...dataL][[...dataL].length - 1].id + 1;
         // setdataL([...dataL, adddataLink]);

@@ -198,7 +198,6 @@ const User = (props) => {
       return;
     }
     let a = Object.values([...dataU]).filter((item) => {
-      // console.log(item);
       return (
         item.email.toLowerCase().includes(keySearch.toLowerCase()) ||
         item.code.toLowerCase().includes(keySearch.toLowerCase())

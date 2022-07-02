@@ -3,10 +3,12 @@ import { useState } from "react";
 import axios from "axios";
 import Loading from "../../../components/Loading";
 import { Link } from "react-router-dom";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 const Profile = (props) => {
   const { userInfo, coin, token } = props;
   const [report, setReport] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
 
   const sendReport = () => {
     setIsLoading(true);
@@ -18,16 +20,26 @@ const Profile = (props) => {
         })
         .then((res) => {
           if (res.data === "okok") {
-            alert("Đã ghi nhận phản hồi của bạn!");
+            setOpenModal("Đã ghi nhận phản hồi của bạn!");
             setReport("");
             setIsLoading(false);
           }
         })
-        .catch(setIsLoading(false));
+        .catch(() => {
+          setOpenModal("Hiện không thể thực hiện chức năng này");
+          setIsLoading(false);
+        });
   };
   return (
     <div className="container mt-4 mb-5">
       {isLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+          title="Thông báo"
+        />
+      )}
       <div className="row" id="container-ipad">
         <div className="col-4 background-content p-4">
           <h1 className="primary-color">Lời cảm ơn!</h1>
@@ -56,7 +68,10 @@ const Profile = (props) => {
               <div className="modal-dialog modal-dialog-centered text-black">
                 <div className="modal-content ">
                   <div className="modal-header">
-                    <h5 className="ms-2 modal-title fw-bold primary-color text-uppercase" id="exampleModalLabel">
+                    <h5
+                      className="ms-2 modal-title fw-bold primary-color text-uppercase"
+                      id="exampleModalLabel"
+                    >
                       Liên hệ
                     </h5>
                     <button
@@ -67,26 +82,30 @@ const Profile = (props) => {
                     ></button>
                   </div>
                   <div className="modal-body col-10 mx-auto">
-                      <h5 className="mb-4">Bạn có thể liên hệ qua:</h5>
-                      <div className="d-flex justify-content-between">
-                        <p>
-                          <a href="https://www.facebook.com/tkiet1999" className="text-reset link-color">
-                          <i className="fa fa-facebook me-3" />Facebook
-                          </a>
-                        </p>
-                      </div>
-                      <input
-                    className="w-100 mx-auto mb-3 p-1"
-                    placeholder="Hoặc gửi tin nhắn ở đây"
-                    onChange={(e) => setReport(e.target.value)}
-                  />
+                    <h5 className="mb-4">Bạn có thể liên hệ qua:</h5>
+                    <div className="d-flex justify-content-between">
+                      <p>
+                        <a
+                          href="https://www.facebook.com/tkiet1999"
+                          className="text-reset link-color"
+                        >
+                          <i className="fa fa-facebook me-3" />
+                          Facebook
+                        </a>
+                      </p>
+                    </div>
+                    <input
+                      className="w-100 mx-auto mb-3 p-1"
+                      placeholder="Hoặc gửi tin nhắn ở đây"
+                      onChange={(e) => setReport(e.target.value)}
+                    />
                     {/* <ul>
                       <li>Facebook: click</li>
                       <li>Email: click</li>
                       <li>Discord: click</li>
                     </ul> */}
                   </div>
-                  
+
                   <div className="modal-footer">
                     <button
                       type="button"
@@ -113,29 +132,31 @@ const Profile = (props) => {
         <div className="col-7 background-content p-4">
           <img
             className="d-block mx-auto mb-4 rounded-circle"
-            src={userInfo.photoURL == undefined ? userProfile : userInfo.photoURL}
+            src={
+              userInfo.photoURL == undefined ? userProfile : userInfo.photoURL
+            }
             alt=""
             width={100}
             height={100}
           />
-          <h1 className="display-5 fw-bold text-center">{userInfo.displayName} </h1>
+          <h1 className="display-5 fw-bold text-center">
+            {userInfo.displayName}{" "}
+          </h1>
           <br />
           <div className="col-9 mx-auto w-respon">
             <div classNam="col-4">
               <div className="background-item row p-2">
                 <i className="fa fa-envelope col-2 d-flex align-items-center justify-content-center icon-user text-item"></i>
                 <div className="row col-10">
-                  <p className="m-0 text-item w-100">
-                    Email
-                  </p>
+                  <p className="m-0 text-item w-100">Email</p>
                   <p className="m-0">
                     <strong className="fw-bold">
-                    {userInfo.email + " "}
-                    {userInfo.checkUser ? (
-                      <i className="fa fa-check-circle text-primary"></i>
-                    ) : (
-                      <Link to="/xacthuc"> Xác thực ngay</Link>
-                    )}
+                      {userInfo.email + " "}
+                      {userInfo.checkUser ? (
+                        <i className="fa fa-check-circle text-primary"></i>
+                      ) : (
+                        <Link to="/xacthuc"> Xác thực ngay</Link>
+                      )}
                     </strong>{" "}
                   </p>
                 </div>
@@ -146,14 +167,9 @@ const Profile = (props) => {
               <div className="background-item row p-2">
                 <i className="fa fa-money col-2 d-flex align-items-center justify-content-center icon-user text-item"></i>
                 <div className="row col-10">
-                  <p className="m-0 text-item w-100">
-                    Số dư
-                  </p>
+                  <p className="m-0 text-item w-100">Số dư</p>
                   <p className="m-0">
-                    <strong className="fw-bold">
-                      {" "}
-                      {coin} KOIN
-                    </strong>{" "}
+                    <strong className="fw-bold"> {coin} KOIN</strong>{" "}
                   </p>
                 </div>
               </div>

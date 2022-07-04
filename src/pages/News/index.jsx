@@ -3,7 +3,6 @@ import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 // firebase
-import { db } from "../../services/firebase";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -55,22 +54,6 @@ const News = () => {
       .catch((e) => {
         console.log(e);
       });
-    // console.log(allData[allData.length - 1].id);
-    // console.log(lastKey);
-    // db.ref()
-    //   .child("newscontent")
-    //   .orderByChild("id")
-    //   .endBefore(allData[allData.length - 1].id, lastKey)
-    //   .limitToLast(4)
-    //   .get()
-    //   .then((snap) => {
-    //     let a = snap.val();
-    //     if (a == null || a == "null") sethasMore(false);
-    //     else {
-    //       setAllData(allData.concat(Object.values(snap.val()).reverse()));
-    //       setLastKey(Object.keys(snap.val())[0]);
-    //     }
-    //   });
   };
 
   function toggleVideo(i) {}
@@ -107,7 +90,7 @@ const News = () => {
               className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
               endMessage={
                 <p className="text-danger" style={{ textAlign: "center" }}>
-                  <b>Yay! Không còn tin nào nữa</b>
+                  <b>Bạn đã xem hết tin</b>
                 </p>
               }
             >

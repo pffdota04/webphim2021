@@ -1,4 +1,5 @@
 import "./style.css";
+import brandads from "./../../assets/images/bia.png";
 import { useEffect, useState } from "react";
 import Profile from "./Profile";
 import NapTien from "./NapTien";
@@ -39,8 +40,6 @@ const UserRequest = (props) => {
   ) : userInfo.checkUser == "not" ? (
     <Redirect push to="/login" />
   ) : (
-    // ) : userInfo.checkUser === false ? (
-    //   <Redirect to="/xacthuc" />
     <div className="container-background">
       <MetaTags>
         <title>Hồ sơ của bạn</title>
@@ -54,8 +53,9 @@ const UserRequest = (props) => {
       <div className="container text-white">
         {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
         <img
-          className="d-block w-100 pt-2"
-          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          className="d-block w-100 pt-2 brandads"
+          // src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          src={brandads}
           alt=""
           width={800}
         />

@@ -2,11 +2,13 @@ import axios from "axios";
 import { useState } from "react";
 import "./style.css";
 import Loading from "../../../components/Loading";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const Voucher = (props) => {
   const [inputCode, setInputCode] = useState("");
   const { userDetail, change } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
 
   const sendVoucher = () => {
     setIsLoading(true);
@@ -18,15 +20,15 @@ const Voucher = (props) => {
       })
       .then((res) => {
         if (res.data.complete == true) {
-          alert("Thanhf coong: nhan duoc " + res.data.voucherPoint);
+          setOpenModal("Bạn nhận được " + res.data.voucherPoint + " Coin");
           let newDetail = userDetail;
           newDetail.coin = newDetail.coin + res.data.voucherPoint;
           change(newDetail);
-        } else alert(res.data);
+        } else setOpenModal(res.data);
         setIsLoading(false);
       })
       .catch((e) => {
-        alert(e.response.data.message);
+        setOpenModal(e.response.data.message);
         setIsLoading(false);
       });
   };
@@ -34,12 +36,18 @@ const Voucher = (props) => {
   return (
     <div className="container mt-4 mb-5">
       {isLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row" id="container-ipad">
         <div className="col-4 background-content p-4">
           <h4 className="text-center primary-color">
             <strong className="display-7 fw-bold fst-italic ">
               {" "}
-              VOUCH KOIN
+              VOUCH COIN
             </strong>{" "}
           </h4>
           <div className="lead pt-3">
@@ -49,6 +57,11 @@ const Voucher = (props) => {
               event của bọn mình nhé!
             </p>
           </div>
+          <a
+            class="primary-color voucher_web"
+            href="https://www.facebook.com/websitexemphimtructuyenKphim/posts/103204582455101"
+            target="_blank"
+          >Xem tại đây: websitexemphimtructuyenKphim</a>
         </div>
         <span className="col-1"></span>
         <div className="col-7 background-content p-4">

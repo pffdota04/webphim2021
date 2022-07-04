@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRef, useEffect } from "react";
 import axios from "axios";
 import Loading from "../../../components/Loading";
+import ModalAlert from './../../../components/ModalAlart/ModalAlert';
 
 const NapTien = (props) => {
   const [inputCode, setInputCode] = useState("");
@@ -12,10 +13,11 @@ const NapTien = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [checkout, setCheckOut] = useState(false);
   const [soLuong, setSoLuong] = useState(1);
+  const [openModal, setOpenModal] = useState(null);
 
   const PayPal = () => {
     const paypal = useRef();
-  
+
     useEffect(() => {
       window.paypal
         .Buttons({
@@ -43,21 +45,21 @@ const NapTien = (props) => {
         })
         .render(paypal.current);
     }, []);
-  
+
     return (
       <div>
         <div ref={paypal}></div>
         <button
-            className="sign__btn"
-            onClick={() => {
+          className="sign__btn"
+          onClick={() => {
             setCheckOut(false);
-            }}
+          }}
         >
-            Close
+          Close
         </button>
       </div>
     );
-  }
+  };
 
   function sendRequest() {
     setIsLoading(true);
@@ -72,12 +74,12 @@ const NapTien = (props) => {
       })
       .then((res) => {
         if (res.data.complete == true) {
-          alert("Đã ghi nhận, yêu cầu sẽ sớm được xử lý");
-        } else alert(res.data);
+          setOpenModal("Đã ghi nhận, yêu cầu sẽ sớm được xử lý");
+        } else setOpenModal(res.data);
         setIsLoading(false);
       })
       .catch((e) => {
-        alert(e.response.data.message);
+        setOpenModal(e.response.data.message);
         setIsLoading(false);
       });
   }
@@ -85,6 +87,12 @@ const NapTien = (props) => {
   return (
     <div className="container mt-4 mb-5">
       {isLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row" id="container-ipad">
         <div className="col-4 background-content p-4">
           <h4 className="text-center primary-color">
@@ -125,13 +133,14 @@ const NapTien = (props) => {
         </div>
         <span className="col-1"></span>
         <div className="col-7 background-content p-4">
-        {checkout ? (
+          {checkout ? (
             <PayPal />
           ) : (
             <div>
               <div className="col-12 col-md-8 mx-auto mb-4">
                 <label for="phuongthuc" className="form-label">
-                  Phương thức: <span className="text-muted">(Bắt buộc) </span>&nbsp;
+                  Phương thức: <span className="text-muted">(Bắt buộc) </span>
+                  &nbsp;
                 </label>
                 <select
                   type="select"
@@ -143,16 +152,16 @@ const NapTien = (props) => {
                 >
                   <option value="momo">Momo</option>
                   <option value="paypal">PayPal</option>
-                  <option value="airpay">Airpay</option>
                   <option value="bank">Chuyển Khoản</option>
                 </select>
               </div>
               <div>
-                {phuongThuc === 'paypal' ? (
+                {phuongThuc === "paypal" ? (
                   <div>
                     <div className="col-12 col-md-8 mx-auto mb-4">
                       <label for="menhgia" className="form-label">
-                        Mệnh giá <span className="text-muted">(Bắt buộc) </span>&nbsp;
+                        Mệnh giá <span className="text-muted">(Bắt buộc) </span>
+                        &nbsp;
                       </label>
                       <select
                         name="type"
@@ -169,12 +178,12 @@ const NapTien = (props) => {
                     </div>
                     <div className="col-12 col-md-8 mx-auto">
                       <button
-                          className="sign__btn"
-                          onClick={() => {
+                        className="sign__btn"
+                        onClick={() => {
                           setCheckOut(true);
-                          }}
+                        }}
                       >
-                          Checkout
+                        Checkout
                       </button>
                     </div>
                   </div>
@@ -182,7 +191,8 @@ const NapTien = (props) => {
                   <div>
                     <div className="col-12 col-md-8 mx-auto mb-4">
                       <label for="menhgia" className="form-label">
-                        Mệnh giá <span className="text-muted">(Bắt buộc) </span>&nbsp;
+                        Mệnh giá <span className="text-muted">(Bắt buộc) </span>
+                        &nbsp;
                       </label>
                       <select
                         name="type"
@@ -199,7 +209,8 @@ const NapTien = (props) => {
                     </div>
                     <div className="col-12 col-md-8 mx-auto mb-4">
                       <label for="magiaodich" className="form-label">
-                        Mã giao dịch <span className="text-muted">(Bắt buộc) </span>&nbsp;
+                        Mã giao dịch{" "}
+                        <span className="text-muted">(Bắt buộc) </span>&nbsp;
                       </label>
                       <input
                         type="text"
@@ -222,16 +233,18 @@ const NapTien = (props) => {
                       ></input>
                     </div>
                     <div className="col-12 col-md-8 mx-auto">
-                      <button className="sign__btn" onClick={() => sendRequest()}>
+                      <button
+                        className="sign__btn"
+                        onClick={() => sendRequest()}
+                      >
                         Gửi
                       </button>
                     </div>
                   </div>
                 )}
               </div>
-              
             </div>
-            )}
+          )}
         </div>
       </div>
     </div>

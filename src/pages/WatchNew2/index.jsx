@@ -215,7 +215,6 @@ const WatchNew2 = () => {
       a,
       Math.random().toString(36).substring(4) + ".vtt"
     );
-    // console.log(rename);
 
     const data = new FormData();
     data.append("file", rename);
@@ -225,7 +224,6 @@ const WatchNew2 = () => {
         data
       )
       .then((res) => {
-        console.log(res.data);
         let copyNowdata = getSub;
         if (name.length > 13) name = name.substring(0, 10) + "...";
         name = name + "(" + res.data.slice(0, -6) + ")";
@@ -237,10 +235,6 @@ const WatchNew2 = () => {
         setforceupdate(forceupdate + 1);
       });
   };
-
-  // useEffect(() => {
-  //   console.log(nowDataInfo);
-  // }, [nowDataInfo]);
 
   function uniqByKeepFirst(a, key) {
     let seen = new Set();
@@ -448,8 +442,8 @@ const WatchNew2 = () => {
 
   function unlockTHis(plan) {
     setPopupVip(null);
-    if (userDetail.checkUser == "not") alert("please login!");
-    if (userDetail.checkUser == false) alert("please verified email!");
+    if (userDetail.checkUser == "not") setShowAlert("please login!");
+    if (userDetail.checkUser == false) setShowAlert("please verified email!");
     else {
       setIsLoading(true);
       setIconUnlock(0);
@@ -461,7 +455,6 @@ const WatchNew2 = () => {
         })
         .then((res) => {
           if (res.data.complete == true) {
-            // alert("Mở khóa thành công, bạn còn lại " + res.data.total);
             setShowAlert("Mở khóa thành công, bạn còn lại " + res.data.total);
 
             let newDetail = userDetail;
@@ -478,13 +471,13 @@ const WatchNew2 = () => {
             getLink(userDetail.token);
             // getDataByTokenId();
             // forceUpdate();
-          } else alert(res.data.complete);
+          } else setShowAlert(res.data.complete);
           setIsLoading(false);
         })
         .catch((e) => {
           console.log(e);
           setIconUnlock(-1);
-          alert("Sorry, some thing was wrong!");
+          setShowAlert("Sorry, some thing was wrong!");
           setIsLoading(false);
         });
     }
@@ -493,7 +486,7 @@ const WatchNew2 = () => {
   function saveThis() {
     if (userDetail.checkUser == "not")
       // return history.push("/login");
-      alert("please login!");
+      setShowAlert("please login!");
     else {
       setIconSave(0);
       axios
@@ -734,3 +727,5 @@ const WatchNew2 = () => {
   );
 };
 export default WatchNew2;
+
+

@@ -28,6 +28,7 @@
 .all-admin {
     font-family: 'Source Sans Pro', sans-serif !important;
     font-weight: 600 !important;
+    min-height: 90vh;
     background-color: #1a191f;
     font-weight: normal !important;
     color: white !important;

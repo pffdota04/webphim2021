@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { DebounceInput } from "react-debounce-input";
 import Loading from "../../../components/Loading";
 import "./style.css";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const LinkPhim = (props) => {
   const { dataL, token, setFetchLink, dataF } = props;
@@ -19,6 +20,7 @@ const LinkPhim = (props) => {
   const [form, setForm] = useState(0); // 0 = defautl, 1 = vip, 2 = sub
   const [formData, setFormData] = useState({ type: "mp4" }); // luu data nhap vao
   const [dataLState, setDataLState] = useState([]); // luu data nhap vao
+  const [openModal, setOpenModal] = useState(null);
 
   useEffect(() => {
     setDataLState(Object.values(dataL));
@@ -357,12 +359,12 @@ const LinkPhim = (props) => {
       )
       .then((res) => {
         if (res.data === "ok") {
-          alert("Cập nhật thành công");
+          setOpenModal("Cập nhật thành công");
         }
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
   }
@@ -396,6 +398,7 @@ const LinkPhim = (props) => {
     // if (Object.keys(a).length === 0) a = null;
     setForceRander(forceRender + 1);
     setAll1Link(a);
+    setOpenModal("Xóa thành công!");
   };
 
   const removeSub = (chap, quality) => {
@@ -418,11 +421,11 @@ const LinkPhim = (props) => {
       formData.quality === "" ||
       formData.quality === undefined
     )
-      alert("Thông tin trống!");
+    setOpenModal("Vui lòng không để trống các trường!");
     else if (type === 0) {
-      alert(JSON.stringify(a));
+      setOpenModal(JSON.stringify(a));
       if (a == null) a = { data: { default: [], vip: [] }, _id: choseL };
-      alert(JSON.stringify(a));
+      setOpenModal(JSON.stringify(a));
       if (a.data.default === undefined)
         a.data.default[0] = {
           chap: formData.chap,
@@ -515,6 +518,7 @@ const LinkPhim = (props) => {
     //   setSub(a);
     // }
     setForceRander(forceRender + 1);
+    setOpenModal("Thêm thành công!");
   };
 
   const ModalForm = () => {
@@ -619,7 +623,7 @@ const LinkPhim = (props) => {
             data-bs-dismiss="modal"
             onClick={() => themLink(isVip ? 1 : 0)}
           >
-            Thêm
+            Save
           </button>
           <button
             type="button"
@@ -705,7 +709,7 @@ const LinkPhim = (props) => {
             data-bs-dismiss="modal"
             onClick={() => themLink(2)}
           >
-            Thêm
+            Save
           </button>
           <button
             type="button"
@@ -734,12 +738,18 @@ const LinkPhim = (props) => {
   // };
 
   return (
-    <div className="my-2 mb-3">
+    <div className="my-2 pb-5">
       {onLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic ">
+            <strong className="display-6 fw-bold fst-italic text-uppercase">
               {" "}
               Link Managerment
             </strong>{" "}

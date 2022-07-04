@@ -74,7 +74,6 @@ const Watch = () => {
   useEffect(() => {
     if (dataFilmState.id == undefined) {
       axios.get(process.env.REACT_APP_API_DEPLOYED2 + "film/" + id).then((res) => {
-        console.log(res.data[0]);
         if (name != res.data[0].title)
           history.push("/watch/" + id + "/" + res.data[0].title);
         setDataFilmState(res.data[0]);
@@ -669,7 +668,6 @@ const Watch = () => {
 
    
       <Footer />
-      {console.log(isDisable)}
     </div>
   );
 };

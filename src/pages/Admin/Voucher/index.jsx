@@ -102,16 +102,14 @@ const Vouchers = (props) => {
     let a = Object.values([...dataV]).filter((item) => {
       return item.code.toLowerCase().includes(keySearch.toLowerCase());
     });
-    // console.log(a);
     setdataVoucher(a);
   };
 
   return (
-    <div className="container my-2 mb-3">
+    <div className="container my-2 pb-5">
       {onLoading && <Loading />}
       {showAlert && (
         <ModalAlert
-          title={"Thông báo"}
           content={showAlert}
           close={() => setShowAlert(null)}
         />
@@ -120,7 +118,7 @@ const Vouchers = (props) => {
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic "> Vouchers</strong>{" "}
+            <strong className="display-6 fw-bold fst-italic text-uppercase"> Voucher management</strong>{" "}
             <div className="dashboxs_voucher">
               <button
                 className="dashbox__mores_voucher"
@@ -190,7 +188,7 @@ const Vouchers = (props) => {
                       className="btn-primarys"
                       onClick={() => addNew()}
                     >
-                      Save changes
+                      Save
                     </button>
                     <button
                       type="button"
@@ -210,9 +208,9 @@ const Vouchers = (props) => {
           <label htmlFor="timkiem">Tìm kiếm: </label>
           <input
             id="timkiem"
-            className="ms-1"
+            className="ms-1 ps-2"
             onChange={(e) => searching(e.target.value)}
-            placeholder="code voucher"
+            placeholder="Code voucher"
           />
           {dataVoucher != undefined && (
             <div className="table-responsive-xl table-voucher mt-3">

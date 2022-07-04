@@ -110,7 +110,6 @@ const Category = (props) => {
         process.env.REACT_APP_API_DEPLOYED2 + "film/caterogy/" + dataOf + "/" + lastid
       )
       .then((res) => {
-        // console.log(res.headers);
         resulf = res.data;
         setLastKey(res.data.lastKey);
       });

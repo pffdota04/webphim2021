@@ -209,13 +209,6 @@ const Home = () => {
         <div className="trending mb-3">
           <h3 className="pb-2 primary-color mb-4">Phim Hot</h3>
           <div className="item mg-card">
-            {/* {console.log(homeData.trending)}
-            {console.log("...")}
-            {console.log(
-              Object.values(homeData.trending).sort((a, b) => {
-                return a.trending - b.trending;
-              })
-            )} */}
             <Carousel
               responsive={responsive_multi_carsousel}
               customButtonGroup={<ButtonGroup />}

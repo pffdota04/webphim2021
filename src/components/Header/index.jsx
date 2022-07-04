@@ -70,7 +70,7 @@ const Header = () => {
           dispatch(setUserData(userinfo));
           user.getIdToken(true).then(function (idToken) {
             console.log(idToken);
-            console.log(userinfo);
+
             axios
               .get(process.env.REACT_APP_API_DEPLOYED2 + "user/info", {
                 headers: { Authorization: `${idToken}` },

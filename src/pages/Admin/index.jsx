@@ -108,7 +108,6 @@ const Admin = () => {
         .getIdTokenResult()
         .then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
-            // alert("You are admin!");
             getDataDashAndToken();
           } else {
             history.push("/");
@@ -160,8 +159,6 @@ const Admin = () => {
             let sum = 0;
             Object.values(res.data.doanhthu).map((e) => (sum = sum + e));
             res.data.sum = sum;
-            console.log(res.data);
-
             setDataDas(res.data);
           })
           .catch((e) => {
@@ -257,15 +254,12 @@ const Admin = () => {
   }
 
   function getDataKitkot() {
-    console.log("fetching kitkot");
-
     setFetchKikot(false);
     if (adminToken != null)
       axios
         .get(process.env.REACT_APP_API_DEPLOYED2 + "kitkot/all")
         .then((res) => {
           const holdLink = res.data;
-          console.log(holdLink);
           setDataAllKitkot(holdLink);
         })
         .catch((e) => console.log(e));
@@ -329,7 +323,7 @@ const Admin = () => {
   }
 
   return userInfo.checkUser == "init" ? (
-    <h1>CHECKING...</h1>
+    <h1>Loading Data...</h1>
   ) : userInfo.checkUser == "not" ? (
     <Redirect push to="/login" />
   ) : (
@@ -440,7 +434,7 @@ const Admin = () => {
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/napcoin"
                     >
-                      <i className="fa fa-money  d-none d-sm-block" /> Nạp Coin
+                      <i className="fa fa-money  d-none d-sm-block" /> Request Payment
                     </Link>
                   </h6>
                 </div>
@@ -454,7 +448,6 @@ const Admin = () => {
                 <div className="stats">
                   <p className="text-bold mb-10 d-none d-sm-block">
                     {Object.keys(dataAllKnews).length}
-                    (test)
                   </p>
                   <h6 className=" mx-auto ms-sm-0 ">
                     <Link
@@ -496,8 +489,7 @@ const Admin = () => {
                 </div>
                 <div className="stats">
                   <p className="text-bold mb-10 d-none d-sm-block">
-                    {/* {Object.keys(dataAllReport).length} */}
-                    (test)
+                    {Object.keys(dataAllKitkot).length}
                   </p>
                   <h6 className=" mx-auto ms-sm-0 ">
                     <Link
@@ -613,10 +605,10 @@ const Admin = () => {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 path={"/admin"}
                 component={() => <Dashboard char1={char1} char2={char2} />}
-              />
+              /> */}
               )
             </Switch>
           )}

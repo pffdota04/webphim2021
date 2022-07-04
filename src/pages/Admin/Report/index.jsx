@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import Loading from "../../../components/Loading";
 import "./style.css";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const Reports = (props) => {
   const { dataReport, token, setFetchReport } = props;
   const [onLoading, setonLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
 
   function Refresh() {
     setFetchReport(true);
@@ -27,23 +30,31 @@ const Reports = (props) => {
       })
       .then((res) => {
         if (res.data === "okok") {
-          alert("Cập nhật thành công");
+          setOpenModal("Đã xóa thành công!");
           // setFetchReport(true)
         }
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
+      const myTimeout = setTimeout(Refresh, 5000);
   };
 
   return (
-    <div className="container my-2 mb-3">
+    <div className="container my-2 pb-5">
+      {onLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic ">Report</strong>{" "}
+            <strong className="display-6 fw-bold fst-italic text-uppercase">Report management</strong>{" "}
             <div className="dashboxs_rp">
               <button className="dashbox__mores_rp" onClick={() => Refresh()}>
                 Refresh Data

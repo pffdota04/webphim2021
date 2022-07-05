@@ -99,7 +99,6 @@ const Home = () => {
 
   const [popupId, setPopupID] = useState(null);
   // const [lis, listTrending] = useState(null);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -133,6 +132,7 @@ const Home = () => {
         <svg
           className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
           style={{ width: "100%", height: "60vh" }}
+          
           role="img"
           aria-label="Placeholder: First slide"
           preserveAspectRatio="xMidYMid slice"
@@ -143,8 +143,6 @@ const Home = () => {
         </svg>
         <div className="carousel-caption text-start">
           <h1> Loading...</h1>
-          <p className="mota">. . .</p>
-          <button className="btn btn-lg background-primary">Loading...</button>
         </div>
       </div>
     ) : (
@@ -161,7 +159,6 @@ const Home = () => {
           modifier: 1,
           slideShadows: true,
         }}
-        // pagination={true}
         className="mySwiper"
         loop={true}
         autoplay={{
@@ -172,7 +169,6 @@ const Home = () => {
       >
         {homeData.top.map((e, i) => (
           <SwiperSlide className="slide-top">
-            {/* <div> */}
             <div className="carousel-caption text-start">
               <h1>{e.title}</h1>
               <p className="mota">{homeData.topdetail[i].description}</p>
@@ -193,7 +189,6 @@ const Home = () => {
               src={homeData.topdetail[i].backimg}
               alt="ảnh top"
             />
-            {/* </div> */}
           </SwiperSlide>
         ))}
       </Swiper>
@@ -317,8 +312,9 @@ const Home = () => {
         {recommendFilm()}
         {lastFilm()}
         <h6 className="text-danger text-center">
-          voucher (cái nào đã xài rồi thì thử cái khác): freevoucher, freevoucher1, freevoucher2, freevoucher3,
-          happy, happy1, happy2, happy3, happy4, vou60, vou80, vou100
+          voucher (cái nào đã xài rồi thì thử cái khác): freevoucher,
+          freevoucher1, freevoucher2, freevoucher3, happy, happy1, happy2,
+          happy3, happy4, vou60, vou80, vou100
         </h6>
       </div>
       <PopupFilm data={popupId} click={setPopupID} />

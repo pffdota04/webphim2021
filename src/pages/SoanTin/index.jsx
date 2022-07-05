@@ -18,6 +18,7 @@ import {
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import axios from "axios";
 
 const SoanTin = (props) => {
   const { dataNew, token, setFetch } = props;
@@ -29,6 +30,7 @@ const SoanTin = (props) => {
 
   // edit
   const [edit, setEdit] = useState(null);
+  const [deleteIt, setDelete] = useState(null);
   const [title2, setTitle2] = useState("");
   const [preview2, setPreview2] = useState("");
   const [img2, setImg2] = useState("");
@@ -45,8 +47,6 @@ const SoanTin = (props) => {
     setFetch(true);
   }
 
-  useEffect(() => {}, []);
-
   const DangTin = () => {
     setonLoading(true);
     db.ref("/newscontent")
@@ -54,65 +54,104 @@ const SoanTin = (props) => {
       .limitToLast(1)
       .once("value")
       .then((res) => {
-        db.ref("/newscontent").push({
-          content: JSON.stringify(
-            convertToRaw(editorState.getCurrentContent())
-          ),
-          id: parseInt(Object.values(res.val())[0].id) + 1 + "",
-          title: title,
-          img: img,
-          preview: preview,
-        });
-        setOpenModal("Đã đăng tin thành công!");
-        setonLoading(false);
+        axios
+          .post(process.env.REACT_APP_API_DEPLOYED2 + "news", {
+            data: {
+              content: JSON.stringify(
+                convertToRaw(editorState.getCurrentContent())
+              ),
+              id: parseInt(Object.values(res.val())[0].id) + 1 + "",
+              title: title,
+              img: img,
+              preview: preview,
+            },
+            token: token,
+          })
+          .then(() => {
+            setOpenModal("Đã cập nhật thành công!");
+            setonLoading(false);
+            Refresh();
+          })
+          .catch((e) => {
+            setOpenModal(e);
+            setonLoading(false);
+          });
       })
       .catch((e) => {
         setOpenModal(e);
         setonLoading(false);
       });
-      const myTimeout = setTimeout(Refresh, 5000);
-    // db.ref("/newscontent").push({
-    //   content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
-    // });
+  };
+
+  const deleteNews = () => {
+    setonLoading(true);
+    db.ref("/newscontent")
+      .orderByChild("id")
+      .equalTo(deleteIt)
+      .once("value")
+      .then((res) => {
+        axios
+          .delete(
+            process.env.REACT_APP_API_DEPLOYED2 +
+              "news/" +
+              Object.keys(res.val())[0],
+            {
+              headers: { Authorization: `${token}` },
+            }
+          )
+          .then(() => {
+            setOpenModal("Đã cập nhật thành công!");
+            setonLoading(false);
+            Refresh();
+          })
+          .catch((e) => {
+            setOpenModal(e);
+            setonLoading(false);
+          });
+      })
+      .catch((e) => {
+        setOpenModal(e);
+        setonLoading(false);
+      });
   };
 
   const UpdateTin = () => {
     setonLoading(true);
-    db.ref("/newscontent")
-      .orderByChild("id")
-      .equalTo(edit)
-      .once("value")
-      .then((res) => {
-        db.ref("/newscontent/" + Object.keys(res.val())[0]).update({
+    axios
+      .put(process.env.REACT_APP_API_DEPLOYED2 + "news", {
+        data: {
           content: JSON.stringify(
             convertToRaw(editorState2.getCurrentContent())
           ),
           title: title2,
           img: img2,
           preview: preview2,
-        });
+        },
+        token: token,
+        id: edit,
+      })
+      .then((res) => {
         setOpenModal("Đã cập nhật thành công!");
         setonLoading(false);
+        Refresh();
       })
       .catch((e) => {
         setOpenModal(e);
         setonLoading(false);
       });
-      const myTimeout = setTimeout(Refresh, 5000);
   };
 
   return (
     <div className="container my-2 pb-5">
       {onLoading && <Loading />}
       {openModal && (
-        <ModalAlert
-          close={() => setOpenModal(null)}
-          content={openModal}
-        />
+        <ModalAlert close={() => setOpenModal(null)} content={openModal} />
       )}
       <div className="row">
         <h4 className="text-center">
-          <strong className="display-6 fw-bold fst-italic text-uppercase">News management</strong>{" "}
+          <strong className="display-6 fw-bold fst-italic text-uppercase">
+            News management
+          </strong>{" "}
           <div className="dashboxs_coin">
             <button
               className="dashbox__mores me-3"
@@ -146,7 +185,9 @@ const SoanTin = (props) => {
                   <td>{e.id}</td>
                   <td className="text-start">
                     <strong>
-                      {e.title}
+                      <Link to={"/tintuc/" + e.id} target="_blank">
+                        {e.title}
+                      </Link>
                       {/* {JSON.stringify(e.content)} */}
                       {/* {JSON.stringify(convertFromRaw(JSON.parse(e.content)))} */}
                     </strong>{" "}
@@ -157,13 +198,6 @@ const SoanTin = (props) => {
                     <img src={e.img} width="140" height={100} alt="anh bia" />
                   </td>
                   <td>
-                    <Link
-                      className="btn btn-success mb-2 mt-2"
-                      to={"/tintuc/" + e.id}
-                      target="_blank"
-                    >
-                      <i className="fa fa-external-link ps-2 pe-1" />
-                    </Link>
                     <span
                       className="btn btn-primary"
                       data-bs-toggle="modal"
@@ -182,6 +216,16 @@ const SoanTin = (props) => {
                     >
                       Edit
                     </span>
+                    <div
+                      className="btn btn-danger mb-2 mt-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalDelete"
+                      onClick={() => {
+                        setDelete(e.id);
+                      }}
+                    >
+                      <i class="fa fa-trash-o ps-1 pe-1"></i>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -230,7 +274,7 @@ const SoanTin = (props) => {
                     />
                   </div>{" "}
                   <div className="text-center">
-                  <span className="labelnew">Summary</span>{" "}
+                    <span className="labelnew">Summary</span>{" "}
                     <input
                       onChange={(e) => setPreview(e.target.value)}
                       className="w-75"
@@ -388,6 +432,44 @@ const SoanTin = (props) => {
                 >
                   Close
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* CONFIRM DELETE MODAL*/}
+        <div
+          className="modal fade"
+          id="modalDelete"
+          tabIndex={-1}
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-xl modal-dialog-centered ">
+            <div className="modal-content bg-dark border-warning">
+              <div className="modal-header">
+                <h5 className="modal-title fw-bold" id="exampleModalLabel">
+                  CONFIRM DELETE
+                </h5>
+                <button
+                  type="button"
+                  className="btn_close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  id=""
+                >
+                  <i className="fa fa-close" />
+                </button>
+              </div>
+              <div className="modal-body text-center">
+                <h6 > Are you sure?</h6>
+                <div
+                  className="btn btn-danger"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  onClick={() => deleteNews()}
+                >
+                  DELETE
+                </div>
               </div>
             </div>
           </div>

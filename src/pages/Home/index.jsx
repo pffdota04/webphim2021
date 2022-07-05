@@ -133,7 +133,6 @@ const Home = () => {
         <svg
           className="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
           style={{ width: "100%", height: "60vh" }}
-          
           role="img"
           aria-label="Placeholder: First slide"
           preserveAspectRatio="xMidYMid slice"
@@ -170,7 +169,7 @@ const Home = () => {
       >
         {homeData.top.map((e, i) => (
           <SwiperSlide className="slide-top">
-{/* <<<<<<< HEAD
+            {/* <<<<<<< HEAD
             <div className="carousel-caption text-start">
               <h1>{e.title}</h1>
               <p className="mota">{homeData.topdetail[i].description}</p>
@@ -347,7 +346,11 @@ const Home = () => {
         href="https://www.facebook.com/websitexemphimtructuyenKphim/posts/103204582455101"
         target="_blank"
       >
-        <img src="https://shoptam113.com/upload-usr/tam113/qua-tang.gif" alt="" className="imgGift" />
+        <img
+          src="https://shoptam113.com/upload-usr/tam113/qua-tang.gif"
+          alt=""
+          className="imgGift"
+        />
       </a>
     </div>
   );

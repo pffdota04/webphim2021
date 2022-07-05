@@ -90,7 +90,7 @@ const News = () => {
               className="row justify-content-md-center last-update-list mx-auto overflow-hidden"
               endMessage={
                 <p className="text-danger" style={{ textAlign: "center" }}>
-                  <b>Yay! Không còn tin nào nữa</b>
+                  <b>Bạn đã xem hết tin</b>
                 </p>
               }
             >

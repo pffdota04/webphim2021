@@ -20,7 +20,7 @@ const Profile = (props) => {
         })
         .then((res) => {
           if (res.data === "okok") {
-            setOpenModal("Đã ghi nhận phản hồi của bạn!");
+            setOpenModal("Cảm ơn phản hồi của bạn!\nChúc bạn xem phim vui vẻ!");
             setReport("");
             setIsLoading(false);
           }
@@ -82,28 +82,19 @@ const Profile = (props) => {
                     ></button>
                   </div>
                   <div className="modal-body col-10 mx-auto">
-                    <h5 className="mb-4">Bạn có thể liên hệ qua:</h5>
-                    <div className="d-flex justify-content-between">
-                      <p>
-                        <a
-                          href="https://www.facebook.com/tkiet1999"
-                          className="text-reset link-color"
-                        >
-                          <i className="fa fa-facebook me-3" />
-                          Facebook
-                        </a>
-                      </p>
-                    </div>
-                    <input
-                      className="w-100 mx-auto mb-3 p-1"
-                      placeholder="Hoặc gửi tin nhắn ở đây"
-                      onChange={(e) => setReport(e.target.value)}
-                    />
-                    {/* <ul>
-                      <li>Facebook: click</li>
-                      <li>Email: click</li>
-                      <li>Discord: click</li>
-                    </ul> */}
+                      <h5 className="mb-4">Bạn có thể liên hệ qua:</h5>
+                      <div className="d-flex justify-content-between">
+                        <p>
+                          <a href="https://www.facebook.com/websitexemphimtructuyenKphim" target="_blank" className="text-reset link-color">
+                          <i className="fa fa-facebook me-3" />Facebook
+                          </a>
+                        </p>
+                      </div>
+                      <input
+                    className="w-100 mx-auto mb-3 p-1"
+                    placeholder="Hoặc gửi tin nhắn ở đây"
+                    onChange={(e) => setReport(e.target.value)}
+                  />
                   </div>
 
                   <div className="modal-footer">
@@ -169,7 +160,7 @@ const Profile = (props) => {
                 <div className="row col-10">
                   <p className="m-0 text-item w-100">Số dư</p>
                   <p className="m-0">
-                    <strong className="fw-bold"> {coin} KOIN</strong>{" "}
+                    <strong className="fw-bold"> {coin} COIN</strong>{" "}
                   </p>
                 </div>
               </div>

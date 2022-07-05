@@ -4,6 +4,7 @@ import { DebounceInput } from "react-debounce-input";
 import Loading from "../../../components/Loading";
 import { db } from "../../../services/firebase";
 import "./style.css";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const KitKotAd = (props) => {
   const { dataK, token, setFetchKikot } = props;
@@ -16,6 +17,7 @@ const KitKotAd = (props) => {
   const [currentLink, setCurrentLink] = useState(dataK[0]); // mặc định là link  đầu tiên
   const [adddataKink, setAddLink] = useState({}); // mặc định là link  đầu tiên
   const [editKitkot, setEditKitKot] = useState(dataK[0]); // mặc định là link  đầu tiên
+  const [openModal, setOpenModal] = useState(null);
 
   function Refresh() {
     setFetchKikot(true);
@@ -133,11 +135,11 @@ const KitKotAd = (props) => {
       .child("/kitkot/" + key)
       .update(editKitkot)
       .then(() => {
-        Refresh();
+        setOpenModal("Cập nhật thành công!");
         setonLoading(false);
-        alert("Cập nhật thành công");
       })
-      .catch((e) => alert(e));
+      .catch((e) => setOpenModal(e));
+    const myTimeout = setTimeout(Refresh, 5000);
   }
 
   function addLink() {
@@ -148,15 +150,15 @@ const KitKotAd = (props) => {
       })
       .then((res) => {
         if (res.data === "okok") {
-          alert("Thêm thành công");
+          setOpenModal("Thêm thành công!");
         }
-        Refresh();
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
+    const myTimeout = setTimeout(Refresh, 5000);
   }
 
   function removeLink(current) {
@@ -171,15 +173,14 @@ const KitKotAd = (props) => {
       .remove()
       .then(() => {
         setonLoading(false);
-        alert("Đã xóa");
-
-        Refresh();
+        setOpenModal("Đã xóa thành công!");
       })
 
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
+    const myTimeout = setTimeout(Refresh, 5000);
   }
 
   const searching = (keySearch) => {
@@ -194,12 +195,18 @@ const KitKotAd = (props) => {
   };
 
   return (
-    <div className="my-2 mb-3">
+    <div className="my-2 pb-5">
       {onLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic "> Kitkot</strong>{" "}
+            <strong className="display-6 fw-bold fst-italic text-uppercase">Kitkot management</strong>{" "}
             <div className="dashboxs">
               <button
                 className="dashbox__mores me-3"
@@ -219,9 +226,9 @@ const KitKotAd = (props) => {
           <label htmlFor="timkiem">Tìm kiếm: </label>
           <input
             id="timkiem"
-            className="ms-1"
+            className="ms-1 ps-2"
             onChange={(e) => searching(e.target.value)}
-            placeholder="id phim"
+            placeholder="Id phim"
           />
           {dataK2 != undefined && (
             <div className="table-responsive-xl table-link">
@@ -329,7 +336,7 @@ const KitKotAd = (props) => {
                   data-bs-dismiss="modal"
                   onClick={() => addLink()}
                 >
-                  Save changes
+                  Save
                 </button>
                 <button
                   type="button"

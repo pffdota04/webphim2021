@@ -1,3 +1,8 @@
 .mycode{
     width: fit-content;
 }
+.voucher_web:hover {
+    color:darkgoldenrod;
+    opacity: 0.8;
+    word-wrap: normal;
+}

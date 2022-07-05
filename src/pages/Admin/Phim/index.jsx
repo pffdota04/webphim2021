@@ -6,6 +6,7 @@ import { DebounceInput } from "react-debounce-input";
 import Loading from "../../../components/Loading";
 import { db } from "../../../services/firebase";
 import "./style.css";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const Phims = (props) => {
   // token --> để gửi đi chung post (xác thực admin bên api),
@@ -25,6 +26,7 @@ const Phims = (props) => {
   const [currentPhim, setCurrentPhim] = useState(dataFilm[choseF]); // lưu thông tin phim đang chọn
   const [addPhim, setaddPhim] = useState({}); // lưu thông tin phim đang chọn
   const [addPhimDetail, setaddPhimDetail] = useState({}); // lưu thông tin phim đang chọn
+  const [openModal, setOpenModal] = useState(null);
 
   // just convert tiếng việt ra viết tắt để lưu trong dababase
   const theloai = [
@@ -420,7 +422,8 @@ const Phims = (props) => {
   // Bấm vào nút cập nhật thì lấy currentPhim gửi đi.
   function updatePhim() {
     if (JSON.stringify(dataFilm[choseF]) == JSON.stringify(currentPhim))
-      alert("Notthing change!");
+    setOpenModal("Không có gì thay đổi!");
+    //alert("Notthing change!");
     else {
       let keyInfo = "xx";
       try {
@@ -443,12 +446,13 @@ const Phims = (props) => {
         )
         .then((res) => {
           if (res.data === "ok") {
-            alert("Cập nhật thành công");
-          } else alert(res.data);
+            setOpenModal("Cập nhật thành công!");
+            //alert("Cập nhật thành công");
+          } else setOpenModal(res.data);
           setonLoading(false);
         })
         .catch((e) => {
-          alert(e);
+          setOpenModal(e);
           setonLoading(false);
         });
     }
@@ -470,7 +474,7 @@ const Phims = (props) => {
       !addPhim.country
     ) {
       setonLoading(false);
-      alert("Điền đầy đủ thông tin để tiếp tục");
+      setOpenModal("Điền đầy đủ thông tin để tiếp tục");
       return;
     }
     addPhim._id = dataFilm[dataFilm.length - 1]._id + 1;
@@ -485,7 +489,7 @@ const Phims = (props) => {
       )
       .then((res) => {
         if (res.data == "ok") {
-          alert("Đã thêm thành công");
+          setOpenModal("Đã thêm thành công");
           hold.push(addPhim);
           setDataFilm(hold);
           setaddPhim({});
@@ -493,7 +497,7 @@ const Phims = (props) => {
         }
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
   }
@@ -510,7 +514,7 @@ const Phims = (props) => {
       )
       .then((res) => {
         if (res.data == "ok") {
-          alert("Đã disable phim");
+          setOpenModal("Đã khóa hoạt động phim");
           let hold = [...Object.values(dataF)];
           hold.forEach((e, i) => {
             if (e._id == fid) hold[i].disable = true;
@@ -537,7 +541,7 @@ const Phims = (props) => {
       )
       .then((res) => {
         if (res.data == "ok") {
-          alert("Đã Enable phim");
+          setOpenModal("Đã mở khóa phim");
           let hold = [...Object.values(dataF)];
           hold.forEach((e, i) => {
             if (e._id == fid) delete hold[i].disable;
@@ -547,7 +551,7 @@ const Phims = (props) => {
         }
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
   }
@@ -630,16 +634,22 @@ const Phims = (props) => {
     setOnTop(true);
   };
   return (
-    <div className="container my-2 mb-3">
+    <div className="container my-2 pb-5">
       {/* {" "}
       {JSON.stringify(currentPhim)}
       <hr />
       {JSON.stringify(detaitFilm)} */}
       {onLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic ">
+            <strong className="display-6 fw-bold fst-italic text-uppercase">
               {" "}
               Film Managerment
             </strong>{" "}
@@ -663,9 +673,9 @@ const Phims = (props) => {
           <DebounceInput
             debounceTimeout={300}
             id="timkiem"
-            className="ms-1"
+            className="ms-1 ps-2"
             onChange={(e) => searching(e.target.value)}
-            placeholder="tên phim"
+            placeholder="Tên phim"
           />
           {dataFilm != undefined && (
             <div className="table-responsive-xl table-phim mt-2">
@@ -887,7 +897,7 @@ const Phims = (props) => {
                     data-bs-dismiss="modal"
                     onClick={() => addnewPhim()}
                   >
-                    Save changes
+                    Save
                   </button>
                   <button
                     type="button"

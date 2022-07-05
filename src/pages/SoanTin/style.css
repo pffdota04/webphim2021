@@ -12,3 +12,7 @@ blockquote {
 .news-breadcrumb {
   --bs-breadcrumb-divider: ">";
 }
+.labelnew {
+  display: inline-block;
+  min-width: 100px;
+}

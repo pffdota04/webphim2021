@@ -1,6 +1,7 @@
 import "./style.css";
 import Carousel from "react-multi-carousel";
 import "../../../node_modules/react-multi-carousel/lib/styles.css";
+import ModalAlert from "../../components/ModalAlart/ModalAlert";
 
 import Footer from "../../components/Footer";
 // import PopupFilm from "./../../components/PopupFilm";
@@ -149,7 +150,7 @@ const Home = () => {
       <Swiper
         style={{ background: "black" }}
         effect={"coverflow"}
-        grabCursor={true}
+        grabCursor={false}
         centeredSlides={true}
         slidesPerView={"auto"}
         coverflowEffect={{
@@ -169,6 +170,7 @@ const Home = () => {
       >
         {homeData.top.map((e, i) => (
           <SwiperSlide className="slide-top">
+{/* <<<<<<< HEAD
             <div className="carousel-caption text-start">
               <h1>{e.title}</h1>
               <p className="mota">{homeData.topdetail[i].description}</p>
@@ -178,6 +180,19 @@ const Home = () => {
               >
                 Xem ngay!
               </Link>
+======= */}
+            {/* <div> */}
+            <div className="carousel-caption text-start shadowContent">
+              <div className="">
+                <h1>{e.title}</h1>
+                <p className="mota">{homeData.topdetail[i].description}</p>
+                <Link
+                  className="btn btn-lg background-primary res-btn"
+                  to={"/detailfilm/" + e._id + "/" + e.title}
+                >
+                  Xem ngay!
+                </Link>
+              </div>
             </div>
             <img
               style={{
@@ -311,27 +326,29 @@ const Home = () => {
         {trendingFilm()}
         {recommendFilm()}
         {lastFilm()}
-        <h6 className="text-danger text-center">
-          voucher (cái nào đã xài rồi thì thử cái khác): freevoucher,
-          freevoucher1, freevoucher2, freevoucher3, happy, happy1, happy2,
-          happy3, happy4, vou60, vou80, vou100
-        </h6>
       </div>
       <PopupFilm data={popupId} click={setPopupID} />
 
       <Footer />
       <Link
         to="/kitkot"
-        className="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center btn-all-screen "
+        className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center btn-all-screen"
       >
         KITKOT
       </Link>
       <Link
         to="/tintuc"
-        className="btn btn-outline-danger rounded-circle d-flex align-items-center justify-content-center btn-all-screen btn-all-2"
+        className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center btn-all-screen btn-all-2"
       >
         News
       </Link>
+      <a
+        class="d-flex align-items-center justify-content-center btn-all-screen btn-all-3"
+        href="https://www.facebook.com/websitexemphimtructuyenKphim/posts/103204582455101"
+        target="_blank"
+      >
+        <img src="https://shoptam113.com/upload-usr/tam113/qua-tang.gif" alt="" className="imgGift" />
+      </a>
     </div>
   );
 };

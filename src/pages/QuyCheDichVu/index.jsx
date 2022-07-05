@@ -69,8 +69,8 @@ function QuyCheDichVu() {
           {" "}
           TÔI ĐÃ ĐỌC CÁC ĐIỀU KHOẢN DỊCH VỤ NÀY VÀ ĐỒNG Ý VỚI TẤT CẢ CÁC ĐIỀU
           KHOẢN NHƯ TRÊN CŨNG NHƯ BẤT KỲ ĐIỀU KHOẢN NÀO ĐƯỢC CHỈNH SỬA SAU NÀY.
-          BẰNG CÁCH BẤM NÚT “ĐĂNG KÝ” HOẶC “ĐĂNG NHẬP” KHI ĐĂNG KÝ SỬ DỤNG TRANG
-          SHOPEE, TÔI HIỂU RẰNG TÔI ĐANG TẠO CHỮ KÝ ĐIỆN TỬ MÀ TÔI HIỂU RẰNG NÓ
+          BẰNG CÁCH BẤM NÚT “ĐĂNG KÝ” HOẶC “ĐĂNG NHẬP” KHI ĐĂNG KÝ SỬ DỤNG WEBSITE,
+          TÔI HIỂU RẰNG TÔI ĐANG TẠO CHỮ KÝ ĐIỆN TỬ MÀ TÔI HIỂU RẰNG NÓ
           CÓ GIÁ TRỊ VÀ HIỆU LỰC TƯƠNG TỰ NHƯ CHỮ KÝ TÔI KÝ BẰNG TAY.
         </strong>
       </div>

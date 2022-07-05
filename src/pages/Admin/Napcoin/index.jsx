@@ -3,11 +3,12 @@ import { useState } from "react";
 import Loading from "../../../components/Loading";
 import Comments from "../Comment";
 import "./style.css";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const Napcoins = (props) => {
   const { dataNC, token, setFetchCoin } = props;
   const [dataNapCoin, setdataNapCoin] = useState(dataNC);
-
+  const [openModal, setOpenModal] = useState(null);
   const [onLoading, setonLoading] = useState(false);
 
   function Refresh() {
@@ -23,13 +24,13 @@ const Napcoins = (props) => {
       })
       .then((res) => {
         if (res.data === "okok") {
-          alert("Đã xóa");
+          setOpenModal("Đã xóa thành công!");
           setdataNapCoin([...dataNapCoin].filter((e) => e.mgd !== rm_e.mgd));
-        } else alert(res.data);
+        } else setOpenModal(res.data);
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
   }
@@ -42,19 +43,19 @@ const Napcoins = (props) => {
       })
       .then((res) => {
         if (res.data === "okok") {
-          alert("Đã xóa");
+          setOpenModal("Đã xóa thành công!");
           setFetchCoin(true);
-        } else alert(res.data);
+        } else setOpenModal(res.data);
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
   }
 
   function xuly(xuly_e, action) {
-    alert(action);
+    //setOpenModal(action);
     setonLoading(true);
     axios
       .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/xulynapkoin", {
@@ -63,8 +64,8 @@ const Napcoins = (props) => {
         action: action,
       })
       .then((res) => {
-        if (res.data == "okok1") alert("Đã cộng tiền");
-        else alert("Đã bỏ qua");
+        if (res.data == "okok1") setOpenModal("Đã cộng coin vào tài khoản này");
+        else setOpenModal("Đã từ chối yêu cầu thanh toán!");
         dataNapCoin.some((e, i) => {
           if (xuly_e.mgd == e.mgd) {
             dataNapCoin[i].xuly = action ? "true" : "false";
@@ -74,7 +75,7 @@ const Napcoins = (props) => {
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
         setonLoading(false);
       });
   }
@@ -99,19 +100,25 @@ const Napcoins = (props) => {
   };
 
   return (
-    <div className="container my-2 mb-3">
+    <div className="container my-2 pb-3">
       {onLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic "> Nạp Coin</strong>{" "}
+            <strong className="display-6 fw-bold fst-italic text-uppercase">Request Payment Management</strong>{" "}
             <div className="dashboxs_coin">
-              <button
+              {/* <button
                 className="dashbox__mores_coin"
                 onClick={() => deleteOld()}
               >
                 Delete Old
-              </button>
+              </button> */}
               <button className="dashbox__mores_coin" onClick={() => Refresh()}>
                 Refresh Data
               </button>
@@ -123,7 +130,7 @@ const Napcoins = (props) => {
           <label htmlFor="timkiem">Tìm kiếm: </label>
           <input
             id="timkiem"
-            className="ms-1"
+            className="ms-1 ps-2"
             onChange={(e) => searching(e.target.value)}
             placeholder="Mã giao dịch"
           />
@@ -171,12 +178,12 @@ const Napcoins = (props) => {
                         <td>
                           {e.xuly != "none" ? (
                             <button
-                              className="btn btn-sm btn-primary ms-1"
+                              className="btn btn-sm ms-1 main__table_cmt-btn--delete"
                               onClick={() => {
                                 deleteRequest(e);
                               }}
                             >
-                              Xoa
+                              Delete
                             </button>
                           ) : (
                             <div>
@@ -186,7 +193,7 @@ const Napcoins = (props) => {
                                   xuly(e, false);
                                 }}
                               >
-                                Tu choi
+                                Refuse
                               </button>
                               <button
                                 className="btn btn-sm btn-success ms-1"
@@ -194,7 +201,7 @@ const Napcoins = (props) => {
                                   xuly(e, true);
                                 }}
                               >
-                                dong y
+                                Agree
                               </button>
                             </div>
                           )}

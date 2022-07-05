@@ -1,11 +1,12 @@
 import "./style.css";
-import Footer from "../../components/Footer";
 import { Link, useParams } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 // firebase
 import { db } from "../../services/firebase";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../components/Loading";
+import ModalAlert from "./../../components/ModalAlart/ModalAlert";
 
 // Draft
 import {
@@ -23,6 +24,8 @@ const SoanTin = (props) => {
   const [title, setTitle] = useState("");
   const [preview, setPreview] = useState("");
   const [img, setImg] = useState("");
+  const [onLoading, setonLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
 
   // edit
   const [edit, setEdit] = useState(null);
@@ -38,9 +41,14 @@ const SoanTin = (props) => {
     EditorState.createEmpty()
   );
 
+  function Refresh() {
+    setFetch(true);
+  }
+
   useEffect(() => {}, []);
 
   const DangTin = () => {
+    setonLoading(true);
     db.ref("/newscontent")
       .orderByKey()
       .limitToLast(1)
@@ -55,14 +63,21 @@ const SoanTin = (props) => {
           img: img,
           preview: preview,
         });
+        setOpenModal("Đã đăng tin thành công!");
+        setonLoading(false);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        setOpenModal(e);
+        setonLoading(false);
+      });
+      const myTimeout = setTimeout(Refresh, 5000);
     // db.ref("/newscontent").push({
     //   content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
     // });
   };
 
   const UpdateTin = () => {
+    setonLoading(true);
     db.ref("/newscontent")
       .orderByChild("id")
       .equalTo(edit)
@@ -76,23 +91,36 @@ const SoanTin = (props) => {
           img: img2,
           preview: preview2,
         });
+        setOpenModal("Đã cập nhật thành công!");
+        setonLoading(false);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        setOpenModal(e);
+        setonLoading(false);
+      });
+      const myTimeout = setTimeout(Refresh, 5000);
   };
 
   return (
-    <div className="container my-2 mb-3">
+    <div className="container my-2 pb-5">
+      {onLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row">
         <h4 className="text-center">
-          <strong className="display-6 fw-bold fst-italic "> Tin Tức</strong>{" "}
+          <strong className="display-6 fw-bold fst-italic text-uppercase">News management</strong>{" "}
           <div className="dashboxs_coin">
             <button
-              className="ms-1 btn btn-warning"
+              className="dashbox__mores me-3"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             >
-              Soan Tin moi
-            </button>{" "}
+              Create News
+            </button>
           </div>
         </h4>
         <div>
@@ -106,10 +134,10 @@ const SoanTin = (props) => {
           <table class="table table-hover table-dark">
             <thead>
               <tr className="text-center">
-                <th>id</th>
-                <th> title</th>
-                <th>img</th>
-                <th>xem</th>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -126,18 +154,18 @@ const SoanTin = (props) => {
                     <span className="text-muted">{e.preview}</span>
                   </td>
                   <td>
-                    <img src={e.img} width="100" height={100} alt="anh bia" />
+                    <img src={e.img} width="140" height={100} alt="anh bia" />
                   </td>
                   <td>
                     <Link
-                      className="btn btn-primary mb-2"
+                      className="btn btn-success mb-2 mt-2"
                       to={"/tintuc/" + e.id}
                       target="_blank"
                     >
-                      <i className="fa fa-external-link" />
+                      <i className="fa fa-external-link ps-2 pe-1" />
                     </Link>
                     <span
-                      className="btn btn-danger"
+                      className="btn btn-primary"
                       data-bs-toggle="modal"
                       data-bs-target="#editmodal"
                       onClick={() => {
@@ -170,90 +198,89 @@ const SoanTin = (props) => {
         >
           <div className="modal-dialog modal-xl modal-dialog-centered ">
             <div className="modal-content bg-dark border-warning">
-              <>
-                <div className="modal-header">
-                  <h5 className="modal-title fw-bold" id="exampleModalLabel">
-                    Soan Tin moi
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn_close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    id=""
-                  >
-                    <i className="fa fa-close" />
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <div className="text-dark bg-light pt-3">
-                    {" "}
-                    <div className="text-center">
-                      Tựa đề:{" "}
-                      <input
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="w-75"
-                      />
-                    </div>{" "}
-                    <div className="text-center">
-                      link img:{" "}
-                      <input
-                        onChange={(e) => setImg(e.target.value)}
-                        className="w-75"
-                      />
-                    </div>{" "}
-                    <div className="text-center">
-                      Preview:{" "}
-                      <input
-                        onChange={(e) => setPreview(e.target.value)}
-                        className="w-75"
-                      />
-                    </div>
-                    <div className="border border-3 mt-3 mb-3">
-                      <Editor
-                        editorState={editorState}
-                        onEditorStateChange={setEditorState}
-                        toolbar={{
-                          inline: { inDropdown: true },
-                          list: { inDropdown: true },
-                          textAlign: { inDropdown: true },
-                          link: { inDropdown: true },
-                          history: { inDropdown: true },
-                          image: {
-                            alt: { present: true, mandatory: true },
-                          },
-                        }}
-                      />
-                    </div>
-                    <h4 className="text-center">Xem trước</h4>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: draftToHtml(
-                          convertToRaw(editorState.getCurrentContent())
-                        ),
-                      }}
-                      className="m-2 bg-faded "
-                    ></div>
-                    <hr />{" "}
-                    <div className="text-center">
-                      {" "}
-                      <div
-                        className="btn btn-danger m-3"
-                        onClick={() => DangTin()}
-                      >
-                        Đăng tin
-                      </div>
-                    </div>
-                    {/* <textarea
-                      // value={JSON.stringify(
-                      //   convertToRaw(editorState.getCurrentContent())
-                      // )}
-                      value={JSON.stringify(editorState)}
-                      className="w-100 "
-                    /> */}
+              <div className="modal-header">
+                <h5 className="modal-title fw-bold" id="exampleModalLabel">
+                  CREATE NEWS
+                </h5>
+                <button
+                  type="button"
+                  className="btn_close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  id=""
+                >
+                  <i className="fa fa-close" />
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="text-dark bg-light pt-3">
+                  {" "}
+                  <div className="text-center">
+                    <span className="labelnew">Title:</span>{" "}
+                    <input
+                      onChange={(e) => setTitle(e.target.value)}
+                      className="w-75"
+                    />
+                  </div>{" "}
+                  <div className="text-center mt-2 mb-2">
+                    <span className="labelnew">Link image:</span>{" "}
+                    <input
+                      onChange={(e) => setImg(e.target.value)}
+                      className="w-75"
+                    />
+                  </div>{" "}
+                  <div className="text-center">
+                  <span className="labelnew">Summary</span>{" "}
+                    <input
+                      onChange={(e) => setPreview(e.target.value)}
+                      className="w-75"
+                    />
                   </div>
+                  <div className="border border-1 border-dark m-3">
+                    <Editor
+                      editorState={editorState}
+                      onEditorStateChange={setEditorState}
+                      toolbar={{
+                        inline: { inDropdown: true },
+                        list: { inDropdown: true },
+                        textAlign: { inDropdown: true },
+                        link: { inDropdown: true },
+                        history: { inDropdown: true },
+                        image: {
+                          alt: { present: true, mandatory: true },
+                        },
+                      }}
+                    />
+                  </div>
+                  <h4 className="text-center">Preview content</h4>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: draftToHtml(
+                        convertToRaw(editorState.getCurrentContent())
+                      ),
+                    }}
+                    className="m-3 bg-faded"
+                  ></div>
+                  <br />
                 </div>
-              </>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn-primarys"
+                  data-bs-dismiss="modal"
+                  onClick={() => DangTin()}
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondarys"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -267,95 +294,101 @@ const SoanTin = (props) => {
         >
           <div className="modal-dialog modal-xl modal-dialog-centered ">
             <div className="modal-content bg-dark border-warning">
-              <>
-                <div className="modal-header">
-                  <h5 className="modal-title fw-bold" id="exampleModalLabel">
-                    edit tin
-                  </h5>
-                  <button
-                    type="button"
-                    className="btn_close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                    id=""
-                  >
-                    <i className="fa fa-close" />
-                  </button>
-                </div>
-                {
-                  <div className="modal-body">
-                    <div className="text-dark bg-light pt-3">
-                      {" "}
-                      <div className="text-center">
-                        Tựa đề:{" "}
-                        <input
-                          onChange={(e) => setTitle2(e.target.value)}
-                          value={title2}
-                          className="w-75"
-                        />
-                      </div>{" "}
-                      <div className="text-center">
-                        link img:{" "}
-                        <input
-                          onChange={(e) => setImg2(e.target.value)}
-                          value={img2}
-                          className="w-75"
-                        />
-                      </div>{" "}
-                      <div className="text-center">
-                        Preview:{" "}
-                        <input
-                          onChange={(e) => setPreview2(e.target.value)}
-                          className="w-75"
-                          value={preview2}
-                        />
-                      </div>
-                      <div className="border border-3 mt-3 mb-3">
-                        <Editor
-                          editorState={editorState2}
-                          onEditorStateChange={setEditorState2}
-                          toolbar={{
-                            inline: { inDropdown: true },
-                            list: { inDropdown: true },
-                            textAlign: { inDropdown: true },
-                            link: { inDropdown: true },
-                            history: { inDropdown: true },
-                            image: {
-                              alt: { present: true, mandatory: true },
-                            },
-                          }}
-                        />
-                      </div>
-                      <h4 className="text-center">Xem trước</h4>
-                      {/* {JSON.stringify(editorState2)} */}
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: draftToHtml(
-                            convertToRaw(editorState2.getCurrentContent())
-                          ),
-                        }}
-                        className="m-2 bg-faded "
-                      ></div>
-                      <hr />{" "}
-                      <div className="text-center">
-                        {" "}
-                        <div
-                          className="btn btn-danger m-3"
-                          onClick={() => UpdateTin()}
-                        >
-                          Đăng tin
-                        </div>
-                      </div>
-                      {/* <textarea
-                      value={JSON.stringify(
-                        convertToRaw(editorState.getCurrentContent())
-                      )}
-                      className="w-100 "
-                    /> */}
-                    </div>
+              <div className="modal-header">
+                <h5 className="modal-title fw-bold" id="exampleModalLabel">
+                  EDIT NEWS
+                </h5>
+                <button
+                  type="button"
+                  className="btn_close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  id=""
+                >
+                  <i className="fa fa-close" />
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="text-dark bg-light pt-3">
+                  {" "}
+                  <div className="text-center">
+                    <span className="labelnew">Title:</span>{" "}
+                    <input
+                      onChange={(e) => setTitle2(e.target.value)}
+                      value={title2}
+                      className="w-75"
+                    />
+                  </div>{" "}
+                  <div className="text-center mt-2 mb-2">
+                    <span className="labelnew">Link image:</span>{" "}
+                    <input
+                      onChange={(e) => setImg2(e.target.value)}
+                      value={img2}
+                      className="w-75"
+                    />
+                  </div>{" "}
+                  <div className="text-center">
+                    <span className="labelnew">Summary</span>{" "}
+                    <input
+                      onChange={(e) => setPreview2(e.target.value)}
+                      className="w-75"
+                      value={preview2}
+                    />
                   </div>
-                }
-              </>
+                  <div className="border border-1 border-dark m-3">
+                    <Editor
+                      editorState={editorState2}
+                      onEditorStateChange={setEditorState2}
+                      toolbar={{
+                        inline: { inDropdown: true },
+                        list: { inDropdown: true },
+                        textAlign: { inDropdown: true },
+                        link: { inDropdown: true },
+                        history: { inDropdown: true },
+                        image: {
+                          alt: { present: true, mandatory: true },
+                        },
+                      }}
+                    />
+                  </div>
+                  <h4 className="text-center">Preview content</h4>
+                  {/* {JSON.stringify(editorState2)} */}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: draftToHtml(
+                        convertToRaw(editorState2.getCurrentContent())
+                      ),
+                    }}
+                    className="m-2 bg-faded "
+                  ></div>
+                  {/* <div className="text-center">
+                    {" "}
+                    <div
+                      className="btn btn-warning m-3"
+                      onClick={() => UpdateTin()}
+                    >
+                      UPDATE
+                    </div>
+                  </div> */}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn-primarys"
+                  data-bs-dismiss="modal"
+                  onClick={() => UpdateTin()}
+                >
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondarys"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

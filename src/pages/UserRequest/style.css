@@ -24,6 +24,11 @@
 .text-item {
   color: #6d6d6d;
 }
+
+.brandads {
+  height: 60%;
+}
+
 @media (min-width: 1024px) {
   .mt-voucher {
     padding-top: 50px !important;

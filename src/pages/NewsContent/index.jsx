@@ -106,12 +106,6 @@ const NewsContent = (props) => {
             </li>
           </ol>
         </nav>{" "}
-        <img
-          className="w-100"
-          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
-          alt=""
-          width={800}
-        />
         {nowShow !== null ? (
           <div
             dangerouslySetInnerHTML={{
@@ -155,12 +149,6 @@ const NewsContent = (props) => {
             </div>
           ))}
         </div>{" "}
-        <img
-          className="w-100"
-          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
-          alt=""
-          width={800}
-        />
       </div>
       <Footer />
     </div>

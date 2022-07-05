@@ -19,7 +19,7 @@ const MaGioiThieu = (props) => {
       })
       .then((res) => {
         if (res.data.complete == true) {
-          setOpenModal("Thành công, nhận 20 Koin!");
+          setOpenModal("Chúc mừng bạn nhận được 20 coin!");
           let newDetail = userDetail;
           newDetail.coin = newDetail.coin + 20;
           change(newDetail);
@@ -39,7 +39,6 @@ const MaGioiThieu = (props) => {
         <ModalAlert
           close={() => setOpenModal(null)}
           content={openModal}
-          title="Thông báo"
         />
       )}
       <div className="row" id="container-ipad">
@@ -48,15 +47,15 @@ const MaGioiThieu = (props) => {
             Nhập mã nhận
             <strong className="display-7 fw-bold fst-italic ">
               {" "}
-              20 KOIN
+              20 COIN
             </strong>{" "}
           </h4>
           <div className="lead pt-3">
             <p>
               Ai đã giới thiệu bạn đến với Kphim, hãy nhập mã của họ để cả 2
-              cùng nhận 20 Koin.
+              cùng nhận 20 Coin.
               <br /> Ngoài ra bạn có thể chia sẽ cho người khác mã của mình để
-              nhận Koin giống như cách bạn đã nhận từ người khác. Chương trình
+              nhận Coin giống như cách bạn đã nhận từ người khác. Chương trình
               này nhằm tri ân đến những người dùng đầu tiên của Kphim!
             </p>
           </div>
@@ -83,7 +82,6 @@ const MaGioiThieu = (props) => {
               onChange={(e) => {
                 setInputCode(e.target.value);
               }}
-              //   value={this.state.type}
             ></input>
           </div>
           <div className="col-12 col-md-8 mx-auto mb-4">

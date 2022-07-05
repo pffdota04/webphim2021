@@ -20,7 +20,7 @@ const Voucher = (props) => {
       })
       .then((res) => {
         if (res.data.complete == true) {
-          setOpenModal("Nhận thành công " + res.data.voucherPoint);
+          setOpenModal("Bạn nhận được " + res.data.voucherPoint + " Coin");
           let newDetail = userDetail;
           newDetail.coin = newDetail.coin + res.data.voucherPoint;
           change(newDetail);
@@ -40,7 +40,6 @@ const Voucher = (props) => {
         <ModalAlert
           close={() => setOpenModal(null)}
           content={openModal}
-          title="Thông báo"
         />
       )}
       <div className="row" id="container-ipad">
@@ -48,7 +47,7 @@ const Voucher = (props) => {
           <h4 className="text-center primary-color">
             <strong className="display-7 fw-bold fst-italic ">
               {" "}
-              VOUCH KOIN
+              VOUCH COIN
             </strong>{" "}
           </h4>
           <div className="lead pt-3">
@@ -58,6 +57,11 @@ const Voucher = (props) => {
               event của bọn mình nhé!
             </p>
           </div>
+          <a
+            class="primary-color voucher_web"
+            href="https://www.facebook.com/websitexemphimtructuyenKphim/posts/103204582455101"
+            target="_blank"
+          >Xem tại đây: websitexemphimtructuyenKphim</a>
         </div>
         <span className="col-1"></span>
         <div className="col-7 background-content p-4">

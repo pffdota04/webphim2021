@@ -323,7 +323,7 @@ const Admin = () => {
   }
 
   return userInfo.checkUser == "init" ? (
-    <h1>CHECKING...</h1>
+    <h1>Loading Data...</h1>
   ) : userInfo.checkUser == "not" ? (
     <Redirect push to="/login" />
   ) : (
@@ -434,7 +434,7 @@ const Admin = () => {
                       className="btn btn-sm btn-link ms-1 mt-1"
                       to="/admin/napcoin"
                     >
-                      <i className="fa fa-money  d-none d-sm-block" /> Nạp Coin
+                      <i className="fa fa-money  d-none d-sm-block" /> Request Payment
                     </Link>
                   </h6>
                 </div>
@@ -614,8 +614,6 @@ const Admin = () => {
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

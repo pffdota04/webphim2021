@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../../../components/Loading";
 import "./style.css";
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const User = (props) => {
   const { dataU, token, setFetchUser } = props;
@@ -9,6 +10,7 @@ const User = (props) => {
   const [choseU, setChoseU] = useState(0);
   const [currentUser, setCurrentUser] = useState(dataU[choseU]); // giá trị mặc định là user đầu tiên, update gì thì lưu vào đây
   const [onLoading, setonLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
 
   function Refresh() {
     setFetchUser(true);
@@ -117,9 +119,10 @@ const User = (props) => {
         UObject: currentUser,
       })
       .then((res) => {
-        alert(res.data);
+        //alert(res.data);
         if (res.data === "okok") {
-          alert("Cập nhật thành công");
+          setOpenModal("Cập nhật thành công!");
+          //alert("Cập nhật thành công");
           let b = dataUser;
           b.map((e, i) => {
             if (e.email === currentUser.email) dataUser[i] = currentUser;
@@ -128,7 +131,8 @@ const User = (props) => {
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
+        //alert(e);
         setonLoading(false);
       });
   }
@@ -152,9 +156,10 @@ const User = (props) => {
         email: email,
       })
       .then((res) => {
-        alert(res.data);
+        //alert(res.data);
         if (res.data === "okok") {
-          alert("Đã ban User");
+          setOpenModal("Đã khóa tài khoản người dùng!");
+          //alert("Đã ban User");
           let b = dataUser;
           b.map((e, i) => {
             if (e.email === email) dataUser[i].disabled = true;
@@ -163,7 +168,8 @@ const User = (props) => {
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
+        //alert(e);
         setonLoading(false);
       });
   }
@@ -176,9 +182,10 @@ const User = (props) => {
         email: email,
       })
       .then((res) => {
-        alert(res.data);
+        //alert(res.data);
         if (res.data === "okok") {
-          alert("Đã mở khóa user");
+          setOpenModal("Đã mở khóa tài khoản người dùng!");
+          //alert("Đã mở khóa user");
           let b = dataUser;
           b.map((e, i) => {
             if (e.email === email) dataUser[i].disabled = null;
@@ -187,7 +194,8 @@ const User = (props) => {
         setonLoading(false);
       })
       .catch((e) => {
-        alert(e);
+        setOpenModal(e);
+        //alert(e);
         setonLoading(false);
       });
   }
@@ -207,12 +215,18 @@ const User = (props) => {
   };
 
   return (
-    <div className="my-2 mb-3">
+    <div className="my-2 pb-5">
       {onLoading && <Loading />}
+      {openModal && (
+        <ModalAlert
+          close={() => setOpenModal(null)}
+          content={openModal}
+        />
+      )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic ">User</strong>
+            <strong className="display-6 fw-bold fst-italic text-uppercase">user management</strong>
             <div className="dashboxs_user">
               <button className="dashbox__mores_user" onClick={() => Refresh()}>
                 Refresh Data
@@ -225,9 +239,9 @@ const User = (props) => {
           <label htmlFor="timkiem">Tìm kiếm: </label>
           <input
             id="timkiem"
-            className="ms-1"
+            className="ms-1 ps-2"
             onChange={(e) => searching(e.target.value)}
-            placeholder="email or code  "
+            placeholder="Email or code"
           />
           {dataUser != undefined && (
             <div className="mt-2 table-responsive-xl table-user">

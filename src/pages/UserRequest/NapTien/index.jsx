@@ -91,7 +91,6 @@ const NapTien = (props) => {
         <ModalAlert
           close={() => setOpenModal(null)}
           content={openModal}
-          title="Thông báo"
         />
       )}
       <div className="row" id="container-ipad">
@@ -153,7 +152,6 @@ const NapTien = (props) => {
                 >
                   <option value="momo">Momo</option>
                   <option value="paypal">PayPal</option>
-                  <option value="airpay">Airpay</option>
                   <option value="bank">Chuyển Khoản</option>
                 </select>
               </div>

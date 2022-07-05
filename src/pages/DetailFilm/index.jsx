@@ -379,10 +379,11 @@ const DetailFilm = () => {
                 alt="poster"
               />
             </div>
-            <h1 className="details-info-title text-light w-100 text-center text-xl-start">
-              {info !== undefined && info.title}
-            </h1>
+            
             <div className="details-info">
+              <h1 className="details-info-title text-light w-100 text-center text-xl-start">
+                {info !== undefined && info.title}
+              </h1>
               <p className="details-info-overview">
                 {detail !== undefined && detail.description}
               </p>

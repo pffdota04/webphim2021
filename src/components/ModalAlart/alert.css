@@ -1,0 +1,26 @@
+#AlertModalLabel .modal-content > .modal-header {
+    justify-content: center;
+    border-bottom: none;
+}
+#AlertModalLabel .modal-content > .modal-body {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+#AlertModalLabel .modal-content > .modal-footer {
+    justify-content: center;
+    text-align: center;
+    border-top: none;
+}
+.modal-header > .imgAlert {
+    display: block;
+    height: 15vh;
+}
+.modal {
+    background: rgba(0,0,0,.4);
+}
+.btnAlert {
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+}

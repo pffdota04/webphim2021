@@ -31,7 +31,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .slide-tik {
@@ -118,4 +118,31 @@
 .video_watch {
   width: 100%;
   height: 100%;
+}
+
+@media (min-width: 768px) and (max-width: 1279.9px) {
+  .video_watch {
+    height: 90%;
+  }
+  .swip-tik .silde-title {
+    height: 4px;
+  }
+}
+
+@media (min-width: 414px) and (max-width: 767.9px) {
+  .video_watch {
+    height: 90%;
+  }
+  .swip-tik .silde-title {
+    height: 30px;
+  }
+}
+
+@media (max-width: 413.9px) {
+  .video_watch {
+    height: 90%;
+  }
+  .swip-tik .silde-title {
+    height: 50px;
+  }
 }

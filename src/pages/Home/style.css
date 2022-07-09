@@ -145,41 +145,74 @@
 }
 @media (min-width: 600px) and (max-width: 767.9px) {
   .carousel-button-group .left {
-    left: 5.5vw;
-    top: 10.5vw;
+    left: 1.6vw;
+    top: 13.5vw;
   }
   .carousel-button-group .right {
-    right: 5.5vw;
-    top: 10.5vw;
+    right: 1.5vw;
+    top: 13.5vw;
   }
   .res-btn {
-    font-size: 1rem !important;
+    font-size: 0.8rem !important;
+  }
+  .slide-top .shadowContent {
+    padding-bottom: 2rem;
+  }
+  .bannerHome > h1 {
+    font-size: 1.6rem;
+  }
+  .bannerHome > p {
+    font-size: 1rem;
+  }
+  .sodem {
+    margin-bottom: 4rem;
+  
+    height: 3rem !important;
+    width: 3rem !important;
   }
 }
 @media (max-width: 599.9px) {
   .img-info-film {
     height: 40vw !important;
   }
-  .res-btn {
-    font-size: 0.8rem !important;
+  .slide-top .shadowContent {
+    padding-bottom: 1rem;
   }
-  .carousel-caption > h1 {
-    font-size: 1.2rem;
+  .bannerHome > .res-btn {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.4rem;
   }
-  .carousel-caption > p {
+  .bannerHome > h1 {
+    font-size: 1.1rem;
+  }
+  .bannerHome > p {
     font-size: 0.6rem;
+    margin-bottom: 0.3rem;
   }
   .carousel-button-group .left {
-    left: 3.1vw;
+    left: 3vw;
     top: 14vw;
     width: 40px;
     height: 40px;
   }
   .carousel-button-group .right {
     top: 14vw;
-    right: 2.7vw;
+    right: 2.4vw;
     width: 40px;
     height: 40px;
+  }
+  .imgGift {
+    width: 150% !important;
+    margin-right: -8px;
+    margin-bottom: -14px;
+  }
+  .fsbtnNews {
+    width: 50px;
+    height: 50px;
+    font-size: 1rem;
+  }
+  .container-home > .container-background {
+    padding-top: 0.5rem !important;
   }
 }
 @media (max-width: 374.9px) {
@@ -201,6 +234,9 @@
     right: 3vw;
     width: 36px;
     height: 36px;
+  }
+  .bannerHome > h1 {
+    font-size: 0.9rem;
   }
 }
 

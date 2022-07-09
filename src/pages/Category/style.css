@@ -13,6 +13,9 @@
   align-items: center;
   justify-content: center;
 }
+.mut {
+  padding-top: 30px;
+}
 
 /* @media (min-width: 1024px) and (max-width: 1100.9px) {
   footer {

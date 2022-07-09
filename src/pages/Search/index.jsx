@@ -116,31 +116,45 @@ const Search = (props) => {
           }
         />
       </MetaTags>
-      <div className="container-fluid container-background pb-5">
+      <div className="container-fluid container-background pb-5 mut">
         <div className="">
           {/* Top ADS: Vừa vào là thấy, tuy nhiên thấy lần đầu */}
-          <img
+          {/* <img
             className="d-block w-100 pt-2"
             src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
             alt=""
             width={800}
-          />
+          /> */}
           <section>
             <div className="mb-3">
               {/* <hr className="mb-2" /> */}
-              <div className="text-white mt-5 container">
-                <div className="col-12 showSearch">
-                  <input
-                      className="search_film"
-                      type="search"
-                      id="search-in-search"
-                      placeholder="Tìm kiếm"
-                      aria-label="Search"
-                      value={keySearch}
-                      onChange={(e) => {
-                        setKeySearch(e.target.value);
-                      }}
-                    />
+              <div className="text-white container">
+                <div className="row">
+                  <div className="showSearch">
+                    <div className="d-flex align-items-center">
+                      <input
+                        className="search_film col-6"
+                        type="search"
+                        id="search-in-search"
+                        placeholder="Tìm kiếm"
+                        aria-label="Search"
+                        value={keySearch}
+                        onChange={(e) => {
+                          setKeySearch(e.target.value);
+                        }}
+                      />
+                      <button
+                        className="sign__btn col-6"
+                        onClick={() => {
+                          setCountry("all");
+                          setType("all");
+                          setMovieOrSeries("all");
+                        }}
+                      >
+                        Xóa bộ lọc
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div className="row width-col">
                   <div className="col-7">
@@ -254,26 +268,14 @@ const Search = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-2">
+                  <div className="hidenDelete col-2">
                     <div className="">
-                      {/* <input
-                        className="me-1 col-lg-7 ms-1"
-                        type="search"
-                        id="search-in-search"
-                        placeholder="Search"
-                        aria-label="Search"
-                        value={keySearch}
-                        onChange={(e) => {
-                          setKeySearch(e.target.value);
-                        }}
-                      /> */}
                       <button
                         className="sign__btn"
                         onClick={() => {
                           setCountry("all");
                           setType("all");
                           setMovieOrSeries("all");
-                          // setKeySearch("");
                         }}
                       >
                         Xóa bộ lọc

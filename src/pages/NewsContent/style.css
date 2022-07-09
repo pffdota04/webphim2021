@@ -21,3 +21,8 @@ blockquote {
   text-overflow: ellipsis;
   max-width: calc(100vw - 90px);
 }
+.titleNews {
+  overflow: hidden;
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+}

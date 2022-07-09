@@ -73,8 +73,141 @@
 
 
 
-@media (max-width: 1200px) {
+@media (min-width: 600px) and (max-width: 1279.9px) {
+  /* .details-container {
+    justify-content: center;
+  } */
+  .details-poster-img {
+    width: 20vh;
+  }
+  .details-info > .details-info-title {
+    text-align: left !important;
+  }
+  .btn-group-detail > .right {
+    right: 14px !important;
+  }
+  .btn-group-detail > .left {
+    left: 13px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279.9px) {
+  .btn-group-detail > .right {
+    right: 9px !important;
+  }
+  .btn-group-detail > .left {
+    left: 8px !important;
+  }
+  .video-trailer {
+    width: 100%;
+    height: 25rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023.9px) {
+  .details-poster-img {
+    height: 45vw;
+  }
+  .details-info {
+    width: 66%;
+  }
+  .details-info h1 {
+    font-size: 1.3rem;
+  }
+  .genres > .btn-outline-light {
+    font-size: 0.6rem;
+  }
+  .nation > .btn-outline-light {
+    font-size: 0.6rem;
+  }
+  .details-info > .watch {
+    margin-bottom: 0.5rem !important;
+  }
+  .watch > .btn-go-film, .watch > .btn-go-trailer {
+    font-size: 0.8rem;
+  }
+  .details-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem !important;
+  }
+  .details-info .btn_save {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 767.9px) {
+  .video-trailer {
+    width: 100%;
+    height: 20rem;
+  }
+  .btn-group-detail > .right {
+    right: 7px !important;
+  }
+  .btn-group-detail > .left {
+    left: 6px !important;
+  }
+}
+
+@media (max-width: 599.9px) {
   .details-container {
     justify-content: center;
+  }
+  .details-poster-img {
+    height: 48vw;
+    width: 18vh;
+    margin-bottom: 10px;
+  }
+  .details-info {
+    width: 100%;
+  }
+  .details-info .watch {
+    display: flex;
+    justify-content: center;
+  }
+  .details-info .listAction {
+    display: flex;
+    justify-content: center;
+  }
+  .details-info h1 {
+    font-size: 1.3rem;
+  }
+  .genres > .btn-outline-light {
+    font-size: 0.6rem;
+  }
+  .nation > .btn-outline-light {
+    font-size: 0.6rem;
+  }
+  .details-info > .watch {
+    margin-bottom: 0.5rem !important;
+  }
+  .watch > .btn-go-film, .watch > .btn-go-trailer {
+    font-size: 0.8rem;
+  }
+  .details-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem !important;
+  }
+  .details-info .btn_save {
+    font-size: 0.8rem;
+  }
+  .video-trailer {
+    width: 100%;
+    height: 10rem;
+  }
+  #title-video-trailer {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .btn-group-detail > .right {
+    right: 9px !important;
+  }
+  .btn-group-detail > .left {
+    left: 10px !important;
+  }
+}
+
+@media (max-width: 374.9px) {
+  .details-info .listAction > button {
+    font-size: 0.6rem !important;
   }
 }

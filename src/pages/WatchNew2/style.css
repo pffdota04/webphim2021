@@ -30,6 +30,7 @@
 .title-film h5 {
   display: inline-block;
   padding: 0 16px;
+  margin-right: 16px;
 }
 .input-arr {
   margin-top: -8px;
@@ -56,7 +57,7 @@
     width: 87%;
   }
   .container-bl {
-    width: 88% !important;
+    width: 100% !important;
   }
 }
 @media (max-width: 1023.9px) {
@@ -135,6 +136,10 @@
   .container-bl .ss {
     width: 52% !important;
   }
+  #filmView {
+    padding: 0 !important;
+  }
+  
 }
 @media (max-width: 599.9px) {
   .loading-film .container-load h1 {
@@ -183,14 +188,27 @@
     width: 100% !important;
     margin-top: 4px !important;
   }
+  .btn-watch-bl > button {
+    font-size: 0.8rem !important;
+  }
 }
 
 .tuby-show {
   opacity: 1 !important;
   visibility: visible !important;
 }
+@media (max-width: 599.9px) {
+  .title-film .nameFilm {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .title-film .nameFilm > h5 {
+    width: 100%;
+  }
+}
 
-@media (min-width: 414px) and (max-width: 599px) {
+@media (min-width: 414px) and (max-width: 599.9px) {
   .iframe-here > * {
     width: 96% !important;
     min-height: 13rem !important;

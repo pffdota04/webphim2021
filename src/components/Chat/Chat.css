@@ -7,8 +7,7 @@
 .chat-area {
   width: 100% !important;
   padding: 0 12px;
-  min-height: 30vh;
-  max-height: 64vh;
+  height: 34vh;
   overflow: auto;
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
@@ -113,6 +112,12 @@
 .w-fit {
   width: fit-content;
 }
+@media (max-width: 1119.9px) {
+  .chat-area {
+    height: 18vh !important;
+  }
+}
+
 @media (max-width: 767.9px) {
   .input-chat {
     min-height: 30px;
@@ -127,6 +132,7 @@
     margin-left: 8rem !important;
   }
 }
+
 @media (max-width: 599.9px) {
   .chat-area {
     padding: 0 !important;

@@ -2,8 +2,6 @@ import "./style.css";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
-
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

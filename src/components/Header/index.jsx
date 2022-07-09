@@ -266,13 +266,13 @@ const Header = () => {
                       <i className="fa fa-unlock" /> Phim Vip
                     </Link>
                   </li>
-                  <li className="user-item">
+                  {/* <li className="user-item">
                     <Link
                       className="menu-dropdown-item text-white"
                       to="/kitkot"
                       onClick={() => setOpenHeader(false)}
                     >
-                      <i className="fa fa-hand-pointer-o"></i> Luớt KitKot
+                      <i className="fa fa-hand-pointer-o"></i> Lướt KitKot
                     </Link>
                   </li>
                   <li className="user-item">
@@ -283,7 +283,7 @@ const Header = () => {
                     >
                       <i className="fa fa-hand-pointer-o"></i> Tin phim
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="user-item">
                     <button
                       className="menu-dropdown-item primary-color"
@@ -832,13 +832,13 @@ const Header = () => {
                         <i className="fa fa-unlock" /> Phim Vip
                       </Link>
                     </li>
-                    <li className="user-item">
+                    {/* <li className="user-item">
                       <Link
                         className="menu-dropdown-item text-white"
                         to="/kitkot"
                         onClick={() => setOpenHeader(false)}
                       >
-                        <i className="fa fa-hand-pointer-o"></i> Luớt KitKot
+                        <i className="fa fa-hand-pointer-o"></i> Lướt KitKot
                       </Link>
                     </li>
                     <li className="user-item">
@@ -847,9 +847,9 @@ const Header = () => {
                         to="/tintuc"
                         onClick={() => setOpenHeader(false)}
                       >
-                        <i className="fa fa-hand-pointer-o"></i>Tin phim
+                        <i className="fa fa-hand-pointer-o"></i> Tin phim
                       </Link>
-                    </li>
+                    </li> */}
                     <li className="user-item">
                       <button
                         className="menu-dropdown-item primary-color"

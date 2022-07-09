@@ -8,6 +8,8 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import MetaTags from "react-meta-tags";
 import ModalAlert from "../../../components/ModalAlart/ModalAlert";
+import "./style.css";
+import brandads from "../../../assets/images/bia.png";
 
 const UnlockList = () => {
   const data = useSelector((state) => state.listUser.unlockList);
@@ -61,20 +63,7 @@ const UnlockList = () => {
             // Object.values(userDetail.unlockFilm)[index].end >= Date.now() && (
             <div className="col-5 col-md-4 col-xl-3 pb-2 mx-auto">
               <FilmCard key={i + "later"} data={i} click={setPopupID} />
-              <p className="text-center">
-                Còn lại{" "}
-                {Object.values(userDetail.unlockFilm)[index].end - Date.now()}
-                ...
-                {}
-                {Math.ceil(
-                  Math.abs(
-                    new Date(Object.values(userDetail.unlockFilm)[index].end) -
-                      Date.now()
-                  ) /
-                    (1000 * 60 * 60 * 24)
-                )}
-                ngày
-              </p>
+              
             </div>
           )
           // )
@@ -101,8 +90,9 @@ const UnlockList = () => {
 
       <div className="container text-white">
         <img
-          className="d-block w-100 pt-2"
-          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          className="d-block w-100 pt-2 brandads"
+          // src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          src={brandads}
           alt=""
           width={800}
         />

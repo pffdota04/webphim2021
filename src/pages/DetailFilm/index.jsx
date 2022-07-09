@@ -243,7 +243,7 @@ const DetailFilm = () => {
 
   const recommendFilm = () => {
     return (
-      <section className="container mt-5">
+      <section className="mt-5">
         <div className="mb-3">
           <h3 className="primary-color mb-4 pb-2">Phim Đề xuất</h3>
           <div className="item mg-card">
@@ -285,7 +285,7 @@ const DetailFilm = () => {
         })
         .then((res) => {
           if (res.data.complete == true) {
-            setShowAlert("Mở khóa thành công, bạn còn lại " + res.data.total);
+            setShowAlert("Mở khóa thành công, bạn còn lại " + res.data.total + " Coin");
             let newDetail = userDetail;
             newDetail.coin = res.data.total;
             if (newDetail.unlockFilm === undefined)
@@ -312,7 +312,7 @@ const DetailFilm = () => {
   function saveThis() {
     if (userDetail.checkUser == "not")
       // return history.push("/login");
-      setShowAlert("Please login!");
+      setShowAlert("Vui lòng đăng nhập!");
     else {
       setIconSave(0);
       axios
@@ -450,7 +450,7 @@ const DetailFilm = () => {
                 {/* {JSON.stringify(detail)} */}
               </div>
               {info !== undefined && info.disable != true ? (
-                <div>
+                <div className="listAction">
                   <button
                     className="btn text-white btn_save m-1"
                     onClick={() => saveThis()}
@@ -540,9 +540,9 @@ const DetailFilm = () => {
           >
             <div className="Invisible" onClick={() => setPopupVip(null)}></div>
             <div class="modal-dialog  modal-dialog-centered ">
-              <div class="modal-content bg-dark p-3 border border-danger border-3 rounded-3">
+              <div class="modal-content bg-dark p-3 border border-3 rounded-3">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">
+                  <h5 class="modal-title primary-color" id="staticBackdropLabel">
                     Mở khóa VIP cho phim này
                   </h5>
                   <button
@@ -566,37 +566,59 @@ const DetailFilm = () => {
                       </h5>
                     ) : (
                       <h5 className="text-center mb-3">
-                        Số dư của bạn: {userDetail.coin} Coin
+                        Số dư của bạn:{" "}
+                        <strong className="primary-color">
+                          {userDetail.coin}
+                        </strong>{" "}
+                        Coin
                       </h5>
                     )}
 
-                    <div className="col-12 border border-danger mb-3 p-1">
-                      Mở khóa <strong>3</strong> ngày với{" "}
-                      <strong>{detail.price}</strong> Coin
+                    <div className="col-12 border mb-3 p-2">
+                      <span>
+                        Mở khóa <strong className="primary-color">3</strong>{" "}
+                        ngày với{" "}
+                        <strong className="primary-color">
+                          {detail.price}
+                        </strong>{" "}
+                        Coin
+                      </span>
                       <button
-                        className="btn btn-sm btn-danger float-end"
+                        className="btn btn-sm background-primary float-mk"
                         disabled={userDetail.coin < detail.price}
                         onClick={() => unlockTHis(0)}
                       >
                         Mở khóa
                       </button>
                     </div>
-                    <div className="col-12 border border-danger mb-3  p-1">
-                      Mở khóa <strong>7</strong> ngày với{" "}
-                      <strong>{detail.price * 2}</strong> Coin
+                    <div className="col-12 border mb-3 p-1">
+                      <span>
+                        Mở khóa <strong className="primary-color">7</strong>{" "}
+                        ngày với{" "}
+                        <strong className="primary-color">
+                          {detail.price * 2}
+                        </strong>{" "}
+                        Coin
+                      </span>
                       <button
-                        className="btn btn-sm btn-danger float-end"
+                        className="btn btn-sm background-primary float-mk"
                         disabled={userDetail.coin < detail.price * 2}
                         onClick={() => unlockTHis(1)}
                       >
                         Mở khóa
                       </button>
                     </div>
-                    <div className="col-12 border border-danger mb-3  p-1">
-                      Mở khóa <strong>14</strong> ngày với{" "}
-                      <strong>{detail.price * 3}</strong> Coin
+                    <div className="col-12 border mb-3 p-1">
+                      <span>
+                        Mở khóa <strong className="primary-color">14</strong>{" "}
+                        ngày với{" "}
+                        <strong className="primary-color">
+                          {detail.price * 3}
+                        </strong>{" "}
+                        Coin
+                      </span>
                       <button
-                        className="btn btn-sm btn-danger float-end "
+                        className="btn btn-sm background-primary float-mk"
                         disabled={userDetail.coin < detail.price * 3}
                         onClick={() => unlockTHis(2)}
                       >

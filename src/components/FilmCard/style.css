@@ -28,10 +28,10 @@
 
 @media (min-width: 600px) and (max-width: 767.9px) {
   .card {
-    width: 20vw !important;
+    width: 26vw !important;
   }
   .card .film-item {
-    height: 31vw !important;
+    height: 40vw !important;
   }
 }
 
@@ -56,10 +56,11 @@
 
 @media (max-width: 575.9px) {
   .card {
-    width: 25vw !important;
+    width: 28vw !important;
   }
   .card .film-item {
     height: 36vw !important;
+    padding: 0 4px !important;
   }
   .card-title {
     font-size: 0.7rem !important;

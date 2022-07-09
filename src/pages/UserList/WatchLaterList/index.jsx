@@ -7,6 +7,7 @@ import Footer from "../../../components/Footer";
 import axios from "axios";
 import { Redirect } from "react-router";
 import MetaTags from "react-meta-tags";
+import brandads from "../../../assets/images/bia.png";
 
 const WatchLaterList = () => {
   const data = useSelector((state) => state.listUser.watchLater);
@@ -83,8 +84,9 @@ const WatchLaterList = () => {
       </MetaTags>
       <div className="container text-white">
         <img
-          className="d-block w-100 pt-2"
-          src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          className="d-block w-100 pt-2 brandads"
+          // src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
+          src={brandads}
           alt=""
           width={800}
         />

@@ -270,7 +270,7 @@ const WatchNew2 = () => {
                   </div>
                 </div>
               ) : (
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center nameFilm">
                   <h5 className="primary-color">
                     {infoFilm.title} ({infoFilm.title_origin}){" "}
                   </h5>
@@ -552,7 +552,7 @@ const WatchNew2 = () => {
                   <div className="spinner-border" role="status"></div>
                 </div>
               ) : (
-                <div className="mt-3">
+                <div className="mt-3 btn-watch-bl">
                   <button
                     className="btn text-white btn_save"
                     onClick={() => saveThis()}

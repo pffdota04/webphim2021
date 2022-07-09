@@ -271,19 +271,19 @@ const Category = (props) => {
           }
         />
       </MetaTags>
-      <div className="container-fluid  pb-5">
+      <div className="container-fluid pb-5 mut">
         <div className="">
           {/* Top ADS: */}
-          <img
+          {/* <img
             className="w-100"
             src="https://ads-cdn.fptplay.net/static/banner/2021/10/15_6168ee52a1ccac0001cbd978.jpg"
             alt=""
             width={800}
-          />
+          /> */}
           <section>
             <div className="mb-3">
               {/* <hr className="mb-2" /> */}
-              <h1 className="primary-color mt-5 ms-4">Phim {reType}</h1>
+              <h1 className="primary-color ms-4">Phim {reType}</h1>
               {/* <hr className="mb-2" /> */}
               {categoryData()}
               {/* <hr className="mb-3" /> */}

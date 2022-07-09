@@ -182,7 +182,7 @@ const Home = () => {
 ======= */}
             {/* <div> */}
             <div className="carousel-caption text-start shadowContent">
-              <div className="">
+              <div className="bannerHome">
                 <h1>{e.title}</h1>
                 <p className="mota">{homeData.topdetail[i].description}</p>
                 <Link
@@ -331,13 +331,13 @@ const Home = () => {
       <Footer />
       <Link
         to="/kitkot"
-        className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center btn-all-screen"
+        className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center btn-all-screen fsbtnNews"
       >
-        KITKOT
+        Kitkot
       </Link>
       <Link
         to="/tintuc"
-        className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center btn-all-screen btn-all-2"
+        className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center btn-all-screen btn-all-2 fsbtnNews"
       >
         News
       </Link>

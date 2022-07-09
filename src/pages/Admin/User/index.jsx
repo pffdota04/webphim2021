@@ -30,6 +30,7 @@ const User = (props) => {
             placeholder
             value={currentUser.code}
             required
+            disabled
             onChange={(e) =>
               setNew((prevState) => ({
                 ...prevState,

@@ -68,9 +68,9 @@ const SoanTin = (props) => {
             token: token,
           })
           .then(() => {
-            setOpenModal("Đã cập nhật thành công!");
+            setOpenModal("Đã thêm tin thành công!");
             setonLoading(false);
-            Refresh();
+            const myTimeout = setTimeout(Refresh, 5000);
           })
           .catch((e) => {
             setOpenModal(e);
@@ -100,9 +100,9 @@ const SoanTin = (props) => {
             }
           )
           .then(() => {
-            setOpenModal("Đã cập nhật thành công!");
+            setOpenModal("Đã xóa tin thành công!");
             setonLoading(false);
-            Refresh();
+            const myTimeout = setTimeout(Refresh, 5000);
           })
           .catch((e) => {
             setOpenModal(e);
@@ -133,7 +133,7 @@ const SoanTin = (props) => {
       .then((res) => {
         setOpenModal("Đã cập nhật thành công!");
         setonLoading(false);
-        Refresh();
+        const myTimeout = setTimeout(Refresh, 5000);
       })
       .catch((e) => {
         setOpenModal(e);
@@ -444,7 +444,7 @@ const SoanTin = (props) => {
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog modal-xl modal-dialog-centered ">
+          <div className="modal-dialog  modal-dialog-centered ">
             <div className="modal-content bg-dark border-warning">
               <div className="modal-header">
                 <h5 className="modal-title fw-bold" id="exampleModalLabel">

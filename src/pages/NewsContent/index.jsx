@@ -138,7 +138,7 @@ const NewsContent = (props) => {
             <div className="col-6 col-sm-4 col-md-4 mt-2 bg-light">
               <div className="border border-dark border-2  p-2">
                 <div className="col-12  ">
-                  <h5>{e.title}</h5>
+                  <h5 className="titleNews" title={e.title}>{e.title}</h5>
 
                   <p>{e.preview}</p>
                   <Link to={"/tintuc/" + e.id + "/" + e.title}>

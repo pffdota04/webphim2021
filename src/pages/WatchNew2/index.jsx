@@ -82,7 +82,7 @@ const WatchNew2 = () => {
         headers: { Authorization: `${token}` },
       })
       .then((res) => {
-        if (res.data == false) setIsDisable(true);
+        if (res.data == false || res.data == null) setIsDisable(true);
         else {
           setUrl(res.data);
           if (res.data.data.default[0].chap == "Full") {
@@ -99,9 +99,9 @@ const WatchNew2 = () => {
             setnowChap(list[0]);
             setListChap(list);
           }
-          setLoading(false);
-          setIsLoading(false);
         }
+        setLoading(false);
+        setIsLoading(false);
       })
       .catch((e) => console.log(e));
   };
@@ -727,5 +727,3 @@ const WatchNew2 = () => {
   );
 };
 export default WatchNew2;
-
-

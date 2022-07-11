@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRef, useEffect } from "react";
 import axios from "axios";
 import Loading from "../../../components/Loading";
-import ModalAlert from './../../../components/ModalAlart/ModalAlert';
+import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
 
 const NapTien = (props) => {
   const [inputCode, setInputCode] = useState("");
@@ -62,36 +62,35 @@ const NapTien = (props) => {
   };
 
   function sendRequest() {
-    setIsLoading(true);
-
-    axios
-      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/napkoin", {
-        token: userDetail.token,
-        mgd: inputCode,
-        type: phuongThuc,
-        coin: soLuong,
-        note: ghiChu,
-      })
-      .then((res) => {
-        if (res.data.complete == true) {
-          setOpenModal("Đã ghi nhận, yêu cầu sẽ sớm được xử lý");
-        } else setOpenModal(res.data);
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        setOpenModal(e.response.data.message);
-        setIsLoading(false);
-      });
+    if (inputCode == "") setOpenModal("Mã giao dịch trống!");
+    else {
+      setIsLoading(true);
+      axios
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/napkoin", {
+          token: userDetail.token,
+          mgd: inputCode,
+          type: phuongThuc,
+          coin: soLuong,
+          note: ghiChu,
+        })
+        .then((res) => {
+          if (res.data.complete == true) {
+            setOpenModal("Đã ghi nhận, yêu cầu sẽ sớm được xử lý");
+          } else setOpenModal(res.data);
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          setOpenModal(e.response.data.message);
+          setIsLoading(false);
+        });
+    }
   }
 
   return (
     <div className="container mt-4 mb-5">
       {isLoading && <Loading />}
       {openModal && (
-        <ModalAlert
-          close={() => setOpenModal(null)}
-          content={openModal}
-        />
+        <ModalAlert close={() => setOpenModal(null)} content={openModal} />
       )}
       <div className="row" id="container-ipad">
         <div className="col-4 background-content p-4">

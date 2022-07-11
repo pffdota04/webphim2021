@@ -11,35 +11,35 @@ const MaGioiThieu = (props) => {
   const [openModal, setOpenModal] = useState(null);
 
   function sendMaGioiThieu() {
-    setIsLoading(true);
-    axios
-      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/usecode", {
-        token: userDetail.token,
-        code: inputCode,
-      })
-      .then((res) => {
-        if (res.data.complete == true) {
-          setOpenModal("Chúc mừng bạn nhận được 20 coin!");
-          let newDetail = userDetail;
-          newDetail.coin = newDetail.coin + 20;
-          change(newDetail);
-        } else setOpenModal(res.data.complete);
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        setOpenModal(e.response.data.message);
-        setIsLoading(false);
-      });
+    if (inputCode == "") setOpenModal("Nhập vào trống!");
+    else {
+      setIsLoading(true);
+      axios
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/usecode", {
+          token: userDetail.token,
+          code: inputCode,
+        })
+        .then((res) => {
+          if (res.data.complete == true) {
+            setOpenModal("Chúc mừng bạn nhận được 20 coin!");
+            let newDetail = userDetail;
+            newDetail.coin = newDetail.coin + 20;
+            change(newDetail);
+          } else setOpenModal(res.data.complete);
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          setOpenModal(e.response.data.message);
+          setIsLoading(false);
+        });
+    }
   }
 
   return (
     <div className="container mt-4 mb-5">
       {isLoading && <Loading />}
       {openModal && (
-        <ModalAlert
-          close={() => setOpenModal(null)}
-          content={openModal}
-        />
+        <ModalAlert close={() => setOpenModal(null)} content={openModal} />
       )}
       <div className="row" id="container-ipad">
         <div className="col-4 background-content p-4">
@@ -81,6 +81,9 @@ const MaGioiThieu = (props) => {
               className="w-100 form-control"
               onChange={(e) => {
                 setInputCode(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.key == "Enter") sendMaGioiThieu();
               }}
             ></input>
           </div>

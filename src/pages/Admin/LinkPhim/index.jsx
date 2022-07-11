@@ -398,7 +398,7 @@ const LinkPhim = (props) => {
     // if (Object.keys(a).length === 0) a = null;
     setForceRander(forceRender + 1);
     setAll1Link(a);
-    setOpenModal("Xóa thành công!");
+    // setOpenModal("Xóa thành công!");
   };
 
   const removeSub = (chap, quality) => {
@@ -421,7 +421,7 @@ const LinkPhim = (props) => {
       formData.quality === "" ||
       formData.quality === undefined
     )
-    setOpenModal("Vui lòng không để trống các trường!");
+      setOpenModal("Vui lòng không để trống các trường!");
     else if (type === 0) {
       setOpenModal(JSON.stringify(a));
       if (a == null) a = { data: { default: [], vip: [] }, _id: choseL };
@@ -723,28 +723,17 @@ const LinkPhim = (props) => {
     );
   };
 
-  useEffect(() => {}, [getLinkUndo]);
 
   const undoAll = () => {
     setAll1Link(getLinkUndo.backup);
     setForceRander(forceRender + 1);
   };
 
-  // const sortData = () => {
-  //   let a = dataLState;
-  //   a = a.reverse();
-  //   setDataLState(a);
-  //   reRender();
-  // };
-
   return (
     <div className="my-2 pb-5">
       {onLoading && <Loading />}
       {openModal && (
-        <ModalAlert
-          close={() => setOpenModal(null)}
-          content={openModal}
-        />
+        <ModalAlert close={() => setOpenModal(null)} content={openModal} />
       )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">

@@ -11,36 +11,35 @@ const Voucher = (props) => {
   const [openModal, setOpenModal] = useState(null);
 
   const sendVoucher = () => {
-    setIsLoading(true);
-
-    axios
-      .post(process.env.REACT_APP_API_DEPLOYED2 + "user/voucher", {
-        token: userDetail.token,
-        code: inputCode,
-      })
-      .then((res) => {
-        if (res.data.complete == true) {
-          setOpenModal("Bạn nhận được " + res.data.voucherPoint + " Coin");
-          let newDetail = userDetail;
-          newDetail.coin = newDetail.coin + res.data.voucherPoint;
-          change(newDetail);
-        } else setOpenModal(res.data);
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        setOpenModal(e.response.data.message);
-        setIsLoading(false);
-      });
+    if (inputCode == "") setOpenModal("Nhập vào trống!");
+    else {
+      setIsLoading(true);
+      axios
+        .post(process.env.REACT_APP_API_DEPLOYED2 + "user/voucher", {
+          token: userDetail.token,
+          code: inputCode,
+        })
+        .then((res) => {
+          if (res.data.complete == true) {
+            setOpenModal("Bạn nhận được " + res.data.voucherPoint + " Coin");
+            let newDetail = userDetail;
+            newDetail.coin = newDetail.coin + res.data.voucherPoint;
+            change(newDetail);
+          } else setOpenModal(res.data);
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          setOpenModal(e.response.data.message);
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
     <div className="container mt-4 mb-5">
       {isLoading && <Loading />}
       {openModal && (
-        <ModalAlert
-          close={() => setOpenModal(null)}
-          content={openModal}
-        />
+        <ModalAlert close={() => setOpenModal(null)} content={openModal} />
       )}
       <div className="row" id="container-ipad">
         <div className="col-4 background-content p-4">
@@ -61,7 +60,9 @@ const Voucher = (props) => {
             class="primary-color voucher_web"
             href="https://www.facebook.com/websitexemphimtructuyenKphim/posts/103204582455101"
             target="_blank"
-          >Xem tại đây: websitexemphimtructuyenKphim</a>
+          >
+            Xem tại đây: websitexemphimtructuyenKphim
+          </a>
         </div>
         <span className="col-1"></span>
         <div className="col-7 background-content p-4">

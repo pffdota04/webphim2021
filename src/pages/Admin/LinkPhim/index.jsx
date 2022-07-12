@@ -425,16 +425,18 @@ const LinkPhim = (props) => {
     else if (type === 0) {
       if (a == null) a = { data: { default: [], vip: [] }, _id: choseL };
       if (a.data.default === undefined)
-        a.data.default[0] = {
-          chap: formData.chap,
-          link: [
-            {
-              quality: formData.quality,
-              type: formData.type,
-              url: formData.url,
-            },
-          ],
-        };
+        a.data.default = [
+          {
+            chap: formData.chap,
+            link: [
+              {
+                quality: formData.quality,
+                type: formData.type,
+                url: formData.url,
+              },
+            ],
+          },
+        ];
       else {
         let added = false;
         a.data.default.map((e, i) => {
@@ -465,16 +467,18 @@ const LinkPhim = (props) => {
       if (a == null) a = { data: { default: [], vip: [] }, _id: choseL };
 
       if (a.data.vip === undefined)
-        a.data.vip[0] = {
-          chap: formData.chap,
-          link: [
-            {
-              quality: formData.quality,
-              type: formData.type,
-              url: formData.url,
-            },
-          ],
-        };
+        a.data.vip = [
+          {
+            chap: formData.chap,
+            link: [
+              {
+                quality: formData.quality,
+                type: formData.type,
+                url: formData.url,
+              },
+            ],
+          },
+        ];
       else {
         let added = false;
         a.data.vip.map((e, i) => {
@@ -719,7 +723,6 @@ const LinkPhim = (props) => {
       </>
     );
   };
-
 
   const undoAll = () => {
     setAll1Link(getLinkUndo.backup);

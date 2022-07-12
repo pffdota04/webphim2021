@@ -13,7 +13,7 @@ const Phims = (props) => {
   // dataFilm --> là all Data Phim,
   // setFetchPhim --> để gọi lại api lấy dataFilm mới
   const { token, dataF, setFetchPhim } = props;
-  const [dataFilm, setDataFilm] = useState(Object.values(dataF));
+  const [dataFilm, setDataFilm] = useState(Object.values(dataF).reverse());
 
   const [onLoading, setonLoading] = useState(false);
   const [onTrend, setOnTren] = useState(false);

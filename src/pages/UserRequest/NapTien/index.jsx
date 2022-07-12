@@ -9,7 +9,7 @@ const NapTien = (props) => {
   //const [soLuong, setSoLuong] = useState(10);
   const [phuongThuc, setPhuongthuc] = useState("momo");
   const [ghiChu, setGhiChu] = useState("");
-  const { userDetail, stk } = props;
+  const { userDetail, stk, change } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [checkout, setCheckOut] = useState(false);
   const [soLuong, setSoLuong] = useState(1);
@@ -60,6 +60,29 @@ const NapTien = (props) => {
       </div>
     );
   };
+
+  function congtienPaypal(sotien) {
+    setIsLoading(true);
+    axios
+      .put(
+        process.env.REACT_APP_API_DEPLOYED2 + "user/naptienpaypal",
+        { coin: sotien },
+        {
+          headers: { Authorization: userDetail.token },
+        }
+      )
+      .then((res) => {
+        setIsLoading(false);
+        setOpenModal("Bạn nhận được " + sotien + " Coin");
+        let newDetail = userDetail;
+        newDetail.coin = newDetail.coin + sotien;
+        change(newDetail);
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setOpenModal("Đã xảy ra lỗi");
+      });
+  }
 
   function sendRequest() {
     if (inputCode == "") setOpenModal("Mã giao dịch trống!");

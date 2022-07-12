@@ -34,7 +34,6 @@ const LinkPhim = (props) => {
     if (choseL !== undefined) {
       setIsLoadLink(true);
       axios
-        // .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/linkvip2", {
         .get(process.env.REACT_APP_API_DEPLOYED2 + "link/alllink/" + choseL, {
           headers: { Authorization: `${token}` },
         })

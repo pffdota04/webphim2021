@@ -11,6 +11,7 @@ const Napcoins = (props) => {
   const [openModal, setOpenModal] = useState(null);
   const [onLoading, setonLoading] = useState(false);
 
+
   function Refresh() {
     setFetchCoin(true);
   }
@@ -103,15 +104,14 @@ const Napcoins = (props) => {
     <div className="container my-2 pb-3">
       {onLoading && <Loading />}
       {openModal && (
-        <ModalAlert
-          close={() => setOpenModal(null)}
-          content={openModal}
-        />
+        <ModalAlert close={() => setOpenModal(null)} content={openModal} />
       )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
           <h4 className="text-center">
-            <strong className="display-6 fw-bold fst-italic text-uppercase">Request Payment Management</strong>{" "}
+            <strong className="display-6 fw-bold fst-italic text-uppercase">
+              Request Payment Management
+            </strong>{" "}
             <div className="dashboxs_coin">
               {/* <button
                 className="dashbox__mores_coin"
@@ -216,7 +216,7 @@ const Napcoins = (props) => {
           }
         </div>
       </div>
-      <Comments token={token}/>
+      <Comments token={token} />
     </div>
   );
 };

@@ -14,7 +14,6 @@ import axios from "axios";
 import Loading from "../../components/Loading";
 import MetaTags from "react-meta-tags";
 
-
 const UserRequest = (props) => {
   const userInfo = useSelector((state) => state.userData.curentUser);
   const userDetail = useSelector((state) => state.userData.userDetail);
@@ -25,9 +24,11 @@ const UserRequest = (props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.get(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk").then((res) => {
-      setAllStk(res.data);
-    });
+    axios
+      .get(process.env.REACT_APP_API_DEPLOYED2 + "admin/allstk")
+      .then((res) => {
+        setAllStk(res.data);
+      });
   }, []);
 
   function changeUserDetail(newUserDetail) {
@@ -143,7 +144,11 @@ const UserRequest = (props) => {
                     role="tabpanel"
                     aria-labelledby="nav-profile-tab"
                   >
-                    <NapTien userDetail={userDetail} stk={allStk} />
+                    <NapTien
+                      userDetail={userDetail}
+                      stk={allStk}
+                      change={changeUserDetail}
+                    />
                   </div>
                 )}
                 {userInfo.checkUser && (

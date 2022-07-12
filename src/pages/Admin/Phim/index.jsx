@@ -209,6 +209,7 @@ const Phims = (props) => {
             <option value="ko">Hàn</option>
             <option value="vi">Việt</option>
             <option value="ch">Trung</option>
+            <option value="th">Thái Lan</option>
           </select>
         </div>
 

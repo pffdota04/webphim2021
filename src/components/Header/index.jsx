@@ -625,7 +625,7 @@ const Header = () => {
                           to="/phim/es"
                           onClick={() => setOpenHeader(false)}
                         >
-                          TÂY BAN NHA
+                          PHIM THÁI LAN
                         </Link>
                       </li>
                     </div>

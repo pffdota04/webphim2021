@@ -272,8 +272,8 @@ const DetailFilm = () => {
 
   function unlockTHis(plan) {
     setPopupVip(null);
-    if (userDetail.checkUser == "not") setShowAlert("Please login!");
-    else if (userDetail.checkUser == false) setShowAlert("Please verified email!");
+    if (userDetail.checkUser == "not") setShowAlert("Vui lòng đăng nhập!");
+    else if (userDetail.checkUser == false) setShowAlert("Vui lòng xác thực email!");
     else {
       setIsLoading(true);
       setIconUnlock(0);
@@ -576,7 +576,7 @@ const DetailFilm = () => {
 
                     <div className="col-12 border mb-3 p-2">
                       <span>
-                        Mở khóa <strong className="primary-color">3</strong>{" "}
+                        Mở khóa <strong className="primary-color">10</strong>{" "}
                         ngày với{" "}
                         <strong className="primary-color">
                           {detail.price}
@@ -593,7 +593,7 @@ const DetailFilm = () => {
                     </div>
                     <div className="col-12 border mb-3 p-1">
                       <span>
-                        Mở khóa <strong className="primary-color">7</strong>{" "}
+                        Mở khóa <strong className="primary-color">20</strong>{" "}
                         ngày với{" "}
                         <strong className="primary-color">
                           {detail.price * 2}
@@ -610,7 +610,7 @@ const DetailFilm = () => {
                     </div>
                     <div className="col-12 border mb-3 p-1">
                       <span>
-                        Mở khóa <strong className="primary-color">14</strong>{" "}
+                        Mở khóa <strong className="primary-color">30</strong>{" "}
                         ngày với{" "}
                         <strong className="primary-color">
                           {detail.price * 3}

@@ -51,21 +51,21 @@ const LinkPhim = (props) => {
         })
         .catch((e) => setIsLoadLink(false));
 
-      axios
-        .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/linksub", {
-          token: token,
-          fid: choseL,
-        })
-        .then((res) => {
-          if (res.data !== null) {
-            setSub(res.data.chap);
-            setSub2(res.data.chap);
-          } else {
-            setSub(res.data);
-            setSub2(res.data);
-          }
-        })
-        .catch((e) => setIsLoadLink(false));
+      // axios
+      //   .post(process.env.REACT_APP_API_DEPLOYED2 + "admin/linksub", {
+      //     token: token,
+      //     fid: choseL,
+      //   })
+      //   .then((res) => {
+      //     if (res.data !== null) {
+      //       setSub(res.data.chap);
+      //       setSub2(res.data.chap);
+      //     } else {
+      //       setSub(res.data);
+      //       setSub2(res.data);
+      //     }
+      //   })
+      //   .catch((e) => setIsLoadLink(false));
     }
   }, [choseL]);
 
@@ -401,13 +401,13 @@ const LinkPhim = (props) => {
     // setOpenModal("Xóa thành công!");
   };
 
-  const removeSub = (chap, quality) => {
-    let a = JSON.parse(JSON.stringify(getSub));
-    delete a[chap].sub[quality];
-    if (Object.keys(a[chap].sub).length === 0) delete a[chap];
-    if (Object.keys(a).length === 0) a = null;
-    setSub(a);
-  };
+  // const removeSub = (chap, quality) => {
+  //   let a = JSON.parse(JSON.stringify(getSub));
+  //   delete a[chap].sub[quality];
+  //   if (Object.keys(a[chap].sub).length === 0) delete a[chap];
+  //   if (Object.keys(a).length === 0) a = null;
+  //   setSub(a);
+  // };
 
   const themLink = (type) => {
     let a;
@@ -423,9 +423,7 @@ const LinkPhim = (props) => {
     )
       setOpenModal("Vui lòng không để trống các trường!");
     else if (type === 0) {
-      setOpenModal(JSON.stringify(a));
       if (a == null) a = { data: { default: [], vip: [] }, _id: choseL };
-      setOpenModal(JSON.stringify(a));
       if (a.data.default === undefined)
         a.data.default[0] = {
           chap: formData.chap,
@@ -518,7 +516,6 @@ const LinkPhim = (props) => {
     //   setSub(a);
     // }
     setForceRander(forceRender + 1);
-    setOpenModal("Thêm thành công!");
   };
 
   const ModalForm = () => {
@@ -623,7 +620,7 @@ const LinkPhim = (props) => {
             data-bs-dismiss="modal"
             onClick={() => themLink(isVip ? 1 : 0)}
           >
-            Save
+            Ok
           </button>
           <button
             type="button"

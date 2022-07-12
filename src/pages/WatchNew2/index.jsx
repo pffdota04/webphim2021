@@ -90,12 +90,14 @@ const WatchNew2 = () => {
             setnowChap("Full");
           } else {
             let list = [];
-            res.data.data.default.map((e) => {
-              list.push(e.chap);
-            });
-            res.data.data.vip.map((e) => {
-              if (!list.includes(e.chap)) list.push(e.chap);
-            });
+            if (res.data.data.default != undefined)
+              res.data.data.default.map((e) => {
+                list.push(e.chap);
+              });
+            if (res.data.data.vip != undefined)
+              res.data.data.vip.map((e) => {
+                if (!list.includes(e.chap)) list.push(e.chap);
+              });
             setnowChap(list[0]);
             setListChap(list);
           }

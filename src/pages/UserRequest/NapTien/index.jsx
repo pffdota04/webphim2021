@@ -222,10 +222,10 @@ const NapTien = (props) => {
                         onChange={(e) => setSoLuong(e.target.value)}
                         value={soLuong}
                       >
-                        <option value="100">10k = 10 Coin</option>
-                        <option value="200">20k= 20 Coin</option>
-                        <option value="500">50k= 50 Coin </option>
-                        <option value="1000">100k= 100 Coin</option>
+                        <option value="10">10k = 10 Coin</option>
+                        <option value="20">20k= 20 Coin</option>
+                        <option value="50">50k= 50 Coin </option>
+                        <option value="100">100k= 100 Coin</option>
                       </select>{" "}
                     </div>
                     <div className="col-12 col-md-8 mx-auto mb-4">

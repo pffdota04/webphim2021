@@ -662,7 +662,7 @@ const WatchNew2 = () => {
 
                     <div className="col-12 border mb-3 p-2">
                       <span>
-                        Mở khóa <strong className="primary-color">10</strong>{" "}
+                        Mở khóa <strong className="primary-color">3</strong>{" "}
                         ngày với{" "}
                         <strong className="primary-color">
                           {detail.price}
@@ -678,7 +678,7 @@ const WatchNew2 = () => {
                       </button>
                     </div>
                     <div className="col-12 border mb-3  p-2">
-                      Mở khóa <strong className="primary-color">20</strong> ngày
+                      Mở khóa <strong className="primary-color">7</strong> ngày
                       với{" "}
                       <strong className="primary-color">
                         {detail.price * 2}
@@ -693,7 +693,7 @@ const WatchNew2 = () => {
                       </button>
                     </div>
                     <div className="col-12 border mb-3  p-2">
-                      Mở khóa <strong className="primary-color">30</strong> ngày
+                      Mở khóa <strong className="primary-color">14</strong> ngày
                       với{" "}
                       <strong className="primary-color">
                         {detail.price * 3}

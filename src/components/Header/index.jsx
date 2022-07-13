@@ -622,10 +622,10 @@ const Header = () => {
                       <li>
                         <Link
                           className="menu-dropdown-item text-white"
-                          to="/phim/th"
+                          to="/phim/es"
                           onClick={() => setOpenHeader(false)}
                         >
-                          PHIM THÁI LAN
+                          TÂY BAN NHA
                         </Link>
                       </li>
                     </div>
@@ -1190,10 +1190,10 @@ const Header = () => {
                     <li>
                       <Link
                         className="menu-dropdown-item text-white"
-                        to="/phim/th"
+                        to="/phim/es"
                         onClick={() => setOpenHeader(false)}
                       >
-                        PHIM THÁI LAN
+                        TÂY BAN NHA
                       </Link>
                     </li>
                   </div>

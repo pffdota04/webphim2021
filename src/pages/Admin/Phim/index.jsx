@@ -212,7 +212,7 @@ const Phims = (props) => {
             <option value="ko">Hàn</option>
             <option value="vi">Việt</option>
             <option value="ch">Trung</option>
-            <option value="th">Thái Lan</option>
+            <option value="es">Tây Ban Nha</option>
           </select>
         </div>
 
@@ -456,7 +456,7 @@ const Phims = (props) => {
           setonLoading(false);
         })
         .catch((e) => {
-          setOpenModal(e);
+          setOpenModal("Thòi gian cập nhật quá lâu");
           setonLoading(false);
         });
     }

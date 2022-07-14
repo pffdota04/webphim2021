@@ -285,32 +285,32 @@ const WatchNew2 = () => {
               <Player
                 autoPlay={false}
                 src={urlCurrent}
-                subtitles={
-                  getSub[nowChap] !== undefined
-                    ? Object.keys(getSub[nowChap].sub).map((e2) => {
-                        return {
-                          lang: e2,
-                          url: getSub[nowChap].sub[e2],
-                          language:
-                            e2 === "en"
-                              ? "Tiếng Anh"
-                              : e2 === "fr"
-                              ? "Tiếng Pháp"
-                              : e2 === "vi"
-                              ? "Tiếng Việt"
-                              : e2,
-                        };
-                      })
-                    : [
-                        {
-                          lang: "no",
-                          url:
-                            process.env.REACT_APP_API_DEPLOYED2 +
-                            "public/subs/noSub.vtt",
-                          language: "Chưa có sub",
-                        },
-                      ]
-                }
+                // subtitles={
+                //   getSub[nowChap] !== undefined
+                //     ? Object.keys(getSub[nowChap].sub).map((e2) => {
+                //         return {
+                //           lang: e2,
+                //           url: getSub[nowChap].sub[e2],
+                //           language:
+                //             e2 === "en"
+                //               ? "Tiếng Anh"
+                //               : e2 === "fr"
+                //               ? "Tiếng Pháp"
+                //               : e2 === "vi"
+                //               ? "Tiếng Việt"
+                //               : e2,
+                //         };
+                //       })
+                //     : [
+                //         {
+                //           lang: "no",
+                //           url:
+                //             process.env.REACT_APP_API_DEPLOYED2 +
+                //             "public/subs/noSub.vtt",
+                //           language: "Chưa có sub",
+                //         },
+                //       ]
+                // }
                 poster={infoFilm.img}
               >
                 {(ref, props) => {

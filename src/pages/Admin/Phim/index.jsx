@@ -456,6 +456,7 @@ const Phims = (props) => {
           setonLoading(false);
         })
         .catch((e) => {
+          console.log(e)
           setOpenModal("Thòi gian cập nhật quá lâu");
           setonLoading(false);
         });

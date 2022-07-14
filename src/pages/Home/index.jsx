@@ -184,7 +184,9 @@ const Home = () => {
             <div className="carousel-caption text-start shadowContent">
               <div className="bannerHome">
                 <h1>{e.title}</h1>
-                <p className="mota">{homeData.topdetail[i].description}</p>
+                <p className="mota d-none d-sm-block">
+                  {homeData.topdetail[i].description}
+                </p>
                 <Link
                   className="btn btn-lg background-primary res-btn"
                   to={"/detailfilm/" + e._id + "/" + e.title}

@@ -849,7 +849,7 @@ const Phims = (props) => {
               Edit Film
             </strong>
           </h4>
-          {JSON.stringify(currentPhim)}
+          {/* {JSON.stringify(currentPhim)} */}
           <hr className="my-4" />
 
           {formPhim(currentPhim, setCurrentPhim, detaitFilm, setDetaitFilm)}

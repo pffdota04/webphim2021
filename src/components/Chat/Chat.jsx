@@ -138,6 +138,8 @@ const Chat = (props) => {
             "bú cu",
             "đm",
             "đcm",
+            "dcm",
+            "dcmm",
             "3que",
             "ma túy",
             "đỉ ",

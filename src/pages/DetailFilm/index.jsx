@@ -272,8 +272,8 @@ const DetailFilm = () => {
 
   function unlockTHis(plan) {
     setPopupVip(null);
-    if (userDetail.checkUser == "not") setShowAlert("Please login!");
-    else if (userDetail.checkUser == false) setShowAlert("Please verified email!");
+    if (userDetail.checkUser == "not") setShowAlert("Vui lòng đăng nhập!");
+    else if (userDetail.checkUser == false) setShowAlert("Vui lòng xác thực email!");
     else {
       setIsLoading(true);
       setIconUnlock(0);

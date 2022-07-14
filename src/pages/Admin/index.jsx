@@ -534,7 +534,7 @@ const Admin = () => {
                 component={() => (
                   <LinkPhim
                     dataL={dataAllLink}
-                    dataF={Object.values(dataAllF)}
+                    dataF={Object.values(dataAllF).reverse()}
                     token={adminToken}
                     setFetchLink={setFetchLink}
                   />

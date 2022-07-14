@@ -7,22 +7,24 @@ import Loading from "../../../components/Loading";
 import { db } from "../../../services/firebase";
 import "./style.css";
 import ModalAlert from "./../../../components/ModalAlart/ModalAlert";
+import { data } from "jquery";
 
 const Phims = (props) => {
   // token --> để gửi đi chung post (xác thực admin bên api),
   // dataFilm --> là all Data Phim,
   // setFetchPhim --> để gọi lại api lấy dataFilm mới
   const { token, dataF, setFetchPhim } = props;
-  const [dataFilm, setDataFilm] = useState(Object.values(dataF));
+  const [dataFilm, setDataFilm] = useState(Object.values(dataF).reverse());
 
   const [onLoading, setonLoading] = useState(false);
+  const [isAddNew, setIsAddNew] = useState(false);
   const [onTrend, setOnTren] = useState(false);
   const [onRecom, setOnRecom] = useState(false);
   const [onTop, setOnTop] = useState(false);
   const [homeId, setHomeId] = useState(undefined);
   const [detaitFilm, setDetaitFilm] = useState({});
 
-  const [choseF, setChoseF] = useState(0); // id phim đang chọn, mặc định 0
+  const [choseF, setChoseF] = useState(1); // id phim đang chọn, mặc định 0
   const [currentPhim, setCurrentPhim] = useState(dataFilm[choseF]); // lưu thông tin phim đang chọn
   const [addPhim, setaddPhim] = useState({}); // lưu thông tin phim đang chọn
   const [addPhimDetail, setaddPhimDetail] = useState({}); // lưu thông tin phim đang chọn
@@ -134,8 +136,9 @@ const Phims = (props) => {
             className="form-control"
             id="firstName"
             placeholder
-            value={currentPhim._id === undefined ? "" : currentPhim._id}
+            value={isAddNew ? dataFilm[0]._id + 1 : detaitFilm._id}
             disabled
+            // value={currentPhim?._id== undefined ? "" : currentPhim._id}
           />
         </div>
         <div className="col-6 col-md-2">
@@ -209,6 +212,7 @@ const Phims = (props) => {
             <option value="ko">Hàn</option>
             <option value="vi">Việt</option>
             <option value="ch">Trung</option>
+            <option value="es">Tây Ban Nha</option>
           </select>
         </div>
 
@@ -422,7 +426,7 @@ const Phims = (props) => {
   // Bấm vào nút cập nhật thì lấy currentPhim gửi đi.
   function updatePhim() {
     if (JSON.stringify(dataFilm[choseF]) == JSON.stringify(currentPhim))
-    setOpenModal("Không có gì thay đổi!");
+      setOpenModal("Không có gì thay đổi!");
     //alert("Notthing change!");
     else {
       let keyInfo = "xx";
@@ -452,7 +456,7 @@ const Phims = (props) => {
           setonLoading(false);
         })
         .catch((e) => {
-          setOpenModal(e);
+          setOpenModal("Thòi gian cập nhật quá lâu");
           setonLoading(false);
         });
     }
@@ -477,7 +481,8 @@ const Phims = (props) => {
       setOpenModal("Điền đầy đủ thông tin để tiếp tục");
       return;
     }
-    addPhim._id = dataFilm[dataFilm.length - 1]._id + 1;
+    // addPhim._id = dataFilm[dataFilm.length]._id + 1;
+    addPhim._id = dataFilm[0]._id + 1;
     axios
       .post(
         process.env.REACT_APP_API_DEPLOYED2 + "film",
@@ -490,9 +495,10 @@ const Phims = (props) => {
       .then((res) => {
         if (res.data == "ok") {
           setOpenModal("Đã thêm thành công");
-          hold.push(addPhim);
-          setDataFilm(hold);
-          setaddPhim({});
+          // hold.push(addPhim);
+          // setDataFilm(hold);
+          // setaddPhim(addPhim);
+          Refresh();
           setonLoading(false);
         }
       })
@@ -641,10 +647,7 @@ const Phims = (props) => {
       {JSON.stringify(detaitFilm)} */}
       {onLoading && <Loading />}
       {openModal && (
-        <ModalAlert
-          close={() => setOpenModal(null)}
-          content={openModal}
-        />
+        <ModalAlert close={() => setOpenModal(null)} content={openModal} />
       )}
       <div className="row">
         <div className="col-12 mx-auto ps-5 pe-5">
@@ -657,7 +660,8 @@ const Phims = (props) => {
               <button
                 className="dashbox__mores"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+                data-bs-target="#exampleModalAdd"
+                onClick={() => setIsAddNew(true)}
               >
                 Add Film
               </button>
@@ -802,6 +806,7 @@ const Phims = (props) => {
                                 -62,
                               behavior: "smooth",
                             });
+                            setIsAddNew(false);
                             // fix header che mat 62px
                           }}
                         >
@@ -861,15 +866,15 @@ const Phims = (props) => {
           {/* Modal Add New Film*/}
           <div
             className="modal fade"
-            id="exampleModal"
+            id="exampleModalAdd"
             tabIndex={-1}
-            aria-labelledby="exampleModalLabel"
+            aria-labelledby="exampleModalAdd"
             aria-hidden="true"
           >
             <div className="modal-dialog modal-xl modal-dialog-centered ">
               <div className="modal-content border-warning bg-dark">
                 <div className="modal-header">
-                  <h5 className="modal-title fw-bold" id="exampleModalLabel">
+                  <h5 className="modal-title fw-bold" id="exampleModalAdd">
                     ADD NEW FILM
                   </h5>
                   <button
@@ -897,7 +902,7 @@ const Phims = (props) => {
                     data-bs-dismiss="modal"
                     onClick={() => addnewPhim()}
                   >
-                    Save
+                    Add x
                   </button>
                   <button
                     type="button"

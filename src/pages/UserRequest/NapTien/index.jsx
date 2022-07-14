@@ -9,7 +9,7 @@ const NapTien = (props) => {
   //const [soLuong, setSoLuong] = useState(10);
   const [phuongThuc, setPhuongthuc] = useState("momo");
   const [ghiChu, setGhiChu] = useState("");
-  const { userDetail, stk } = props;
+  const { userDetail, stk, change } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [checkout, setCheckOut] = useState(false);
   const [soLuong, setSoLuong] = useState(1);
@@ -35,9 +35,8 @@ const NapTien = (props) => {
               ],
             });
           },
-          onApprove: async (data, actions) => {
-            const order = await actions.order.capture();
-            console.log(order);
+          onApprove: function(data, actions) {
+            return actions.order.capture().then(congtienPaypal(soLuong));
           },
           onError: (err) => {
             console.log(err);
@@ -60,6 +59,29 @@ const NapTien = (props) => {
       </div>
     );
   };
+
+  function congtienPaypal(sotien) {
+    setIsLoading(true);
+    axios
+      .put(
+        process.env.REACT_APP_API_DEPLOYED2 + "user/naptienpaypal",
+        { coin: sotien },
+        {
+          headers: { Authorization: userDetail.token },
+        }
+      )
+      .then((res) => {
+        setIsLoading(false);
+        setOpenModal("Bạn nhận được " + sotien + " Coin");
+        let newDetail = userDetail;
+        newDetail.coin = newDetail.coin + sotien;
+        change(newDetail);
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setOpenModal("Đã xảy ra lỗi");
+      });
+  }
 
   function sendRequest() {
     if (inputCode == "") setOpenModal("Mã giao dịch trống!");
@@ -98,7 +120,7 @@ const NapTien = (props) => {
             Tỷ lệ:
             <strong className="display-7 fw-bold fst-italic ">
               {" "}
-              1000 VNĐ = 5 COIN
+              1000 VNĐ = 1 COIN
             </strong>{" "}
           </h4>
           <div className="lead pt-3">
@@ -169,10 +191,10 @@ const NapTien = (props) => {
                         onChange={(e) => setSoLuong(e.target.value)}
                         value={soLuong}
                       >
-                        <option value="1">1$ = 110 Coin</option>
-                        <option value="2">2$= 220 Coin</option>
-                        <option value="5">5$= 550 Coin </option>
-                        <option value="10">10$= 1100 Coin</option>
+                        <option value="1">1$ = 24 Coin</option>
+                        <option value="2">2$= 48 Coin</option>
+                        <option value="5">5$= 120 Coin </option>
+                        <option value="10">10$= 240 Coin</option>
                       </select>{" "}
                     </div>
                     <div className="col-12 col-md-8 mx-auto">
@@ -200,10 +222,10 @@ const NapTien = (props) => {
                         onChange={(e) => setSoLuong(e.target.value)}
                         value={soLuong}
                       >
-                        <option value="100">10k = 50 Coin</option>
-                        <option value="200">20k= 100 Coin</option>
-                        <option value="500">50k= 250 Coin </option>
-                        <option value="1000">100k= 500 Coin</option>
+                        <option value="10">10k = 10 Coin</option>
+                        <option value="20">20k= 20 Coin</option>
+                        <option value="50">50k= 50 Coin </option>
+                        <option value="100">100k= 100 Coin</option>
                       </select>{" "}
                     </div>
                     <div className="col-12 col-md-8 mx-auto mb-4">

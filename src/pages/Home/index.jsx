@@ -287,7 +287,7 @@ const Home = () => {
             >
               {Object.keys(homeData).length == 0
                 ? loadLoading(6, false)
-                : Object.values(homeData.last).map((e, i) => (
+                : Object.values(homeData.last).reverse().map((e, i) => (
                     <div className="">
                       <FilmCard
                         data={e}

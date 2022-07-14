@@ -136,7 +136,7 @@ const Phims = (props) => {
             className="form-control"
             id="firstName"
             placeholder
-            value={isAddNew ? dataFilm[0]._id + 1 : detaitFilm._id}
+            value={isAddNew ? dataFilm[0]._id + 1 : currentPhim._id}
             disabled
             // value={currentPhim?._id== undefined ? "" : currentPhim._id}
           />
@@ -329,8 +329,8 @@ const Phims = (props) => {
             <a
               target="_blank"
               href={
-                currentPhim.yttrailer != undefined
-                  ? "https://www.youtube.com/watch?v=" + currentPhim.yttrailer
+                detaitFilm.yttrailer != undefined
+                  ? "https://www.youtube.com/watch?v=" + detaitFilm.yttrailer
                   : undefined
               }
             >
@@ -525,7 +525,7 @@ const Phims = (props) => {
           hold.forEach((e, i) => {
             if (e._id == fid) hold[i].disable = true;
           });
-          setDataFilm(hold);
+          setDataFilm(hold.reverse());
         }
         setonLoading(false);
       })
@@ -552,7 +552,7 @@ const Phims = (props) => {
           hold.forEach((e, i) => {
             if (e._id == fid) delete hold[i].disable;
           });
-          setDataFilm(hold);
+          setDataFilm(hold.reverse());
           setonLoading(false);
         }
       })
@@ -807,7 +807,6 @@ const Phims = (props) => {
                               behavior: "smooth",
                             });
                             setIsAddNew(false);
-                            // fix header che mat 62px
                           }}
                         >
                           <i class="fa fa-pencil mb-1" />
@@ -849,6 +848,7 @@ const Phims = (props) => {
               Edit Film
             </strong>
           </h4>
+          {JSON.stringify(currentPhim)}
           <hr className="my-4" />
 
           {formPhim(currentPhim, setCurrentPhim, detaitFilm, setDetaitFilm)}

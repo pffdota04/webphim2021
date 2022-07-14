@@ -379,7 +379,7 @@ const DetailFilm = () => {
                 alt="poster"
               />
             </div>
-            
+
             <div className="details-info">
               <h1 className="details-info-title text-light w-100 text-center text-xl-start">
                 {info !== undefined && info.title}
@@ -428,7 +428,7 @@ const DetailFilm = () => {
               <div className="watch mb-4">
                 {info !== undefined && info.disable != true && (
                   <Link
-                    className="background-primary btn btn-go-film"
+                    className="background-primary btn btn-go-film  me-4"
                     to={
                       "/watchnew/" +
                       id +
@@ -442,7 +442,7 @@ const DetailFilm = () => {
                   </Link>
                 )}
                 <a
-                  className="background-primary btn ms-4 btn-go-trailer"
+                  className="background-primary btn btn-go-trailer"
                   href="#title-video-trailer"
                 >
                   Xem Trailer
@@ -542,7 +542,10 @@ const DetailFilm = () => {
             <div class="modal-dialog  modal-dialog-centered ">
               <div class="modal-content bg-dark p-3 border border-3 rounded-3">
                 <div class="modal-header">
-                  <h5 class="modal-title primary-color" id="staticBackdropLabel">
+                  <h5
+                    class="modal-title primary-color"
+                    id="staticBackdropLabel"
+                  >
                     Mở khóa VIP cho phim này
                   </h5>
                   <button

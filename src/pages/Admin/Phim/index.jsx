@@ -506,7 +506,7 @@ const Phims = (props) => {
     setonLoading(true);
     axios
       .put(
-        process.env.REAREACT_APP_API_DEPLOYED2 + "film/disable",
+        process.env.REACT_APP_API_DEPLOYED2 + "film/disable",
         {
           fid: fid,
         },

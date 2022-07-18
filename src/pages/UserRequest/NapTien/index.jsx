@@ -36,7 +36,7 @@ const NapTien = (props) => {
             });
           },
           onApprove: function(data, actions) {
-            return actions.order.capture().then(congtienPaypal(soLuong));
+            return actions.order.capture().then(congtienPaypal(soLuong * 24));
           },
           onError: (err) => {
             console.log(err);
@@ -191,10 +191,10 @@ const NapTien = (props) => {
                         onChange={(e) => setSoLuong(e.target.value)}
                         value={soLuong}
                       >
-                        <option value="24">1$ = 24 Coin</option>
-                        <option value="48">2$= 48 Coin</option>
-                        <option value="120">5$= 120 Coin </option>
-                        <option value="240">10$= 240 Coin</option>
+                        <option value="1">1$ = 24 Coin</option>
+                        <option value="2">2$= 48 Coin</option>
+                        <option value="5">5$= 120 Coin </option>
+                        <option value="10">10$= 240 Coin</option>
                       </select>{" "}
                     </div>
                     <div className="col-12 col-md-8 mx-auto">
